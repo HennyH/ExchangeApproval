@@ -1,7 +1,13 @@
-# ExchangeUnitApproval
+# Exchange Unit Approval
 Automation of the exchange unit approval process.
 
-# License
+## Document Index
+
+| Name | Purpose | Location|
+|------|---------|---------|
+| Requirements Gathering Q/A | A series of requirement questions to be asked and breifely answered | https://docs.google.com/document/d/1DUcOZpU-bf4NuRfM3Ps1jvzjafvCsmqWtG0WBbdX06I/edit?usp=sharing
+
+## License
 
 ExchangeUnitApproval (c) by Henry Hollingworth (21471423@student.uwa.edu.au),
                             Jason Cheng (20946915@student.uwa.edu.au),
