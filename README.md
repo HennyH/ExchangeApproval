@@ -5,6 +5,7 @@ Automation of the exchange unit approval process.
 
 | Name | Purpose | Location|
 |------|---------|---------|
+| Scope of Work | The formal scope fo work document. | https://docs.google.com/document/d/1hzsphYwCaM4Cp4AHWbQEjavldIIpR4219eS1xQPRJAs/edit?usp=sharing
 | Requirements Gathering Q/A | A series of requirement questions to be asked and breifely answered | https://docs.google.com/document/d/1DUcOZpU-bf4NuRfM3Ps1jvzjafvCsmqWtG0WBbdX06I/edit?usp=sharing
 | Team Availability | A record of when team members are free | http://whenisgood.net/k9z4pp4/results/dakdyr8
 | Team Time Sheet | The 'Group Time Sheet' deliverable | https://studentuwaeduau-my.sharepoint.com/:x:/g/personal/21471423_student_uwa_edu_au/EajGA6zduTdAiHLIwwOIr4cB1nkB77cRg0XKk0DANpS4Hw?e=L4gqxx
