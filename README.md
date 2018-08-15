@@ -11,9 +11,10 @@ Automation of the exchange unit approval process.
 | Team Time Sheet | The 'Group Time Sheet' deliverable | https://studentuwaeduau-my.sharepoint.com/:x:/g/personal/21471423_student_uwa_edu_au/EajGA6zduTdAiHLIwwOIr4cB1nkB77cRg0XKk0DANpS4Hw?e=L4gqxx
 | Team Booked Hours Sheet | The 'Book Hours Sheet' deliverable | https://studentuwaeduau-my.sharepoint.com/:x:/g/personal/21471423_student_uwa_edu_au/ETEtg2uRvV9JuOHaXFNMg4IBVgbHWze4gNXFSsn-2DnzLw?e=1eZ73Q
 | Existing Process Flowchart | A flowchart detailing the existing process and interaction between entities | https://www.lucidchart.com/invitations/accept/6557347f-c50c-42f0-b50f-6711588a8249
-| Meeting 1 Notes | A collection of notes pertaining to the first meeting held on the 06/08/2018 | https://docs.google.com/document/d/1HcdILR31IKStN5MduLGdf4MgZpuen0HVt0qO1BcZ0CE/edit?usp=sharing
+| Client Meeting 1 Notes | A collection of notes pertaining to the first meeting held on the 06/08/2018 | https://docs.google.com/document/d/1HcdILR31IKStN5MduLGdf4MgZpuen0HVt0qO1BcZ0CE/edit?usp=sharing
 | Audit Meeting 1 Notes | 09/08/2018 14:10 - 15:30 | https://docs.google.com/document/d/1Nxk-VlIZfNkuaq0PZUJyM6Do1lZtxfoXO-xX_dLySc8/edit?usp=sharing |
 | Client Meeting 2 Notes | 10/08/2018 15:02-15:55 | https://docs.google.com/document/d/1Qy5r8CcwlKQVKjjgNZt7GXewCEV0ZdPZg5ctElkHwJY/edit?usp=sharing |
+| Client Meeting 3 Notes | 15/08/2018 15:38-16:44 | https://docs.google.com/document/d/1MDC6awTdmaHYMSnWTM0UICSgvlmna1P3tHwJdSFSDIQ/edit?usp=sharing |
 
 ## License
 
