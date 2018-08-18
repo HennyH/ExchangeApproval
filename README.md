@@ -9,6 +9,7 @@ Automation of the exchange unit approval process.
 | Team Availability | A record of when team members are free | http://whenisgood.net/k9z4pp4/results/dakdyr8
 | Team Time Sheet | The 'Group Time Sheet' deliverable | https://studentuwaeduau-my.sharepoint.com/:x:/g/personal/21471423_student_uwa_edu_au/EajGA6zduTdAiHLIwwOIr4cB1nkB77cRg0XKk0DANpS4Hw?e=L4gqxx
 | Team Booked Hours Sheet | The 'Book Hours Sheet' deliverable | https://studentuwaeduau-my.sharepoint.com/:x:/g/personal/21471423_student_uwa_edu_au/ETEtg2uRvV9JuOHaXFNMg4IBVgbHWze4gNXFSsn-2DnzLw?e=1eZ73Q
+| Skills and Resource Audit | An audit of the teams skills and available technologies | https://docs.google.com/document/d/1JaGGeTomoZ4wiJrZkwlBtQWwbJSzNFsRh3Mgc683ud4/edit?usp=sharing
 
 ### Design Documents
 | Name | Purpose | Location|
