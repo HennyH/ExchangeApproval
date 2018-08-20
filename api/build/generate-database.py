@@ -9,6 +9,8 @@ import os
 
 import sys
 
+import sqlite3
+
 import argparse
 
 
@@ -21,9 +23,19 @@ def main(argv=None):
                         metavar="OUTPUT",
                         help="""The location to save the created """
                              """database to.""")
-    parser.add_argument("--schma",
+    parser.add_argument("--schema",
                         type=str,
                         required=True,
                         metavar="SCHEMA",
                         help="""The SQL script to run to create the file.""")
-    
+    result = parser.parse_args(argv)
+
+    with open(result.schema, "r") as schema_fileobj:
+        schema_script = schema_fileobj.read()
+
+    os.makedirs(os.path.dirname(result.output), exist_ok=True)
+    connection = sqlite3.connect(result.output)
+    connection.executescript(schema_script)
+
+if __name__ == "__main__":
+    main()
