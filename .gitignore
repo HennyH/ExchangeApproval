@@ -1,3 +1,4 @@
 .vscode
 api/bin
 api/obj
+api/packages
