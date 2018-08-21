@@ -26,6 +26,20 @@ def is_x64():
     return sys.maxsize > 2**32
 
 
+SYSTEM_TO_OS = {"Darwin": "osx", "Linux": "linux", "Windows": "win"}
+
+def runtime():
+    os = SYSTEM_TO_OS.get(system(), None)
+    if os is None:
+        raise NotImplementedError("""The platform {} was not amoung the """
+                                  """supported ones: {}""".format(
+                                      system(),
+                                      SYSTEM_TO_OS
+                                  ))
+    arch = "x64" if is_x64() else "x86"
+    return "{os}-{arch}".format(os=os, arch=arch)
+
+
 def main(argv=None):
     argv = argv or sys.argv[1:]
     parser = argparse.ArgumentParser()
@@ -45,35 +59,60 @@ def main(argv=None):
     except IndexError:
         raise RuntimeError("""Could not locate a """
                            """system.data.sqlite.core package.""")
+
+    # Try locate the SQLite.Interop.(dll|so) under the runtime folder.
+    # This will involving going into the appropriate runtime 'win-x64', etc...
+    # then into the /lib folder, then into the dotnet version folder to finally
+    # find (hopefully) a dll or so.
+    runtime_version = runtime()
+    runtime_dir = os.path.join(sqlite_pkg_path, "runtimes", runtime_version)
+    if not os.path.exists(runtime_dir):
+        raise RuntimeError("""Expected to find a runtime {} """
+                           """but it did not exist.""".format(runtime_dir))
+    runtime_lib_dir = os.path.join(runtime_dir, "lib")
+    dotnet_version_to_interop_dll = {}
+    for dotnet_version in os.listdir(runtime_lib_dir):
+        interop_dll_glob = os.path.join(runtime_lib_dir,
+                                        dotnet_version,
+                                        "SQLite.Interop.*")
+        try:
+            interop_dll = glob(interop_dll_glob)[0]
+            dotnet_version_to_interop_dll[dotnet_version] = interop_dll
+        except IndexError:
+            raise RuntimeError("""Could not find a SQLite.Interop dll or so """
+                               """in the folder {}.""".format(interop_dll_glob))
+
     sqlite_lib_dirs = os.listdir(os.path.join(sqlite_pkg_path, "lib"))
-    sqlite_build_dirs = os.listdir(os.path.join(sqlite_pkg_path, "build"))
-
-    for dotnet_version in sqlite_lib_dirs:
-        # On windows (and possibly) other platforms there is not a
-        # netstandard2.0 folder under /build but the highest netX dll/so
-        # does the job. So the logic here is if there isn't a direct match
-        # just grab the one from the newest netX folder.
-        if dotnet_version not in sqlite_build_dirs:
-            is_netX = lambda n: re.match(r"net\d+", n)
-            dotnet_version = sorted(
-                filter(is_netX, sqlite_build_dirs),
-                reverse=True
-            )[0]
-
-        # Depending on the system we need to go into different folders to get
-        # the dll/so within a build/<dotnet-version> folder.
-        dll_path_components = [sqlite_pkg_path, "build", dotnet_version]
-        if system() == "Windows":
-            if is_x64():
-                dll_path_components.extend(["x64", "SQLite.Interop.dll"])
-            else:
-                dll_path_components.extend(["x86", "SQLite.Interop.dll"])
-        else:
-            dll_path_components.extend(["SQLite.Interop.so"])
-
-        dll_path = os.path.join(*dll_path_components)
-        lib_folder = os.path.join(sqlite_pkg_path, "lib", dotnet_version)
-        copy2(dll_path, lib_folder)
+    for lib_dotnet_version in sqlite_lib_dirs:
+        if lib_dotnet_version not in dotnet_version_to_interop_dll:
+            print(""".NET Version '{}' did not have an associated """
+                  """SQLite.Interop.(dll|so)""".format(lib_dotnet_version))
+            continue
+        dll_path = dotnet_version_to_interop_dll[lib_dotnet_version]
+        destination = os.path.join(sqlite_pkg_path,
+                                   "lib",
+                                   lib_dotnet_version,
+                                   os.path.basename(dll_path))
+        try:
+            copy2(dll_path, destination)
+        except PermissionError as err:
+            if not os.path.exists(destination):
+                raise err
+            dst_size = os.stat(destination).st_size
+            dll_size = os.stat(dll_path).st_size
+            if dst_size != dll_size:
+                raise RuntimeError(
+                    """When attemping to copy {} to {} a PermissionError """
+                    """was encountered due to the destination being in """
+                    """use. They had a different file size which shouldn't """
+                    """occur, this is probably an error. Try deleting your """
+                    """packages folder and rebuilding. dst = {} vs dll = {}""".format(
+                        dll_path,
+                        destination,
+                        dst_size,
+                        dll_size
+                    )
+                )
 
 if __name__ == "__main__":
     main()

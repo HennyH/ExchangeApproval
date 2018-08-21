@@ -5,6 +5,8 @@ open System.Collections.Generic
 open System.Linq
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Mvc
+open Exchange.Queries
+open Microsoft.AspNetCore.Mvc
 
 [<Route("api/[controller]")>]
 [<ApiController>]
@@ -13,8 +15,11 @@ type ValuesController () =
 
     [<HttpGet>]
     member this.Get() =
-        let values = [|"value1"; "value2"|]
-        ActionResult<string[]>(values)
+        printfn "%s" (__SOURCE_DIRECTORY__ + "/../bin/exchange.db")
+        use cn = connect (__SOURCE_DIRECTORY__ + "/../bin/exchange.db")
+        cn.Open() |> ignore
+        let foos = queryUnits cn None
+        JsonResult(foos)
 
     [<HttpGet("{id}")>]
     member this.Get(id:int) =
