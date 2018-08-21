@@ -4,28 +4,31 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <!-- Configures where the nuget packages are restored to. See https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders -->
     <RestorePackagesPath>packages</RestorePackagesPath>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <!-- Copy SQLite.Interop from the sqlite packages' build folder into it's lib folder where the type provider expects it. -->
-  <Target Name="CopySqliteInterop" BeforeTargets="BeforeBuild">
-    <Exec Command="python $(ProjectDir)/build/copy-sqlite-interop.py" />
-  </Target>
+  <!-- <Target Name="CopySqliteInterop" BeforeTargets="BeforeBuild">
+    <Exec Command="python $(ProjectDir)/build/copy-sqlite-interop.py $(ProjectDir)packages" />
+  </Target> -->
+
   <!-- Generate a sample database to use with the SQL type provider -->
   <Target Name="GenerateSampleDatabase" BeforeTargets="BeforeBuild">
     <Exec Command="python $(ProjectDir)/build/generate-database.py --output $(ProjectDir)bin/exchange.db --schema $(ProjectDir)../database/schema.sql" />
   </Target>
 
   <ItemGroup>
+    <Compile Include="Models.fs" />
+    <Compile Include="Queries.fs" />
     <Compile Include="Controllers/ValuesController.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
-    <Compile Include="Queries.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="SQLProvider" Version="1.1.48" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.109.1" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.1.0" />
   </ItemGroup>
 
 </Project>
