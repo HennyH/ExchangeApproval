@@ -19,6 +19,8 @@ Automation of the exchange unit approval process.
 | Existing Process Flowchart | A flowchart detailing the existing process and interaction between entities | https://www.lucidchart.com/invitations/accept/6557347f-c50c-42f0-b50f-6711588a8249
 | Project Acceptance Tests | For now, this is only for the search form | https://docs.google.com/document/d/17f8f_OZ8KZg9K_H_xM-yoc8FRIKmNsvT_1tsB5NaC5Q/edit?usp=sharing
 | User Stories | Document detailing per sprint what our user stories are. | https://docs.google.com/document/d/177y5c7_CgxiBHOAfjFETm31pY17ebNv8PxTSsWcy-Iw/edit?usp=sharing
+| Risk Register | Some risks and actions to avoid |
+https://docs.google.com/document/d/1XezEW9XmIpJqe9lMXQ4i1SXS8p3d2UZSIqWs1Siq0Bo/edit?usp=sharinghttps://docs.google.com/document/d/1XezEW9XmIpJqe9lMXQ4i1SXS8p3d2UZSIqWs1Siq0Bo/edit?usp=sharing
 
 ### Client Meeting Notes
 | Name | Purpose | Location|
