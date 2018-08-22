@@ -15,6 +15,7 @@
   <!-- Generate a sample database to use with the SQL type provider -->
   <Target Name="GenerateSampleDatabase" BeforeTargets="BeforeBuild">
     <Exec Command="python $(ProjectDir)/build/generate-database.py --output $(ProjectDir)bin/exchange.db --schema $(ProjectDir)../database/schema.sql" />
+    <Exec Command="python $(ProjectDir)/../database/seed_test_data.py --database $(ProjectDir)bin/exchange.db" />
   </Target>
 
   <ItemGroup>
