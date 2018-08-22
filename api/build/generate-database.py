@@ -34,6 +34,11 @@ def main(argv=None):
         schema_script = schema_fileobj.read()
 
     os.makedirs(os.path.dirname(result.output), exist_ok=True)
+    if os.path.exists(result.output):
+        try:
+            os.unlink(result.output)
+        except:
+            pass
     connection = sqlite3.connect(result.output)
     connection.executescript(schema_script)
 
