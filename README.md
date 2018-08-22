@@ -16,7 +16,9 @@ Automation of the exchange unit approval process.
 |------|---------|---------|
 | Scope of Work | The formal scope fo work document. | https://docs.google.com/document/d/1hzsphYwCaM4Cp4AHWbQEjavldIIpR4219eS1xQPRJAs/edit?usp=sharing
 | Requirements Gathering Q/A | A series of requirement questions to be asked and breifely answered | https://docs.google.com/document/d/1DUcOZpU-bf4NuRfM3Ps1jvzjafvCsmqWtG0WBbdX06I/edit?usp=sharing
-| Existing Process Flowchart | A flowchart detailing the existing process and interaction between entities | https://www.lucidchart.com/invitations/accept/6557347f-c50c-42f0-b50f-6711588a8249
+| Exchange Application Process Flowchart | A flowchart detailing the existing exchange application process. | https://www.lucidchart.com/invitations/accept/6557347f-c50c-42f0-b50f-6711588a8249
+| Existing Communication Process Flowchart | A flowchart showing how and to who different entities communicate. | https://www.lucidchart.com/invitations/accept/9863d42f-3a4d-45a4-a178-68c427fbe090
+| Proposed Communication Process Flowchart | A flowchart showing how and to who different entities will communicate when the project is implemented | https://www.lucidchart.com/invitations/accept/329e5b98-ea86-45e4-bef4-c8e9ee3badf8
 | Project Acceptance Tests | For now, this is only for the search form | https://docs.google.com/document/d/17f8f_OZ8KZg9K_H_xM-yoc8FRIKmNsvT_1tsB5NaC5Q/edit?usp=sharing
 | User Stories | Document detailing per sprint what our user stories are. | https://docs.google.com/document/d/177y5c7_CgxiBHOAfjFETm31pY17ebNv8PxTSsWcy-Iw/edit?usp=sharing
 | Risk Register | Some risks and actions to avoid them. | https://docs.google.com/document/d/1XezEW9XmIpJqe9lMXQ4i1SXS8p3d2UZSIqWs1Siq0Bo/edit?usp=sharing
