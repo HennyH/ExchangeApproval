@@ -1,4 +1,4 @@
-import * as m from 'mithril'
+import m from 'mithril';
 
 let root = document.body;
-m.render(root, "Hello world!");
+m.render(root, <main><h1>Hello World!</h1></main>);
