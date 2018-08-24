@@ -64,41 +64,25 @@ module Queries =
 
     type UnitDecisionQueryParameters = {
         sorts: (UnitDecisionSortColumn * SortOrder) list option;
-        universityIds: int64 list option;
-        unitContextIds: int64 list option;
-        unitLevelIds: int64 list option;
+        universityIds: int32 list option;
+        unitContextIds: int32 list option;
+        unitLevelIds: int32 list option;
     }
 
     let queryUnitDecisions (connection: Connection) (queryParameters: UnitDecisionQueryParameters) =
-        let exchangeUniversityParameters =
-            match queryParameters.universityIds with
-            | Some(ids) ->
+        let parameters =
+            match queryParameters with
+            | { universityIds = uniIds; unitContextIds = contextIds; unitLevelIds = levelIds } ->
                 [
-                    "FilterByExchangeUniversities", true :> obj;
-                    "ExchangeUniversities", ids :> obj
+                    "FilterByExchangeUniversities", (match uniIds with | Some(ids) -> ids.Length > 0 | None -> false) :> obj;
+                    "ExchangeUniversities", defaultArg uniIds [] :> obj;
+                    "FilterByUWAUnitContextIds", (match contextIds with | Some(ids) -> ids.Length > 0 | None -> false) :> obj;
+                    "UWAUnitContextIds", defaultArg contextIds [] :> obj;
+                    "FilterByUWAUnitLevelIds", (match levelIds with | Some(ids) -> ids.Length > 0 | None -> false) :> obj;
+                    "UWAUnitLevelIds", defaultArg levelIds [] :> obj;
+
                 ]
-            | None -> ["FilterByExchangeUniversities", false :> obj]
-        let unitContextParameters =
-            match queryParameters.unitContextIds with
-            | Some(ids) ->
-                [
-                    "FilterByUWAUnitContextIds", true :> obj;
-                    "UWAUnitContextIds", ids :> obj
-                ]
-            | None -> ["FilterByUWAUnitContextIds", false :> obj]
-        let unitLevelParameters =
-            match queryParameters.unitLevelIds with
-            | Some(ids) ->
-                [
-                    "FilterByUWAUnitLevelIds", true :> obj;
-                    "UWAUnitLevelIds", ids :> obj
-                ]
-            | None -> ["FilterByUWAUnitLevelIds", false :> obj]
-        let parameters = List.collect (fun ps -> ps) [
-            exchangeUniversityParameters;
-            unitContextParameters;
-            unitLevelParameters;
-        ]
+        printfn "parameters = %A" parameters
         connection.Query(
             @"
                 SELECT
