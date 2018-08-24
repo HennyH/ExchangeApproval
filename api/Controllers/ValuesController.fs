@@ -14,19 +14,20 @@ type ValuesController (configuration: IConfiguration) =
     let connectionString = configuration.["ConnectionString"]
 
     [<HttpGet("decisions")>]
-    member this.Get([<FromQuery>]exchangeUniversityIds: System.Collections.Generic.List<int64>,
-                    [<FromQuery>]uwaUnitContextIds: System.Collections.Generic.List<int64>,
-                    [<FromQuery>]uwaUnitLevelIds: System.Collections.Generic.List<int64>) =
+    member this.Get([<FromQuery(Name="universityId")>]exchangeUniversityIds: int32[],
+                    [<FromQuery(Name="contextId")>]uwaUnitContextIds: int32[],
+                    [<FromQuery(Name="levelId")>]uwaUnitLevelIds: int32[]) =
         use connection = connect connectionString
         connection.Open() |> ignore
-        printfn "Uids = %A, CtxIds = %A, LvlIds = %A" exchangeUniversityIds uwaUnitContextIds uwaUnitLevelIds
-        let queryParameters: UnitDecisionQueryParameters = {
-            sorts = None;
-            universityIds = Some(List.ofSeq exchangeUniversityIds);
-            unitContextIds = Some(List.ofSeq uwaUnitContextIds);
-            unitLevelIds = Some(List.ofSeq uwaUnitLevelIds);
-        }
-        let decisions = queryUnitDecisions connection queryParameters
+        let decisions =
+            queryUnitDecisions
+                connection
+                {
+                    sorts = None;
+                    universityIds = Some(List.ofSeq exchangeUniversityIds);
+                    unitContextIds = Some(List.ofSeq uwaUnitContextIds);
+                    unitLevelIds = Some(List.ofSeq uwaUnitLevelIds);
+                }
         JsonResult(decisions)
 
     [<HttpGet("unit-levels")>]
