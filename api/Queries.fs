@@ -52,18 +52,7 @@ module Queries =
             "
             None
 
-    type UnitDecisionSortColumn =
-        | LastUpdated
-        | UnitContext
-        | University
-        | ExchangeUnitName
-        | ExchangeUnitCode
-        | UWAUnitName
-        | UWAUnitCode
-        | Approved
-
     type UnitDecisionQueryParameters = {
-        sorts: (UnitDecisionSortColumn * SortOrder) list option;
         universityIds: int32 list option;
         unitContextIds: int32 list option;
         unitLevelIds: int32 list option;
