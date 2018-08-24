@@ -1,24 +1,30 @@
-namespace Exchange
+namespace API.Data
 
 module Queries =
 
     open Dapper
     open Microsoft.Data.Sqlite
-    open Exchange.Models
+    open API.Data.Models
 
     type Connection = SqliteConnection
-
-    type UnitQueryParameters = {
-        university: string option;
-        unitTypes: UnitType list option;
-        unitLevels: UnitLevel list option;
-    }
-
-    type Foo(ID: int64) =
-        member this.ID = ID
+    type Parameters = (string * obj) list
 
     let connect (datasource: string): Connection =
         new SqliteConnection("Data Source=" + datasource)
 
-    let queryUnits (connection: Connection) (parameters: UnitQueryParameters option) =
-        connection.Query<Foo>("SELECT * FROM Foo")
+    let query<'T> (connection: Connection) (sql: string) (parameters: Parameters option): 'T seq =
+        match parameters with
+        | Some(p) -> connection.Query<'T>(sql, dict p)
+        | None -> connection.Query<'T>(sql)
+
+    let queryUniversities (connection: Connection) (name: string option) =
+        let sql =
+            @"
+                SELECT university_id AS id, university_name AS name
+                FROM university
+                WHERE @Name IS NULL OR university_name LIKE '%' || @Name || '%'
+            "
+        let parameters = match name with
+                         | Some(n) -> [("Name", n :> obj)]
+                         | None -> []
+        query<UniversityDTO> connection sql (Some parameters)

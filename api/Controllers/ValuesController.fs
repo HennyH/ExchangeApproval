@@ -1,30 +1,22 @@
-﻿namespace api.Controllers
+﻿namespace API.Controllers
 
-open System
-open System.Collections.Generic
-open System.Linq
-open System.Threading.Tasks
 open Microsoft.AspNetCore.Mvc
-open Exchange.Queries
-open Microsoft.AspNetCore.Mvc
+open Microsoft.Extensions.Configuration
+open API.Data.Queries
 
 [<Route("api/[controller]")>]
 [<ApiController>]
-type ValuesController () =
+type ValuesController (configuration: IConfiguration) =
     inherit ControllerBase()
 
-    [<HttpGet>]
-    member this.Get() =
-        printfn "%s" (__SOURCE_DIRECTORY__ + "/../bin/exchange.db")
-        use cn = connect (__SOURCE_DIRECTORY__ + "/../bin/exchange.db")
-        cn.Open() |> ignore
-        let foos = queryUnits cn None
-        JsonResult(foos)
+    let connectionString = configuration.["ConnectionString"]
 
-    [<HttpGet("{id}")>]
-    member this.Get(id:int) =
-        let value = "value"
-        ActionResult<string>(value)
+    [<HttpGet("{name}")>]
+    member this.Get(name: string) =
+        use connection = connect connectionString
+        connection.Open() |> ignore
+        let universities = queryUniversities connection (Some name)
+        JsonResult(universities)
 
     [<HttpPost>]
     member this.Post([<FromBody>] value:string) =
