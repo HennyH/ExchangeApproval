@@ -23,7 +23,6 @@ type ValuesController (configuration: IConfiguration) =
             queryUnitDecisions
                 connection
                 {
-                    sorts = None;
                     universityIds = Some(List.ofSeq exchangeUniversityIds);
                     unitContextIds = Some(List.ofSeq uwaUnitContextIds);
                     unitLevelIds = Some(List.ofSeq uwaUnitLevelIds);
