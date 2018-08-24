@@ -2,3 +2,6 @@
 api/bin
 api/obj
 api/packages
+node_modules
+client/dist
+client/package-lock.json
