@@ -1,4 +1,4 @@
-namespace Exchange
+namespace API
 
 module Models =
 
