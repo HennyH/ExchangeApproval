@@ -156,6 +156,21 @@ def generate_units(c, universites):
                       "university_id) VALUES (?, ?, ?)",
                       (unit_name, unit_code, uni_id))
             unit_id = c.lastrowid
+            if uni_name == "University of Western Australia":
+                c.execute("INSERT INTO uwa_unit (uwa_unit_level_id, unit_id) "
+                          "VALUES (?, ?)",
+                          (
+                              # Four levels 1000, ..., 3000, >4000
+                              random.randint(1, 4),
+                              unit_id
+                          ))
+            else:
+                c.execute("INSERT INTO exchange_unit (unit_id, exchange_unit_outline_href) "
+                          "VALUES (?, ?)",
+                          (
+                              unit_id,
+                              "https://universities.com/unit/{}".format(unit_code)
+                          ))
             units.append((unit_id, unit_name, unit_code, uni_id, uni_name))
     return units
 

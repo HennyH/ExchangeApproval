@@ -2,25 +2,46 @@ namespace API.Data.Models
 
 open System
 
-type UnitContextDTO = Elective = 1 | Core = 2 | Complementary = 3
+[<CLIMutable>]
+type UnitContextDTO = {
+    id: int32;
+    name: string;
+}
 
+[<CLIMutable>]
+type UnitLevelDTO = {
+    id: int32;
+    name: string;
+}
+
+[<CLIMutable>]
 type UniversityDTO = {
-    id: int64;
+    id: int32;
     name: string
 }
 
+[<CLIMutable>]
 type UnitDTO = {
-    id: int64;
+    id: int32;
     name: string;
     code: string option;
     university: UniversityDTO
 }
 
-type UnitDecision = {
-    id: int64;
-    date: DateTime;
-    context: UnitContextDTO;
-    uwaUnit: Unit option;
-    exchangeUnit: Unit;
-    approved: bool;
+[<CLIMutable>]
+type UnitDecisionDTO = {
+    decisionId: int32;
+    decisionDate: DateTime;
+    exchangeUniversityId: int32;
+    exchangeUniversityName: string;
+    exchangeUnitName: string;
+    exchangeUnitCode: string option;
+    exchangeUnitOutlineHref: string;
+    uwaUnitName: string option;
+    uwaUnitCode: string option;
+    uwaUnitLevelId: int32 option;
+    uwaUnitLevelName: string option;
+    unitContextId: int32;
+    unitContextName: string;
+    approved: int32;
 }

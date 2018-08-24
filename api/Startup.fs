@@ -31,10 +31,11 @@ type Startup private () =
         app.UseMvc() |> ignore
         // This registers Option<'T> types with Dapper.
         OptionHandler.RegisterTypes()
+        // Enable columns like decision_id to map to decisionId
+        Dapper.DefaultTypeMap.MatchNamesWithUnderscores <- true
         this.Configuration.["ConnectionString"] <-
             match this.Configuration.["DATABASE"] with
             | empty when String.IsNullOrEmpty(empty) -> (__SOURCE_DIRECTORY__ + "/bin/exchange.db")
             | valid -> valid
-        printfn "Connection string = %s" this.Configuration.["ConnectionString"]
 
     member val Configuration : IConfiguration = null with get, set
