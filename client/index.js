@@ -1,18 +1,55 @@
 import m from 'mithril';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import classNames from 'classnames';
 import myStyles from './special.css'
 
-let root = document.body;
-m.render(
-    root,
-    <main>
-        <div class={myStyles.red}>
-            Hello World!
-        </div>
-        <div class={classNames("alert", "alert-primary")}>
-            Alert! Alert!
-        </div>
-    </main>
-);
+const Data = {
+    decisions: {
+        list: [],
+        fetch: () => {
+            m.request({
+                method: "GET",
+                url: "https://localhost:5001/api/values/decisions"
+            }).then(items => {
+                Data.decisions.list = items;
+            });
+        }
+    }
+}
+
+
+let UnitDecisionTable = () => {
+
+    let dataTable = null;
+
+    return {
+        oninit: Data.decisions.fetch,
+        view: () =>(
+            <table id="example" class="display table" style="width:100%" />
+        ),
+        oncreate: () => {
+            dataTable = $('#example').DataTable({
+                data: Data.decisions.list,
+                columns: [
+                    { title: 'Unit Name', data: 'exchange_unit_name' }
+                ]
+            });
+        },
+        onupdate: () => {
+            dataTable.clear();
+            dataTable.rows.add(Data.decisions.list);
+            dataTable.draw();
+        }
+    }
+}
+
+(() => {
+
+
+    let root = document.body;
+    m.mount(
+        root,
+        UnitDecisionTable
+    );
+
+})()
