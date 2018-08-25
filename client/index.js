@@ -1,7 +1,6 @@
 import m from 'mithril';
 
-import classNames from 'classnames';
-import myStyles from './special.css'
+import SearchSettingsPanel from './src/SearchSettingsPanel'
 
 const Data = {
     decisions: {
@@ -25,7 +24,10 @@ let UnitDecisionTable = () => {
     return {
         oninit: Data.decisions.fetch,
         view: () =>(
-            <table id="example" class="display table" style="width:100%" />
+            <div>
+                <SearchSettingsPanel />
+                <table id="example" class="display table" style="width:100%" />
+            </div>
         ),
         oncreate: () => {
             dataTable = $('#example').DataTable({

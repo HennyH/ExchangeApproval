@@ -25,11 +25,12 @@ module Queries =
             @"
                 SELECT university_id AS id, university_name AS name
                 FROM university
-                WHERE @Name IS NULL OR university_name LIKE '%' || @Name || '%'
+                WHERE @FilterByName IS NULL OR university_name LIKE '%' || @Name || '%'
             "
-        let parameters = match name with
-                         | Some(n) -> [("Name", n :> obj)]
-                         | None -> []
+        let parameters = [
+            "FilterByName", (match name with | Some(name) -> true | None -> false) :> obj;
+            "Name", defaultArg name "" :> obj;
+        ]
         query<UniversityDTO> connection sql (Some parameters)
 
     let queryUnitContexts (connection: Connection) =

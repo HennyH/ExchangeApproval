@@ -34,3 +34,9 @@ type ValuesController (configuration: IConfiguration) =
         use connection = connect connectionString
         connection.Open() |> ignore
         JsonResult(queryUnitLevels connection)
+
+    [<HttpGet("universities")>]
+    member this.Universities() =
+        use connection = connect connectionString
+        connection.Open() |> ignore
+        JsonResult(queryUniversities connection None)
