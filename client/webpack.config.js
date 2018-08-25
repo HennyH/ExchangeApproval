@@ -28,7 +28,6 @@ module.exports = (env, options) => {
         { test: /\.js$/, exclude: [/node_modules/, /node_modules/], loader: 'babel-loader'},
         {
           test: /\.css$/,
-          exclude: /node_modules/,
           use: [
             devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
             {
