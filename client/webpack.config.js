@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -11,18 +12,22 @@ module.exports = (env, options) => {
       path: path.join(path.resolve(__dirname), '/dist'),
       filename: 'index.js'
     },
+    externals: {
+      $: 'jQuery'
+    },
     plugins: [
-      new HtmlWebpackPlugin({ hash: devMode ? false : true }),
+      new HtmlWebpackPlugin({
+        hash: devMode ? false : true,
+        template: './index.html'
+      }),
       new MiniCssExtractPlugin()
     ],
+    devtool: 'eval-source-map',
     module: {
       rules: [
-        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+        { test: /\.js$/, exclude: [/node_modules/, /node_modules/], loader: 'babel-loader'},
         {
           test: /\.css$/,
-          // CSS files that come from node_modules we don't want to turn
-          // into modules that get bundled into our index.js. We have a
-          // seperate CSS rule to cover CSS from node_modules.
           exclude: /node_modules/,
           use: [
             devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -30,16 +35,6 @@ module.exports = (env, options) => {
               loader: 'css-loader',
               options: { modules: true, camelCase: true }
             },
-            'postcss-loader'
-          ]
-        },
-        // Import CSS from node_modules just as if it were a style-sheet.
-        {
-          test: /\.css$/,
-          include: /node_modules/,
-          use: [
-            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-            'css-loader',
             'postcss-loader'
           ]
         }
