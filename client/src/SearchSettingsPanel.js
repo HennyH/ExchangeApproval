@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import 'select2-theme-bootstrap4/dist/select2-bootstrap.min.css'
 
 import CheckboxGroup from './CheckboxGroup';
+import styles from './SearchSettingsPanel.css';
 
 export default function SearchSettingsPanel() {
 
@@ -15,19 +16,32 @@ export default function SearchSettingsPanel() {
         { label: '>4000', value: '4' }
     ];
 
+    const contextOptions = [
+        { label: 'Electives', value: '1' },
+        { label: 'Core', value: '2' },
+        { label: 'Complementary', value: '3' }
+    ];
+
     function view() {
         return (
             <div class="container-span search-panel-container">
                 <form>
-                    <fieldset>
-                        <legend>Search Settings</legend>
+                    <fieldset class={styles.fieldset}>
+                        <legend class={styles.legend}>Search Settings</legend>
                         <div class="row">
                             <div class="col">
                                 <label for="universities">Exchange Universitys</label>
                                 <select class="form-control" id="universities-select" name="universities"></select>
                             </div>
                             <div class="col">
-                                <label>Unit Level</label>
+                                <label>Approval Type(s)</label>
+                                <CheckboxGroup name="approval-types"
+                                               options={contextOptions}
+                                               handleUpdate={console.log}
+                                />
+                            </div>
+                            <div class="col">
+                                <label>Unit Level(s)</label>
                                 <CheckboxGroup name="unit-level"
                                                options={levelOptions}
                                                handleUpdate={console.log}
