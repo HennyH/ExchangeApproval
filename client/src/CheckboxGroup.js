@@ -31,14 +31,14 @@ export default function CheckboxGroup() {
         return (
             <div class="form-group">
                 {options.map(({ label, value }) => (
-                    <div class="form-check">
-                        <input class="form-check-input"
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input"
                             type="checkbox"
                             value={value}
                             id={name + label}
                             onclick={handleCheckboxClicked.bind(this, handleUpdate)}
                         />
-                        <label class="form-check-label" for={name + label}>
+                        <label class="custom-control-label" for={name + label}>
                             {label}
                         </label>
                     </div>
