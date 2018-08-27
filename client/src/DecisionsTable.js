@@ -28,7 +28,15 @@ export default function DecisionsTable() {
         datatable = $("#" + id).DataTable({
             data: decisions,
             columns: [
-                { title: 'Unit Name', data: 'exchange_unit_name' }
+                { title: "Decision Date", data: "decision_date" },
+                { title: "Approval Type", data: "uwa_unit_context_name" },
+                { title: "Ex. University", data: "exchange_university_name" },
+                { title: "Ex. Unit Name", data: "exchange_unit_name" },
+                { title: "Ex. Unit Code", data: "exchange_unit_code" },
+                { title: "Ex. Outline", data: "exchange_unit_outline_href" },
+                { title: "UWA Unit Name", data: "uwa_unit_name" },
+                { title: "UWA Unit Code", data: "uwa_unit_code" },
+                { title: "Approved", data: "approved" }
             ]
         });
     }
