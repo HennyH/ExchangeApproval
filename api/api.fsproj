@@ -22,6 +22,7 @@
     <Compile Include="Enums.fs" />
     <Compile Include="DataTransferModels.fs" />
     <Compile Include="Queries.fs" />
+    <Compile Include="ViewModels.fs" />
     <Compile Include="Controllers/ValuesController.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
