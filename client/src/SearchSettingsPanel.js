@@ -53,7 +53,7 @@ export default function SearchSettingsPanel() {
                     <div class="row">
                         <div class="col-6">
                             <label for="universities">Exchange Universitys</label>
-                            <select class="form-control"
+                            <select class={classNames("form-control", Styles.universitySelect)}
                                     id="universities-select"
                                     name="universities"
                                     onchange={handleUniversitiesChange}></select>
