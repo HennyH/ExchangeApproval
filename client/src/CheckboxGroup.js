@@ -5,10 +5,7 @@ const TOGGLE_CHECKBOX = "TOGGLE_CHECKBOX";
 function reducer(state, action, data) {
     switch (action) {
         case TOGGLE_CHECKBOX:
-            return {
-                ...state,
-                [data.label]: data.checked
-            }
+            return [...state, data.value].filter(v => data.checked || v != data.value);
         default:
             console.log('Unkown action', action);
             return state;
@@ -17,19 +14,16 @@ function reducer(state, action, data) {
 
 export default function CheckboxGroup() {
 
-    let state = {};
+    let state = [];
 
-    function oninit({ attrs: { options = [] } }) {
-        state = options.reduce(
-            (acc, { label }) => { acc[label] = false; return acc; },
-            {}
-        );
+    function oninit({ attrs: { handleUpdate: onUpdate } }) {
+        onUpdate(state);
     }
 
     function handleCheckboxClicked(onUpdate, event) {
-        const label = event.target.attributes['data-label'].value;
+        const value = event.target.value;
         const checked = event.target.checked;
-        state = reducer(state, TOGGLE_CHECKBOX, { label, checked });
+        state = reducer(state, TOGGLE_CHECKBOX, { value, checked });
         onUpdate(state);
     }
 
@@ -42,7 +36,6 @@ export default function CheckboxGroup() {
                             type="checkbox"
                             value={value}
                             id={name + label}
-                            data-label={label}
                             onclick={handleCheckboxClicked.bind(this, handleUpdate)}
                         />
                         <label class="form-check-label" for={name + label}>

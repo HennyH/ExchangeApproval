@@ -118,3 +118,6 @@ LEFT OUTER JOIN uwa_unit_context
     ON uwa_unit_context.uwa_unit_context_id = unit_decision.uwa_unit_context_id
 INNER JOIN denormalized_exchange_units AS exchange_unit
     ON exchange_unit.exchange_unit_id = unit_decision.exchange_unit_id;
+
+CREATE VIEW IF NOT EXISTS exchange_universities AS
+SELECT * FROM university WHERE university_name <> 'University of Western Australia';

@@ -53,6 +53,13 @@ module Queries =
             "
             None
 
+    let queryExchangeUniversities (connection: Connection) =
+        query<UniversityDTO>
+            connection
+            @"
+                SELECT university_id AS id, university_name AS name FROM exchange_universities
+            "
+
     type UnitDecisionQueryParameters = {
         universityIds: int32 list option;
         unitContextIds: int32 list option;

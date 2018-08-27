@@ -3,6 +3,7 @@
 open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
 open API.Data.Queries
+open API.Data.ViewModels
 open System
 open Microsoft.AspNetCore.Mvc
 
@@ -29,14 +30,16 @@ type ValuesController (configuration: IConfiguration) =
                 }
         JsonResult(decisions)
 
-    [<HttpGet("unit-levels")>]
-    member this.Get() =
+    [<HttpGet("filters")>]
+    member this.GetFilters() =
         use connection = connect connectionString
         connection.Open() |> ignore
-        JsonResult(queryUnitLevels connection)
-
-    [<HttpGet("universities")>]
-    member this.Universities() =
-        use connection = connect connectionString
-        connection.Open() |> ignore
-        JsonResult(queryUniversities connection None)
+        let unitLevels = queryUnitLevels connection
+        let contextTypes = queryUnitContexts connection
+        let exchangeUniversities = queryExchangeUniversities connection None
+        let filterOptions: FilterOptionsVM = {
+            levelOptions = unitLevels |> List.ofSeq;
+            contextOptions = contextTypes |> List.ofSeq;
+            exchangeUniversities = exchangeUniversities |> List.ofSeq;
+        }
+        JsonResult(filterOptions)
