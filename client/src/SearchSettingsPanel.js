@@ -22,14 +22,19 @@ export default function SearchSettingsPanel() {
         { label: 'Complementary', value: '3' }
     ];
 
+    function handleSubmit(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     function view() {
         return (
-            <div class="container-span search-panel-container">
+            <div class="container-span">
                 <form>
                     <fieldset class={styles.fieldset}>
                         <legend class={styles.legend}>Search Settings</legend>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-6">
                                 <label for="universities">Exchange Universitys</label>
                                 <select class="form-control" id="universities-select" name="universities"></select>
                             </div>
@@ -48,6 +53,9 @@ export default function SearchSettingsPanel() {
                                 />
                             </div>
                             <div class="col">
+                                <button type="submit" class="btn btn-primary">
+                                    Search
+                                </button>
                             </div>
                         </div>
                     </fieldset>
@@ -58,7 +66,7 @@ export default function SearchSettingsPanel() {
         )
     }
 
-    function oncreate() {
+    function oncreate(vnode) {
         universitySelect = $("#universities-select").select2({
             multiple: true,
             width: 'resolve',
@@ -74,6 +82,10 @@ export default function SearchSettingsPanel() {
                 })
             }
         });
+
+        const $submitButton = $(vnode.dom).find('button[type="submit"]');
+        $submitButton.css('margin-top', $submitButton.parent().height() - $submitButton.height());
+        $submitButton.css('margin-left', $submitButton.parent().width() - $submitButton.width());
     }
 
     return { view, oncreate };
