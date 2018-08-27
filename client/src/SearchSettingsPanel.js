@@ -2,9 +2,18 @@ import m from 'mithril';
 import classNames from 'classnames';
 import 'select2-theme-bootstrap4/dist/select2-bootstrap.min.css'
 
+import CheckboxGroup from './CheckboxGroup';
+
 export default function SearchSettingsPanel() {
 
     let universitySelect = null;
+
+    const levelOptions = [
+        { label: '1000', value: '1' },
+        { label: '2000', value: '2' },
+        { label: '3000', value: '3' },
+        { label: '>4000', value: '4' }
+    ];
 
     function view() {
         return (
@@ -19,18 +28,10 @@ export default function SearchSettingsPanel() {
                             </div>
                             <div class="col">
                                 <label>Unit Level</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="1000" id="unitLevelOne" />
-                                    <label class="form-check-label" for="unitLevelOne">
-                                        1000
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2000" id="unitLevelTwo" />
-                                    <label class="form-check-label" for="unitLevelTwo">
-                                        2000
-                                    </label>
-                                </div>
+                                <CheckboxGroup name="unit-level"
+                                               options={levelOptions}
+                                               handleUpdate={console.log}
+                                />
                             </div>
                             <div class="col">
                             </div>
