@@ -19,7 +19,7 @@ export default function DecisionsTable() {
         maybeRefresh(decisions);
         return (
             <div>
-                <table id={id} class="display table" style="width:100%" />
+                <table id={id} class="display table compact" style="width:100%" />
             </div>
         )
     }

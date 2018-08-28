@@ -1,6 +1,5 @@
 import m from 'mithril';
 import classNames from 'classnames';
-import 'select2-theme-bootstrap4/dist/select2-bootstrap.min.css'
 
 import CheckboxGroup from './CheckboxGroup';
 import Styles from './SearchSettingsPanel.css';
