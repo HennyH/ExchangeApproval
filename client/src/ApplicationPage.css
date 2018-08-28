@@ -1,0 +1,12 @@
+.header {
+    background-color: #458ed2;
+    height: 5em;
+}
+
+.header-title {
+    color: white;
+    display: inline-block;
+    position: relative;
+    padding-left: 0.5em;
+    top: 3em;
+}

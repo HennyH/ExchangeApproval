@@ -1,12 +1,11 @@
 import m from 'mithril';
 
 import SearchPage from './src/SearchPage'
-
+import ApplicationPage from './src/ApplicationPage'
 
 (() => {
-    let root = document.body;
-    m.mount(
-        root,
-        SearchPage
-    );
+    m.route(document.body, "/search", {
+        "/search": SearchPage,
+        "/application": ApplicationPage
+    });
 })()

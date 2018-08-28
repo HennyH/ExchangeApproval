@@ -5,6 +5,7 @@
             "pragma": "m"
         }],
         "transform-object-rest-spread",
-        "transform-object-entries"
+        "transform-object-entries",
+        "transform-class-properties"
     ]
 }
