@@ -1,74 +1,78 @@
 import m from 'mithril';
 import classNames from 'classnames';
+import { Form } from 'powerform'
 
-import CheckboxGroup from './CheckboxGroup';
+import CheckboxGroup from './FormHelpers/CheckboxGroup'
+import Select2 from './FormHelpers/Select2'
+import { OptionsField } from './FormHelpers/Fields'
 import Styles from './SearchSettingsPanel.css';
 
-const UPDATE_APPROVAL_TYPES = "UPDATE_APPROVAL_TYPES";
-const UPDATE_UNIT_LEVELS = "UPDATE_UNIT_LEVELS";
-const UPDATE_UNIVERSITIES = "UPDATE_UNIVERSITIES";
-
-function reducer(state, action, data) {
-    switch (action) {
-        case UPDATE_APPROVAL_TYPES:
-            return { ...state, approvalTypes: data };
-        case UPDATE_UNIT_LEVELS:
-            return { ...state, unitLevels: data };
-        case UPDATE_UNIVERSITIES:
-            return { ...state, exchangeUniversities: data };
-        default:
-            return state;
-    }
+class SearchSettingsPowerForm extends Form {
+    exchangeUniversities = OptionsField.new({ multiple: true });
+    approvalTypes = OptionsField.new({ multiple: true });
+    unitLevels = OptionsField.new({ multiple: true })
 }
+
 
 export default function SearchSettingsPanel() {
 
-    let state = {};
+    const state = {};
 
-    function handleApprovalTypesChange(toggles) {
-        state = reducer(state, UPDATE_APPROVAL_TYPES, toggles);
+    function oninit() {
+        state.form = SearchSettingsPowerForm.new();
     }
 
-    function handleUnitLevelsChange(toggles) {
-        state = reducer(state, UPDATE_UNIT_LEVELS, toggles);
-    }
-
-    function handleUniversitiesChange(event) {
-        const selectedValues = Array.from(event.target.selectedOptions).map(({ value}) => value);
-        state = reducer(state, UPDATE_UNIVERSITIES, selectedValues);
-    }
-
-    function handleSubmit(onSubmit, event) {
+    function handleSubmit(callback, event) {
         event.preventDefault();
         event.stopPropagation();
-        onSubmit(state);
+        callback(state.form.getData());
     }
 
-    function view({ attrs: { handleSubmit: onSubmit, levelOptions, contextOptions }}) {
+    function view({
+        attrs: {
+            onsubmit,
+            levelOptions,
+            contextOptions,
+            exchangeUniversities
+        }
+    }) {
+        const {
+            exchangeUniversities: universitiesField,
+            approvalTypes: approvalTypesField,
+            unitLevels: unitLevelsField
+        } = state.form;
         return (
-            <form onsubmit={handleSubmit.bind(this, onSubmit)}>
+            <form onsubmit={handleSubmit.bind(this, onsubmit)}>
                 <fieldset class={Styles.fieldset}>
                     <legend class={Styles.legend}>Search Settings</legend>
                     <div class="row">
                         <div class="col-6">
                             <label for="universities">Exchange Universitys</label>
-                            <select class={classNames("form-control", Styles.universitySelect)}
-                                    id="universities-select"
-                                    name="universities"
-                                    onchange={handleUniversitiesChange}></select>
+                            <Select2
+                                field={universitiesField}
+                                config={{
+                                    multiple: true,
+                                    width: 'resolve',
+                                    placeholder: 'Select universities to filter to...',
+                                    data: exchangeUniversities
+                                }}
+                                onchange={x => console.log(state.form.getData())}
+                            />
                         </div>
                         <div class="col">
                             <label>Approval Type(s)</label>
-                            <CheckboxGroup name="approval-types"
-                                            options={contextOptions}
-                                            handleUpdate={handleApprovalTypesChange}
+                            <CheckboxGroup
+                                field={approvalTypesField}
+                                options={contextOptions}
+                                onchange={x => console.log(state.form.getData())}
                             />
                         </div>
                         <div class="col">
                             <label>Unit Level(s)</label>
-                            <CheckboxGroup name="unit-level"
-                                            options={levelOptions}
-                                            handleUpdate={handleUnitLevelsChange}
+                            <CheckboxGroup
+                                field={unitLevelsField}
+                                options={levelOptions}
+                                onchange={x => console.log(state.form.getData())}
                             />
                         </div>
                         <div class="col">
@@ -83,17 +87,10 @@ export default function SearchSettingsPanel() {
     }
 
     function oncreate(vnode) {
-        $("#universities-select").select2({
-            multiple: true,
-            width: 'resolve',
-            placeholder: 'Select universities to filter to...',
-            data: vnode.attrs.exchangeUniversities
-        });
-
         const $submitButton = $(vnode.dom).find('button[type="submit"]');
         $submitButton.css('margin-top', $submitButton.parent().height() - $submitButton.height());
         $submitButton.css('margin-left', $submitButton.parent().width() - $submitButton.width());
     }
 
-    return { view, oncreate };
+    return { view, oninit, oncreate };
 }

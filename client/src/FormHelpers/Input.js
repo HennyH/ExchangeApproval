@@ -7,10 +7,10 @@ export default function Input() {
     function view({
         attrs: {
             field,
-            oninput: handleInput = noop,
+            oninput = noop,
             class: classes = null,
-            appendInputText: appendText = null,
-            prependInputText: prependText = null,
+            appendInputText = null,
+            prependInputText = null,
             ...otherAttrs
         },
         children
@@ -25,17 +25,17 @@ export default function Input() {
                 value={field.getData()}
                 oninput={e => {
                     field.setData(e.target.value);
-                    handleInput(e);
+                    oninput(e);
                 }}
                 class={classNames(classes, validationClass, "form-control")}
             >
                 {children}
             </input>
         )
-        const inputText = (appendText || prependText)
+        const inputText = (appendInputText || prependInputText)
             ? (
-                <div class={classNames({ "input-group-append": !!appendText, "input-group-prepend": !!prependText})}>
-                    <div class="input-group-text">{appendText || prependText}</div>
+                <div class={classNames({ "input-group-append": !!appendInputText, "input-group-prepend": !!prependInputText})}>
+                    <div class="input-group-text">{appendInputText || prependInputText}</div>
                 </div>
             )
             : <div />

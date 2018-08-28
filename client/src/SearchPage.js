@@ -6,8 +6,12 @@ import DecisionsTable from './DecisionsTable'
 const Data = {
     decisions: {
         list: [],
-        fetch: ({ approvalTypes: contextId = [], unitLevels: levelId = [], exchangeUniversities: universityId = [] } = {}) => {
-            const qs = m.buildQueryString({ contextId, levelId, universityId });
+        fetch: ({ contextIds = [], levelIds = [], universityIds = [] } = {}) => {
+            const qs = m.buildQueryString({
+                contextId: contextIds,
+                levelId: levelIds,
+                universityId: universityIds
+            });
             m.request({
                 method: "GET",
                 url: "https://localhost:5001/api/values/decisions?" + qs
@@ -20,14 +24,15 @@ const Data = {
 
 export default function SearchPage() {
 
-    let state = {}
-
     function oninit() {
         Data.decisions.fetch();
     }
 
     function handleSearchPanelSubmit(settings) {
-        Data.decisions.fetch(settings);
+        const universityIds = settings.exchangeUniversities.map(({ value: id }) => id);
+        const contextIds = settings.approvalTypes.map(({ value: id }) => id);
+        const levelIds = settings.unitLevels.map(({ value: id }) => id);
+        Data.decisions.fetch({ universityIds, contextIds, levelIds });
     }
 
     function view() {
@@ -35,7 +40,7 @@ export default function SearchPage() {
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <SearchSettingsPanelContainer handleSubmit={handleSearchPanelSubmit} />
+                        <SearchSettingsPanelContainer onsubmit={handleSearchPanelSubmit} />
                     </div>
                 </div>
                 <hr />
