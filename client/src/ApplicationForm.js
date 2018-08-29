@@ -3,6 +3,7 @@ import { Form } from 'powerform'
 
 import Input from './FormHelpers/Input.js'
 import { StudentEmailField, StringField } from './FormHelpers/Fields.js'
+import UnitApprovalRequestItem from './UnitApprovalRequestItem.js'
 
 
 class ApplicationPowerForm extends Form {
@@ -81,6 +82,8 @@ export default function ApplicationForm() {
                         <Input field={universityHomepage} type="text" />
                     </div>
                 </div>
+                <hr />
+                <UnitApprovalRequestItem />
             </form>
         )
     }

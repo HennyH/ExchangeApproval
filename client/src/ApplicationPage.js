@@ -1,6 +1,6 @@
 import m from 'mithril'
 
-import StudentDetailsForm from './StudentDetailsForm'
+import ApplicationForm from './ApplicationForm'
 import Styles from './ApplicationPage.css';
 
 export default function ApplicationPage() {
@@ -16,7 +16,7 @@ export default function ApplicationPage() {
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <StudentDetailsForm />
+                            <ApplicationForm />
                         </div>
                     </div>
                 </div>
