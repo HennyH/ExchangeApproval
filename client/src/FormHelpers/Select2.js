@@ -9,6 +9,7 @@ export default function Select2() {
             field,
             onchange = noop,
             class: classes = null,
+            config: { multiple = false } = {},
             ...otherAttrs
         }
     }) {
@@ -17,7 +18,11 @@ export default function Select2() {
                 name={field.fieldName}
                 class={classNames("form-control", classes)}
                 onchange={e => {
-                    field.setData(e.target.selectedOptions);
+                    if (multiple) {
+                        field.setData(e.target.selectedOptions);
+                    } else {
+                        field.setData(e.target.selectedOptions[0]);
+                    }
                     onchange(e);
                 }}
                 {...otherAttrs}

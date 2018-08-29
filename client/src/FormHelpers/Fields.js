@@ -21,6 +21,7 @@ export class StringField extends Field {
 
 export class OptionsField extends Field {
     constructor(config) {
+        config = config || {}
         super({
             default: config.multiple ? [] : null,
             ...config
