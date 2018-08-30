@@ -1,0 +1,12 @@
+.select2-wrapper + span :global(.select2-selection__choice) {
+    color: white;
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    padding-bottom: 3px !important;
+    padding-left: 7px !important;
+}
+
+.select2-wrapper + span :global(.select2-selection__choice__remove) {
+    color: #212529 !important;
+    padding-right: 2px;
+}

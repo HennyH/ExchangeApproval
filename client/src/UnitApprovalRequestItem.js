@@ -2,20 +2,24 @@ import m from 'mithril'
 import { Form } from 'powerform'
 
 import Input from './FormHelpers/Input.js'
-import Select2 from './FormHelpers/Select2'
+import Select from './FormHelpers/Select'
 import { OptionsField, StringField } from './FormHelpers/Fields.js'
+import Styles from './UnitApprovalRequestItem.css'
 
 class UnitApprovalRequestItemPowerForm extends Form {
-    exchangeUnitName = StringField.new({ required: true });
-    exchangeUnitCode = StringField.new({ required: true });
-    exchangeUnitOutlineHref = StringField.new({
-        required: true,
-        regex: /^https?\:\/\//,
-        regexErrorMessage: 'Enter a URL of the from https://...'
-    });
-    contextType = OptionsField.new();
-    uwaUnitName = StringField.new({ required: true });
-    uwaUnitCode = StringField.new({ required: true });
+    constructor({ contextTypeOptions } = {}) {
+        super()
+        this.exchangeUnitName = StringField.new({ required: true });
+        this.exchangeUnitCode = StringField.new({ required: true });
+        this.exchangeUnitOutlineHref = StringField.new({
+            required: true,
+            regex: /^https?\:\/\//,
+            regexErrorMessage: 'Enter a URL of the from https://...'
+        });
+        this.contextType = OptionsField.new({ options: contextTypeOptions });
+        this.uwaUnitName = StringField.new({ required: true });
+        this.uwaUnitCode = StringField.new({ required: true });
+    }
 }
 
 export default function UnitApprovalRequestItem() {
@@ -23,7 +27,13 @@ export default function UnitApprovalRequestItem() {
     const state = {};
 
     function oninit() {
-        state.form = UnitApprovalRequestItemPowerForm.new();
+        state.form = new UnitApprovalRequestItemPowerForm({
+            contextTypeOptions: [
+                { value: '1', text: 'Elective' },
+                { value: '2', text: 'Core'},
+                { value: '3', text: 'Complementary'}
+            ]
+        });
     }
 
     function view() {
@@ -31,34 +41,64 @@ export default function UnitApprovalRequestItem() {
             exchangeUnitName, exchangeUnitCode, exchangeUnitOutlineHref,
             contextType, uwaUnitName, uwaUnitCode
         } = state.form;
-        const maybeUwaFields = (contextType.getData() && contextType.getData().value !== '-1')
-            ? [
-                <label for="uwa-unit-name">for a UWA unit with name</label>,
-                <Input field={uwaUnitName} type="text" />,
-                <label for="uwa-unit-code">whose unit code is</label>,
-                <Input field={uwaUnitCode} type="text" />,
-            ]
-            : [];
+        const isElective = contextType.getData() && contextType.getData().value === '1';
         return (
-            <form class="form-inline">
-                <label for="exch-unit-name">Exchange unit with name</label>
-                <Input field={exchangeUnitName} type="text" />
-                <label for="exch-unit-code">whose unit code is</label>
-                <Input field={exchangeUnitCode} type="text" />
-                <label for="exch-unit-href">and whose outline can be found at</label>
-                <Input field={exchangeUnitOutlineHref} type="text" />
-                <label for="contextType">as an</label>
-                <Select2
-                    field={contextType}
-                    config={{
-                        width: 'resolve',
-                        data: [
-                            { id: 'foo', text: '1'},
-                            { id: 'foo', text: '2'}
-                        ]
-                    }}
-                />
-                {maybeUwaFields}
+            <form novalidate class={Styles.requestContainer}>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-row">
+                            <div class="col">
+                                <h5>Exchane Unit Details</h5>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="exch-unit-code">Unit Name:</label>
+                                <Input field={exchangeUnitName} type="text" />
+                            </div>
+                            <div class="col">
+                                <label for="exch-unit-code">Unit Code:</label>
+                                <Input field={exchangeUnitCode} type="text" />
+                            </div>
+                            <div class="col">
+                                <label for="exch-unit-href">Unit Outline Link:</label>
+                                <Input field={exchangeUnitOutlineHref} type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-row">
+                            <div class="col">
+                                <h5>UWA Unit Details</h5>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-4">
+                                <label for="contextType">Unit Type:</label>
+                                <Select
+                                    field={contextType}
+                                    options={contextType.config.options}
+                                />
+                            </div>
+                            {isElective
+                                ? <div />
+                                : ([
+                                    <div class="col-4">
+                                        <label for="uwa-unit-name">Unit Name:</label>
+                                        <Input field={uwaUnitName} type="text" />
+                                    </div>,
+                                    <div class="col-4">
+                                        <label for="uwa-unit-code">Unit Code:</label>,
+                                        <Input field={uwaUnitCode} type="text" />
+                                    </div>
+                                ])
+                            }
+                        </div>
+                    </div>
+                </div>
             </form>
         )
     }

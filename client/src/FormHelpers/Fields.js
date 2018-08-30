@@ -26,6 +26,22 @@ export class OptionsField extends Field {
             default: config.multiple ? [] : null,
             ...config
         });
+        /* When we initialize an options field which will be backed by some
+         * type of <select /> element, we need to make sure the field's current
+         * value matches the default state that the <select /> element
+         * will have. For example a non-multiple select by default will choose
+         * either the first element that has the selected attr set OR the first
+         * option.
+         */
+        if (config.options && config.options.length > 0) {
+            if (config.multiple) {
+                this.setData(config.options.filter(o => o.selected))
+            } else {
+                const selected = config.options.find(o => o.selected) || config.options[0];
+                this.setData(selected);
+            }
+
+        }
     }
 
     setData(value) {
@@ -52,25 +68,28 @@ export class OptionsField extends Field {
         super.setData(normalizedValue);
     }
 
-    modify(newOption, previousValue) {
+    modify(newOption, previousOption) {
         if (!newOption) {
-            return previousValue;
+            return previousOption;
         }
+
         if (!this.config.multiple) {
-            return newOption.selected ? newOption : null;
-        } else {
-            if (Array.isArray(newOption)) {
-                return newOption;
-            } else {
-                return [
-                    ...(previousValue || []),
-                    newOption
-                ]
-                /* Dedupe */
-                .filter((o, i, self) => self.findIndex(x => x.value == o.value) === i)
-                /* Remove ones that were just de-selected */
-                .filter(o => newOption.selected || o.value != newOption.value);
-            }
+            return (!previousOption || newOption.value !== previousOption.value)
+                ? newOption
+                : null;
         }
+
+        if (Array.isArray(newOption)) {
+            return newOption;
+        }
+
+        return [
+            ...(previousOption || []),
+            newOption
+        ]
+        /* Dedupe */
+        .filter((o, i, self) => self.findIndex(x => x.value == o.value) === i)
+        /* Remove ones that were just de-selected */
+        .filter(o => newOption.selected || o.value != newOption.value);
     }
 }
