@@ -1,0 +1,48 @@
+import m from 'mithril'
+import { Form } from 'powerform'
+
+import Input from './FormHelpers/Input.js'
+import { StringField } from './FormHelpers/Fields.js'
+
+export class ExchangeUniversityDetailsPowerForm extends Form {
+    constructor(config) {
+        super();
+        this.universityName = StringField.new({ required: true });
+        this.universityHomepage = StringField.new({
+            required: true,
+            regex: /^https?\:\/\//,
+            regexErrorMessage: 'Enter a URL of the from https://...'
+        });
+        Form.new.apply(() => this, config);
+        this.config = config;
+    }
+}
+
+export function ExchangeUniversityDetailsForm() {
+
+    function view({ attrs: { form } }) {
+        return (
+            <form novalidate>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <h3>University Details</h3>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="email">Exchange University Name: </label>
+                    <div class="input-group col-8">
+                        <Input field={form.universityName} type="text" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-4" for="email">Exchange University Homepage: </label>
+                    <div class="input-group col-8">
+                        <Input field={form.universityHomepage} type="text" />
+                    </div>
+                </div>
+            </form>
+        )
+    }
+
+    return { view }
+}
