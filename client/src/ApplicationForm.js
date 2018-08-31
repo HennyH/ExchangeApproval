@@ -1,91 +1,103 @@
 import m from 'mithril'
-import { Form } from 'powerform'
 
-import Input from './FormHelpers/Input.js'
-import { StudentEmailField, StringField } from './FormHelpers/Fields.js'
-import UnitApprovalRequestItem from './UnitApprovalRequestItem.js'
-
-
-class ApplicationPowerForm extends Form {
-    email = StudentEmailField.new();
-    degree = StringField.new({ required: true  });
-    major = StringField.new({ required: true });
-    major2nd = StringField.new({ required: false });
-    universityName = StringField.new({ required: true });
-    universityHomepage = StringField.new({
-        required: true,
-        regex: /^https?\:\/\//,
-        regexErrorMessage: 'Enter a URL of the from https://...'
-    })
-}
+import { StudentDetailsForm, StudentDetailsPowerForm } from './StudentDetailsForm.js'
+import { ExchangeUniversityDetailsForm, ExchangeUniversityDetailsPowerForm } from './ExchangeUniversityDetailsForm.js'
+import { UnitApprovalRequestItemForm, UnitApprovalRequestItemPowerForm } from './UnitApprovalRequestItemForm.js'
 
 
 export default function ApplicationForm() {
 
     const state = {};
 
-    function oninit() {
-        state.form = ApplicationPowerForm.new();
+    function oninit({ attrs: { contextTypeOptions, electiveContextTypeOption, changeCallback }}) {
+        state.studentDetailsForm = StudentDetailsPowerForm.new({
+            onChange: handleChange.bind(this, changeCallback)
+        });
+        state.exchangeUniversityDetailsForm = ExchangeUniversityDetailsPowerForm.new({
+            onChange: handleChange.bind(this, changeCallback)
+        });
+        state.approvalRequestForms = [];
+        addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, handleChange.bind(this, changeCallback));
     }
 
-    function view() {
-        const {
-            email, degree, major, major2nd,
-            universityName, universityHomepage
-        } = state.form;
+    function handleChange(callback) {
+        const isValid =
+            state.studentDetailsForm.isValid() &&
+            state.exchangeUniversityDetailsForm.isValid() &&
+            !state.approvalRequestForms.some(({ form }) => !form.isValid());
+        callback(
+            {
+                student: state.studentDetailsForm.getData(),
+                exchangeUniversity: state.exchangeUniversityDetailsForm.getData(),
+                approvalRequests: state.approvalRequestForms.map(({ form }) => form.getData())
+            },
+            isValid
+        );
+    }
+
+    function view({ attrs: { contextTypeOptions, changeCallback, electiveContextTypeOption } }) {
         return (
-            <form novalidate>
-                <div class="form-group row">
-                    <div class="col-12">
-                        <h3>Student Details</h3>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-2" for="email">UWA Email: </label>
-                    <div class="input-group col-8">
-                        <Input field={email} type="text" appendInputText="@student.uwa.edu.au" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-2" for="degree">Degree: </label>
-                    <div class="input-group col-8">
-                        <Input field={degree} type="text" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-2" for="degree">Major: </label>
-                    <div class="input-group col-8">
-                        <Input field={major} type="text" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-2" for="degree">2nd Major*: </label>
-                    <div class={"input-group col-8"}>
-                        <Input field={major2nd} type="text" />
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <StudentDetailsForm form={state.studentDetailsForm} />
                     </div>
                 </div>
                 <hr />
-                <div class="form-group row">
-                    <div class="col-12">
-                        <h3>University Details</h3>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-4" for="email">Exchange University Name: </label>
-                    <div class="input-group col-8">
-                        <Input field={universityName} type="text" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-4" for="email">Exchange University Homepage: </label>
-                    <div class="input-group col-8">
-                        <Input field={universityHomepage} type="text" />
+                <div class="row">
+                    <div class="col">
+                        <ExchangeUniversityDetailsForm form={state.exchangeUniversityDetailsForm} />
                     </div>
                 </div>
                 <hr />
-                <UnitApprovalRequestItem />
-            </form>
+                <div class="row">
+                    <div class="col">
+                        <h3>Unit Approval Requests</h3>
+                    </div>
+                </div>
+                <br />
+                {state.approvalRequestForms.map(({ id, form }) => [
+                    <div class="row">
+                        <div class="col">
+                            <UnitApprovalRequestItemForm
+                                key={id}
+                                form={form}
+                                electiveContextTypeOption={electiveContextTypeOption}
+                                ondelete={() => removeApprovalRequestForm(id, changeCallback)}
+                            />
+                        </div>
+                    </div>,
+                    <br />
+                ])}
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" onclick={() => addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback)}>
+                            Add Request
+                        </button>
+                    </div>
+                </div>
+            </div>
         )
+    }
+
+    function addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback) {
+        state.approvalRequestForms.push({
+            id: state.approvalRequestForms.reduce((max, { id }) => Math.max(max, id), -1),
+            form: new UnitApprovalRequestItemPowerForm({
+                contextTypeOptions,
+                electiveContextTypeOption,
+                onChange: handleChange.bind(this, changeCallback)
+            })
+        });
+        handleChange(changeCallback);
+    }
+
+    function removeApprovalRequestForm(formId, changeCallback) {
+        const index = state.approvalRequestForms.findIndex(f => f.id === formId);
+        if (index >= 0) {
+            state.approvalRequestForms.splice(index, 1);
+            handleChange(changeCallback);
+        }
     }
 
     return { oninit, view };

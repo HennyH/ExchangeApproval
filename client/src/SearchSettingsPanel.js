@@ -6,7 +6,6 @@ import CheckboxGroup from './FormHelpers/CheckboxGroup'
 import Select2 from './FormHelpers/Select2'
 import { OptionsField } from './FormHelpers/Fields'
 import Styles from './SearchSettingsPanel.css';
-import { debounce } from './utilities'
 
 class SearchSettingsPowerForm extends Form {
     exchangeUniversities = OptionsField.new({ multiple: true });
