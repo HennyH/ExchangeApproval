@@ -21,11 +21,6 @@ export function StudentDetailsForm() {
         return (
             <form novalidate>
                 <div class="form-group row">
-                    <div class="col-12">
-                        <h3>Student Details</h3>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label class="col-form-label col-2" for="email">UWA Email: </label>
                     <div class="input-group col-8">
                         <Input field={form.email} type="text" appendInputText="@student.uwa.edu.au" />
