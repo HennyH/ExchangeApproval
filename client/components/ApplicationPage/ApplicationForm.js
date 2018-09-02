@@ -7,7 +7,9 @@ import { UnitApprovalRequestItemForm, UnitApprovalRequestItemPowerForm } from '.
 
 export default function ApplicationForm() {
 
-    const state = {};
+    const state = {
+        scrollToLastRequest: false
+    };
 
     function oninit({ attrs: { contextTypeOptions, electiveContextTypeOption, changeCallback }}) {
         state.studentDetailsForm = StudentDetailsPowerForm.new({
@@ -38,46 +40,72 @@ export default function ApplicationForm() {
     function view({ attrs: { contextTypeOptions, changeCallback, electiveContextTypeOption } }) {
         return (
             <div class="container">
-                <div class="row">
-                    <div class="col">
+                <div class="card bg-light mt-3 mb-3">
+                    <div class="card-header">Student Details</div>
+                    <div class="card-body">
                         <StudentDetailsForm form={state.studentDetailsForm} />
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
-                        <ExchangeUniversityDetailsForm form={state.exchangeUniversityDetailsForm} />
+                <div class="card bg-light mt-3 mb-3">
+                    <div class="card-header">Exchange University Details</div>
+                    <div class="card-body">
+                    <ExchangeUniversityDetailsForm form={state.exchangeUniversityDetailsForm} />
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
-                        <h3>Unit Approval Requests</h3>
-                    </div>
-                </div>
-                <br />
-                {state.approvalRequestForms.map(({ id, form }) => [
-                    <div class="row">
-                        <div class="col">
-                            <UnitApprovalRequestItemForm
-                                key={id}
-                                form={form}
-                                electiveContextTypeOption={electiveContextTypeOption}
-                                ondelete={() => removeApprovalRequestForm(id, changeCallback)}
-                            />
-                        </div>
-                    </div>,
-                    <br />
-                ])}
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-primary" onclick={() => addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback)}>
-                            Add Request
+                <div class="card bg-light mt-3 mb-3">
+                    <div class="card-header">Unit Approval Requests</div>
+                    <div class="card-body">
+                        <button type="button" class="mb-1 btn btn-link" onclick={scrollToLastRequestItem}>
+                            Jump To Bottom
+                        </button>
+                        {state.approvalRequestForms.map(({ id, form }) => (
+                            <div class="card bg-light mt-1 mb-1">
+                                <div class="card-body">
+                                    <UnitApprovalRequestItemForm
+                                        class="request-item-form"
+                                        key={id}
+                                        form={form}
+                                        electiveContextTypeOption={electiveContextTypeOption}
+                                        ondelete={() => removeApprovalRequestForm(id, changeCallback)}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                        <button type="button" class="mt-3 mr-3 btn btn-primary" onclick={() => addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback)}>
+                                Add Request
+                        </button>
+                        <button type="button" class="mt-3 btn btn-link" onclick={scrollToFirstRequestItem}>
+                                Jump To Top
                         </button>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    function onupdate() {
+        if (state.scrollToLastRequest) {
+            state.scrollToLastRequest = false;
+            scrollToLastRequestItem();
+        }
+    }
+
+    function scrollToLastRequestItem() {
+        const $lastItemForm = $('.request-item-form').last()
+        const topOffset = $lastItemForm.offset().top;
+        window.scroll({
+            top: topOffset,
+            behavior: 'smooth'
+        });
+    }
+
+    function scrollToFirstRequestItem() {
+        const $lastItemForm = $('.request-item-form').first()
+        const topOffset = $lastItemForm.offset().top;
+        window.scroll({
+            top: window.screenY - topOffset,
+            behavior: 'smooth'
+        });
     }
 
     function addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback) {
@@ -90,6 +118,7 @@ export default function ApplicationForm() {
             })
         });
         handleChange(changeCallback);
+        state.scrollToLastRequest = true;
     }
 
     function removeApprovalRequestForm(formId, changeCallback) {
@@ -100,5 +129,5 @@ export default function ApplicationForm() {
         }
     }
 
-    return { oninit, view };
+    return { oninit, view, onupdate };
 }
