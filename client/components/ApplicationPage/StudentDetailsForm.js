@@ -10,7 +10,7 @@ export class StudentDetailsPowerForm extends Form {
         this.degree = StringField.new({ required: true  });
         this.major = StringField.new({ required: true });
         this.major2nd = StringField.new({ required: false });
-        Form.new.apply(() => this, config);
+        Form.new.call(() => this, config);
         this.config = config;
     }
 }

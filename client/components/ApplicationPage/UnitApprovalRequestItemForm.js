@@ -6,7 +6,7 @@ import Styles from './UnitApprovalRequestItemForm.css'
 
 export class UnitApprovalRequestItemPowerForm extends Form {
     constructor({ contextTypeOptions, electiveContextTypeOption, ...config }) {
-        super();
+        super(config);
         this.exchangeUnitName = StringField.new({ required: true });
         this.exchangeUnitCode = StringField.new({ required: true });
         this.exchangeUnitOutlineHref = StringField.new({
@@ -21,7 +21,7 @@ export class UnitApprovalRequestItemPowerForm extends Form {
         this.uwaUnitCode = StringField.new({
             requiredIf: (val, allValues) => allValues.contextType.value !== electiveContextTypeOption.value
         });
-        Form.new.apply(() => this, config);
+        Form.new.call(() => this, config);
         this.config = config;
     }
 }
