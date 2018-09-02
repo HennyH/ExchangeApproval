@@ -1,7 +1,8 @@
 import m from 'mithril'
 
-import SearchSettingsPanelContainer from './SearchSettingsPanelContainer'
-import DecisionsTable from './DecisionsTable'
+import SearchSettingsPanelContainer from './SearchSettingsPanelContainer.js'
+import DecisionsTable from './DecisionsTable.js'
+import { addItemToCart, default as Cart } from 'Components/Cart';
 
 const Data = {
     decisions: {
@@ -45,9 +46,19 @@ export default function SearchPage() {
                 </div>
                 <hr />
                 <div class="row">
+                    <div class="col-12" style="border: 1px solid black;">
+                        <h5>Cart</h5>
+                        <Cart />
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
                     <div class="col-12">
                         <h5>Search Results</h5>
-                        <DecisionsTable id="search-decisions" decisions={Data.decisions.list} />
+                        <DecisionsTable
+                            decisions={Data.decisions.list}
+                            onAddToCart={addItemToCart}
+                        />
                     </div>
                 </div>
             </div>
