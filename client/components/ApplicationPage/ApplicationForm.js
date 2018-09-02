@@ -1,4 +1,5 @@
 import m from 'mithril'
+import classNames from 'classnames'
 
 import { StudentDetailsForm, StudentDetailsPowerForm } from './StudentDetailsForm.js'
 import { ExchangeUniversityDetailsForm, ExchangeUniversityDetailsPowerForm } from './ExchangeUniversityDetailsForm.js'
@@ -58,8 +59,8 @@ export default function ApplicationForm() {
                         <button type="button" class="mb-1 btn btn-link" onclick={scrollToLastRequestItem}>
                             Jump To Bottom
                         </button>
-                        {state.approvalRequestForms.map(({ id, form }) => (
-                            <div class="card bg-light mt-1 mb-1">
+                        {state.approvalRequestForms.map(({ id, form }, i) => (
+                            <div class={classNames("card bg-light mt-1", i == state.approvalRequestForms.length - 1 ? "mb-1" : "mb-2")}>
                                 <div class="card-body">
                                     <UnitApprovalRequestItemForm
                                         class="request-item-form"

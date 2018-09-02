@@ -38,20 +38,20 @@ export function UnitApprovalRequestItemForm() {
                     <div class="col">
                         <div class="form-row">
                             <div class="col">
-                                <h5>Exchane Unit Details</h5>
+                                <h6>Exchane Unit Details</h6>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
-                                <label for="exch-unit-code">Unit Name:</label>
+                                <label class="col-form-label-sm" for="exch-unit-code">Unit Name:</label>
                                 <Input field={form.exchangeUnitName} type="text" />
                             </div>
                             <div class="col">
-                                <label for="exch-unit-code">Unit Code:</label>
+                                <label class="col-form-label-sm"  for="exch-unit-code">Unit Code:</label>
                                 <Input field={form.exchangeUnitCode} type="text" />
                             </div>
                             <div class="col">
-                                <label for="exch-unit-href">Unit Outline Link:</label>
+                                <label class="col-form-label-sm" for="exch-unit-href">Unit Outline Link:</label>
                                 <Input field={form.exchangeUnitOutlineHref} type="text" />
                             </div>
                         </div>
@@ -62,12 +62,12 @@ export function UnitApprovalRequestItemForm() {
                     <div class="col">
                         <div class="form-row">
                             <div class="col">
-                                <h5>UWA Unit Details</h5>
+                                <h6>UWA Unit Details</h6>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-4">
-                                <label for="contextType">Unit Type:</label>
+                                <label class="form-control-sm" class="col-form-label-sm" for="contextType">Unit Type:</label>
                                 <Select
                                     field={form.contextType}
                                     options={form.contextType.config.options}
@@ -77,11 +77,11 @@ export function UnitApprovalRequestItemForm() {
                                 ? <div />
                                 : ([
                                     <div class="col-4">
-                                        <label for="uwa-unit-name">Unit Name:</label>
+                                        <label class="col-form-label-sm" for="uwa-unit-name">Unit Name:</label>
                                         <Input field={form.uwaUnitName} type="text" />
                                     </div>,
                                     <div class="col-4">
-                                        <label for="uwa-unit-code">Unit Code:</label>,
+                                        <label class="col-form-label-sm" for="uwa-unit-code">Unit Code:</label>,
                                         <Input field={form.uwaUnitCode} type="text" />
                                     </div>
                                 ])
