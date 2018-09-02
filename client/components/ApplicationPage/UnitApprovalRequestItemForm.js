@@ -28,12 +28,12 @@ export class UnitApprovalRequestItemPowerForm extends Form {
 
 export function UnitApprovalRequestItemForm() {
 
-    function view({ attrs: { form, electiveContextTypeOption, ondelete }}) {
+    function view({ attrs: { form, electiveContextTypeOption, ondelete, ...otherAttrs }}) {
         const isElective =
             form.contextType.getData() &&
             form.contextType.getData().value === electiveContextTypeOption.value;
         return (
-            <form novalidate class={Styles.requestContainer}>
+            <form novalidate {...otherAttrs}>
                 <div class="form-row">
                     <div class="col">
                         <div class="form-row">
