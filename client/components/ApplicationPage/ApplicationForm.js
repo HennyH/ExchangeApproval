@@ -39,6 +39,7 @@ export default function ApplicationForm() {
     }
 
     function view({ attrs: { contextTypeOptions, changeCallback, electiveContextTypeOption } }) {
+        const numberRequestForms = state.approvalRequestForms.length;
         return (
             <div class="container">
                 <div class="card bg-light mt-3 mb-3">
@@ -56,11 +57,17 @@ export default function ApplicationForm() {
                 <div class="card bg-light mt-3 mb-3">
                     <div class="card-header">Unit Approval Requests</div>
                     <div class="card-body">
-                        <button type="button" class="mb-1 btn btn-link" onclick={scrollToLastRequestItem}>
-                            Jump To Bottom
-                        </button>
+                        {(numberRequestForms > 1
+                            ? (
+                                <button type="button" class="mb-1 btn btn-link" onclick={scrollToLastRequestItem}>
+                                    Jump To Bottom
+                                </button>
+                            )
+                            : <div />
+                        )}
                         {state.approvalRequestForms.map(({ id, form }, i) => (
-                            <div class={classNames("card bg-light mt-1", i == state.approvalRequestForms.length - 1 ? "mb-1" : "mb-2")}>
+                            <div class={classNames("card bg-light mt-1", i == numberRequestForms - 1 ? "mb-1" : "mb-2")}>
+                                <div class="card-header">Request {i + 1}</div>
                                 <div class="card-body">
                                     <UnitApprovalRequestItemForm
                                         class="request-item-form"
@@ -72,12 +79,17 @@ export default function ApplicationForm() {
                                 </div>
                             </div>
                         ))}
-                        <button type="button" class="mt-3 mr-3 btn btn-primary" onclick={() => addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback)}>
+                        <button type="button" class={classNames(numberRequestForms > 0 ? "mt-3" : null, "mb-1 mr-3 btn btn-primary")} onclick={() => addNewApprovalRequestForm(contextTypeOptions, electiveContextTypeOption, changeCallback)}>
                                 Add Request
                         </button>
-                        <button type="button" class="mt-3 btn btn-link" onclick={scrollToFirstRequestItem}>
-                                Jump To Top
-                        </button>
+                        {(numberRequestForms > 1
+                            ? (
+                                <button type="button" class={classNames(numberRequestForms > 0 ? "mt-3" : null, "mb-1 mr-3 btn btn-link")} onclick={scrollToFirstRequestItem}>
+                                        Jump To Top
+                                </button>
+                            )
+                            : <div />
+                        )}
                     </div>
                 </div>
             </div>
