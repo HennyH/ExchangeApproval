@@ -11,16 +11,23 @@ export default function Input() {
             class: classes = null,
             appendInputText = null,
             prependInputText = null,
+            readonly = false,
             ...otherAttrs
         },
         children
     }) {
-        const validationClass = field.isDirty()
+        /* If a field is readonly it shouldn't be validated. If we allow
+         * validation green borders  appear around inputs despite the values
+         * presumably having either been already sumitted to or provided by
+         * the server.
+         */
+        const validationClass = !readonly && field.isDirty()
             ? (field.isValid() ? 'is-valid' : 'is-invalid')
             : '';
         const input = (
             <input
                 name={field.fieldName}
+                readonly={readonly}
                 {...otherAttrs}
                 value={field.getData()}
                 oninput={e => {
