@@ -1,8 +1,7 @@
 import m from 'mithril'
 import { Form } from 'powerform'
 
-import Input from './FormHelpers/Input.js'
-import { StudentEmailField, StringField } from './FormHelpers/Fields.js'
+import { Input, StudentEmailField, StringField } from 'FormHelpers'
 
 export class StudentDetailsPowerForm extends Form {
     constructor(config) {
