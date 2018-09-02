@@ -2,9 +2,7 @@ import m from 'mithril';
 import classNames from 'classnames';
 import { Form } from 'powerform'
 
-import CheckboxGroup from './FormHelpers/CheckboxGroup'
-import Select2 from './FormHelpers/Select2'
-import { OptionsField } from './FormHelpers/Fields'
+import { CheckboxGroup, Select2, OptionsField } from 'FormHelpers'
 import Styles from './SearchSettingsPanel.css';
 
 class SearchSettingsPowerForm extends Form {

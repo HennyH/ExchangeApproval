@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 
 module.exports = (env, options) => {
   const devMode = options.mode !== "production";
@@ -14,6 +15,16 @@ module.exports = (env, options) => {
     },
     externals: {
       $: 'jQuery'
+    },
+    resolve: {
+      alias: {
+        FormHelpers: path.resolve(__dirname, 'components/FormHelpers'),
+        SearchPage: path.resolve(__dirname, 'components/SearchPage'),
+        ApplicationPage: path.resolve(__dirname, 'components/ApplicationPage')
+      },
+      plugins: [
+        new DirectoryNamedWebpackPlugin()
+      ]
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -40,9 +51,10 @@ module.exports = (env, options) => {
       ]
     },
     devServer: {
+      https: true,
+      port: 9000,
       contentBase: path.join(path.resolve(__dirname), '/dist'),
       compress: true,
-      port: 9000,
       historyApiFallback: true
     }
   };

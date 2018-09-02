@@ -1,9 +1,7 @@
 import m from 'mithril'
 import { Form } from 'powerform'
 
-import Input from './FormHelpers/Input.js'
-import Select from './FormHelpers/Select.js'
-import { OptionsField, StringField } from './FormHelpers/Fields.js'
+import { Input, Select, OptionsField, StringField }  from 'FormHelpers'
 import Styles from './UnitApprovalRequestItemForm.css'
 
 export class UnitApprovalRequestItemPowerForm extends Form {
