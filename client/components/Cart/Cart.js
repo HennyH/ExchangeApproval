@@ -37,6 +37,10 @@ export function makeCartTableConfig(cartItems) {
     }
 }
 
+export function getItemsInCart() {
+    return [...window.CART.items];
+}
+
 export function emitCartEvent(name, ...args) {
     if (name === CART_EVENTS.CART_CHANGED) {
         args = [window.CART.items, ...args]
@@ -81,7 +85,7 @@ export function isItemInCart(item) {
 }
 
 export function removeCartEventHandler(name, callback) {
-    const index = window.CART.handlers.items.find(
+    const index = window.CART.handlers.find(
         h => h.name === name && h.callback === callback
     );
     if (index >= 0) {

@@ -24,7 +24,7 @@ export default function Select2() {
         return (
             <select
                 name={field.fieldName}
-                class={classNames("form-control", classes)}
+                class={classNames("custom-select", classes)}
                 onchange={e => {
                     field.setData(e.target.selectedOptions[0]);
                     onchange(e);

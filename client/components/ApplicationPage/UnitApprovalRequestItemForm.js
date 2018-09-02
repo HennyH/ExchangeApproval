@@ -28,7 +28,7 @@ export class UnitApprovalRequestItemPowerForm extends Form {
 
 export function UnitApprovalRequestItemForm() {
 
-    function view({ attrs: { form, electiveContextTypeOption, ondelete, ...otherAttrs }}) {
+    function view({ attrs: { form, readonly, electiveContextTypeOption, ondelete, ...otherAttrs }}) {
         const isElective =
             form.contextType.getData() &&
             form.contextType.getData().value === electiveContextTypeOption.value;
@@ -44,15 +44,15 @@ export function UnitApprovalRequestItemForm() {
                         <div class="form-row">
                             <div class="col">
                                 <label class="col-form-label-sm" for="exch-unit-code">Unit Name:</label>
-                                <Input field={form.exchangeUnitName} type="text" />
+                                <Input readonly={readonly} field={form.exchangeUnitName} type="text" />
                             </div>
                             <div class="col">
                                 <label class="col-form-label-sm"  for="exch-unit-code">Unit Code:</label>
-                                <Input field={form.exchangeUnitCode} type="text" />
+                                <Input readonly={readonly} field={form.exchangeUnitCode} type="text" />
                             </div>
                             <div class="col">
                                 <label class="col-form-label-sm" for="exch-unit-href">Unit Outline Link:</label>
-                                <Input field={form.exchangeUnitOutlineHref} type="text" />
+                                <Input readonly={readonly} field={form.exchangeUnitOutlineHref} type="text" />
                             </div>
                         </div>
                     </div>
@@ -69,6 +69,7 @@ export function UnitApprovalRequestItemForm() {
                             <div class="col-4">
                                 <label class="form-control-sm" class="col-form-label-sm" for="contextType">Unit Type:</label>
                                 <Select
+                                    disabled={readonly}
                                     field={form.contextType}
                                     options={form.contextType.config.options}
                                 />
@@ -78,11 +79,11 @@ export function UnitApprovalRequestItemForm() {
                                 : ([
                                     <div class="col-4">
                                         <label class="col-form-label-sm" for="uwa-unit-name">Unit Name:</label>
-                                        <Input field={form.uwaUnitName} type="text" />
+                                        <Input readonly={readonly} field={form.uwaUnitName} type="text" />
                                     </div>,
                                     <div class="col-4">
                                         <label class="col-form-label-sm" for="uwa-unit-code">Unit Code:</label>,
-                                        <Input field={form.uwaUnitCode} type="text" />
+                                        <Input readonly={readonly} field={form.uwaUnitCode} type="text" />
                                     </div>
                                 ])
                             }
