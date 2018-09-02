@@ -1,7 +1,7 @@
 import m from 'mithril';
 
-import SearchPage from 'SearchPage';
-import ApplicationPage from 'ApplicationPage';
+import SearchPage from 'Components/SearchPage';
+import ApplicationPage from 'Components/ApplicationPage';
 
 (() => {
     m.route(document.body, "/search", {
