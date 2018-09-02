@@ -13,6 +13,8 @@ export default function DecisionsTable() {
         datatable.clear();
         datatable.rows.add(newDecisions);
         datatable.draw();
+
+        oldDecisions = newDecisions;
     }
 
     function view({ attrs: { id , decisions }}) {
