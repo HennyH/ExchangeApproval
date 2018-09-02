@@ -31,7 +31,12 @@ export default function Select2() {
                 }}
                 {...otherAttrs}
             >
-                {options.map(props => <option {...props} />)}
+                {options.map(props => (
+                    <option
+                        {...props}
+                        selected={props.selected || props.value === selected.value}
+                    />
+                ))}
             </select>
         )
     }

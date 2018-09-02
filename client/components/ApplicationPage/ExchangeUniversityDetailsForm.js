@@ -12,7 +12,7 @@ export class ExchangeUniversityDetailsPowerForm extends Form {
             regex: /^https?\:\/\//,
             regexErrorMessage: 'Enter a URL of the from https://...'
         });
-        Form.new.apply(() => this, config);
+        Form.new.call(() => this, config);
         this.config = config;
     }
 }

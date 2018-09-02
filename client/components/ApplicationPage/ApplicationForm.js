@@ -12,6 +12,8 @@ import {
     removeCartEventHandler
 } from 'Components/Cart'
 
+window.NEXT_APPROVAL_REQUEST_FORM_ID = 1;
+
 export default function ApplicationForm() {
 
     let updateCartDerivedRequestItemsOnCartChangeCallback = null;
@@ -63,7 +65,7 @@ export default function ApplicationForm() {
 
     function view({ attrs: { contextTypeOptions, electiveContextTypeOption, changeCallback } }) {
         const appliedAddNewRequestForm = () => {
-            const nextId = state.approvalRequestForms.reduce((max, { id }) => Math.max(max, id), -1);
+            const nextId = window.NEXT_APPROVAL_REQUEST_FORM_ID++;
             addNewApprovalRequestForm({
                 id: nextId,
                 isFromCart: false,
@@ -194,20 +196,23 @@ export default function ApplicationForm() {
                     changeCallback,
                     invokeChangeCallback: false,
                     scrollToForm: false,
-                    cartItem: cartItem
-                });
-                form.setData({
-                    exchangeUnitName: cartItem.exchange_unit_name,
-                    exchangeUnitCode: cartItem.exchange_unit_code,
-                    exchangeUnitOutlineHref: cartItem.exchange_unit_outline_href,
-                    contextType: new Option(
-                        cartItem.uwa_unit_context_name,
-                        cartItem.uwa_unit_context_id,
-                        false,
-                        true
-                    ),
-                    uwaUnitName: cartItem.uwa_unit_name,
-                    uwaUnitCode: cartItem.uwa_unit_code
+                    cartItem: cartItem,
+                    powerFormProps: {
+                        /* This sets the default values for the form. */
+                        data: {
+                            exchangeUnitName: cartItem.exchange_unit_name,
+                            exchangeUnitCode: cartItem.exchange_unit_code,
+                            exchangeUnitOutlineHref: cartItem.exchange_unit_outline_href,
+                            contextType: new Option(
+                                cartItem.uwa_unit_context_name,
+                                cartItem.uwa_unit_context_id,
+                                false,
+                                true
+                            ),
+                            uwaUnitName: cartItem.uwa_unit_name,
+                            uwaUnitCode: cartItem.uwa_unit_code
+                        }
+                    }
                 });
             }
         }
@@ -234,12 +239,14 @@ export default function ApplicationForm() {
         changeCallback,
         invokeChangeCallback = true,
         scrollToForm = true,
+        powerFormProps = {},
         ...formProps
     }) {
         const form = new UnitApprovalRequestItemPowerForm({
             contextTypeOptions,
             electiveContextTypeOption,
-            onChange: () => handleChange(changeCallback)
+            onChange: () => handleChange(changeCallback),
+            ...powerFormProps
         });
         state.approvalRequestForms.push({ id, isFromCart, form, ...formProps});
         if (invokeChangeCallback) {

@@ -27,7 +27,7 @@ export class OptionsField extends Field {
     constructor(config) {
         config = config || {}
         super({
-            default: config.multiple ? [] : null,
+            default: config.default || (config.multiple ? [] : null),
             ...config
         });
         /* When we initialize an options field which will be backed by some
