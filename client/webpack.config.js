@@ -19,7 +19,8 @@ module.exports = (env, options) => {
     resolve: {
       alias: {
         FormHelpers: path.resolve(__dirname, 'components/FormHelpers'),
-        Components: path.resolve(__dirname, 'components')
+        Components: path.resolve(__dirname, 'components'),
+        Assets: path.resolve(__dirname, 'assets')
       },
       plugins: [
         new DirectoryNamedWebpackPlugin()
@@ -35,6 +36,7 @@ module.exports = (env, options) => {
     devtool: 'eval-source-map',
     module: {
       rules: [
+        { test: /\.svg$/, loader: 'svg-url-loader' },
         { test: /\.js$/, exclude: [/node_modules/, /node_modules/], loader: 'babel-loader'},
         {
           test: /\.css$/,

@@ -1,18 +1,12 @@
 import m from 'mithril'
 
+import Layout from 'Components/Layout'
 import ApplicationForm from './ApplicationForm'
-import Styles from './ApplicationPage.css';
 
 export default function ApplicationPage() {
     function view() {
         return (
-            <div>
-                <div class={Styles.header}>
-                    <span class={Styles.headerTitle}>
-                        Exchange Unit Approval Application
-                    </span>
-                </div>
-                <br />
+            <Layout>
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -26,7 +20,7 @@ export default function ApplicationPage() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Layout>
         )
     }
 
