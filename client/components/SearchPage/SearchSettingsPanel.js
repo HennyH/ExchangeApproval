@@ -41,44 +41,41 @@ export default function SearchSettingsPanel() {
         } = state.form;
         return (
             <form onsubmit={handleSubmit.bind(this, onsubmit)}>
-                <fieldset class={Styles.fieldset}>
-                    <legend class={Styles.legend}>Search Settings</legend>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12 form-group">
-                            <label for="universities">Exchange Universitys</label>
-                            <Select2
-                                field={universitiesField}
-                                config={{
-                                    multiple: true,
-                                    width: '100%',
-                                    placeholder: 'Select universities to filter to...',
-                                    data: exchangeUniversities
-                                }}
-                            />
-                        </div>
-                        <div class="col-lg-auto col-md-12 from-group">
-                            <label>Approval Type(s)</label>
-                            <CheckboxGroup
-                                field={approvalTypesField}
-                                options={contextOptions}
-                                onchange={x => console.log(state.form.getData())}
-                            />
-                        </div>
-                        <div class="col-lg-auto col-md-12 form-group">
-                            <label>Unit Level(s)</label>
-                            <CheckboxGroup
-                                field={unitLevelsField}
-                                options={levelOptions}
-                                onchange={x => console.log(state.form.getData())}
-                            />
-                        </div>
-                        <div class="col-lg-auto col-md-12 form-group align-self-end">
-                            <button type="submit" class="btn btn-primary">
-                                Search
-                            </button>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 form-group">
+                        <label for="universities">Exchange Universitys</label>
+                        <Select2
+                            field={universitiesField}
+                            config={{
+                                multiple: true,
+                                width: '100%',
+                                placeholder: 'Select universities to filter to...',
+                                data: exchangeUniversities
+                            }}
+                        />
                     </div>
-                </fieldset>
+                    <div class="col-lg-auto col-md-12 from-group">
+                        <label>Approval Type(s)</label>
+                        <CheckboxGroup
+                            field={approvalTypesField}
+                            options={contextOptions}
+                            onchange={x => console.log(state.form.getData())}
+                        />
+                    </div>
+                    <div class="col-lg-auto col-md-12 form-group">
+                        <label>Unit Level(s)</label>
+                        <CheckboxGroup
+                            field={unitLevelsField}
+                            options={levelOptions}
+                            onchange={x => console.log(state.form.getData())}
+                        />
+                    </div>
+                    <div class="col-lg-auto col-md-12 form-group align-self-end">
+                        <button type="submit" class="btn btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
             </form>
         );
     }
