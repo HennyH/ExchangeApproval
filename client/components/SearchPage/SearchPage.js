@@ -43,22 +43,21 @@ export default function SearchPage() {
         return (
             <Layout>
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12">
+                    <div class="card bg-light mt-3 mb-3">
+                        <div class="card-header">Search Settings</div>
+                        <div class="card-body">
                             <SearchSettingsPanelContainer onsubmit={handleSearchPanelSubmit} />
                         </div>
                     </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-12" style="border: 1px solid black;">
-                            <h5>Cart</h5>
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Unit Cart</div>
+                        <div class="card-body">
                             <Cart />
                         </div>
                     </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-12">
-                            <h5>Search Results</h5>
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Search Results</div>
+                        <div class="card-body">
                             <DecisionsTable
                                 decisions={Data.decisions.list}
                                 onAddToCart={addItemToCart}
