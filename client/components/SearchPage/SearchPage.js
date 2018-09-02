@@ -1,5 +1,6 @@
 import m from 'mithril'
 
+import Layout from 'Components/Layout'
 import SearchSettingsPanelContainer from './SearchSettingsPanelContainer.js'
 import DecisionsTable from './DecisionsTable.js'
 import { addItemToCart, default as Cart } from 'Components/Cart';
@@ -26,7 +27,9 @@ const Data = {
 export default function SearchPage() {
 
     function oninit() {
-        Data.decisions.fetch();
+        if (Data.decisions.list.length === 0) {
+            Data.decisions.fetch();
+        }
     }
 
     function handleSearchPanelSubmit(settings) {
@@ -38,30 +41,32 @@ export default function SearchPage() {
 
     function view() {
         return (
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <SearchSettingsPanelContainer onsubmit={handleSearchPanelSubmit} />
+            <Layout>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <SearchSettingsPanelContainer onsubmit={handleSearchPanelSubmit} />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12" style="border: 1px solid black;">
+                            <h5>Cart</h5>
+                            <Cart />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>Search Results</h5>
+                            <DecisionsTable
+                                decisions={Data.decisions.list}
+                                onAddToCart={addItemToCart}
+                            />
+                        </div>
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col-12" style="border: 1px solid black;">
-                        <h5>Cart</h5>
-                        <Cart />
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-12">
-                        <h5>Search Results</h5>
-                        <DecisionsTable
-                            decisions={Data.decisions.list}
-                            onAddToCart={addItemToCart}
-                        />
-                    </div>
-                </div>
-            </div>
+            </Layout>
         );
     }
 
