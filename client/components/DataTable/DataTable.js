@@ -96,7 +96,6 @@ export default function DataTable() {
          */
         const $currentTable = $(`#data-table-${id}`);
         $cachedTable.append($currentTable);
-        console.log("Storing ", $currentTable, " into cache", $cachedTable);
     }
 
     return { oninit, view, oncreate, onremove };
