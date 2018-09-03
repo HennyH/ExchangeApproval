@@ -4,6 +4,7 @@ import Layout from 'Components/Layout'
 import ApplicationForm from './ApplicationForm'
 
 export default function ApplicationPage() {
+
     function view() {
         return (
             <Layout>
