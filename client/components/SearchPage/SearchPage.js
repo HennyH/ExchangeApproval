@@ -1,14 +1,18 @@
 import m from 'mithril'
+import classNames from 'classnames';
 
 import Layout from 'Components/Layout'
 import SearchSettingsPanelContainer from './SearchSettingsPanelContainer.js'
+import Spinner from 'Components/Spinners/RectangularSpinner';
 import DecisionsTable from './DecisionsTable.js'
 import { addItemToCart, default as Cart } from 'Components/Cart';
 
 const Data = {
     decisions: {
+        loading: false,
         list: [],
         fetch: ({ contextIds = [], levelIds = [], universityIds = [] } = {}) => {
+            Data.decisions.loading = true;
             const qs = m.buildQueryString({
                 contextId: contextIds,
                 levelId: levelIds,
@@ -19,6 +23,7 @@ const Data = {
                 url: "https://localhost:5001/api/values/decisions?" + qs
             }).then(items => {
                 Data.decisions.list = items;
+                Data.decisions.loading = false;
             });
         }
     }
@@ -37,6 +42,7 @@ export default function SearchPage() {
         const contextIds = settings.approvalTypes.map(({ value: id }) => id);
         const levelIds = settings.unitLevels.map(({ value: id }) => id);
         Data.decisions.fetch({ universityIds, contextIds, levelIds });
+        m.redraw();
     }
 
     function view() {
@@ -55,13 +61,18 @@ export default function SearchPage() {
                             <Cart />
                         </div>
                     </div>
-                    <div class="card bg-light mb-3">
+                    <div class={classNames("card bg-light mb-3", Data.decisions.loading ? "text-center": "")}>
                         <div class="card-header">Search Results</div>
                         <div class="card-body">
-                            <DecisionsTable
-                                decisions={Data.decisions.list}
-                                onAddToCart={addItemToCart}
-                            />
+                            {(Data.decisions.loading
+                                ? (<Spinner />)
+                                : (
+                                    <DecisionsTable
+                                        decisions={Data.decisions.list}
+                                        onAddToCart={addItemToCart}
+                                    />
+                                )
+                            )}
                         </div>
                     </div>
                 </div>

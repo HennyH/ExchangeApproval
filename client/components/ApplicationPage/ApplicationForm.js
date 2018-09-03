@@ -41,7 +41,7 @@ export default function ApplicationForm() {
          * same function to be called whenever the cart changes.
          */
         updateCartDerivedRequestItemsOnCartChangeCallback = (items) => updateCartDerivedRequestItems({
-            cartItems: getItemsInCart(),
+            cartItems: items,
             contextTypeOptions,
             electiveContextTypeOption,
             changeCallback
@@ -188,7 +188,7 @@ export default function ApplicationForm() {
              * hasn't already been added for it.
              */
             if (!state.approvalRequestForms.some(({ id }) => id === cartItemId)) {
-                const form = addNewApprovalRequestForm({
+                addNewApprovalRequestForm({
                     id: cartItemId,
                     isFromCart: true,
                     contextTypeOptions,
@@ -228,7 +228,6 @@ export default function ApplicationForm() {
         );
 
         handleChange(changeCallback);
-        m.redraw();
     }
 
     function addNewApprovalRequestForm({

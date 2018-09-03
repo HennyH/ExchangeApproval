@@ -88,7 +88,7 @@ export default function DecisionsTable() {
     function view({ attrs: { decisions, onAddToCart }}) {
         return (
             <DataTable
-                id="de"
+                id="decisions-table"
                 config={makeDecisionsTableConfig(decisions)}
                 setup={(id, datatable) => {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
@@ -96,6 +96,7 @@ export default function DecisionsTable() {
                         onAddToCart(decision);
                     })
                 }}
+                cache={true}
             />
         )
     }

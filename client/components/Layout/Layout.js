@@ -3,11 +3,18 @@ import classNames from 'classnames'
 
 import Styles from './Layout.css';
 
+
 export default function Layout() {
     function view({ children }) {
+        const currentRoute = m.route.get();
+        const navLinks = [
+            { href: "/search", text: "Search Units" },
+            { href: "/application", text: "Student Application" },
+            { href: "/staff", text: "Staff Portal" }
+        ];
         return (
             <div>
-                <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <a class="navbar-brand" href="#">
                         <div class={classNames(Styles.uwaLogo, "d-inline-block", "align-middle")}></div>
                         UWA Exchange Helper
@@ -17,9 +24,16 @@ export default function Layout() {
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="#!/search">Search <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="#!/application">Apply</a>
-                        <a class="nav-item nav-link" href="#">Staff</a>
+                            {navLinks.map(({ href, text }) => {
+                                const isActive = href === currentRoute;
+                                const classes = classNames("nav-item nav-link", isActive ? "active" : "");
+                                return (
+                                    <a oncreate={m.route.link} href={href} class={classes}>
+                                        {text}
+                                        { isActive ? <span class="sr-only">(current)</span> : <span /> }
+                                    </a>
+                                );
+                            })}
                         </div>
                     </div>
                 </nav>
