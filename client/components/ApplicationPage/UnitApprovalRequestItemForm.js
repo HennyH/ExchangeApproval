@@ -1,12 +1,13 @@
 import m from 'mithril'
 import { Form } from 'powerform'
 
-import { Input, Select, OptionsField, StringField }  from 'FormHelpers'
+import { Input, Select, OptionsField, IntegerField, StringField }  from 'FormHelpers'
 import Styles from './UnitApprovalRequestItemForm.css'
 
 export class UnitApprovalRequestItemPowerForm extends Form {
     constructor({ contextTypeOptions, electiveContextTypeOption, ...config }) {
         super(config);
+        this.id = IntegerField.new();
         this.exchangeUnitName = StringField.new({ required: true });
         this.exchangeUnitCode = StringField.new({ required: true });
         this.exchangeUnitOutlineHref = StringField.new({

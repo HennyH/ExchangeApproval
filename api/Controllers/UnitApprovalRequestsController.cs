@@ -48,5 +48,13 @@ namespace ExchangeApproval.Controllers
             Console.WriteLine(universityNames);
             return QueryUnitApprovalDecisions(_db, universityNames, uwaContextTypes, uwaUnitLevels);
         }
+
+        [HttpPost("application")]
+        public JsonResult SubmitApplication(ApplicationFormVM formVm)
+        {
+            /* This method is a WIP, may not work... */
+            InsertNewStudentApplication(_db, formVm);
+            return new JsonResult("Hello");
+        }
     }
 }

@@ -10,15 +10,23 @@ export class StudentEmailField extends Field {
 
 export class StringField extends Field {
     validate(value, allValues) {
-        // console.log('validating', this.fieldName, value);
         const required = this.config.required ||
                          (this.config.requiredIf && this.config.requiredIf(value, allValues));
-        // console.log('field ', this.fieldName, 'was required? = ', required, this.config.required, !!this.config.requiredIf)
         if (required && (!value || !value.trim())) {
             throw new ValidationError('This field is required.');
         }
         if (this.config.regex && value && !value.match(this.config.regex)) {
             throw new ValidationError(this.config.regexErrorMessage || 'Invalid value.');
+        }
+    }
+}
+
+export class IntegerField extends Field {
+    validate(value, allValues) {
+        const required = this.config.required ||
+                         (this.config.requiredIf && this.config.requiredIf(value, allValues));
+        if (required && (value === null || value === undefined)) {
+            throw new ValidationError('This field is required.');
         }
     }
 }

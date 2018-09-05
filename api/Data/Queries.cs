@@ -58,6 +58,7 @@ namespace ExchangeApproval.Data
                 .Select(g => g.OrderByDescending(r => r.DecisionDate).FirstOrDefault())
                 .Select(r => new UnitApprovalDecisionVM
                 {
+                    Id = r.Id,
                     DecisionDate = r.DecisionDate.Value,
                     ExchangeUniversityName = r.ExchangeUniversityName,
                     ExchangeUnitName = r.ExchangeUnitName,
@@ -81,5 +82,41 @@ namespace ExchangeApproval.Data
                 return false;
             return user.PasswordHash == UWAStaffLogon.HashPassword(password, user.Salt);
         }
+
+        public static void InsertNewStudentApplication(ExchangeDbContext db, ApplicationFormVM formVm)
+        {
+            db.Add(new ExchangeApplication
+            {
+                StudentEmail = formVm.Student.Email,
+                Degree = formVm.Student.Degree,
+                Major = formVm.Student.Major,
+                Major2nd = formVm.Student.Major2nd,
+                ExchangeUniversityName = formVm.ExchangeUniversity.UniversityName,
+                ExchangeUniversityHref = formVm.ExchangeUniversity.UniversityHomepage,
+                UnitApprovalRequests = formVm.ApprovalRequests.Select(r =>
+                {
+                    if (r.Id.HasValue)
+                    {
+                        return new UnitApprovalRequest { Id = r.Id.Value };
+                    }
+
+                    return new UnitApprovalRequest
+                    {
+                        DecisionDate = null,
+                        Approved = null,
+                        ExchangeUniversityName = r.ExchangeUniversityName,
+                        ExchangeUnitCode = r.ExchangeUnitCode,
+                        ExchangeUnitName = r.ExchangeUnitName,
+                        ExchangeUnitOutlineHref = r.ExchangeUnitOutlineHref,
+                        UWAUnitCode = r.UWAUnitCode,
+                        UWAUnitContext = r.UWAUnitContext,
+                        UWAUnitLevel = r.UWAUnitLevel,
+                        UWAUnitName = r.UWAUnitName
+                    };
+                }).ToList()
+            });
+            db.SaveChanges();
+        }
+
     }
 }

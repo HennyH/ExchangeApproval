@@ -121,4 +121,21 @@ namespace ExchangeApproval.Data
             );
         }
     }
+
+    public class ExchangeApplication
+    {
+        public int Id { get; set; }
+        [Required]
+        public string StudentEmail { get; set; }
+        [Required]
+        public string Degree { get; set; }
+        [Required]
+        public string Major { get; set; }
+        public string Major2nd { get; set; }
+        [Required]
+        public string ExchangeUniversityName { get; set; }
+        [Required]
+        public string ExchangeUniversityHref { get; set; }
+        public List<UnitApprovalRequest> UnitApprovalRequests { get; set; }
+    }
 }
