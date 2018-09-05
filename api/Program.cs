@@ -27,6 +27,14 @@ namespace ExchangeApproval
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseKestrel(options =>
+                {
+                    var port = Environment.GetEnvironmentVariable("PORT");
+                    if (port != null)
+                    {
+                        options.ListenAnyIP(Int32.Parse(port));
+                    }
+                });
     }
 }
