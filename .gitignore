@@ -1,6 +1,6 @@
 .vscode
-api/bin
-api/obj
+bin
+obj
 api/packages
 node_modules
 client/dist

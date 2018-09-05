@@ -26,7 +26,7 @@ export function makeDecisionsTableConfig(decisons) {
         columns: [
             {
                 title: COLUMN_NAMES.Date,
-                data: "decision_date",
+                data: "decisionDate",
                 render: (data, type, row, meta) => {
                     const options = { month: "short", year: "2-digit" };
                     return new Date(data).toLocaleDateString(undefined, options);
@@ -34,7 +34,7 @@ export function makeDecisionsTableConfig(decisons) {
             },
             {
                 title: COLUMN_NAMES.Type,
-                data: "uwa_unit_context_name",
+                data: "uwaUnitContext",
                 render: (data, type, row, meta) => `
                     <span class='badge ${TYPE_TO_BADGE_CLASS[data] || DEFAULT_BADGE_CLASS} ${Styles.contextTypeBadge}'>
                         ${data.substring(0, 4).toUpperCase()}
@@ -43,14 +43,14 @@ export function makeDecisionsTableConfig(decisons) {
             },
             {
                 title: COLUMN_NAMES.ExchangeUniversity,
-                data: "exchange_university_name",
+                data: "exchangeUniversityName",
                 width: '30%'
             },
             {
                 title: COLUMN_NAMES.ExchangeUnit,
                 width: "30%",
-                data: "exchange_unit_name",
-                render: (data, type, row, meta) => `<a href=${encodeURI(data.exchange_unit_outline_href)}>${data} (${row.exchange_unit_code})</a>`
+                data: "exchangeUnitName",
+                render: (data, type, row, meta) => `<a href=${encodeURI(data.exchangeUnitOutlineHref)}>${data} (${row.exchangeUnitCode})</a>`
 
             },
             {
@@ -59,8 +59,8 @@ export function makeDecisionsTableConfig(decisons) {
                 width: "30%",
                 render: (data, type, row, meta) => {
                     const components = [
-                        row.uwa_unit_name || '',
-                        row.uwa_unit_code ? `(${row.uwa_unit_code})` : ''
+                        row.uwaUnitName || '',
+                        row.uwaUnitCode ? `(${row.uwaUnitCode})` : ''
                     ];
                     return components.join(' ');
                 }

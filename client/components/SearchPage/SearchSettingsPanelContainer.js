@@ -8,7 +8,7 @@ const Data = {
         fetch: () => {
             m.request({
                 method: "GET",
-                url: "https://localhost:5001/api/values/filters"
+                url: "https://localhost:5001/api/requests/filters"
             }).then(options => {
                 Data.filters.options = options;
             });
@@ -29,9 +29,9 @@ export default function SearchSettingsPanelContainer() {
         return (
             <SearchSettingsPanel
                 {...attrs}
-                exchangeUniversities={Data.filters.options.exchangeUniversities.map(({ id, name }) => ({ id, text: name }))}
-                levelOptions={Data.filters.options.levelOptions.map(({ id, name }) => ({ value: id, label: name}))}
-                contextOptions={Data.filters.options.contextOptions.map(({ id, name }) => ({ value: id, label: name}))}
+                exchangeUniversities={Data.filters.options.exchangeUniversityNames}
+                levelOptions={Data.filters.options.uwaUnitLevelOptions}
+                contextOptions={Data.filters.options.uwaUnitContextOptions}
             />
         );
     }

@@ -6,7 +6,6 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
-open FSharp.Data.Dapper
 
 type Startup private () =
 
@@ -50,9 +49,9 @@ type Startup private () =
         app.UseHttpsRedirection() |> ignore
         app.UseMvc() |> ignore
         // This registers Option<'T> types with Dapper.
-        OptionHandler.RegisterTypes()
+        // OptionHandler.RegisterTypes()
         // Enable columns like decision_id to map to decisionId
-        Dapper.DefaultTypeMap.MatchNamesWithUnderscores <- true
+        // Dapper.DefaultTypeMap.MatchNamesWithUnderscores <- true
         this.Configuration.["ConnectionString"] <-
             match this.Configuration.["DATABASE"] with
             | empty when String.IsNullOrEmpty(empty) -> (__SOURCE_DIRECTORY__ + "/bin/exchange.db")
