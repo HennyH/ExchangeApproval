@@ -52,6 +52,21 @@ namespace ExchangeApproval.Data
             return x;
         }
 
+        public static IEnumerable<UWAStaffLogon> CreateStaffLoginForRos()
+        {
+            var salt = UWAStaffLogon.GenerateSalt();
+            return new[]
+            {
+                new UWAStaffLogon
+                {
+                    Id = 1,
+                    Email = "ros@uwa.edu.au",
+                    Salt = salt,
+                    PasswordHash = UWAStaffLogon.HashPassword("password", salt)
+                }
+            };
+        }
+
         public readonly static string[] UNITCODE_PREFIXES = new string[]
         {
             "ART",

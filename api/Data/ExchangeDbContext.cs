@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using static ExchangeApproval.Data.SeedSampleData;
 
 namespace ExchangeApproval.Data
@@ -20,9 +22,11 @@ namespace ExchangeApproval.Data
         {
             base.OnModelCreating(modelBuilder);
             UnitApprovalRequest.OnModelCreating(modelBuilder);
+            UWAStaffLogon.OnModelCreating(modelBuilder);
         }
 
         public DbSet<UnitApprovalRequest> UnitApprovalRequests { get; set; }
+        public DbSet<UWAStaffLogon> StaffLogons { get; set; }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -73,6 +77,48 @@ namespace ExchangeApproval.Data
             modelBuilder
                 .Entity<UnitApprovalRequest>()
                 .HasData(CreateSeedUnitApprovalRequests().ToArray());
+        }
+    }
+
+    public class UWAStaffLogon
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public byte[] Salt { get; set; }
+        [Required]
+        public string PasswordHash { get; set; }
+
+        public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<UWAStaffLogon>()
+                .HasData(CreateStaffLoginForRos().ToArray());
+        }
+
+        public static byte[] GenerateSalt()
+        {
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+
+            return salt;
+        }
+
+        public static string HashPassword(string password, byte[] salt)
+        {
+            return Convert.ToBase64String(
+                KeyDerivation.Pbkdf2(
+                    password: password,
+                    salt: salt,
+                    prf: KeyDerivationPrf.HMACSHA1,
+                    iterationCount: 10000,
+                    numBytesRequested: 256 / 8
+                )
+            );
         }
     }
 }

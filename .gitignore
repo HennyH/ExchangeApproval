@@ -4,3 +4,6 @@ obj
 wwwroot
 node_modules
 package-lock.json
+*.csproj.user
+Properties
+.vs

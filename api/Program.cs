@@ -18,10 +18,7 @@ namespace ExchangeApproval
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-            var db = host.Services.GetService<ExchangeDbContext>();
-            db.Database.EnsureCreated();
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

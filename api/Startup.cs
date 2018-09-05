@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Serialization;
+using ZNetCS.AspNetCore.Authentication.Basic;
+using ZNetCS.AspNetCore.Authentication.Basic.Events;
 using System;
 using System.IO;
 using System.Reflection;
@@ -45,6 +47,15 @@ namespace ExchangeApproval
                 this.EnableCORS = true;
             }
 
+            services.AddScoped<BasicAuthenticationEventHandler>();
+            services
+                .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                .AddBasicAuthentication(options =>
+                {
+                    options.Realm = "ExchangeApproval";
+                    options.EventsType = typeof(BasicAuthenticationEventHandler);
+                });
+
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -78,12 +89,20 @@ namespace ExchangeApproval
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetService<ExchangeDbContext>();
+                db.Database.EnsureCreated();
+            }
         }
     }
 }

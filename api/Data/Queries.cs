@@ -70,5 +70,16 @@ namespace ExchangeApproval.Data
                     Approved = r.Approved.Value
                 });
         }
+
+        public static bool QueryIsVaidStaffLogon(ExchangeDbContext db, string email, string password)
+        {
+            var user = db.StaffLogons
+                .Where(l => l.Email == email)
+                .Select(l => new { l.Salt, l.PasswordHash })
+                .FirstOrDefault();
+            if (user == null)
+                return false;
+            return user.PasswordHash == UWAStaffLogon.HashPassword(password, user.Salt);
+        }
     }
 }

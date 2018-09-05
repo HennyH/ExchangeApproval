@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static ExchangeApproval.Data.Queries;
 
@@ -20,6 +21,7 @@ namespace ExchangeApproval.Controllers
         }
 
         [HttpGet("universities")]
+        [Authorize]
         public IEnumerable<string> Universities()
         {
             return QueryExchangeUniversities(_db, null).ToList();
