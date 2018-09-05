@@ -7,7 +7,11 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Serialization;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace ExchangeApproval
 {
@@ -45,16 +49,11 @@ namespace ExchangeApproval
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
-
-            var datasource = Configuration["DATABASE"];
+            services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ExchangeDbContext>(options =>
-                options.UseSqlite($"Data Source={datasource}")
-            );
+            {
+                options.UseInMemoryDatabase("ExchangeDb");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,13 +70,13 @@ namespace ExchangeApproval
             }
             else
             {
-                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
+
+            app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
 
             app.UseMvc(routes =>
             {

@@ -8,7 +8,7 @@ const Data = {
         fetch: () => {
             m.request({
                 method: "GET",
-                url: "https://localhost:5001/api/requests/filters"
+                url: "/api/requests/filters"
             }).then(options => {
                 Data.filters.options = options;
             });
