@@ -20,7 +20,7 @@ const Data = {
             });
             m.request({
                 method: "GET",
-                url: "https://localhost:5001/api/requests/decisions?" + qs
+                url: `/api/requests/decisions?${qs}"`
             }).then(items => {
                 Data.decisions.list = items;
                 Data.decisions.loading = false;

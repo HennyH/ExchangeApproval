@@ -10,8 +10,8 @@ module.exports = (env, options) => {
     context: path.resolve(__dirname),
     entry: './index.js',
     output: {
-      path: path.join(path.resolve(__dirname), '/dist'),
-      filename: 'index.js'
+      path: path.join(path.resolve(__dirname), '..', '/wwwroot'),
+      filename: 'index.js',
     },
     externals: {
       $: 'jQuery'
