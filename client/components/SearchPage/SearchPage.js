@@ -11,16 +11,16 @@ const Data = {
     decisions: {
         loading: false,
         list: [],
-        fetch: ({ contextIds = [], levelIds = [], universityIds = [] } = {}) => {
+        fetch: ({ universityNames = [], uwaContextTypes = [], uwaUnitLevels = [] } = {}) => {
             Data.decisions.loading = true;
             const qs = m.buildQueryString({
-                contextId: contextIds,
-                levelId: levelIds,
-                universityId: universityIds
+                universityNames,
+                uwaContextTypes,
+                uwaUnitLevels
             });
             m.request({
                 method: "GET",
-                url: "https://localhost:5001/api/values/decisions?" + qs
+                url: "https://localhost:5001/api/requests/decisions?" + qs
             }).then(items => {
                 Data.decisions.list = items;
                 Data.decisions.loading = false;
@@ -38,10 +38,11 @@ export default function SearchPage() {
     }
 
     function handleSearchPanelSubmit(settings) {
-        const universityIds = settings.exchangeUniversities.map(({ value: id }) => id);
-        const contextIds = settings.approvalTypes.map(({ value: id }) => id);
-        const levelIds = settings.unitLevels.map(({ value: id }) => id);
-        Data.decisions.fetch({ universityIds, contextIds, levelIds });
+        console.log(settings);
+        const universityNames = settings.exchangeUniversities.map(({ value }) => value);
+        const uwaContextTypes = settings.approvalTypes.map(({ value }) => value);
+        const uwaUnitLevels = settings.unitLevels.map(({ value }) => value);
+        Data.decisions.fetch({ universityNames, uwaContextTypes, uwaUnitLevels });
         m.redraw();
     }
 

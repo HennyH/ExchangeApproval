@@ -4,8 +4,6 @@ open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
 open API.Data.Queries
 open API.Data.ViewModels
-open System
-open Microsoft.AspNetCore.Mvc
 
 [<Route("api/[controller]")>]
 [<ApiController>]
@@ -43,3 +41,9 @@ type ValuesController (configuration: IConfiguration) =
             exchangeUniversities = exchangeUniversities |> List.ofSeq;
         }
         JsonResult(filterOptions)
+
+    [<HttpPost("application")>]
+    member this.SubmitRequests([<FromBody>]studentApplication: StudentApplicationVM) =
+        printfn "Lets take a lookin"
+        printfn "%O" studentApplication
+        printfn "And thats it folks!"

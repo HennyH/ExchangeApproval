@@ -98,7 +98,7 @@ module Queries =
                     decision.uwa_unit_code,
                     decision.approved
                 FROM denormalized_unit_decisions AS decision
-                WHERE 1=1
+                WHERE approved IS NOT NULL
                     AND (@FilterByExchangeUniversities = 0 OR decision.exchange_university_id IN @ExchangeUniversities)
                     AND (@FilterByUWAUnitContextIds = 0 OR decision.uwa_unit_context_id IN @UWAUnitContextIds)
                     AND (@FilterByUWAUnitLevelIds = 0 OR decision.uwa_unit_level_id IN @UWAUnitLevelIds)
@@ -106,3 +106,18 @@ module Queries =
             dict parameters
         )
 
+    let insertExchangeUniversity (connection: Connection) (name: string): UniversityDTO =
+        match queryUniversities connection (Some(name)) |> Seq.tryHead with
+        | Some(universty) -> universty
+        | None ->
+            connection.Execute(
+                @"
+                    INSERT INTO univeristy (university_name) VALUES
+                    (@Name)
+                ",
+                dict ["Name", name]
+            ) |> ignore
+            queryUniversities connection (Some(name)) |> Seq.head
+
+    let insertPendingApprovalDecision (exchangeUniversity: UniversityDTO) (uwaContextType: UnitContextDTO) (uwaUnit: UnitDTO option): UnitDecisionDTO =
+        ()

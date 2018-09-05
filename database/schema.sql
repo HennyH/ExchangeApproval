@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS unit_decision
     uwa_unit_context_id INTEGER NOT NULL,
     uwa_unit_id INTEGER NULL,
     exchange_unit_id INTEGER NOT NULL,
-    approved BOOLEAN NOT NULL,
+    approved BOOLEAN NULL,
     FOREIGN KEY (uwa_unit_context_id) REFERENCES uwa_unit_context_id (uwa_unit_context_id),
     FOREIGN KEY (uwa_unit_id) REFERENCES unit (unit_id),
     FOREIGN KEY (exchange_unit_id) REFERENCES unit (unit_id)
@@ -121,3 +121,20 @@ INNER JOIN denormalized_exchange_units AS exchange_unit
 
 CREATE VIEW IF NOT EXISTS exchange_universities AS
 SELECT * FROM university WHERE university_name <> 'University of Western Australia';
+
+-- Create tables relating to the storing of student applications
+CREATE TABLE student_application
+(
+    student_application_id INTEGER PRIMARY KEY,
+    exchange_university_id INTEGER NOT NULL
+);
+
+CREATE TABLE student_unit_request
+(
+    student_unit_request_id INTEGER PRIMARY KEY,
+    student_application_id INTEGER NOT NULL,
+    unit_decision_id INTEGER NOT NULL,
+    FOREIGN KEY (student_application_id) REFERENCES student_application (student_application_id),
+    FOREIGN KEY (exchange_unit_id) REFERENCES exchange_unit (exchange_unit_id),
+    FOREIGN KEY (unit_decision_id) REFERENCES unit_decision (unit_decision_id)
+);

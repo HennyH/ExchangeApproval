@@ -64,8 +64,15 @@ export default function DataTable() {
 
         if (!restoredFromCache) {
             datatable = $("#" + id).DataTable({
-                ...config
+                ...config,
+                /* Override the data here. We do this because the maybeRefresh
+                 * function updates some internal state about what data we
+                 * are displaying so as to avoid expensive re-renders when
+                 * the data doesn't change, we'll call it in a moment.
+                 */
+                data: []
             });
+            maybeRefresh(config.data);
             if (setup) {
                 setup(id, datatable, config);
             }

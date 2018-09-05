@@ -12,30 +12,41 @@ import {
     removeCartEventHandler
 } from 'Components/Cart'
 
-window.NEXT_APPROVAL_REQUEST_FORM_ID = 1;
+
+window.APPLICATION_FORM = window.APPLICATION_FORM || {
+    NEXT_APPROVAL_REQUEST_FORM_ID: 1,
+    APPROVAL_REQUEST_ITEM_FORMS: [],
+    STUDENT_DETAILS_FORM: StudentDetailsPowerForm.new({
+        onChange: emitApplicationFormChangedEvent
+    }),
+    EXCHANGE_UNIVERSITY_DETAILS_FORM: ExchangeUniversityDetailsPowerForm.new({
+        onChange: emitApplicationFormChangedEvent
+    }),
+    CHANGE_CALLBACK: () => {}
+}
+
+function emitApplicationFormChangedEvent() {
+    const isValid =
+        window.APPLICATION_FORM.STUDENT_DETAILS_FORM.isValid() &&
+        window.APPLICATION_FORM.EXCHANGE_UNIVERSITY_DETAILS_FORM.isValid() &&
+        !window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.some(({ form }) => !form.isValid());
+    window.APPLICATION_FORM.CHANGE_CALLBACK(
+        {
+            student: window.APPLICATION_FORM.STUDENT_DETAILS_FORM.getData(),
+            exchangeUniversity: window.APPLICATION_FORM.EXCHANGE_UNIVERSITY_DETAILS_FORM.getData(),
+            approvalRequests: window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.map(({ form }) => form.getData())
+        },
+        isValid
+    );
+}
 
 export default function ApplicationForm() {
 
     let updateCartDerivedRequestItemsOnCartChangeCallback = null;
-    const state = {
-        scrollToLastRequest: false,
-        studentDetailsForm: null,
-        exchangeUniversityDetailsForm: null,
-        approvalRequestForms: []
-    };
+    const state = { scrollToLastRequest: false };
 
     function oninit({ attrs: { contextTypeOptions, electiveContextTypeOption, changeCallback }}) {
-        /* Create the power forms that'll be used in the view, and which the changeCallbacks
-         * argument will be derived.
-         */
-        state.studentDetailsForm = StudentDetailsPowerForm.new({
-            onChange: () => handleChange(changeCallback)
-        });
-        state.exchangeUniversityDetailsForm = ExchangeUniversityDetailsPowerForm.new({
-            onChange: () => handleChange(changeCallback)
-        });
-        state.approvalRequestForms = [];
-
+        window.APPLICATION_FORM.CHANGE_CALLBACK = changeCallback;
         /* When the form initalizes we need to create approval request forms
          * for all the items already in the cart. We also need to register the
          * same function to be called whenever the cart changes.
@@ -43,8 +54,7 @@ export default function ApplicationForm() {
         updateCartDerivedRequestItemsOnCartChangeCallback = (items) => updateCartDerivedRequestItems({
             cartItems: items,
             contextTypeOptions,
-            electiveContextTypeOption,
-            changeCallback
+            electiveContextTypeOption
         });
         updateCartDerivedRequestItemsOnCartChangeCallback(getItemsInCart());
         addCartEventHandler(
@@ -64,31 +74,32 @@ export default function ApplicationForm() {
     }
 
     function view({ attrs: { contextTypeOptions, electiveContextTypeOption, changeCallback } }) {
+        /* Update the callback function which gets triggered when the form changes */
+        window.APPLICATION_FORM.CHANGE_CALLBACK = changeCallback;
         const appliedAddNewRequestForm = () => {
-            const nextId = window.NEXT_APPROVAL_REQUEST_FORM_ID++;
+            const nextId = window.APPLICATION_FORM.NEXT_APPROVAL_REQUEST_FORM_ID++;
             addNewApprovalRequestForm({
                 id: nextId,
                 isFromCart: false,
                 contextTypeOptions,
                 electiveContextTypeOption,
-                changeCallback,
                 scrollToForm: true,
                 invokeChangeCallback: true
             });
         };
-        const numberRequestForms = state.approvalRequestForms.length;
+        const numberRequestForms = window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.length;
         return (
             <div class="container">
                 <div class="card bg-light mt-3 mb-3">
                     <div class="card-header">Student Details</div>
                     <div class="card-body">
-                        <StudentDetailsForm form={state.studentDetailsForm} />
+                        <StudentDetailsForm form={window.APPLICATION_FORM.STUDENT_DETAILS_FORM} />
                     </div>
                 </div>
                 <div class="card bg-light mt-3 mb-3">
                     <div class="card-header">Exchange University Details</div>
                     <div class="card-body">
-                    <ExchangeUniversityDetailsForm form={state.exchangeUniversityDetailsForm} />
+                    <ExchangeUniversityDetailsForm form={window.APPLICATION_FORM.EXCHANGE_UNIVERSITY_DETAILS_FORM} />
                     </div>
                 </div>
                 <div class="card bg-light mt-3 mb-3">
@@ -102,7 +113,7 @@ export default function ApplicationForm() {
                             )
                             : <div />
                         )}
-                        {state.approvalRequestForms.map(({ id, isFromCart, form }, i) => (
+                        {window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.map(({ id, isFromCart, form }, i) => (
                             <div class={classNames("card bg-light mt-1", i == numberRequestForms - 1 ? "mb-1" : "mb-2")}>
                                 <div class="card-header">Request {i + 1} {isFromCart ? "(From Cart)" : ""}</div>
                                 <div class="card-body">
@@ -112,7 +123,7 @@ export default function ApplicationForm() {
                                         key={id}
                                         form={form}
                                         electiveContextTypeOption={electiveContextTypeOption}
-                                        ondelete={() => removeApprovalRequestForm(id, changeCallback)}
+                                        ondelete={() => removeApprovalRequestForm(id)}
                                     />
                                 </div>
                             </div>
@@ -141,21 +152,6 @@ export default function ApplicationForm() {
         }
     }
 
-    function handleChange(callback) {
-        const isValid =
-            state.studentDetailsForm.isValid() &&
-            state.exchangeUniversityDetailsForm.isValid() &&
-            !state.approvalRequestForms.some(({ form }) => !form.isValid());
-        callback(
-            {
-                student: state.studentDetailsForm.getData(),
-                exchangeUniversity: state.exchangeUniversityDetailsForm.getData(),
-                approvalRequests: state.approvalRequestForms.map(({ form }) => form.getData())
-            },
-            isValid
-        );
-    }
-
     function scrollToLastRequestItem() {
         const $lastItemForm = $('.request-item-form').last()
         const topOffset = $lastItemForm.offset().top;
@@ -178,7 +174,6 @@ export default function ApplicationForm() {
         cartItems,
         contextTypeOptions,
         electiveContextTypeOption,
-        changeCallback
     }) {
         const cartItemIds = []
         for (let cartItem of cartItems) {
@@ -187,30 +182,29 @@ export default function ApplicationForm() {
             /* Add a new form that is derived from the cart item if one
              * hasn't already been added for it.
              */
-            if (!state.approvalRequestForms.some(({ id }) => id === cartItemId)) {
+            if (!window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.some(({ id }) => id === cartItemId)) {
                 addNewApprovalRequestForm({
                     id: cartItemId,
                     isFromCart: true,
                     contextTypeOptions,
                     electiveContextTypeOption,
-                    changeCallback,
                     invokeChangeCallback: false,
                     scrollToForm: false,
                     cartItem: cartItem,
                     powerFormProps: {
                         /* This sets the default values for the form. */
                         data: {
-                            exchangeUnitName: cartItem.exchange_unit_name,
-                            exchangeUnitCode: cartItem.exchange_unit_code,
-                            exchangeUnitOutlineHref: cartItem.exchange_unit_outline_href,
+                            exchangeUnitName: cartItem.exchangeUnitName,
+                            exchangeUnitCode: cartItem.exchangeUnitCode,
+                            exchangeUnitOutlineHref: cartItem.exchangeUnitOutlineHref,
                             contextType: new Option(
-                                cartItem.uwa_unit_context_name,
-                                cartItem.uwa_unit_context_id,
+                                cartItem.uwaUnitContext,
+                                cartItem.uwaUnitContext,
                                 false,
                                 true
                             ),
-                            uwaUnitName: cartItem.uwa_unit_name,
-                            uwaUnitCode: cartItem.uwa_unit_code
+                            uwaUnitName: cartItem.uwaUnitName,
+                            uwaUnitCode: cartItem.uwaUnitCode
                         }
                     }
                 });
@@ -222,12 +216,12 @@ export default function ApplicationForm() {
          * something is removed from the cart and we need to drop the form
          * for it.
          */
-        state.approvalRequestForms = state.approvalRequestForms.filter(f =>
+        window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS = window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.filter(f =>
             !f.isFromCart ||
             cartItems.some(i => btoa(JSON.stringify(i)) === f.id)
         );
 
-        handleChange(changeCallback);
+        emitApplicationFormChangedEvent();
     }
 
     function addNewApprovalRequestForm({
@@ -235,7 +229,6 @@ export default function ApplicationForm() {
         isFromCart = false,
         contextTypeOptions,
         electiveContextTypeOption,
-        changeCallback,
         invokeChangeCallback = true,
         scrollToForm = true,
         powerFormProps = {},
@@ -244,12 +237,19 @@ export default function ApplicationForm() {
         const form = new UnitApprovalRequestItemPowerForm({
             contextTypeOptions,
             electiveContextTypeOption,
-            onChange: () => handleChange(changeCallback),
+            onChange: () => emitApplicationFormChangedEvent,
             ...powerFormProps
         });
-        state.approvalRequestForms.push({ id, isFromCart, form, ...formProps});
+
+        /* If it's from the cart insert it at the top of the list */
+        if (isFromCart) {
+            window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.unshift({ id, isFromCart, form, ...formProps});
+        } else {
+            window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.push({ id, isFromCart, form, ...formProps});
+        }
+
         if (invokeChangeCallback) {
-            handleChange(changeCallback);
+            emitApplicationFormChangedEvent();
         }
         if (scrollToForm) {
             /* This flag will be consumed in the onupdate lifecycle method
@@ -261,15 +261,15 @@ export default function ApplicationForm() {
         return form;
     }
 
-    function removeApprovalRequestForm(id, changeCallback) {
-        const index = state.approvalRequestForms.findIndex(f => f.id === id);
+    function removeApprovalRequestForm(id) {
+        const index = window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.findIndex(f => f.id === id);
         if (index >= 0) {
-            const form = state.approvalRequestForms[index];
-            state.approvalRequestForms.splice(index, 1);
+            const form = window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS[index];
+            window.APPLICATION_FORM.APPROVAL_REQUEST_ITEM_FORMS.splice(index, 1);
             if (form.isFromCart) {
                 removeItemFromCart(form.cartItem);
             }
-            handleChange(changeCallback);
+            emitApplicationFormChangedEvent();
         }
     }
 
