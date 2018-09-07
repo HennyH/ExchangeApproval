@@ -33,6 +33,7 @@ Automation of the exchange unit approval process.
 | Mentor Meeting 1 Questions and Notes | 16/08/2018 | https://docs.google.com/document/d/14y2D4a-uu6OoEJcWEIlkJRlL4-V6u4nSdY39QSU35YI/edit?usp=sharing |
 | Mentor Meeting 1 Notes | 16/08/2018 15:05-16:20 | https://docs.google.com/document/d/11RsvLUr-8UpzFFUaTtm9Y-LTiv4-HBJnazVkOKdygpg/edit?usp=sharing |
 | Audited Meeting 2 Notes & Task Allocation | 24/08/2018 15:03-16:13 | https://docs.google.com/document/d/1VmcXWwOu-_Aae3WXsIyDmmJdd4bla0evX2GGk1aISis/edit |
+| Audited Meeting 3 Notes & Task Allocation | 07/09/2018 13:03-13:56 | https://docs.google.com/document/d/1VlGiPCwzeYtbhAuUCwOp9VkFe9EVCBhT2kHLiLq1Go0/edit |
 ## License
 
 ExchangeUnitApproval (c) by Henry Hollingworth (21471423@student.uwa.edu.au),
