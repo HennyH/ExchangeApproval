@@ -10,7 +10,7 @@ export default function Layout() {
         const navLinks = [
             { href: "/search", text: "Search Units" },
             { href: "/application", text: "Student Application" },
-            { href: "/staff", text: "Staff Portal" }
+            { href: "/student-office", text: "Staff Portal" }
         ];
         return (
             <div>

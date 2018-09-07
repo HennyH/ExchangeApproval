@@ -2,7 +2,7 @@ import m from 'mithril'
 import classNames from 'classnames';
 
 import Layout from 'Components/Layout'
-import SearchSettingsPanelContainer from './SearchSettingsPanelContainer.js'
+import StudentUnitSearchSettingsPanelContainer from './StudentUnitSearchSettingsPanelContainer.js'
 import Spinner from 'Components/Spinners/RectangularSpinner';
 import DecisionsTable from './DecisionsTable.js'
 import { addItemToCart, default as Cart } from 'Components/Cart';
@@ -49,11 +49,11 @@ export default function SearchPage() {
     function view() {
         return (
             <Layout>
-                <div class="container">
+                <div class="container-fluid">
                     <div class="card bg-light mt-3 mb-3">
                         <div class="card-header">Search Settings</div>
                         <div class="card-body">
-                            <SearchSettingsPanelContainer onsubmit={handleSearchPanelSubmit} />
+                            <StudentUnitSearchSettingsPanelContainer onsubmit={handleSearchPanelSubmit} />
                         </div>
                     </div>
                     <div class="card bg-light mb-3">
