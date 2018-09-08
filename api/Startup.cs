@@ -14,6 +14,7 @@ using ZNetCS.AspNetCore.Authentication.Basic.Events;
 using System;
 using System.IO;
 using System.Reflection;
+using Newtonsoft.Json.Converters;
 
 namespace ExchangeApproval
 {
@@ -58,6 +59,10 @@ namespace ExchangeApproval
 
             services
                 .AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddEntityFrameworkInMemoryDatabase();

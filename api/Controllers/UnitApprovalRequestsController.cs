@@ -6,6 +6,9 @@ using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using ExchangeApproval.Utilities;
 using static ExchangeApproval.Data.Queries;
 
 namespace ExchangeApproval.Controllers
@@ -41,12 +44,17 @@ namespace ExchangeApproval.Controllers
         [HttpGet("decisions")]
         public IEnumerable<UnitApprovalDecisionVM> ApprovalRequests(
                 string[] universityNames,
-                UWAUnitContext[] uwaContextTypes,
-                UWAUnitLevel[] uwaUnitLevels
+                string[] uwaContextTypes,
+                string[] uwaUnitLevels
             )
         {
             Console.WriteLine(universityNames);
-            return QueryUnitApprovalDecisions(_db, universityNames, uwaContextTypes, uwaUnitLevels);
+            return QueryUnitApprovalDecisions(
+                _db,
+                universityNames,
+                EnumExtensions.ParseMany<UWAUnitContext>(uwaContextTypes).ToArray(),
+                EnumExtensions.ParseMany<UWAUnitLevel>(uwaUnitLevels).ToArray()
+            );
         }
 
         [HttpPost("application")]
