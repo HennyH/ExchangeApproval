@@ -5,7 +5,7 @@ import {
     COLUMN_NAMES as DECISION_TABLE_COLUMN_NAMES,
     makeDecisionsTableConfig,
     default as DecisionsTable
-} from 'Components/SearchPage/DecisionsTable.js'
+} from 'Components/DecisionSearch/DecisionsTable.js'
 
 window.CART = window.CART || {
     handlers: [],
