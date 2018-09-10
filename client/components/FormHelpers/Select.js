@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 const noop = () => {};
 
-export default function Select2() {
+export default function Select() {
     function view({
         attrs: {
             field,
@@ -35,7 +35,9 @@ export default function Select2() {
                     <option
                         {...props}
                         selected={props.selected || props.value === selected.value}
-                    />
+                    >
+                        {props.label}
+                    </option>
                 ))}
             </select>
         )

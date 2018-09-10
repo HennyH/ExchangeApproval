@@ -1,12 +1,13 @@
 import m from 'mithril'
+import classNames from 'classnames';
 
 import Styles from './RectangularSpinner.css'
 
 export default function RectangularSpinner() {
 
-    function view() {
+    function view({ attrs: { class: classes, ...otherAttrs }}) {
         return (
-            <div class={Styles.ldsGrid}>
+            <div class={classNames(Styles.ldsGrid, classes)} {...otherAttrs}>
                 <div/>
                 <div/>
                 <div/>
@@ -20,14 +21,5 @@ export default function RectangularSpinner() {
         );
     }
 
-    function oncreate({ dom: ref }) {
-        const $div = $(ref);
-        // $div.css({
-        //     top: "50%",
-        //     left: "50%",
-        //     margin: `-${$div.height() / 2}px 0 0 -${$div.width() / 2}px`
-        // });
-    }
-
-    return { view , oncreate }
+    return { view }
 }

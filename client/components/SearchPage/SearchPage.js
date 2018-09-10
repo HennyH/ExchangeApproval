@@ -10,13 +10,16 @@ import DecisionsTable from './DecisionsTable.js';
 
 const Data = {
     filters: {
+        loading: false,
         options: null,
         fetch: () => {
+            Data.filters.loading = true;
             m.request({
                 method: "GET",
                 url: "/api/requests/filters"
             }).then(options => {
                 Data.filters.options = options;
+                Data.filters.loading = false;
             });
         }
     },
@@ -54,15 +57,18 @@ export default function SearchPage() {
         return (
             <Layout>
                 <div class="container">
-                    <div class="card bg-light mb-3">
+                    <div class="card bg-light mt-3 mb-3">
                         <div class="card-header">Search Settings</div>
-                        <div class="card-body">
-                            <DecisionSearchSettingsPanel
-                                onSearchSettingsChanged={handleSearchSettingsChanged}
-                                exchangeUniversityOptions={Data.filters.options.exchangeUniversityNames}
-                                levelOptions={Data.filters.options.uwaUnitLevelOptions}
-                                contextOptions={Data.filters.options.uwaUnitContextOptions}
-                            />
+                        <div class={classNames("card-body", Data.filters.loading ? "text-center" : "")}>
+                            {(Data.filters.loading
+                                ? <Spinner />
+                                : <DecisionSearchSettingsPanel
+                                    onSearchSettingsChanged={handleSearchSettingsChanged}
+                                    exchangeUniversityOptions={Data.filters.options.exchangeUniversityNames}
+                                    levelOptions={Data.filters.options.uwaUnitLevelOptions}
+                                    contextOptions={Data.filters.options.uwaUnitContextOptions}
+                                />
+                            )}
                         </div>
                     </div>
                     <div class="card bg-light mb-3">
@@ -77,7 +83,7 @@ export default function SearchPage() {
                             {(Data.decisions.loading
                                 ? <Spinner />
                                 : <DecisionsTable
-                                    decisions={Data.decisions}
+                                    decisions={Data.decisions.list}
                                     onAddToCart={addItemToCart}
                                 />
                             )}
