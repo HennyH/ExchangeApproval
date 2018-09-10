@@ -4,7 +4,6 @@ import DataTable from 'Components/DataTable';
 import Styles from './DecisionsTable.css'
 
 export const COLUMN_NAMES = {
-    Id: 'ID',
     Date: 'Date',
     Type: 'Type',
     ExchangeUniversity: 'Ex. University',
@@ -51,7 +50,8 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 title: COLUMN_NAMES.ExchangeUnit,
                 width: "30%",
                 data: "exchangeUnitName",
-                render: (data, type, row, meta) => `<a href=${encodeURI(data.exchangeUnitOutlineHref)}>${data} (${row.exchangeUnitCode})</a>`
+                render: (data, type, row, meta) =>
+                    `<a href=${encodeURI(row.exchangeUnitOutlineHref)}>${data} (${row.exchangeUnitCode})</a>`
 
             },
             {
