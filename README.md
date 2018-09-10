@@ -30,6 +30,7 @@ Automation of the exchange unit approval process.
 | Audit Meeting 1 Notes | 09/08/2018 14:10 - 15:30 | https://docs.google.com/document/d/1Nxk-VlIZfNkuaq0PZUJyM6Do1lZtxfoXO-xX_dLySc8/edit?usp=sharing |
 | Client Meeting 2 Notes | 10/08/2018 15:02-15:55 | https://docs.google.com/document/d/1Qy5r8CcwlKQVKjjgNZt7GXewCEV0ZdPZg5ctElkHwJY/edit?usp=sharing |
 | Client Meeting 3 Notes | 15/08/2018 15:38-16:44 | https://docs.google.com/document/d/1MDC6awTdmaHYMSnWTM0UICSgvlmna1P3tHwJdSFSDIQ/edit?usp=sharing |
+| Client Meeting 4 Notes | 10/09/2018 14:45-15:30 | https://docs.google.com/document/d/1WGtJdJ8kiP21bQZckdQBsUeQRMVsXHPwDcUoUEH3q-U/edit |
 | Mentor Meeting 1 Questions and Notes | 16/08/2018 | https://docs.google.com/document/d/14y2D4a-uu6OoEJcWEIlkJRlL4-V6u4nSdY39QSU35YI/edit?usp=sharing |
 | Mentor Meeting 1 Notes | 16/08/2018 15:05-16:20 | https://docs.google.com/document/d/11RsvLUr-8UpzFFUaTtm9Y-LTiv4-HBJnazVkOKdygpg/edit?usp=sharing |
 | Audited Meeting 2 Notes & Task Allocation | 24/08/2018 15:03-16:13 | https://docs.google.com/document/d/1VmcXWwOu-_Aae3WXsIyDmmJdd4bla0evX2GGk1aISis/edit |
