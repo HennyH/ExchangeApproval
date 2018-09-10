@@ -72,7 +72,7 @@ namespace ExchangeApproval.Data
                 });
         }
 
-        public static bool QueryIsVaidStaffLogon(ExchangeDbContext db, string email, string password)
+        public static bool QueryIsValidStaffLogon(ExchangeDbContext db, string email, string password)
         {
             var user = db.StaffLogons
                 .Where(l => l.Email == email)

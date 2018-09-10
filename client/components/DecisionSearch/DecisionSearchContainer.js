@@ -115,7 +115,9 @@ export function DecisionSearch() {
                         <div class={classNames("card-body", isLoading ? "text-center": "")}>
                             {(isLoading
                                 ? <Spinner />
-                                : <DecisionsTable decisions={decisions} onAddToCart={onAddToCart} />
+                                : <DecisionsTable decisions={decisions}
+                                onAddToCart={onAddToCart}
+                                />
                             )}
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import m from 'mithril'
 
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
-import { COLUMN_NAMES, default as DecisionsTable } from '../DecisionSearch/DecisionsTable.js';
+import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
 
 const MOCK_DECISIONS = [
     {
@@ -29,7 +29,7 @@ const MOCK_DECISIONS = [
         "uwaUnitCode": "ANTH3.12",
         "uwaUnitLevel": ">4000",
         "uwaUnitContext": "Core",
-        "approved": true
+        "approved": null
     },
     {
         "id": 23,
@@ -58,26 +58,13 @@ export default function StaffPage() {
                         </div>
                     </div>
                     <div class="card bg-light mt-3 mb-3">
-                        <div class="card-header">Search Settings</div>
+                        <div class="card-header">Search Results</div>
                         <div class="card-body">
-                            <DecisionsTable
+                            <InboxTable
                                 decisions={MOCK_DECISIONS}
                                 headers={[
-                                    COLUMN_NAMES.Type,
-                                    COLUMN_NAMES.ExchangeUniversity,
-                                    COLUMN_NAMES.ExchangeUnit,
-                                    COLUMN_NAMES.UWAUnit,
-                                    COLUMN_NAMES.Approved
-                                ]}
-                            />
-                        </div>
-                    </div>
-                    <div class="card bg-light mt-3 mb-3">
-                        <div class="card-header">Search Settings</div>
-                        <div class="card-body">
-                            <DecisionsTable
-                                decisions={MOCK_DECISIONS}
-                                headers={[
+                                    COLUMN_NAMES.Id,
+                                    COLUMN_NAMES.Date,
                                     COLUMN_NAMES.Type,
                                     COLUMN_NAMES.ExchangeUniversity,
                                     COLUMN_NAMES.ExchangeUnit,

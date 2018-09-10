@@ -20,7 +20,7 @@ namespace ExchangeApproval
 
         public override Task ValidatePrincipalAsync(ValidatePrincipalContext context)
         {
-            if (QueryIsVaidStaffLogon(_db, context.UserName, context.Password))
+            if (QueryIsValidStaffLogon(_db, context.UserName, context.Password))
             {
                 var claims = new List<Claim>
                 {

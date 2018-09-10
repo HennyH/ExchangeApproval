@@ -1,20 +1,19 @@
 import m from 'mithril'
 
 import DataTable from 'Components/DataTable';
-import Styles from './DecisionsTable.css'
+import Styles from '../DecisionSearch/DecisionsTable.css'
 
 export const COLUMN_NAMES = {
-    Id: 'ID',
+    Id: 'Id',
     Date: 'Date',
     Type: 'Type',
     ExchangeUniversity: 'Ex. University',
     ExchangeUnit: 'Ex. Unit',
     UWAUnit: 'UWA Unit',
-    Approved: 'Appv.',
-    Cart: 'Cart'
+    Approved: 'Appv.'
 };
 
-export function makeDecisionsTableConfig(decisions, headers) {
+export function makeInboxTableConfig(decisions, headers) {
     const TYPE_TO_BADGE_CLASS = {
         Elective: 'badge-warning',
         Complementary: 'badge-primary',
@@ -25,6 +24,11 @@ export function makeDecisionsTableConfig(decisions, headers) {
     return {
         data: decisions,
         columns: [
+            {
+                title: COLUMN_NAMES.Id,
+                data: "id",
+                render: (data, type, row, meta) => data
+            },
             {
                 title: COLUMN_NAMES.Date,
                 data: "decisionDate",
@@ -70,31 +74,21 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 title: COLUMN_NAMES.Approved,
                 data: "approved",
                 render: (data, type, row, meta) => data ? "✅" : data == null ? "💭" : "❌"
-            },
-            {
-                title: COLUMN_NAMES.Cart,
-                data: null,
-                render: (data, type, row, meta) => {
-                    return row.approved
-                        ? "<button type='button' class='btn btn-primary'>🛒</button>"
-                        : ""
-                }
             }
         ].filter(c => headers == null || headers.includes(c.title))
     }
 }
 
-export default function DecisionsTable() {
+export default function InboxTable() {
 
-    function view({ attrs: { decisions, onAddToCart, headers = null }}) {
+    function view({ attrs: { decisions, headers = null }}) {
         return (
             <DataTable
-                id="decisions-table"
-                config={makeDecisionsTableConfig(decisions, headers)}
+                id="inbox-table"
+                config={makeInboxTableConfig(decisions, headers)}
                 setup={(id, datatable) => {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
                         const decision = datatable.row($(event.target).parents('tr')).data();
-                        onAddToCart(decision);
                     })
                 }}
                 cache={true}
