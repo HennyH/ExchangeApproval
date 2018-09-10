@@ -13,14 +13,7 @@ export const COLUMN_NAMES = {
     Approved: 'Appv.'
 };
 
-export function makeInboxTableConfig(decisions, headers) {
-    const TYPE_TO_BADGE_CLASS = {
-        Elective: 'badge-warning',
-        Complementary: 'badge-primary',
-        Core: 'badge-success'
-    }
-    const DEFAULT_BADGE_CLASS = 'badge-secondary';
-
+export function makeInboxTableConfig(decisions) {
     return {
         data: decisions,
         columns: [
@@ -55,7 +48,7 @@ export function makeInboxTableConfig(decisions, headers) {
                 title: COLUMN_NAMES.ExchangeUniversityName,
                 data: "exchangeUniversityName",
                 width: '30%',
-                render: (data, type, row, meta) => 
+                render: (data, type, row, meta) =>
                 `<a href=${encodeURI(row.exchangeUniversityHref)}>${data}</a>`
             },
             {
@@ -69,11 +62,11 @@ export function makeInboxTableConfig(decisions, headers) {
 
 export default function InboxTable() {
 
-    function view({ attrs: { decisions, headers = null }}) {
+    function view({ attrs: { decisions }}) {
         return (
             <DataTable
                 id="inbox-table"
-                config={makeInboxTableConfig(decisions, headers)}
+                config={makeInboxTableConfig(decisions)}
                 setup={(id, datatable) => {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
                         const decision = datatable.row($(event.target).parents('tr')).data();

@@ -24,7 +24,9 @@ const Data = {
 export default function ApplicationPage() {
 
     function oninit() {
-        Data.filters.fetch();
+        if (Data.filters.options === null) {
+            Data.filters.fetch();
+        }
     }
 
     function view() {
