@@ -48,8 +48,12 @@ const Data = {
 export default function SearchPage() {
 
     function oninit() {
-        Data.filters.fetch();
-        Data.decisions.fetch();
+        if (Data.filters.options == null) {
+            Data.filters.fetch();
+        }
+        if (Data.decisions.list.length === 0) {
+            Data.decisions.fetch();
+        }
     }
 
     function view() {
