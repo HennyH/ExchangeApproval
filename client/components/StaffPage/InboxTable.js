@@ -5,11 +5,11 @@ import Styles from '../DecisionSearch/DecisionsTable.css'
 
 export const COLUMN_NAMES = {
     Id: 'Id',
-    StudentName: "Student Name",
-    StudentNumber: "Student Number",
     Date: 'Date',
     Type: 'Type',
-    ExchangeUniversityName: 'Ex. University',
+    ExchangeUniversity: 'Ex. University',
+    ExchangeUnit: 'Ex. Unit',
+    UWAUnit: 'UWA Unit',
     Approved: 'Appv.'
 };
 
@@ -26,44 +26,56 @@ export function makeInboxTableConfig(decisions, headers) {
         columns: [
             {
                 title: COLUMN_NAMES.Id,
-                data: "id"
-            },
-            {
-                title: COLUMN_NAMES.StudentName,
-                data: "studentName"
-            },
-            {
-                title: COLUMN_NAMES.StudentNumber,
-                data: "studentNumber"
+                data: "id",
+                render: (data, type, row, meta) => data
             },
             {
                 title: COLUMN_NAMES.Date,
                 data: "decisionDate",
                 render: (data, type, row, meta) => {
-                    if (data === null) {
-                        return `
-                            <span class='badge badge-warning'>
-                                PENDING
-                            </span>
-                        `;
-                    }
                     const options = { month: "short", year: "2-digit" };
                     return new Date(data).toLocaleDateString(undefined, options);
                 }
             },
             {
-                title: COLUMN_NAMES.ExchangeUniversityName,
+                title: COLUMN_NAMES.Type,
+                data: "uwaUnitContext",
+                render: (data, type, row, meta) => `
+                    <span class='badge ${TYPE_TO_BADGE_CLASS[data] || DEFAULT_BADGE_CLASS} ${Styles.contextTypeBadge}'>
+                        ${data.substring(0, 4).toUpperCase()}
+                    </span>
+                `
+            },
+            {
+                title: COLUMN_NAMES.ExchangeUniversity,
                 data: "exchangeUniversityName",
-                width: '30%',
-                render: (data, type, row, meta) => 
-                `<a href=${encodeURI(row.exchangeUniversityHref)}>${data}</a>`
+                width: '30%'
+            },
+            {
+                title: COLUMN_NAMES.ExchangeUnit,
+                width: "30%",
+                data: "exchangeUnitName",
+                render: (data, type, row, meta) => `<a href=${encodeURI(data.exchangeUnitOutlineHref)}>${data} (${row.exchangeUnitCode})</a>`
+
+            },
+            {
+                title: COLUMN_NAMES.UWAUnit,
+                data: null,
+                width: "30%",
+                render: (data, type, row, meta) => {
+                    const components = [
+                        row.uwaUnitName || '',
+                        row.uwaUnitCode ? `(${row.uwaUnitCode})` : ''
+                    ];
+                    return components.join(' ');
+                }
             },
             {
                 title: COLUMN_NAMES.Approved,
                 data: "approved",
                 render: (data, type, row, meta) => data ? "✅" : data == null ? "💭" : "❌"
             }
-        ]
+        ].filter(c => headers == null || headers.includes(c.title))
     }
 }
 
