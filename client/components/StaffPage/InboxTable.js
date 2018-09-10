@@ -1,7 +1,7 @@
 import m from 'mithril'
 
-import DataTable from 'Components/DataTable';
-import Styles from '../DecisionSearch/DecisionsTable.css'
+import DataTable from 'Components/DataTable/DataTable.js';
+import Styles from '../SearchPage/DecisionsTable.css'
 
 export const COLUMN_NAMES = {
     Id: 'Id',

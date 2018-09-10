@@ -8,16 +8,16 @@ const MOCK_DECISIONS = [
     {
         "id": 7,
         "studentName": "Augustin Gan",
-        "studentNumber": "21313131",
+        "studentNumber": "21988992",
         "decisionDate": "1995-04-08T00:00:00",
-        "exchangeUniversityName": "University of New York",
-        "exchangeUniversityHref": "https://university.com",
+        "exchangeUniversityName": "MIT",
+        "exchangeUniversityHref": "https://www.MIT.com",
         "approved": true
     },
     {
         "id": 18,
         "studentName": "Henry Hollingworth",
-        "studentNumber": "21313221",
+        "studentNumber": "21498574",
         "decisionDate": null,
         "exchangeUniversityName": "University of Los Angeles",
         "exchangeUniversityHref": "https://university.com",
