@@ -40,7 +40,7 @@ export function DecisionSearchSettingsPanel() {
             <form onsubmit={handleSubmit.bind(this, onSearchSettingsChanged)}>
                 <div class="row">
                     <div class="col-lg-6 col-md-12 form-group">
-                        <label for="universities">Exchange Universitys</label>
+                        <label for="universities">Exchange Universities</label>
                         <Select2
                             field={state.form.exchangeUniversities}
                             config={{
@@ -115,7 +115,9 @@ export function DecisionSearch() {
                         <div class={classNames("card-body", isLoading ? "text-center": "")}>
                             {(isLoading
                                 ? <Spinner />
-                                : <DecisionsTable decisions={decisions} onAddToCart={onAddToCart} />
+                                : <DecisionsTable decisions={decisions}
+                                onAddToCart={onAddToCart}
+                                />
                             )}
                         </div>
                     </div>
