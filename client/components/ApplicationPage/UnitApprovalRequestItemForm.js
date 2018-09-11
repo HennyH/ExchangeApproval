@@ -39,7 +39,7 @@ export function UnitApprovalRequestItemForm() {
                     <div class="col">
                         <div class="form-row">
                             <div class="col">
-                                <h6>Exchane Unit Details</h6>
+                                <h6>Exchange Unit Details</h6>
                             </div>
                         </div>
                         <div class="form-row">
