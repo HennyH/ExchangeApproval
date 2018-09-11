@@ -10,7 +10,8 @@ export const COLUMN_NAMES = {
     Date: 'Date',
     Type: 'Type',
     ExchangeUniversityName: 'Ex. University',
-    Approved: 'Appv.'
+    Approved: 'Appv.',
+    Edit: 'Edit'
 };
 
 export function makeInboxTableConfig(decisions) {
@@ -55,6 +56,14 @@ export function makeInboxTableConfig(decisions) {
                 title: COLUMN_NAMES.Approved,
                 data: "approved",
                 render: (data, type, row, meta) => data ? "✅" : data == null ? "💭" : "❌"
+            },
+            {
+                title: COLUMN_NAMES.Edit,
+                render: (data, type, row, meta) => {
+                    return row.approved === null
+                        ? `<button type='button' class='btn btn-primary'>🖉 Edit</button>`
+                        : `<button type='button' class='btn btn-secondary' disabled>⚿ Edit</button>`
+                }
             }
         ]
     }
