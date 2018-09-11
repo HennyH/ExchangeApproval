@@ -7,8 +7,8 @@ export const COLUMN_NAMES = {
     Date: 'Date',
     Type: 'Type',
     ExchangeUniversity: 'Ex. University',
-    ExchangeUnit: 'Ex. Unit',
-    UWAUnit: 'UWA Unit',
+    ExchangeUnit: 'Ex. Unit(s)',
+    UWAUnit: 'UWA Unit(s)',
     Approved: 'Appv.',
     Cart: 'Cart'
 };
@@ -26,45 +26,49 @@ export function makeDecisionsTableConfig(decisions, headers) {
         columns: [
             {
                 title: COLUMN_NAMES.Date,
-                data: "decisionDate",
+                data: "approvedAt",
                 render: (data, type, row, meta) => {
                     const options = { month: "short", year: "2-digit" };
                     return new Date(data).toLocaleDateString(undefined, options);
                 }
             },
             {
-                title: COLUMN_NAMES.Type,
-                data: "uwaUnitContext",
-                render: (data, type, row, meta) => `
-                    <span class='badge ${TYPE_TO_BADGE_CLASS[data] || DEFAULT_BADGE_CLASS} ${Styles.contextTypeBadge}'>
-                        ${data.substring(0, 4).toUpperCase()}
-                    </span>
-                `
-            },
-            {
                 title: COLUMN_NAMES.ExchangeUniversity,
                 data: "exchangeUniversityName",
-                width: '30%'
+                width: '30%',
+                render: (data, type, row, meta) =>
+                    `<a href="${encodeURI(row.exchangeUniversityHref)}">${data}</a>`
             },
             {
                 title: COLUMN_NAMES.ExchangeUnit,
                 width: "30%",
-                data: "exchangeUnitName",
+                data: "exchangeUnits",
                 render: (data, type, row, meta) =>
-                    `<a href=${encodeURI(row.exchangeUnitOutlineHref)}>${data} (${row.exchangeUnitCode})</a>`
-
+                    data.map(u =>
+                        `
+                        <a class="badge badge-secondary" href="${u.unitHref}">
+                            ${u.unitName}
+                            <span class="badge badge-light">${u.unitCode}</span>
+                        </a>
+                        `
+                    ).join('')
             },
             {
                 title: COLUMN_NAMES.UWAUnit,
-                data: null,
+                data: "uwaUnits",
                 width: "30%",
-                render: (data, type, row, meta) => {
-                    const components = [
-                        row.uwaUnitName || '',
-                        row.uwaUnitCode ? `(${row.uwaUnitCode})` : ''
-                    ];
-                    return components.join(' ');
-                }
+                render: (data, type, row, meta) =>
+                    data.map(u =>
+                        `
+                        <a class="badge badge-secondary" href="${u.unitHref}">
+                            ${u.unitName}
+                            <span class="badge badge-light">${u.unitCode}</span>
+                            <span class="badge ${TYPE_TO_BADGE_CLASS[u.uwaUnitContext.label]}">
+                                ${u.uwaUnitContext.label}
+                            </span>
+                        </a>
+                        `
+                    ).join('')
             },
             {
                 title: COLUMN_NAMES.Approved,

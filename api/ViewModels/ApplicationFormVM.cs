@@ -21,7 +21,7 @@ namespace ExchangeApproval.ViewModels
             public string UniversityName { get; set; }
         }
 
-        public List<UnitApprovalDecisionVM> ApprovalRequests { get; set; }
+        //public List<> ApprovalRequests { get; set; }
         public StudentDetailsVM Student { get; set; }
         public ExchangeUniversityDetailsVM ExchangeUniversity { get; set; }
     }

@@ -30,10 +30,8 @@ namespace ExchangeApproval.Data
         public DbSet<UWAStaffLogon> StaffLogons { get; set; }
     }
 
-    [JsonConverter(typeof(StringEnumConverter))]
     public enum UWAUnitContext { Elective, Core, Complementary };
 
-    [JsonConverter(typeof(StringEnumConverter))]
     public enum UWAUnitLevel
     {
         [EnumMember(Value = "1000")]
@@ -103,11 +101,11 @@ namespace ExchangeApproval.Data
         public string CourseCode { get; set; }
         public DateTime? ApprovalDecidedAt { get; set; }
         public bool? IsApproved { get; set; }
-        public string ExchangeUniversity { get; set; }
-        public string ExchangeCountry { get; set; }
+        public string ExchangeUniversityCountry { get; set; }
+        public string ExchangeUniversityHref { get; set; }
+        public string ExchangeUniversityName { get; set; }
         public IList<ExchangeUnit> ExchangeUnits { get; set; }
         public IList<UWAUnit> UWAUnits { get; set; }
-        public UWAUnitContext UWAUnitContext { get; set; }
         public int? EquivalenceDeciderId { get; set; }
         public UWAStaffLogon EquivalenceDecider { get; set; } 
         public DateTime? EquivalenceDecidedAt { get; set; }
@@ -155,6 +153,7 @@ namespace ExchangeApproval.Data
         public string Title { get; set; }
         public string Href { get; set; }
         public UWAUnitContext Context { get; set; }
+        public UWAUnitLevel Level { get; set; }
     }
 
     public class Comment

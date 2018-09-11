@@ -35,34 +35,36 @@ namespace ExchangeApproval.Controllers
         {
             return new DecisionsSearchFilterVM
             {
-                ExchangeUniversityNames = Universities().ToList(),
-                UWAUnitContextOptions = Enum.GetValues(typeof(UWAUnitContext)).Cast<UWAUnitContext>().ToList(),
-                UWAUnitLevelOptions = Enum.GetValues(typeof(UWAUnitLevel)).Cast<UWAUnitLevel>().ToList()
+                ExchangeUniversityNames = Universities()
+                    .Select(n => new SelectOption<string>(n, n))
+                    .ToList(),
+                UWAUnitContextOptions = Enum
+                    .GetValues(typeof(UWAUnitContext))
+                    .Cast<UWAUnitContext>()
+                    .Select(c => new SelectOption<UWAUnitContext>(c, true))
+                    .ToList(),
+                UWAUnitLevelOptions = Enum
+                    .GetValues(typeof(UWAUnitLevel))
+                    .Cast<UWAUnitLevel>()
+                    .Select(l => new SelectOption<UWAUnitLevel>(l, true))
+                    .ToList()
             };
         }
 
         [HttpGet("decisions")]
-        public IEnumerable<UnitApprovalDecisionVM> ApprovalRequests(
+        public IEnumerable<UnitSetDecisionVM> ApprovalRequests(
                 string[] universityNames,
-                string[] uwaContextTypes,
-                string[] uwaUnitLevels
+                UWAUnitContext[] uwaContextTypes,
+                UWAUnitLevel[] uwaUnitLevels
             )
         {
             Console.WriteLine(universityNames);
             return QueryUnitApprovalDecisions(
                 _db,
                 universityNames,
-                EnumExtensions.ParseMany<UWAUnitContext>(uwaContextTypes).ToArray(),
-                EnumExtensions.ParseMany<UWAUnitLevel>(uwaUnitLevels).ToArray()
+                uwaContextTypes,
+                uwaUnitLevels
             );
-        }
-
-        [HttpPost("application")]
-        public JsonResult SubmitApplication(ApplicationFormVM formVm)
-        {
-            /* This method is a WIP, may not work... */
-            InsertNewStudentApplication(_db, formVm);
-            return new JsonResult("Hello");
         }
     }
 }

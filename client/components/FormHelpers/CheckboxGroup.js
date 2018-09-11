@@ -16,12 +16,13 @@ export default function CheckboxGroup() {
         const name = field.fieldName;
         return (
             <div class="form-group">
-                {options.map(value => (
+                {options.map(({ label, value  }) => (
                     <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input"
+                        <input
+                            class="control-input"
                             type="checkbox"
                             value={value}
-                            id={name + value}
+                            name={name}
                             onclick={e => {
                                 const value = e.target.value;
                                 const selected = e.target.checked;
@@ -31,8 +32,8 @@ export default function CheckboxGroup() {
                             }}
                             {...otherAttrs}
                         />
-                        <label class="custom-control-label" for={name + value}>
-                            {value}
+                        <label class="control-label" for={name}>
+                            {label}
                         </label>
                     </div>
                 ))}

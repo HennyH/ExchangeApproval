@@ -5,8 +5,8 @@ namespace ExchangeApproval.ViewModels
 {
     public class DecisionsSearchFilterVM
     {
-        public IReadOnlyList<string> ExchangeUniversityNames { get; set; }
-        public IReadOnlyList<UWAUnitContext> UWAUnitContextOptions { get; set; }
-        public IReadOnlyList<UWAUnitLevel> UWAUnitLevelOptions { get; set; }
+        public IReadOnlyList<SelectOption<string>> ExchangeUniversityNames { get; set; }
+        public IReadOnlyList<SelectOption<UWAUnitContext>> UWAUnitContextOptions { get; set; }
+        public IReadOnlyList<SelectOption<UWAUnitLevel>> UWAUnitLevelOptions { get; set; }
     }
 }

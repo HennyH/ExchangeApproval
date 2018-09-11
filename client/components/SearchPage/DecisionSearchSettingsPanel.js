@@ -45,9 +45,9 @@ export default function DecisionSearchSettingsPanel() {
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select universities to filter to...',
-                                data: exchangeUniversityOptions.map(name => ({
-                                    id: name,
-                                    text: name
+                                data: exchangeUniversityOptions.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
                                 }))
                             }}
                         />

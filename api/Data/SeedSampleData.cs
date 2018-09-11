@@ -91,6 +91,7 @@ namespace ExchangeApproval.Data
             {
                 var id = ids[k];
                 var unitContext = Random.Choose(Enum.GetValues(typeof(UWAUnitContext)).Cast<UWAUnitContext>().ToList());
+                var unitLevel = Random.Choose(Enum.GetValues(typeof(UWAUnitLevel)).Cast<UWAUnitLevel>().ToList());
                 var approvalDecidedUpon = Random.NextDouble() < 0.8 ? true : false;
                 var equivalentPrecedent = unitContext == UWAUnitContext.Elective
                     ? (ExchangeApplicationUnitSet)null
@@ -102,7 +103,6 @@ namespace ExchangeApproval.Data
                 var equivlanceDecidedUpon = Random.NextDouble() < 0.5 ? true : false;
                 var isMultiUnit = Random.NextDouble() < 0.2;
                 var unitCoordinator = Random.Choose(unitCoordinators);
-                Console.WriteLine("Unit Coordinator = {0}", JsonConvert.SerializeObject(unitCoordinator));
 
                 unitSets.Add(new ExchangeApplicationUnitSet
                 {
@@ -114,10 +114,11 @@ namespace ExchangeApproval.Data
                         ? new DateTime(Random.Next(1995, 2019), Random.Next(1, 13), Random.Next(1, 20))
                         : (DateTime?)null,
                     IsApproved = approvalDecidedUpon
-                        ? Random.NextDouble() < 0.8 ? true : false
+                        ? Random.NextDouble() < 0.5 ? true : false
                         : (bool?)null,
-                    ExchangeUniversity = Random.Choose(EXCHANGE_UNIVERSITIES),
-                    ExchangeCountry = "England",
+                    ExchangeUniversityName = Random.Choose(EXCHANGE_UNIVERSITIES),
+                    ExchangeUniversityCountry = "England",
+                    ExchangeUniversityHref = "https://university.com",
                     ExchangeUnits = isMultiUnit
                         ? new List<ExchangeUnit>
                         {
@@ -149,17 +150,18 @@ namespace ExchangeApproval.Data
                         {
                             Code = isMultiUnit ? "ENG1002" : Random.Choose(UNITCODE_PREFIXES) + Random.Choose(UNITCODE_SUFFIX),
                             Title = isMultiUnit ? "Engineering Mechanics" : string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
-                            Href = "https://unit.com"
+                            Href = "https://unit.com",
+                            Context = unitContext,
+                            Level = unitLevel
                         }
                     },
-                    UWAUnitContext = unitContext,
                     EquivalenceDeciderId = unitContext == UWAUnitContext.Elective
                         ? null
                         : equivalentPrecedent?.EquivalenceDecider?.Id ?? (int?)unitCoordinator.Id,
-                    EquivalenceDecidedAt = unitContext == UWAUnitContext.Elective
+                    EquivalenceDecidedAt = unitContext == UWAUnitContext.Elective || !equivlanceDecidedUpon
                         ? (DateTime?)null
                         : equivalentPrecedent?.EquivalenceDecidedAt ?? DateTime.Now,
-                    IsEquivalent = unitContext == UWAUnitContext.Elective
+                    IsEquivalent = unitContext == UWAUnitContext.Elective || !equivlanceDecidedUpon
                         ? (bool?)null
                         : equivalentPrecedent?.IsEquivalent ?? Random.NextDouble() < 0.6 ? true : false,
                     EquivalencePrecedentId = equivalentPrecedent?.Id,
