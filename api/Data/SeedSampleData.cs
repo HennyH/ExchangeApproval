@@ -1,12 +1,40 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
+
 
 namespace ExchangeApproval.Data
 {
     public static class SeedSampleData
     {
+        [DllImport("kernel32")]
+        static extern bool AllocConsole();
+
+        static SeedSampleData()
+        {
+            AllocConsole();
+        }
+
+        private static int _NextID = 1;
+        private static readonly Dictionary<string, List<int>> _NameToIdSet = new Dictionary<string, List<int>>();
+
+        private static List<int> GetIds(string name, int count)
+        {
+            if (!_NameToIdSet.ContainsKey(name))
+                _NameToIdSet[name] = Enumerable.Range(0, count).Select(_ => _NextID++).ToList();
+
+            return _NameToIdSet[name];
+        }
+
+        public static int GetId(string name)
+        {
+            return GetIds(name, 1).Single();
+        }
+        
+
         readonly static Random Random = new Random();
 
         public static T Choose<T>(this Random rnd, IReadOnlyList<T> choices)
@@ -20,51 +48,134 @@ namespace ExchangeApproval.Data
             return Enumerable.Range(0, numberOfSamples).Select(i => rnd.Choose(choices)).ToArray();
         }
 
-        public static IEnumerable<UnitApprovalRequest> CreateSeedUnitApprovalRequests()
+        public static IEnumerable<ExchangeApplicationUnitSet> CreateSeedExchangeApplicationUnitSets()
         {
-            for (var i = 1; i <= 100; i++)
+            var staffLogons = CreateSeedUWAStaffLogons()
+                .Where(l => l.Role == StaffRole.UnitCoordinator)
+                .ToList();
+            foreach (var id in GetIds("exchange-applications", 100))
             {
-                yield return CreateRandomUnitApprovalRequest(i);
+                foreach (var unitSet in CreateRandomExchangeApplication(id, staffLogons))
+                {
+                    yield return unitSet;
+                };
             }
         }
 
-        public static UnitApprovalRequest CreateRandomUnitApprovalRequest(int id)
+        public static IEnumerable<UWAStaffLogon> CreateSeedUWAStaffLogons()
         {
-            var decidedUpon = Random.NextDouble() < 0.8 ? true : false;
-            var x = new UnitApprovalRequest()
+            var users = new[]
             {
-                Id = id,
-                DecisionDate = decidedUpon
-                    ? new DateTime(Random.Next(1995, 2019), Random.Next(1, 13), Random.Next(1, 20))
-                    : (DateTime?)null,
-                ExchangeUniversityName = Random.Choose(EXCHANGE_UNIVERSITIES),
-                ExchangeUnitName = string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
-                ExchangeUnitCode = Random.Choose(UNITCODE_PREFIXES) + Random.Choose(UNITCODE_SUFFIX),
-                ExchangeUnitOutlineHref = "https://university.com",
-                UWAUnitName = string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
-                UWAUnitCode = Random.Choose(UNITCODE_PREFIXES) + Random.Choose(UNITCODE_SUFFIX),
-                UWAUnitLevel = Random.Choose(Enum.GetValues(typeof(UWAUnitLevel)).Cast<UWAUnitLevel>().ToList()),
-                UWAUnitContext = Random.Choose(Enum.GetValues(typeof(UWAUnitContext)).Cast<UWAUnitContext>().ToList()),
-                Approved = decidedUpon
-                    ? Random.NextDouble() < 0.8 ? true : false
-                    : (bool?)null
+                new { Email = "ros@uwa.edu.au", Role = StaffRole.StudentOffice },
+                new { Email = "mwise@uwa.edu.au", Role = StaffRole.UnitCoordinator }
             };
-            return x;
-        }
-
-        public static IEnumerable<UWAStaffLogon> CreateStaffLoginForRos()
-        {
-            var salt = UWAStaffLogon.GenerateSalt();
-            return new[]
+            return users.Zip(GetIds("staff-logons", users.Length), (u, id) =>
             {
-                new UWAStaffLogon
+                var salt = UWAStaffLogon.GenerateSalt();
+                return new UWAStaffLogon
                 {
-                    Id = 1,
-                    Email = "ros@uwa.edu.au",
+                    Id = id,
+                    Email = u.Email,
+                    Role = u.Role,
                     Salt = salt,
                     PasswordHash = UWAStaffLogon.HashPassword("password", salt)
-                }
-            };
+                };
+            });
+        }
+
+        private static List<ExchangeApplicationUnitSet> CreateRandomExchangeApplication(int applicationId, List<UWAStaffLogon> unitCoordinators)
+        {
+            var unitSets = new List<ExchangeApplicationUnitSet>();
+            var ids = GetIds("unit-sets" + applicationId.ToString(), Random.Next(2, 10));
+            for (var k = 0; k < ids.Count; k++)
+            {
+                var id = ids[k];
+                var unitContext = Random.Choose(Enum.GetValues(typeof(UWAUnitContext)).Cast<UWAUnitContext>().ToList());
+                var approvalDecidedUpon = Random.NextDouble() < 0.8 ? true : false;
+                var equivalentPrecedent = unitContext == UWAUnitContext.Elective
+                    ? (ExchangeApplicationUnitSet)null
+                    : (
+                        (k > 1 && Random.NextDouble() < 0.4)
+                            ? unitSets[k - 1]
+                            : null
+                    );
+                var equivlanceDecidedUpon = Random.NextDouble() < 0.5 ? true : false;
+                var isMultiUnit = Random.NextDouble() < 0.2;
+                var unitCoordinator = Random.Choose(unitCoordinators);
+                Console.WriteLine("Unit Coordinator = {0}", JsonConvert.SerializeObject(unitCoordinator));
+
+                unitSets.Add(new ExchangeApplicationUnitSet
+                {
+                    Id = id,
+                    ApplicationId = applicationId,
+                    ExchangeDate = new DateTime(Random.Next(2018, 2019), Random.Next(1, 13), Random.Next(1, 20)),
+                    CourseCode = "BP0043",
+                    ApprovalDecidedAt = approvalDecidedUpon
+                        ? new DateTime(Random.Next(1995, 2019), Random.Next(1, 13), Random.Next(1, 20))
+                        : (DateTime?)null,
+                    IsApproved = approvalDecidedUpon
+                        ? Random.NextDouble() < 0.8 ? true : false
+                        : (bool?)null,
+                    ExchangeUniversity = Random.Choose(EXCHANGE_UNIVERSITIES),
+                    ExchangeCountry = "England",
+                    ExchangeUnits = isMultiUnit
+                        ? new List<ExchangeUnit>
+                        {
+                            new ExchangeUnit
+                            {
+                                Code = "VM213",
+                                Title = "Introduction to Solid Mechanics",
+                                Href = "https://unit.com"
+                            },
+                            new ExchangeUnit
+                            {
+                                Code = "VM214",
+                                Title = "Introduction to Fluid Mechanics",
+                                Href = "https://unit.com"
+                            },
+                        }
+                        : new List<ExchangeUnit>
+                        {
+                            new ExchangeUnit
+                            {
+                                Code = Random.Choose(UNITCODE_PREFIXES) + Random.Choose(UNITCODE_SUFFIX),
+                                Title = string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
+                                Href = "https://unit.com"
+                            }
+                        },
+                    UWAUnits = new List<UWAUnit>
+                    {
+                        new UWAUnit
+                        {
+                            Code = isMultiUnit ? "ENG1002" : Random.Choose(UNITCODE_PREFIXES) + Random.Choose(UNITCODE_SUFFIX),
+                            Title = isMultiUnit ? "Engineering Mechanics" : string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
+                            Href = "https://unit.com"
+                        }
+                    },
+                    UWAUnitContext = unitContext,
+                    EquivalenceDeciderId = unitContext == UWAUnitContext.Elective
+                        ? null
+                        : equivalentPrecedent?.EquivalenceDecider?.Id ?? (int?)unitCoordinator.Id,
+                    EquivalenceDecidedAt = unitContext == UWAUnitContext.Elective
+                        ? (DateTime?)null
+                        : equivalentPrecedent?.EquivalenceDecidedAt ?? DateTime.Now,
+                    IsEquivalent = unitContext == UWAUnitContext.Elective
+                        ? (bool?)null
+                        : equivalentPrecedent?.IsEquivalent ?? Random.NextDouble() < 0.6 ? true : false,
+                    EquivalencePrecedentId = equivalentPrecedent?.Id,
+                    Comments = new List<Comment>
+                    {
+                        new Comment
+                        {
+                            UserEmail = unitCoordinator.Email,
+                            Message = "Sample message",
+                            PostedAt = new DateTime(Random.Next(2018, 2019), Random.Next(1, 13), Random.Next(1, 20))
+                        }
+                    }
+                });
+             }
+
+            return unitSets;
         }
 
         public readonly static string[] UNITCODE_PREFIXES = new string[]

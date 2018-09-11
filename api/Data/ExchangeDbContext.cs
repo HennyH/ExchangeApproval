@@ -5,6 +5,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
@@ -21,11 +22,11 @@ namespace ExchangeApproval.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            UnitApprovalRequest.OnModelCreating(modelBuilder);
             UWAStaffLogon.OnModelCreating(modelBuilder);
+            ExchangeApplicationUnitSet.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<UnitApprovalRequest> UnitApprovalRequests { get; set; }
+        public DbSet<ExchangeApplicationUnitSet> ExchangeApplicationUnitSets { get; set; }
         public DbSet<UWAStaffLogon> StaffLogons { get; set; }
     }
 
@@ -45,46 +46,14 @@ namespace ExchangeApproval.Data
         GtThree
     };
 
-    public class UnitApprovalRequest
-    {
-        public int Id { get; set; }
-        public DateTime? DecisionDate { get; set; }
-        [Required]
-        public string ExchangeUniversityName { get; set; }
-        [Required]
-        public string ExchangeUnitName { get; set; }
-        public string ExchangeUnitCode { get; set; }
-        [Required]
-        public string ExchangeUnitOutlineHref { get; set; }
-        [Required]
-        public UWAUnitContext UWAUnitContext { get; set; }
-        public string UWAUnitName { get; set; }
-        public string UWAUnitCode { get; set; }
-        public UWAUnitLevel? UWAUnitLevel { get; set; }
-        public bool? Approved { get; set; }
-
-        public static void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<UnitApprovalRequest>()
-                .Property(p => p.UWAUnitContext)
-                .HasConversion<string>();
-            modelBuilder
-                .Entity<UnitApprovalRequest>()
-                .Property(p => p.UWAUnitLevel)
-                .HasConversion<string>();
-
-            modelBuilder
-                .Entity<UnitApprovalRequest>()
-                .HasData(CreateSeedUnitApprovalRequests().ToArray());
-        }
-    }
+    public enum StaffRole { StudentOffice, UnitCoordinator };
 
     public class UWAStaffLogon
     {
         public int Id { get; set; }
         [Required]
         public string Email { get; set; }
+        public StaffRole Role { get; set; }
         [Required]
         public byte[] Salt { get; set; }
         [Required]
@@ -94,7 +63,11 @@ namespace ExchangeApproval.Data
         {
             modelBuilder
                 .Entity<UWAStaffLogon>()
-                .HasData(CreateStaffLoginForRos().ToArray());
+                .Property(l => l.Role)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<UWAStaffLogon>()
+                .HasData(CreateSeedUWAStaffLogons().ToArray());
         }
 
         public static byte[] GenerateSalt()
@@ -122,20 +95,73 @@ namespace ExchangeApproval.Data
         }
     }
 
-    public class ExchangeApplication
+    public class ExchangeApplicationUnitSet
     {
         public int Id { get; set; }
-        [Required]
-        public string StudentEmail { get; set; }
-        [Required]
-        public string Degree { get; set; }
-        [Required]
-        public string Major { get; set; }
-        public string Major2nd { get; set; }
-        [Required]
-        public string ExchangeUniversityName { get; set; }
-        [Required]
-        public string ExchangeUniversityHref { get; set; }
-        public List<UnitApprovalRequest> UnitApprovalRequests { get; set; }
+        public int ApplicationId { get; set; }
+        public DateTime ExchangeDate { get; set; }
+        public string CourseCode { get; set; }
+        public DateTime? ApprovalDecidedAt { get; set; }
+        public bool? IsApproved { get; set; }
+        public string ExchangeUniversity { get; set; }
+        public string ExchangeCountry { get; set; }
+        public IList<ExchangeUnit> ExchangeUnits { get; set; }
+        public IList<UWAUnit> UWAUnits { get; set; }
+        public UWAUnitContext UWAUnitContext { get; set; }
+        public int? EquivalenceDeciderId { get; set; }
+        public UWAStaffLogon EquivalenceDecider { get; set; } 
+        public DateTime? EquivalenceDecidedAt { get; set; }
+        public bool? IsEquivalent { get; set; }
+        public int? EquivalencePrecedentId { get; set; }
+        public ExchangeApplicationUnitSet EquivalencePrecedent { get; set; }
+        public IList<Comment> Comments { get; set; }
+
+        public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<ExchangeApplicationUnitSet>()
+                .Property(s => s.ExchangeUnits)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                    v => JsonConvert.DeserializeObject<IList<ExchangeUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            modelBuilder
+                .Entity<ExchangeApplicationUnitSet>()
+                .Property(s => s.UWAUnits)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                    v => JsonConvert.DeserializeObject<IList<UWAUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            modelBuilder
+                .Entity<ExchangeApplicationUnitSet>()
+                .Property(s => s.Comments)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                    v => JsonConvert.DeserializeObject<IList<Comment>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            modelBuilder
+                .Entity<ExchangeApplicationUnitSet>()
+                .HasData(CreateSeedExchangeApplicationUnitSets().ToArray());
+        }
     }
+
+    public class ExchangeUnit
+    {
+        public string Code { get; set; }
+        public string Title { get; set; }
+        public string Href { get; set; }
+    }
+
+    public class UWAUnit
+    {
+        public string Code { get; set; }
+        public string Title { get; set; }
+        public string Href { get; set; }
+        public UWAUnitContext Context { get; set; }
+    }
+
+    public class Comment
+    {
+        public string UserEmail { get; set; }
+        public DateTime PostedAt { get; set; }
+        public string Message { get; set; }
+    }
+    
 }

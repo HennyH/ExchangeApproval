@@ -11,6 +11,7 @@ namespace ExchangeApproval.Data
             var builder = new DbContextOptionsBuilder<ExchangeDbContext>();
             var datasource = Environment.GetEnvironmentVariable("DATABASE");
             builder.UseSqlite($"Data Source={datasource}");
+            builder.EnableSensitiveDataLogging();
             return new ExchangeDbContext(builder.Options);
         }
     }
