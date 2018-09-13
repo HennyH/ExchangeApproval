@@ -6,10 +6,10 @@ import Styles from './DecisionsTable.css'
 export const COLUMN_NAMES = {
     Date: 'Date',
     Type: 'Type',
-    ExchangeUniversity: 'Ex. University',
-    ExchangeUnit: 'Ex. Unit(s)',
+    ExchangeUniversity: 'Exchange University',
+    ExchangeUnit: 'Exchange Unit(s)',
     UWAUnit: 'UWA Unit(s)',
-    Approved: 'Appv.',
+    Approved: 'Appvoved',
     Cart: 'Cart'
 };
 
@@ -20,6 +20,27 @@ export function makeDecisionsTableConfig(decisions, headers) {
         Core: 'badge-success'
     }
     const DEFAULT_BADGE_CLASS = 'badge-secondary';
+
+    const unitButton = ({ unitName, unitCode, unitHref }) => {
+        return
+            `
+            <div class="btn-group" role="group">
+                <button
+                    type="button"
+                    rel="tooltip"
+                    class="has-popover btn btn-secondary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="${unitName}"
+                >
+                    ${unitCode}
+                </button>
+                <a href="${unitHref}" role="button" class="btn btn-link">
+                    🌐
+                </a>
+            </div>
+            `
+    }
 
     return {
         data: decisions,
@@ -43,32 +64,45 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 title: COLUMN_NAMES.ExchangeUnit,
                 width: "30%",
                 data: "exchangeUnits",
-                render: (data, type, row, meta) =>
-                    data.map(u =>
-                        `
-                        <a class="badge badge-secondary" href="${u.unitHref}">
-                            ${u.unitName}
-                            <span class="badge badge-light">${u.unitCode}</span>
+                render: (data, type, row, meta) => data.map((u, i) =>
+                    `
+                    <span class="badge badge-secondary ${i > 0 ? 'mt-1' : '' }" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
+                        <span
+                            rel="popover"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="${u.unitName}"
+                        >
+                            ${u.unitCode}
+                        </span>
+                        <a href="${u.unitHref}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em">
+                            ↪
                         </a>
-                        `
-                    ).join('')
+                    </span>
+                    `
+                ).join('')
             },
             {
                 title: COLUMN_NAMES.UWAUnit,
                 data: "uwaUnits",
                 width: "30%",
-                render: (data, type, row, meta) =>
-                    data.map(u =>
-                        `
-                        <a class="badge badge-secondary" href="${u.unitHref}">
-                            ${u.unitName}
-                            <span class="badge badge-light">${u.unitCode}</span>
-                            <span class="badge ${TYPE_TO_BADGE_CLASS[u.uwaUnitContext.label]}">
-                                ${u.uwaUnitContext.label}
-                            </span>
+                render: (data, type, row, meta) => data.map((u, i) =>
+                    `
+                    <span class="badge badge-secondary  ${i > 0 ? 'mt-1' : '' }" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
+                        <span
+                            rel="popover"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="${u.unitName}"
+                        >
+                            ${u.unitCode}
+                        </span>
+                        <a href="${u.unitHref}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em">
+                            ↪
                         </a>
-                        `
-                    ).join('')
+                    </span>
+                    `
+                ).join('')
             },
             {
                 title: COLUMN_NAMES.Approved,
@@ -99,7 +133,11 @@ export default function DecisionsTable() {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
                         const decision = datatable.row($(event.target).parents('tr')).data();
                         onAddToCart(decision);
-                    })
+                    });
+                    $(`#${id} tbody`).tooltip({
+                        selector: '[rel="popover"]',
+                        trigger: 'hover'
+                    });
                 }}
                 cache={true}
             />
