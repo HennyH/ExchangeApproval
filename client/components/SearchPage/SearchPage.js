@@ -104,6 +104,7 @@ export default function SearchPage() {
         const uwaContextTypes = settings.approvalTypes.map(({ value }) => value);
         const uwaUnitLevels = settings.unitLevels.map(({ value }) => value);
         Data.decisions.fetch({ universityNames, uwaContextTypes, uwaUnitLevels });
+        console.log(settings);
         m.redraw();
     }
 

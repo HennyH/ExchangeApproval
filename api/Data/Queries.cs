@@ -14,7 +14,7 @@ namespace ExchangeApproval.Data
                 .Distinct();
         }
 
-        public static IQueryable<UnitSetDecisionVM> QueryUnitApprovalDecisions(
+        public static IEnumerable<UnitSetDecisionVM> QueryUnitApprovalDecisions(
                 ExchangeDbContext db,
                 IReadOnlyList<string> universityNames = null,
                 IReadOnlyList<UWAUnitContext> uwaUnitContexts = null,
@@ -37,37 +37,44 @@ namespace ExchangeApproval.Data
             }
 
             return query
-                .Where(s => s.EquivalenceDecidedAt.HasValue || s.ApprovalDecidedAt.HasValue)
-                .Select(s => new UnitSetDecisionVM
+                .AsEnumerable()
+                .Select(s =>
                 {
-                    UnitSetId = s.Id,
-                    ApprovedAt = (s.ApprovalDecidedAt ?? s.EquivalenceDecidedAt).Value,
-                    Approved = (s.ApprovalDecidedAt ?? s.EquivalenceDecidedAt).HasValue
-                        ? (bool?)(s.IsEquivalent == true || s.IsApproved == true)
-                        : null, 
-                    ExchangeUniversityName = s.ExchangeUniversityName,
-                    ExchangeUniversityHref = s.ExchangeUniversityHref,
-                    ExchangeUnits = s.ExchangeUnits.Select(u => new UnitVM
+                    var latestEquivalenceDecision = s.UnitEquivalenceDecisions
+                        .Where(d => d.IsEquivalent == true)
+                        .OrderByDescending(d => d.DecidedAt)
+                        .FirstOrDefault();
+                    return new UnitSetDecisionVM
                     {
-                        UniversityName = s.ExchangeUniversityName,
-                        UniversityHref = s.ExchangeUniversityHref,
-                        UnitCode = u.Code,
-                        UnitName = u.Title,
-                        UnitHref = u.Href,
-                        IsUWAUnit = false,
-                        UWAUnitLevel = null
-                    }).ToList(),
-                    UWAUnits = s.UWAUnits.Select(u => new UnitVM
-                    {
-                        UniversityName = "University of Western Australia",
-                        UniversityHref = "https://uwa.edu.au",
-                        UnitCode = u.Code,
-                        UnitName = u.Title,
-                        UnitHref = u.Href,
-                        IsUWAUnit = true,
-                        UWAUnitLevel = new SelectOption<UWAUnitLevel>(u.Level, true),
-                        UWAUnitContext = new SelectOption<UWAUnitContext>(u.Context, true),
-                    }).ToList()
+                        UnitSetId = s.Id,
+                        ApprovedAt = (s.ApprovalDecidedAt ?? latestEquivalenceDecision?.DecidedAt).Value,
+                        Approved = (s.ApprovalDecidedAt ?? latestEquivalenceDecision?.DecidedAt).HasValue
+                            ? (bool?)(latestEquivalenceDecision?.IsEquivalent == true || s.IsApproved == true)
+                            : null,
+                        ExchangeUniversityName = s.ExchangeUniversityName,
+                        ExchangeUniversityHref = s.ExchangeUniversityHref,
+                        ExchangeUnits = s.ExchangeUnits.Select(u => new UnitVM
+                        {
+                            UniversityName = s.ExchangeUniversityName,
+                            UniversityHref = s.ExchangeUniversityHref,
+                            UnitCode = u.Code,
+                            UnitName = u.Title,
+                            UnitHref = u.Href,
+                            IsUWAUnit = false,
+                            UWAUnitLevel = null
+                        }).ToList(),
+                        UWAUnits = s.UWAUnits.Select(u => new UnitVM
+                        {
+                            UniversityName = "University of Western Australia",
+                            UniversityHref = "https://uwa.edu.au",
+                            UnitCode = u.Code,
+                            UnitName = u.Title,
+                            UnitHref = u.Href,
+                            IsUWAUnit = true,
+                            UWAUnitLevel = new SelectOption<UWAUnitLevel>(u.Level, true),
+                            UWAUnitContext = new SelectOption<UWAUnitContext>(u.Context, true),
+                        }).ToList()
+                    };
                 })
                 .GroupBy(d => new
                 {

@@ -24,6 +24,14 @@ namespace ExchangeApproval.Data
             base.OnModelCreating(modelBuilder);
             UWAStaffLogon.OnModelCreating(modelBuilder);
             ExchangeApplicationUnitSet.OnModelCreating(modelBuilder);
+
+            var (unitSets, staffLogons) = LoadSampleData();
+            modelBuilder
+                .Entity<UWAStaffLogon>()
+                .HasData(staffLogons.ToArray());
+            modelBuilder
+                .Entity<ExchangeApplicationUnitSet>()
+                .HasData(unitSets.ToArray());
         }
 
         public DbSet<ExchangeApplicationUnitSet> ExchangeApplicationUnitSets { get; set; }
@@ -40,8 +48,10 @@ namespace ExchangeApproval.Data
         Two,
         [EnumMember(Value = "3000")]
         Three,
+        [EnumMember(Value = "4000")]
+        Four,
         [EnumMember(Value = ">4000")]
-        GtThree
+        GtFour
     };
 
     public enum StaffRole { StudentOffice, UnitCoordinator };
@@ -63,9 +73,6 @@ namespace ExchangeApproval.Data
                 .Entity<UWAStaffLogon>()
                 .Property(l => l.Role)
                 .HasConversion<string>();
-            modelBuilder
-                .Entity<UWAStaffLogon>()
-                .HasData(CreateSeedUWAStaffLogons().ToArray());
         }
 
         public static byte[] GenerateSalt()
@@ -97,6 +104,7 @@ namespace ExchangeApproval.Data
     {
         public int Id { get; set; }
         public int ApplicationId { get; set; }
+        public string StudentNumber { get; set; }
         public DateTime ExchangeDate { get; set; }
         public string CourseCode { get; set; }
         public DateTime? ApprovalDecidedAt { get; set; }
@@ -106,12 +114,9 @@ namespace ExchangeApproval.Data
         public string ExchangeUniversityName { get; set; }
         public IList<ExchangeUnit> ExchangeUnits { get; set; }
         public IList<UWAUnit> UWAUnits { get; set; }
-        public int? EquivalenceDeciderId { get; set; }
-        public UWAStaffLogon EquivalenceDecider { get; set; } 
-        public DateTime? EquivalenceDecidedAt { get; set; }
-        public bool? IsEquivalent { get; set; }
-        public int? EquivalencePrecedentId { get; set; }
-        public ExchangeApplicationUnitSet EquivalencePrecedent { get; set; }
+        public IList<UnitEquivalenceDecision> UnitEquivalenceDecisions { get; set; }
+        public int? EquivalencePrecedentUnitSetId { get; set; }
+        public ExchangeApplicationUnitSet EquivalencePrecedentUnitSet { get; set; }
         public IList<Comment> Comments { get; set; }
 
         public static void OnModelCreating(ModelBuilder modelBuilder)
@@ -130,14 +135,25 @@ namespace ExchangeApproval.Data
                     v => JsonConvert.DeserializeObject<IList<UWAUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
             modelBuilder
                 .Entity<ExchangeApplicationUnitSet>()
+                .Property(s => s.UnitEquivalenceDecisions)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                    v => JsonConvert.DeserializeObject<IList<UnitEquivalenceDecision>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            modelBuilder
+                .Entity<ExchangeApplicationUnitSet>()
                 .Property(s => s.Comments)
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                     v => JsonConvert.DeserializeObject<IList<Comment>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-            modelBuilder
-                .Entity<ExchangeApplicationUnitSet>()
-                .HasData(CreateSeedExchangeApplicationUnitSets().ToArray());
         }
+    }
+
+    public class UnitEquivalenceDecision
+    {
+        public string DecisionMakerEmail { get; set; }
+        public DateTime? DecidedAt { get; set; }
+        public bool? IsEquivalent { get; set; }
+        public Comment Comment { get; set; }
     }
 
     public class ExchangeUnit
