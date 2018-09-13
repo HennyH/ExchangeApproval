@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.IO;
 using CsvHelper;
 
@@ -11,13 +10,13 @@ namespace ExchangeApproval.Data
 {
     public static class SeedSampleData
     {
-        [DllImport("kernel32")]
-        static extern bool AllocConsole();
+        //[DllImport("kernel32")]
+        //static extern bool AllocConsole();
 
-        static SeedSampleData()
-        {
-            AllocConsole();
-        }
+        //static SeedSampleData()
+        //{
+        //    AllocConsole();
+        //}
 
         private static int _NextID = 1;
         private static readonly Dictionary<string, List<int>> _NameToIdSet = new Dictionary<string, List<int>>();
