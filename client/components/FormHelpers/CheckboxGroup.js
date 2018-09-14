@@ -7,12 +7,13 @@ export default function CheckboxGroup() {
     function view({
         attrs: {
             field,
-            options = [],
+            options = null,
             onchange = noop,
             class: classes = null,
             ...otherAttrs
         }
     }) {
+        options = options || field.config.options || [];
         const name = field.fieldName;
         return (
             <div class="form-group">
@@ -27,7 +28,6 @@ export default function CheckboxGroup() {
                                 value={value}
                                 name={name}
                                 onclick={e => {
-                                    const value = e.target.value;
                                     const selected = e.target.checked;
                                     const option = new Option(label, value, false, selected);
                                     field.setData(option);

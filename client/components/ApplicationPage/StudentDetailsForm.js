@@ -4,7 +4,7 @@ import { Form } from 'powerform'
 import { Input, StudentEmailField, StringField } from 'FormHelpers'
 
 export class StudentDetailsPowerForm extends Form {
-    constructor(config) {
+    constructor({ ...config }) {
         super(config);
         this.email = StudentEmailField.new();
         this.degree = StringField.new({ required: true  });

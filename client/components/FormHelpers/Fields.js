@@ -31,11 +31,81 @@ export class IntegerField extends Field {
     }
 }
 
+export class FormListField extends Field {
+    constructor({ factory, ...config }) {
+        super(config);
+        this.formFactory = factory;
+        this.forms = [];
+    }
+
+    getData() {
+        return this.forms.map(f => f.getData());
+    }
+
+    modify(newVal, preVal) {
+        return newVal.map(data => this.formFactory({ data }));
+    }
+
+    setData(data) {
+        super.setData(data);
+        this.forms = this.currentValue;
+    }
+
+    validate() {
+        if (this.config.required && this.forms.length === 0) {
+            throw new ValidationError('This section requires at least one entry.');
+        }
+        return this.forms.map(f => f.isValid());
+    }
+
+    isDirty() {
+        return this.forms.some(f => f.isDirty());
+    }
+
+    pushForm(config) {
+        this.forms.push(this.formFactory(config));
+    }
+
+    unshiftForm(config) {
+        this.forms.unshift(this.formFactory(config));
+    }
+
+    removeForm(form) {
+        const index = this.forms.indexOf(form);
+        if (index >= 0) {
+            this.forms.splice(index, 1);
+        }
+    }
+}
+
+export class FormField extends Field {
+    constructor(config) {
+        super(config);
+        Field.new.call(() => this, config);
+        this.config = config;
+        config.form._fields.map(name => this[name] = config.form[name]);
+    }
+
+    getData() {
+        return this.config.form.getData();
+    }
+
+    setData(data) {
+        return this.config.form.setData(data)
+    }
+
+    validate() {
+        return this.config.form.isValid();
+    }
+}
+
 export class OptionsField extends Field {
     constructor(config) {
         config = config || {}
         super({
-            default: config.default || (config.multiple ? [] : null),
+            default: config.default
+                ? { ...config.default, selected: true }
+                : (config.multiple ? [] : null),
             ...config
         });
         /* When we initialize an options field which will be backed by some
@@ -49,7 +119,7 @@ export class OptionsField extends Field {
             if (config.multiple) {
                 this.setData(config.options.filter(o => o.selected))
             } else {
-                const selected = config.options.find(o => o.selected) || config.options[0];
+                const selected = this.defaultValue || config.options.find(o => o.selected) || config.options[0];
                 this.setData(selected);
             }
 
@@ -57,7 +127,9 @@ export class OptionsField extends Field {
     }
 
     validate() {
-        return !this.config.required || this.value;
+        if (this.config.required && this.value === undefined) {
+            throw new ValidationError('This field is required.');
+        }
     }
 
     setData(value) {
@@ -81,6 +153,7 @@ export class OptionsField extends Field {
                 ({ label, value, selected }) => ({ label, value, selected })
             );
         }
+
         super.setData(normalizedValue);
     }
 
@@ -109,3 +182,4 @@ export class OptionsField extends Field {
         .filter(o => newOption.selected || o.value != newOption.value);
     }
 }
+

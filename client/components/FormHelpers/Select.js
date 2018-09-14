@@ -9,11 +9,12 @@ export default function Select() {
             field,
             onchange = noop,
             class: classes = null,
-            options = [],
+            options = null,
             ...otherAttrs
         }
     }) {
-        const selected = options.find(o => o.selected) || field.getData() || options[0];
+        options = options || field.config.options
+        const selected = field.getData() || options.find(o => o.selected) || options[0];
         if (selected) {
             const currentSelection = field.getData();
             if (!currentSelection || currentSelection.value !== selected.value) {
@@ -34,7 +35,7 @@ export default function Select() {
                 {options.map(props => (
                     <option
                         {...props}
-                        selected={props.selected || props.value === selected.value}
+                        selected={props.value === selected.value}
                     >
                         {props.label}
                     </option>

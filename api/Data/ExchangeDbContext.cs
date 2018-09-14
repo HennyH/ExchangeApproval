@@ -42,6 +42,8 @@ namespace ExchangeApproval.Data
 
     public enum UWAUnitLevel
     {
+        [EnumMember(Value = "Insufficent")]
+        Zero,
         [EnumMember(Value = "1000")]
         One,
         [EnumMember(Value = "2000")]
@@ -104,20 +106,22 @@ namespace ExchangeApproval.Data
     {
         public int Id { get; set; }
         public int ApplicationId { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
         public string StudentNumber { get; set; }
         public DateTime ExchangeDate { get; set; }
         public string CourseCode { get; set; }
-        public DateTime? ApprovalDecidedAt { get; set; }
-        public bool? IsApproved { get; set; }
         public string ExchangeUniversityCountry { get; set; }
         public string ExchangeUniversityHref { get; set; }
         public string ExchangeUniversityName { get; set; }
         public IList<ExchangeUnit> ExchangeUnits { get; set; }
         public IList<UWAUnit> UWAUnits { get; set; }
-        public IList<UnitEquivalenceDecision> UnitEquivalenceDecisions { get; set; }
-        public int? EquivalencePrecedentUnitSetId { get; set; }
-        public ExchangeApplicationUnitSet EquivalencePrecedentUnitSet { get; set; }
-        public IList<Comment> Comments { get; set; }
+        public bool? IsEquivalent { get; set; }
+        public int? EquivalencePrecedentId { get; set; }
+        public ExchangeApplicationUnitSet EquivalencePrecedent { get; set; }
+        public bool? IsContextuallyApproved { get; set; }
+        public UWAUnitLevel? EquivalentUWAUnitLevel { get; set; }
+        public string Notes { get; set; }
+        public bool RequiresEquivalenceDecision { get { return UWAUnits != null; } }
 
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -133,29 +137,9 @@ namespace ExchangeApproval.Data
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                     v => JsonConvert.DeserializeObject<IList<UWAUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-            modelBuilder
-                .Entity<ExchangeApplicationUnitSet>()
-                .Property(s => s.UnitEquivalenceDecisions)
-                .HasConversion(
-                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    v => JsonConvert.DeserializeObject<IList<UnitEquivalenceDecision>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-            modelBuilder
-                .Entity<ExchangeApplicationUnitSet>()
-                .Property(s => s.Comments)
-                .HasConversion(
-                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    v => JsonConvert.DeserializeObject<IList<Comment>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
     }
-
-    public class UnitEquivalenceDecision
-    {
-        public string DecisionMakerEmail { get; set; }
-        public DateTime? DecidedAt { get; set; }
-        public bool? IsEquivalent { get; set; }
-        public Comment Comment { get; set; }
-    }
-
+    
     public class ExchangeUnit
     {
         public string Code { get; set; }
@@ -168,15 +152,5 @@ namespace ExchangeApproval.Data
         public string Code { get; set; }
         public string Title { get; set; }
         public string Href { get; set; }
-        public UWAUnitContext Context { get; set; }
-        public UWAUnitLevel Level { get; set; }
     }
-
-    public class Comment
-    {
-        public string UserEmail { get; set; }
-        public DateTime PostedAt { get; set; }
-        public string Message { get; set; }
-    }
-    
 }

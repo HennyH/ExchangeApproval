@@ -1,7 +1,8 @@
 import m from 'mithril'
 
 import Layout from 'Components/Layout'
-import ApplicationForm from './ApplicationForm'
+import ApplicationForm, { ApplicationPowerForm } from './ApplicationForm'
+import { UnitSetForm, UnitSetPowerForm } from './UnitSetForm.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 const Data = {
@@ -21,6 +22,10 @@ const Data = {
     }
 }
 
+const applicationPowerForm = new ApplicationPowerForm({
+    unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
+})
+
 export default function ApplicationPage() {
 
     function oninit() {
@@ -36,11 +41,7 @@ export default function ApplicationPage() {
                     ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
                     : (
                         <div class="container">
-                            <ApplicationForm
-                                contextTypeOptions={Data.filters.options.uwaUnitContextOptions.map(n => ({ value: n, label: n}))}
-                                electiveContextTypeOption={{ value: 'Elective' }}
-                                changeCallback={console.log}
-                            />
+                            <ApplicationForm form={applicationPowerForm} />
                         </div>
                     )
                 )}

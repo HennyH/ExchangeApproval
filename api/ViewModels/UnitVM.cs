@@ -13,8 +13,5 @@ namespace ExchangeApproval.ViewModels
         public string UnitCode { get; set; }
         public string UnitName { get; set; }
         public string UnitHref { get; set; }
-        public bool IsUWAUnit { get; set; } = false;
-        public SelectOption<UWAUnitContext> UWAUnitContext { get; set; } = null;
-        public SelectOption<UWAUnitLevel> UWAUnitLevel { get; set; } = null;
     }
 }

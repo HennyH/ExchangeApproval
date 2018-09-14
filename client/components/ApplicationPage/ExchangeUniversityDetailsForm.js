@@ -4,8 +4,8 @@ import { Form } from 'powerform'
 import { Input, StringField } from 'FormHelpers'
 
 export class ExchangeUniversityDetailsPowerForm extends Form {
-    constructor(config) {
-        super();
+    constructor({ ...config }) {
+        super(config);
         this.universityName = StringField.new({ required: true });
         this.universityHomepage = StringField.new({
             required: true,

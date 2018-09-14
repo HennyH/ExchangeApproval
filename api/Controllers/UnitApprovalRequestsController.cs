@@ -54,7 +54,6 @@ namespace ExchangeApproval.Controllers
         [HttpGet("decisions")]
         public IEnumerable<UnitSetDecisionVM> ApprovalRequests(
                 string[] universityNames,
-                UWAUnitContext[] uwaContextTypes,
                 UWAUnitLevel[] uwaUnitLevels
             )
         {
@@ -62,7 +61,6 @@ namespace ExchangeApproval.Controllers
             return QueryUnitApprovalDecisions(
                 _db,
                 universityNames,
-                uwaContextTypes,
                 uwaUnitLevels
             );
         }

@@ -9,7 +9,9 @@ import {
 
 window.CART = window.CART || {
     handlers: [],
-    items: []
+    items: [
+        {"unitSetId":529,"lastUpdatedAt":"2018-09-19T00:00:00","approved":true,"exchangeUniversityName":"University Of New Mexico","exchangeUniversityHref":"https://university.com","exchangeUnits":[{"universityName":"University Of New Mexico","universityHref":"https://university.com","unitCode":"ME482/582","unitName":"Robot Engineering","unitHref":"https://unit.com"}],"uwaUnits":[{"universityName":"University of Western Australia","universityHref":"https://uwa.edu.au","unitCode":"MPE(MECH) OPTION","unitName":"Person Media","unitHref":"https://uwa.edu.au"}],"equivalentUnitLevel":{"label":"GtFour","value":5,"selected":true}}
+    ]
 }
 
 export const CART_EVENTS = {
@@ -73,20 +75,21 @@ export function removeItemFromCart(item, emitEvent = true) {
     }
 }
 
-export function addCartEventHandler(name, callback) {
-    window.CART.handlers.push({
-        name,
-        func: callback
-    });
-}
-
 export function isItemInCart(item) {
     return window.CART.items.indexOf(item) >= 0;
 }
 
-export function removeCartEventHandler(name, callback) {
+export function addCartEventHandler(name, id, callback) {
+    window.CART.handlers.push({
+        name,
+        id,
+        func: callback
+    });
+}
+
+export function removeCartEventHandler(name, id, callback) {
     const index = window.CART.handlers.find(
-        h => h.name === name && h.callback === callback
+        h => h.name === name && (h.callback === callback || h.id === id)
     );
     if (index >= 0) {
         window.CART.handlers.splice(index, 1);

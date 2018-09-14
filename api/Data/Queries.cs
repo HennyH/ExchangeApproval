@@ -14,10 +14,9 @@ namespace ExchangeApproval.Data
                 .Distinct();
         }
 
-        public static IEnumerable<UnitSetDecisionVM> QueryUnitApprovalDecisions(
+        public static IQueryable<UnitSetDecisionVM> QueryUnitApprovalDecisions(
                 ExchangeDbContext db,
                 IReadOnlyList<string> universityNames = null,
-                IReadOnlyList<UWAUnitContext> uwaUnitContexts = null,
                 IReadOnlyList<UWAUnitLevel> uwaUnitLevels = null
             )
         {
@@ -27,61 +26,45 @@ namespace ExchangeApproval.Data
             {
                 query = query.Where(s => universityNames.Any(n => s.ExchangeUniversityName == n));
             }
-            if (uwaUnitContexts != null && uwaUnitContexts.Count > 0)
-            {
-                query = query.Where(s => s.UWAUnits.Any(u => uwaUnitContexts.Contains(u.Context)));
-            }
             if (uwaUnitLevels != null && uwaUnitLevels.Count > 0)
             {
-                query = query.Where(s => s.UWAUnits.Any(u => uwaUnitLevels.Contains(u.Level)));
+                query = query.Where(s => s.EquivalentUWAUnitLevel.HasValue && uwaUnitLevels.Contains(s.EquivalentUWAUnitLevel.Value));
             }
 
             return query
-                .AsEnumerable()
-                .Select(s =>
+                .GroupBy(s => new { s.UWAUnits, s.ExchangeUnits, s.ExchangeUniversityName })
+                .SelectMany(g => g.Distinct())
+                .OrderByDescending(s => s.LastUpdatedAt)
+                .ThenByDescending(s => s.ExchangeUniversityName)
+                .Select(s => new UnitSetDecisionVM
                 {
-                    var latestEquivalenceDecision = s.UnitEquivalenceDecisions
-                        .Where(d => d.IsEquivalent == true)
-                        .OrderByDescending(d => d.DecidedAt)
-                        .FirstOrDefault();
-                    return new UnitSetDecisionVM
+                    UnitSetId = s.Id,
+                    LastUpdatedAt = s.LastUpdatedAt,
+                    Approved =
+                        (s.RequiresEquivalenceDecision && s.IsEquivalent == true)
+                        || (!s.RequiresEquivalenceDecision && s.EquivalentUWAUnitLevel != UWAUnitLevel.Zero),
+                    ExchangeUniversityName = s.ExchangeUniversityName,
+                    ExchangeUniversityHref = s.ExchangeUniversityHref,
+                    ExchangeUnits = s.ExchangeUnits.Select(u => new UnitVM
                     {
-                        UnitSetId = s.Id,
-                        ApprovedAt = (s.ApprovalDecidedAt ?? latestEquivalenceDecision?.DecidedAt).Value,
-                        Approved = (s.ApprovalDecidedAt ?? latestEquivalenceDecision?.DecidedAt).HasValue
-                            ? (bool?)(latestEquivalenceDecision?.IsEquivalent == true || s.IsApproved == true)
-                            : null,
-                        ExchangeUniversityName = s.ExchangeUniversityName,
-                        ExchangeUniversityHref = s.ExchangeUniversityHref,
-                        ExchangeUnits = s.ExchangeUnits.Select(u => new UnitVM
-                        {
-                            UniversityName = s.ExchangeUniversityName,
-                            UniversityHref = s.ExchangeUniversityHref,
-                            UnitCode = u.Code,
-                            UnitName = u.Title,
-                            UnitHref = u.Href,
-                            IsUWAUnit = false,
-                            UWAUnitLevel = null
-                        }).ToList(),
-                        UWAUnits = s.UWAUnits.Select(u => new UnitVM
-                        {
-                            UniversityName = "University of Western Australia",
-                            UniversityHref = "https://uwa.edu.au",
-                            UnitCode = u.Code,
-                            UnitName = u.Title,
-                            UnitHref = u.Href,
-                            IsUWAUnit = true,
-                            UWAUnitLevel = new SelectOption<UWAUnitLevel>(u.Level, true),
-                            UWAUnitContext = new SelectOption<UWAUnitContext>(u.Context, true),
-                        }).ToList()
-                    };
-                })
-                .GroupBy(d => new
-                {
-                    UWAUnits = d.UWAUnits.Select(u => new { u.UnitName, u.UnitCode, u.UniversityName }),
-                    ExchangeUnits = d.ExchangeUnits.Select(u => new { u.UnitName, u.UnitCode, u.UniversityName })
-                })
-                .Select(g => g.OrderByDescending(d => d.ApprovedAt).FirstOrDefault());
+                        UniversityName = s.ExchangeUniversityName,
+                        UniversityHref = s.ExchangeUniversityHref,
+                        UnitCode = u.Code,
+                        UnitName = u.Title,
+                        UnitHref = u.Href
+                    }).ToList(),
+                    UWAUnits = s.UWAUnits.Select(u => new UnitVM
+                    {
+                        UniversityName = "University of Western Australia",
+                        UniversityHref = "https://uwa.edu.au",
+                        UnitCode = u.Code,
+                        UnitName = u.Title,
+                        UnitHref = u.Href,
+                    }).ToList(),
+                    EquivalentUnitLevel = s.EquivalentUWAUnitLevel == null
+                        ? null
+                        : new SelectOption<UWAUnitLevel>(s.EquivalentUWAUnitLevel.Value, true)
+                });
         }
 
         public static bool QueryIsValidStaffLogon(ExchangeDbContext db, string email, string password)

@@ -14,32 +14,37 @@ export const COLUMN_NAMES = {
 };
 
 export function makeDecisionsTableConfig(decisions, headers) {
-    const TYPE_TO_BADGE_CLASS = {
-        Elective: 'badge-warning',
-        Complementary: 'badge-primary',
-        Core: 'badge-success'
-    }
-    const DEFAULT_BADGE_CLASS = 'badge-secondary';
-
-    const unitButton = ({ unitName, unitCode, unitHref }) => {
-        return
+    const unitButton = ({
+        displayName,
+        tooltipContent,
+        href,
+        badgeType = "secondary",
+        badgeClasses = ""
+    }) => {
+        displayName = displayName || "";
+        const shortName = displayName.length >= 20
+            ? displayName.substring(0, 18) + "..."
+            : displayName;
+        const link = href
+            ? `
+                <a href="${href}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em">
+                    ↪
+                </a>
             `
-            <div class="btn-group" role="group">
-                <button
-                    type="button"
-                    rel="tooltip"
-                    class="has-popover btn btn-secondary"
+            : ``;
+        return `
+            <span class="badge badge-${badgeType} ${badgeClasses}" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
+                <span
+                    rel="popover"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="${unitName}"
+                    title="${tooltipContent}"
                 >
-                    ${unitCode}
-                </button>
-                <a href="${unitHref}" role="button" class="btn btn-link">
-                    🌐
-                </a>
-            </div>
-            `
+                    ${shortName}
+                </span>
+                ${link}
+            </span>
+        `;
     }
 
     return {
@@ -64,45 +69,31 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 title: COLUMN_NAMES.ExchangeUnit,
                 width: "30%",
                 data: "exchangeUnits",
-                render: (data, type, row, meta) => data.map((u, i) =>
-                    `
-                    <span class="badge badge-secondary ${i > 0 ? 'mt-1' : '' }" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
-                        <span
-                            rel="popover"
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="${u.unitName}"
-                        >
-                            ${u.unitCode}
-                        </span>
-                        <a href="${u.unitHref}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em">
-                            ↪
-                        </a>
-                    </span>
-                    `
-                ).join('')
+                render: (data, type, row, meta) => data.map((u, i) => unitButton({
+                    displayName: u.unitCode || u.unitName,
+                    tooltipContent: `${u.unitName} ${u.unitCode}`,
+                    href: u.unitHref,
+                    badgeClasses: i > 0 ? 'mt-1' : ''
+                })).join('')
             },
             {
                 title: COLUMN_NAMES.UWAUnit,
-                data: "uwaUnits",
                 width: "30%",
-                render: (data, type, row, meta) => data.map((u, i) =>
-                    `
-                    <span class="badge badge-secondary  ${i > 0 ? 'mt-1' : '' }" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
-                        <span
-                            rel="popover"
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="${u.unitName}"
-                        >
-                            ${u.unitCode}
-                        </span>
-                        <a href="${u.unitHref}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em">
-                            ↪
-                        </a>
-                    </span>
-                    `
-                ).join('')
+                render: (data, type, row, meta) => {
+                    if (row.uwaUnits === null || row.uwaUnits === undefined || row.uwaUnits.length == 0) {
+                        return unitButton({
+                            displayName: `Level ${row.equivalentUnitLevel.label}`,
+                            tooltipContent: `Was deemed equivalent of a level ${row.equivalentUnitLevel.label} unit.`,
+                            badgeType: 'primary'
+                        });
+                    }
+                    return row.uwaUnits.map((u, i) => unitButton({
+                        displayName: u.unitCode || u.unitName,
+                        tooltipContent: `${u.unitName} ${u.unitCode}`,
+                        href: u.unitHref,
+                        badgeClasses: i > 0 ? 'mt-1' : ''
+                    })).join('');
+                }
             },
             {
                 title: COLUMN_NAMES.Approved,

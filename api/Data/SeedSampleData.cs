@@ -209,12 +209,12 @@ namespace ExchangeApproval.Data
                         unitSets.Add(new ExchangeApplicationUnitSet
                         {
                             Id = unitSets.Count + 1,
-                            ApplicationId = int.Parse(studentNumber) % 200,
+                            ApplicationId = int.Parse(studentNumber) + Random.Next(1, 5),
+                            LastUpdatedAt = approvedAt,
                             StudentNumber = studentNumber,
                             ExchangeDate = exchangeDate,
                             CourseCode = courseCode,
-                            ApprovalDecidedAt = approvedAt,
-                            IsApproved = isApproved,
+                            IsContextuallyApproved = isApproved,
                             ExchangeUniversityCountry = exchangeCountryName,
                             ExchangeUniversityName = exchangeUniversityName,
                             ExchangeUniversityHref = "https://university.com",
@@ -229,23 +229,12 @@ namespace ExchangeApproval.Data
                                 Code = code,
                                 Title = string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
                                 Href = "https://uwa.edu.au",
-                                Level = guessUnitLevel(code),
-                                Context = Random.Choose(new[] { UWAUnitContext.Core, UWAUnitContext.Complementary })
                             }).ToList(),
-                            EquivalencePrecedentUnitSetId = null,
-                            EquivalencePrecedentUnitSet = null,
-                            UnitEquivalenceDecisions = signedOffByEmails.Select(e => new UnitEquivalenceDecision
-                            {
-                                DecisionMakerEmail = e,
-                                DecidedAt = approvedAt,
-                                IsEquivalent = isApproved,
-                                Comment = new Comment
-                                {
-                                    UserEmail = e,
-                                    PostedAt = approvedAt,
-                                    Message = comments
-                                }
-                            }).ToList()
+                            EquivalencePrecedentId = null,
+                            EquivalencePrecedent = null,
+                            IsEquivalent = isApproved,
+                            EquivalentUWAUnitLevel = (UWAUnitLevel?)uwaUnitCodes.Select(guessUnitLevel).OrderByDescending(l => l).FirstOrDefault() ?? UWAUnitLevel.Two,
+                            Notes = comments
                         });
 
                         foreach (var staffEmail in signedOffByEmails)
