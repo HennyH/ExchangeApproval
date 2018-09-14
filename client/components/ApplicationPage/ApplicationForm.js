@@ -67,7 +67,7 @@ export default function ApplicationForm() {
         const formsToDrop = form.unitSetForms.forms.reduce(
             (agg, f) => {
                 const precedentUnitSetId = f.precedentUnitSetId.getData();
-                if (precedentId && !items.some(i => i.unitSetId === precedentUnitSetId)) {
+                if (precedentUnitSetId && !items.some(i => i.unitSetId === precedentUnitSetId)) {
                     agg.push(f);
                 }
             },
