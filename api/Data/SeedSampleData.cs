@@ -168,112 +168,120 @@ namespace ExchangeApproval.Data
                 }
             }
 
-            using (var parser = new StreamReader("api/data/sample-data.csv"))
-            using (var csv = new CsvReader(parser))
+            try
             {
-                while (csv.Read())
+                using (var parser = new StreamReader("api/Data/sample-data.csv"))
+                using (var csv = new CsvReader(parser))
                 {
-                    var approvedText = csv.GetField(0);
-                    var yearText = csv.GetField(1);
-                    var studentNumberText = csv.GetField(2);
-                    var courseCodeText = csv.GetField(3);
-                    var decisionDateText = csv.GetField(4);
-                    var exchangeUniText = csv.GetField(5);
-                    var exchangeCountryText = csv.GetField(6);
-                    var uwaUnitCodesText = csv.GetField(7);
-                    var exchangeUnitCodesText = csv.GetField(8);
-                    var exchangeUnitTitleText = csv.GetField(9);
-                    var approvedByText = csv.GetField(10);
-                    var commentsText = csv.GetField(11);
-
-                    bool isApproved = approvedText == "Y";
-                    DateTime exchangeDate = new DateTime(int.Parse(yearText), Random.Next(1, 12), Random.Next(1, 20));
-                    string studentNumber = studentNumberText.Trim();
-                    string courseCode = courseCodeText.Trim();
-                    DateTime approvedAt = exchangeDate.AddDays(-60);
-                    string exchangeUniversityName = exchangeUniText.Trim().ToTitleCase();
-                    string exchangeCountryName = exchangeUniText.Trim().ToTitleCase();
-                    string[] uwaUnitCodes = uwaUnitCodesText.Trim().Split(" & ").Select(c => c.Trim().ToUpperInvariant()).ToArray();
-                    string[] exchangeUnitCodes = exchangeUnitCodesText.Trim().Split(" & ").Select(c => c.Trim().ToUpperInvariant()).ToArray();
-                    string[] exchangeUnitTitles = exchangeUnitTitleText.Trim().Split(" & ").Select(n => n.Trim().ToTitleCase()).ToArray();
-                    string[] signedOffByEmails = approvedByText
-                        .Trim()
-                        .Split(" and ")
-                        .Select(n => n.Trim().ToLowerInvariant().Replace(" ", "."))
-                        .Select(n => $"{n}@staff.uwa.edu")
-                        .ToArray();
-                    string comments = commentsText.Trim();
-
-                    unitSets.Add(new ExchangeApplicationUnitSet
+                    while (csv.Read())
                     {
-                        Id = unitSets.Count + 1,
-                        ApplicationId = int.Parse(studentNumber) % 200,
-                        StudentNumber = studentNumber,
-                        ExchangeDate = exchangeDate,
-                        CourseCode = courseCode,
-                        ApprovalDecidedAt = approvedAt,
-                        IsApproved = isApproved,
-                        ExchangeUniversityCountry = exchangeCountryName,
-                        ExchangeUniversityName = exchangeUniversityName,
-                        ExchangeUniversityHref = "https://university.com",
-                        ExchangeUnits = exchangeUnitCodes.Zip(exchangeUnitTitles, (code, title) => new ExchangeUnit
+                        var approvedText = csv.GetField(0);
+                        var yearText = csv.GetField(1);
+                        var studentNumberText = csv.GetField(2);
+                        var courseCodeText = csv.GetField(3);
+                        var decisionDateText = csv.GetField(4);
+                        var exchangeUniText = csv.GetField(5);
+                        var exchangeCountryText = csv.GetField(6);
+                        var uwaUnitCodesText = csv.GetField(7);
+                        var exchangeUnitCodesText = csv.GetField(8);
+                        var exchangeUnitTitleText = csv.GetField(9);
+                        var approvedByText = csv.GetField(10);
+                        var commentsText = csv.GetField(11);
+
+                        bool isApproved = approvedText == "Y";
+                        DateTime exchangeDate = new DateTime(int.Parse(yearText), Random.Next(1, 12), Random.Next(1, 20));
+                        string studentNumber = studentNumberText.Trim();
+                        string courseCode = courseCodeText.Trim();
+                        DateTime approvedAt = exchangeDate.AddDays(-60);
+                        string exchangeUniversityName = exchangeUniText.Trim().ToTitleCase();
+                        string exchangeCountryName = exchangeUniText.Trim().ToTitleCase();
+                        string[] uwaUnitCodes = uwaUnitCodesText.Trim().Split(" & ").Select(c => c.Trim().ToUpperInvariant()).ToArray();
+                        string[] exchangeUnitCodes = exchangeUnitCodesText.Trim().Split(" & ").Select(c => c.Trim().ToUpperInvariant()).ToArray();
+                        string[] exchangeUnitTitles = exchangeUnitTitleText.Trim().Split(" & ").Select(n => n.Trim().ToTitleCase()).ToArray();
+                        string[] signedOffByEmails = approvedByText
+                            .Trim()
+                            .Split(" and ")
+                            .Select(n => n.Trim().ToLowerInvariant().Replace(" ", "."))
+                            .Select(n => $"{n}@staff.uwa.edu")
+                            .ToArray();
+                        string comments = commentsText.Trim();
+
+                        unitSets.Add(new ExchangeApplicationUnitSet
                         {
-                            Code = code,
-                            Title = title,
-                            Href = "https://unit.com"
-                        }).ToList(),
-                        UWAUnits = uwaUnitCodes.Select(code => new UWAUnit
-                        {
-                            Code = code,
-                            Title = string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
-                            Href = "https://uwa.edu.au",
-                            Level = guessUnitLevel(code),
-                            Context = Random.Choose(new[] { UWAUnitContext.Core, UWAUnitContext.Complementary })
-                        }).ToList(),
-                        EquivalencePrecedentUnitSetId = null,
-                        EquivalencePrecedentUnitSet = null,
-                        UnitEquivalenceDecisions = signedOffByEmails.Select(e => new UnitEquivalenceDecision
-                        {
-                            DecisionMakerEmail = e,
-                            DecidedAt = approvedAt,
-                            IsEquivalent = isApproved,
-                            Comment = new Comment
+                            Id = unitSets.Count + 1,
+                            ApplicationId = int.Parse(studentNumber) % 200,
+                            StudentNumber = studentNumber,
+                            ExchangeDate = exchangeDate,
+                            CourseCode = courseCode,
+                            ApprovalDecidedAt = approvedAt,
+                            IsApproved = isApproved,
+                            ExchangeUniversityCountry = exchangeCountryName,
+                            ExchangeUniversityName = exchangeUniversityName,
+                            ExchangeUniversityHref = "https://university.com",
+                            ExchangeUnits = exchangeUnitCodes.Zip(exchangeUnitTitles, (code, title) => new ExchangeUnit
                             {
-                                UserEmail = e,
-                                PostedAt = approvedAt,
-                                Message = comments
-                            }
-                        }).ToList()
-                    });
-
-                    foreach (var staffEmail in signedOffByEmails)
-                    {
-                        if (uwaStaffLogons.Any(l => l.Email == staffEmail))
-                            continue;
-                        salt = UWAStaffLogon.GenerateSalt();
-                        uwaStaffLogons.Add(new UWAStaffLogon
-                        {
-                            Id = uwaStaffLogons.Count + 1,
-                            Email = staffEmail,
-                            Role = StaffRole.UnitCoordinator,
-                            Salt = salt,
-                            PasswordHash = UWAStaffLogon.HashPassword("password", salt)
+                                Code = code,
+                                Title = title,
+                                Href = "https://unit.com"
+                            }).ToList(),
+                            UWAUnits = uwaUnitCodes.Select(code => new UWAUnit
+                            {
+                                Code = code,
+                                Title = string.Join(" ", Random.Sample(WORDS, Random.Next(2, 5))),
+                                Href = "https://uwa.edu.au",
+                                Level = guessUnitLevel(code),
+                                Context = Random.Choose(new[] { UWAUnitContext.Core, UWAUnitContext.Complementary })
+                            }).ToList(),
+                            EquivalencePrecedentUnitSetId = null,
+                            EquivalencePrecedentUnitSet = null,
+                            UnitEquivalenceDecisions = signedOffByEmails.Select(e => new UnitEquivalenceDecision
+                            {
+                                DecisionMakerEmail = e,
+                                DecidedAt = approvedAt,
+                                IsEquivalent = isApproved,
+                                Comment = new Comment
+                                {
+                                    UserEmail = e,
+                                    PostedAt = approvedAt,
+                                    Message = comments
+                                }
+                            }).ToList()
                         });
+
+                        foreach (var staffEmail in signedOffByEmails)
+                        {
+                            if (uwaStaffLogons.Any(l => l.Email == staffEmail))
+                                continue;
+                            salt = UWAStaffLogon.GenerateSalt();
+                            uwaStaffLogons.Add(new UWAStaffLogon
+                            {
+                                Id = uwaStaffLogons.Count + 1,
+                                Email = staffEmail,
+                                Role = StaffRole.UnitCoordinator,
+                                Salt = salt,
+                                PasswordHash = UWAStaffLogon.HashPassword("password", salt)
+                            });
+                        }
                     }
                 }
-            }
 
-            salt = UWAStaffLogon.GenerateSalt();
-            uwaStaffLogons.Add(new UWAStaffLogon
+                salt = UWAStaffLogon.GenerateSalt();
+                uwaStaffLogons.Add(new UWAStaffLogon
+                {
+                    Id = uwaStaffLogons.Count + 1,
+                    Email = "ros@uwa.edu.au",
+                    Role = StaffRole.StudentOffice,
+                    Salt = salt,
+                    PasswordHash = UWAStaffLogon.HashPassword("password", salt)
+                });
+
+                return (unitSets, uwaStaffLogons);
+            }
+            catch (Exception ex)
             {
-                Id = uwaStaffLogons.Count + 1,
-                Email = "ros@uwa.edu.au",
-                Role = StaffRole.StudentOffice,
-                Salt = salt,
-                PasswordHash = UWAStaffLogon.HashPassword("password", salt)
-            });
-            
-            return (unitSets, uwaStaffLogons);
+                Console.WriteLine("{0}\n{1}", ex.Message, ex.StackTrace);
+                return (unitSets, uwaStaffLogons);
+            }
         }
     }
 }
