@@ -70,6 +70,7 @@ export default function ApplicationForm() {
                 if (precedentUnitSetId && !items.some(i => i.unitSetId === precedentUnitSetId)) {
                     agg.push(f);
                 }
+                return agg;
             },
             []
         );
