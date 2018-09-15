@@ -1,27 +1,45 @@
 import m from 'mithril'
 
 window.NEXT_DATA_TABLE_ID = 1;
+window.TABLE_ID_TO_DATA = {};
+window.TABLE_ID_TO_DATATABLE = {};
 
 export default function DataTable() {
 
     let id = null;
-    let oldData = null;
-    let datatable = null;
     let isCacheEnabled = false;
+    let refreshLock = true;
 
-    function maybeRefresh(newData) {
+    function getDataTable() {
+        return id ? window.TABLE_ID_TO_DATATABLE[id] : null;
+    }
+
+    function setDataTable(datatable) {
+        window.TABLE_ID_TO_DATATABLE[id] = datatable;
+    }
+
+    function getData() {
+        return id ? window.TABLE_ID_TO_DATA[id] : [];
+    }
+
+    function setData(data) {
+        window.TABLE_ID_TO_DATA[id] = data;
+    }
+
+    function maybeRefreshData(newData) {
         /* If the data hasn't changed (we treat it as an immutable list
          * since fetching the data from the API would result in a new list)
          * don't rerender the datatable. This operation can take almost 800ms.
          */
-        if (newData === oldData || datatable === null) {
+        const datatable = getDataTable();
+        if (newData === getData() || datatable === null || datatable === undefined || refreshLock) {
             return;
         }
 
         datatable.clear();
         datatable.rows.add(newData);
         datatable.draw();
-        oldData = newData;
+        setData(newData);
     }
 
     function oninit({ attrs: { id: providedId, cache = false }}) {
@@ -35,16 +53,18 @@ export default function DataTable() {
     }
 
     function view({ attrs: { config: { data } } }) {
-        maybeRefresh(data);
+        maybeRefreshData(data);
         return (
-            <div id={`data-table-${id}`}>
-                <table id={id} class="display table compact" style="width:100%" />
-            </div>
+            <div id={`data-table-anchor-${id}`} style="display: none" />
         )
     }
 
     function oncreate({ attrs: { config, setup = null }, dom: ref }) {
-        const $div = $(ref);
+        const $anchor = $(ref);
+        /* Create our container for the table alongside the anchor DOM that
+         * is managed by mithril.
+         */
+
         let restoredFromCache = false;
 
         /* This reverses the caching operation performed in onremove. If
@@ -57,31 +77,43 @@ export default function DataTable() {
         if (isCacheEnabled) {
             const $maybeCachedTable = $(`#data-table-cache-${id}`).children();
             if ($maybeCachedTable.length > 0) {
-                $div.replaceWith($maybeCachedTable);
+                $anchor.after($maybeCachedTable);
                 restoredFromCache = true;
             }
         }
 
         if (!restoredFromCache) {
-            datatable = $("#" + id).DataTable({
+            $anchor.after(`
+                <div id="${id}">
+                    <table id="__table__${id}" class="display table compact" style="width:100%"></table>
+                </div>
+            `);
+            const datatable = $(`#__table__${id}`).DataTable({
                 ...config,
                 /* Override the data here. We do this because the maybeRefresh
-                 * function updates some internal state about what data we
-                 * are displaying so as to avoid expensive re-renders when
-                 * the data doesn't change, we'll call it in a moment.
-                 */
+                    * function updates some internal state about what data we
+                    * are displaying so as to avoid expensive re-renders when
+                    * the data doesn't change, we'll call it in a moment.
+                    */
                 data: []
             });
-            maybeRefresh(config.data);
-            if (setup) {
-                setup(id, datatable, config);
-            }
+            setDataTable(datatable);
+        }
+
+        refreshLock = false;
+        maybeRefreshData(config.data);
+
+        if (!restoredFromCache && setup) {
+            setup(id, getDataTable(), config);
         }
     }
 
-    function onremove() {
+    function onremove({ dom : ref }) {
         if (!isCacheEnabled) {
-            return;
+            setData(null);
+            setDataTable(null);
+            /* clear out our unmanaged DOM */
+            $(ref).siblings().remove();
         }
 
         /* To cache the table we create a <div /> to contain the table HTML
@@ -97,11 +129,12 @@ export default function DataTable() {
         }
         const $cachedTable = $(`#data-table-cache-${id}`).first();
         $cachedTable.empty()
+
         /* We can't use the dom attribute of the vnode because for some reason
          * when we replace it in oncreate (when restoring from cache) it
          * doesn't know...
          */
-        const $currentTable = $(`#data-table-${id}`);
+        const $currentTable = $(`#${id}`);
         $cachedTable.append($currentTable);
     }
 
