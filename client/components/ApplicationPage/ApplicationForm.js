@@ -31,8 +31,6 @@ export class ApplicationPowerForm extends Form {
                     ...config,
                     unitLevelOptions
                 });
-                form.id = config.id || null;
-                form.readonly = form.precedentUnitSetId.getData() !== null && form.precedentUnitSetId.getData() !== undefined;
                 return form;
             },
             required: true
@@ -126,9 +124,14 @@ export default function ApplicationForm() {
                             <div class="card-body">
                                 <FormRepeater
                                     field={form.unitSetForms}
-                                    form={UnitSetForm}
+                                    render={UnitSetForm}
                                     class="mt-3"
                                 />
+                            </div>
+                        </div>
+                        <div class="card bg-light mt-3 mb-3">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary" onclick={() => console.log(form.isValid(), form.getError())}>Submit Application</button>
                             </div>
                         </div>
                     </div>

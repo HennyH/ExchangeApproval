@@ -1,4 +1,5 @@
 import m from 'mithril'
+import classNames from 'classnames'
 
 const noop = () => {};
 
@@ -10,13 +11,18 @@ export default function RadioGroup() {
             options = null,
             onchange = noop,
             class: classes = null,
+            readonly = false,
             ...otherAttrs
         }
     }) {
         options = options || field.config.options || [];
         const name = field.fieldName;
+        const validationClass = !readonly
+            ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
+            : '';
+        const selected = field.getData();
         return (
-            <div class="form-group">
+            <div class={classNames("form-group", validationClass)}>
                 {options.map(({ label, value  }) => {
                     const id = `${name}_${label}`;
                     return (
@@ -26,7 +32,8 @@ export default function RadioGroup() {
                                 type="radio"
                                 id={id}
                                 value={value}
-                                name={name}
+                                name={field.fieldName}
+                                checked={value === selected.value}
                                 onclick={e => {
                                     const selected = e.target.checked;
                                     const option = new Option(label, value, false, selected);
@@ -41,6 +48,7 @@ export default function RadioGroup() {
                         </div>
                     );
                 })}
+                <div class="invalid-feedback">{field.getError()}</div>
             </div>
         );
     }

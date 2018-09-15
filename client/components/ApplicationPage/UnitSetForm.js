@@ -2,7 +2,7 @@ import m from 'mithril'
 import classNames from 'classnames'
 import { Form } from 'powerform'
 
-import { Input, Select, OptionsField, IntegerField, StringField, FormListField }  from 'FormHelpers'
+import { Input, Select, OptionsField, IntegerField, StringField, FormListField, BooleanField }  from 'FormHelpers'
 import Styles from './UnitSetForm.css'
 import { FormRepeater } from '../FormHelpers/FormRepeater';
 import { FormField } from '../FormHelpers/Fields';
@@ -63,6 +63,7 @@ export class StaffUnitSetApprovalPowerForm extends Form {
 export class UnitSetPowerForm extends Form {
     constructor({ unitLevelOptions, ...config }) {
         super(config);
+        this.readonly = BooleanField.new({ default: false });
         this.precedentUnitSetId = IntegerField.new();
         this.applicationId = IntegerField.new();
         this.exchangeUnitsForm = FormListField.new({
@@ -78,6 +79,11 @@ export class UnitSetPowerForm extends Form {
         })
         Form.new.call(() => this, config);
         this.config = config;
+        if (this.precedentUnitSetId.getData() !== null
+            && this.precedentUnitSetId.getData() !== undefined
+        ) {
+            this.readonly.setData(true);
+        }
     }
 }
 
@@ -85,9 +91,16 @@ function UnitForm() {
     function view({ attrs: { form, onDelete, readonly = false }}) {
         return (
             <div class="form-row">
-                <div class="col-auto align-self-end" style="width: 3em">
-                    <DeleteButton onClick={onDelete} />
-                </div>
+                {readonly
+                    ? <div />
+                    : (
+                        <div class="col-auto" style="width: 3em">
+                            <label class="col-form-label-sm">&nbsp;</label>
+                            <DeleteButton onClick={onDelete} />
+                        </div>
+                    )
+
+                }
                 <div class="col">
                     <label class="col-form-label-sm" for="exch-unit-code">Unit Name:</label>
                     <Input readonly={readonly} field={form.unitName} type="text" />
@@ -132,7 +145,9 @@ function StaffUnitSetApprovalForm() {
 
 export function UnitSetForm() {
 
-    function view({ attrs: { title = "Unit Set", onDelete, form, readonly, class: classes, ...otherAttrs }}) {
+    function view({ attrs: { formIndex, onDelete, form, class: classes, ...otherAttrs }}) {
+        const title = `Unit Set ${formIndex + 1}`;
+        const readonly = form.readonly.getData();
         return (
             <div class={classNames("card", classes)} {...otherAttrs}>
                 <div class="card-header">
@@ -154,7 +169,7 @@ export function UnitSetForm() {
                             <FormRepeater
                                 field={form.exchangeUnitsForm}
                                 jumps={false}
-                                form={UnitForm}
+                                render={UnitForm}
                                 readonly={readonly}
                             />
                         </div>
@@ -167,7 +182,7 @@ export function UnitSetForm() {
                             <FormRepeater
                                 field={form.uwaUnitsForm}
                                 jumps={false}
-                                form={UnitForm}
+                                render={UnitForm}
                                 readonly={readonly}
                             />
                         </div>

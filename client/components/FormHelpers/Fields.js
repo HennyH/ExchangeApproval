@@ -8,6 +8,16 @@ export class StudentEmailField extends Field {
     }
 }
 
+export class BooleanField extends Field {
+    modify(newValue, oldValue) {
+        return !!newValue;
+    }
+
+    validate() {
+
+    }
+}
+
 export class StringField extends Field {
     validate(value, allValues) {
         const required = this.config.required ||
@@ -31,6 +41,14 @@ export class IntegerField extends Field {
     }
 }
 
+export function mapFields(form, func) {
+    return form._fields.map(n => func(form[n]));
+}
+
+export function reduceFields(form, callbackFn, initialValue) {
+    return mapFields(form, f => f).reduce(callbackFn, initialValue);
+}
+
 export class FormListField extends Field {
     constructor({ factory, ...config }) {
         super(config);
@@ -52,15 +70,32 @@ export class FormListField extends Field {
     }
 
     validate() {
-        if (this.config.required &&
-            (
-                this.forms.length === 0 ||
-                this.forms.some(f => f._fields.some(n => !f[n].isValid()))
-            )
-        ) {
+        if (this.config.required && this.forms.length === 0) {
             throw new ValidationError('This section requires at least one valid entry.');
         }
+        if (this.forms.length > 0 && this.forms.some(f => f._fields.some(n => !f[n].isValid()))) {
+            throw new ValidationError('This section requires all entries to be valid.');
+        }
         return ;
+    }
+
+    getError({ childForms = true } = {}) {
+        if (!childForms) {
+            return super.getError();
+        }
+
+        return this.forms.reduce((agg, form) => [
+            ...agg,
+            reduceFields(
+                form,
+                (errors, field) => {
+                    const error = field.getError();
+                    errors[field.fieldName] = error
+                    return errors;
+                },
+                {}
+            )
+        ], []);
     }
 
     isDirty() {
@@ -102,8 +137,14 @@ export class FormField extends Field {
         this.config.form.setData(data);
     }
 
+    isDirty() {
+        return this.config.form.isDirty();
+    }
+
     validate() {
-        return this.config.form.isValid();
+        return this.config.form._fields.map(n => {
+            this.config.form[n].validate()
+        });
     }
 }
 
@@ -135,7 +176,7 @@ export class OptionsField extends Field {
     }
 
     validate() {
-        if (this.config.required && this.value === undefined) {
+        if (this.config.required && this.getData() === undefined) {
             throw new ValidationError('This field is required.');
         }
     }

@@ -21,8 +21,8 @@ export default function Input() {
          * presumably having either been already sumitted to or provided by
          * the server.
          */
-        const validationClass = !readonly && field.isDirty()
-            ? (field.isValid() ? 'is-valid' : 'is-invalid')
+        const validationClass = !readonly
+            ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
             : '';
         const input = (
             <input
