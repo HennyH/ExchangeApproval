@@ -36,6 +36,7 @@ namespace ExchangeApproval.Controllers
             return new DecisionsSearchFilterVM
             {
                 ExchangeUniversityNames = Universities()
+                    .OrderByDescending(n => n)
                     .Select(n => new SelectOption<string>(n, n))
                     .ToList(),
                 UWAUnitContextOptions = Enum
