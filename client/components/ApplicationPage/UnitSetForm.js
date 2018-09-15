@@ -81,7 +81,7 @@ export class UnitSetPowerForm extends Form {
 }
 
 function UnitForm() {
-    function view({ attrs: { form, readonly }}) {
+    function view({ attrs: { form, readonly = false }}) {
         return (
             <div class="form-row">
                 <div class="col">

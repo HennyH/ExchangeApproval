@@ -32,7 +32,7 @@ export class ApplicationPowerForm extends Form {
                     unitLevelOptions
                 });
                 form.id = config.id || null;
-                form.readonly = form.precedentUnitSetId.getData() !== null;
+                form.readonly = form.precedentUnitSetId.getData() !== null && form.precedentUnitSetId.getData() !== undefined;
                 return form;
             },
             required: true
