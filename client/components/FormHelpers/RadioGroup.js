@@ -23,7 +23,8 @@ export default function RadioGroup() {
         const selected = field.getData();
         return (
             <div class={classNames("form-group", validationClass)}>
-                {options.map(({ label, value  }) => {
+                {options.map(option => {
+                    const { label, value } = option;
                     const id = `${name}_${label}`;
                     return (
                         <div class="custom-control custom-radio">
@@ -35,8 +36,6 @@ export default function RadioGroup() {
                                 name={field.fieldName}
                                 checked={value === selected.value}
                                 onclick={e => {
-                                    const selected = e.target.checked;
-                                    const option = new Option(label, value, false, selected);
                                     field.setData(option);
                                     onchange(option);
                                 }}
