@@ -149,7 +149,7 @@ export function UnitSetForm() {
         const title = `Unit Set ${formIndex + 1}`;
         const readonly = form.readonly.getData();
         return (
-            <div class={classNames("card", classes)} {...otherAttrs}>
+            <div class={classNames("card", "bg-light", classes)} {...otherAttrs}>
                 <div class="card-header">
                     <div class="row">
                         <div class="col-11">
@@ -168,6 +168,7 @@ export function UnitSetForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.exchangeUnitsForm}
+                                addItemText="Add Exchange Unit"
                                 jumps={false}
                                 render={UnitForm}
                                 readonly={readonly}
@@ -181,6 +182,7 @@ export function UnitSetForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.uwaUnitsForm}
+                                addItemText="Add UWA Unit"
                                 jumps={false}
                                 render={UnitForm}
                                 readonly={readonly}

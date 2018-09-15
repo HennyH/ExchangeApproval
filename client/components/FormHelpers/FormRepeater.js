@@ -20,6 +20,7 @@ export function FormRepeater() {
         attrs: {
             field,
             render: Form,
+            addItemText = 'Add Item',
             titleFactory = () => null,
             jumps = true,
             readonly,
@@ -66,7 +67,7 @@ export function FormRepeater() {
                             class={classNames(numberOfForms > 0 ? "mt-3" : null, "mb-1 mr-3 btn btn-primary")}
                             onclick={() => addForm(field, { ...defaultConfig })}
                         >
-                                Add Request
+                                {addItemText}
                         </button>
                     )
                 }

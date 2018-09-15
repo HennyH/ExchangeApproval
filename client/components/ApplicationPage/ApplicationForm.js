@@ -43,11 +43,76 @@ export class ApplicationPowerForm extends Form {
 
 export default function ApplicationForm() {
 
+    const state = {
+        hasTriedToSubmit: false
+    };
+
     function oninit(vnode) {
         reRegisterCartChangeHandler(vnode)
         updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
     }
 
+    function view({ attrs: { form } }) {
+        const validationClass = state.hasTriedToSubmit
+            ? (form.isValid() ? 'is-valid' : 'is-invalid')
+            : '';
+        const error = "This form is not valid. Please check all fields for validation errors";
+
+        return (
+            <div class="container">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Exchange Application
+                    </div>
+                    <div class="card-body">
+                        <div class="card bg-light mt-3 mb-3">
+                            <div class="card-header">Student Details</div>
+                            <div class="card-body">
+                                <StudentDetailsForm form={form.studentDetailsForm} />
+                            </div>
+                        </div>
+                        <div class="card bg-light mt-3 mb-3">
+                            <div class="card-header">Exchange University Details</div>
+                            <div class="card-body">
+                                <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} />
+                            </div>
+                        </div>
+                        <div class="card bg-light mt-3 mb-3">
+                            <div class="card-header">Unit Approval Requests</div>
+                            <div class="card-body">
+                                <FormRepeater
+                                    field={form.unitSetForms}
+                                    render={UnitSetForm}
+                                    addItemText="Add Unit Set"
+                                    class="mt-3"
+                                />
+                            </div>
+                        </div>
+                        <div class="card bg-light mt-3 mb-3">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form)}>
+                                    Submit Application
+                                </button>
+                                <input type="hidden" class={classNames("form-control", validationClass)} />
+                                <span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
+                                    {error}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    function handleSubmit(form) {
+        state.hasTriedToSubmit = true;
+        if (form.isValid()) {
+            console.log("APPLICATION SUBMITED", form.getData());
+        }
+    }
+
+    /* cart functionality */
     function onbeforeupdate(vnode, old) {
         reRegisterCartChangeHandler(vnode);
     }
@@ -97,47 +162,6 @@ export default function ApplicationForm() {
         if (redraw) {
             m.redraw();
         }
-    }
-
-    function view({ attrs: { form } }) {
-        return (
-            <div class="container">
-                <div class="card mt-3">
-                    <div class="card-header">
-                        Exchange Application
-                    </div>
-                    <div class="card-body">
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-header">Student Details</div>
-                            <div class="card-body">
-                                <StudentDetailsForm form={form.studentDetailsForm} />
-                            </div>
-                        </div>
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-header">Exchange University Details</div>
-                            <div class="card-body">
-                                <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} />
-                            </div>
-                        </div>
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-header">Unit Approval Requests</div>
-                            <div class="card-body">
-                                <FormRepeater
-                                    field={form.unitSetForms}
-                                    render={UnitSetForm}
-                                    class="mt-3"
-                                />
-                            </div>
-                        </div>
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-body">
-                                <button type="button" class="btn btn-primary" onclick={() => console.log(form.isValid(), form.getError())}>Submit Application</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
     }
 
     return { oninit, onbeforeupdate, view }
