@@ -23,9 +23,13 @@ const Data = {
 }
 
 const applicationPowerForm = new ApplicationPowerForm({
-    onChange: (...args) => console.log("APPLICATION UPDATE", ...args),
+    onChange: showData,
     unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
 })
+
+function showData() {
+    return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
+}
 
 export default function ApplicationPage() {
 

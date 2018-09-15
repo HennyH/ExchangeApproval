@@ -42,7 +42,7 @@ export function FormRepeater() {
                 )}
                 {(field.forms.map(f =>
                     <div class='form-item'>
-                        <Form {...f} {...formAttrs} form={f}/>
+                        <Form {...f} {...formAttrs} form={f} onDelete={() => removeForm(field, f)} />
                     </div>
                 ))}
                 <input type="hidden" class={classNames("form-control", validationClass)} />
@@ -67,6 +67,10 @@ export function FormRepeater() {
                 )}
             </div>
         )
+    }
+
+    function removeForm(field, form) {
+        field.removeForm(form);
     }
 
     function onupdate({ attrs: { jumps = true }, dom: ref }) {

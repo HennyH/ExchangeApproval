@@ -8,14 +8,14 @@ import { FormRepeater } from '../FormHelpers/FormRepeater';
 import { FormField } from '../FormHelpers/Fields';
 import CheckboxGroup from '../FormHelpers/CheckboxGroup';
 import RadioGroup from '../FormHelpers/RadioGroup';
+import DeleteButton from '../FormHelpers/DeleteButton';
 
 export class UnitPowerForm extends Form {
-    constructor({ onChange, ...config }) {
-        super({ onChange, ...config });
-        this.unitName = StringField.new({ onChange, required: true });
-        this.unitCode = StringField.new({ onChange, required: true });
+    constructor({ ...config }) {
+        super(config);
+        this.unitName = StringField.new({ required: true });
+        this.unitCode = StringField.new({ required: true });
         this.unitHref = StringField.new({
-            onChange,
             required: true,
             regex: /^https?\:\/\//,
             regexErrorMessage: 'Enter a URL of the from https://...'
@@ -26,10 +26,9 @@ export class UnitPowerForm extends Form {
 }
 
 export class StaffUnitSetApprovalPowerForm extends Form {
-    constructor({ unitLevelOptions, onChange, ...config }) {
-        super({ ...onChange, config });
+    constructor({ unitLevelOptions, ...config }) {
+        super(config);
         this.equivalentUnitLevel = OptionsField.new({
-            onChange,
             required: true,
             options: [
                 { value: null, label: 'Pending' },
@@ -38,7 +37,6 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             default: { value: null, label: 'Pending', selected: true }
         });
         this.isContextuallyApproved = OptionsField.new({
-            onChange,
             required: true,
             options: [
                 { value: null, label: 'Pending' },
@@ -48,7 +46,6 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             default: { value: null, label: 'Pending', selected: true }
         });
         this.isEquivalent = OptionsField.new({
-            onChange,
             required: true,
             options: [
                 { value: null, label: 'Pending' },
@@ -57,30 +54,27 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
-        this.comment = StringField.new({ onChange });
+        this.comment = StringField.new();
         Form.new.call(() => this, config);
         this.config = config;
     }
 }
 
 export class UnitSetPowerForm extends Form {
-    constructor({ unitLevelOptions, onChange, ...config }) {
-        super({ onChange, config });
-        this.precedentUnitSetId = IntegerField.new({ onChange });
-        this.applicationId = IntegerField.new({ onChange });
+    constructor({ unitLevelOptions, ...config }) {
+        super(config);
+        this.precedentUnitSetId = IntegerField.new();
+        this.applicationId = IntegerField.new();
         this.exchangeUnitsForm = FormListField.new({
-            onChange,
-            factory: ({...config}) => new UnitPowerForm({ onChange, ...config, unitLevelOptions }),
+            factory: ({...config}) => new UnitPowerForm({ ...config, unitLevelOptions }),
             required: true
         });
         this.uwaUnitsForm = FormListField.new({
-            onChange,
-            factory: ({...config}) => new UnitPowerForm({ onChange, ...config, unitLevelOptions }),
+            factory: ({...config}) => new UnitPowerForm({ ...config, unitLevelOptions }),
             required: true
         });
         this.staffApprovalForm = new FormField({
-            onChange,
-            form: new StaffUnitSetApprovalPowerForm({ onChange, unitLevelOptions })
+            form: new StaffUnitSetApprovalPowerForm({ unitLevelOptions })
         })
         Form.new.call(() => this, config);
         this.config = config;
@@ -88,9 +82,12 @@ export class UnitSetPowerForm extends Form {
 }
 
 function UnitForm() {
-    function view({ attrs: { form, readonly = false }}) {
+    function view({ attrs: { form, onDelete, readonly = false }}) {
         return (
             <div class="form-row">
+                <div class="col-auto align-self-end" style="width: 3em">
+                    <DeleteButton onClick={onDelete} />
+                </div>
                 <div class="col">
                     <label class="col-form-label-sm" for="exch-unit-code">Unit Name:</label>
                     <Input readonly={readonly} field={form.unitName} type="text" />
@@ -135,11 +132,18 @@ function StaffUnitSetApprovalForm() {
 
 export function UnitSetForm() {
 
-    function view({ attrs: { title = "Unit Set", form, readonly, class: classes, ...otherAttrs }}) {
+    function view({ attrs: { title = "Unit Set", onDelete, form, readonly, class: classes, ...otherAttrs }}) {
         return (
             <div class={classNames("card", classes)} {...otherAttrs}>
                 <div class="card-header">
-                    {title}
+                    <div class="row">
+                        <div class="col-11">
+                            {title}
+                        </div>
+                        <div class="col-auto align-self-end" style="width: 3em">
+                            <DeleteButton onClick={onDelete} />
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card">

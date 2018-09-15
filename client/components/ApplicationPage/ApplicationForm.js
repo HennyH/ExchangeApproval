@@ -17,21 +17,18 @@ import { FormField, FormListField } from '../FormHelpers/Fields.js';
 
 
 export class ApplicationPowerForm extends Form {
-    constructor({ unitLevelOptions, onChange, ...config }) {
-        super({ onChange, ...config });
+    constructor({ unitLevelOptions, ...config }) {
+        super(config);
         this.studentDetailsForm = new FormField({
-            onChange,
-            form: new StudentDetailsPowerForm({ onChange })
+            form: new StudentDetailsPowerForm()
         });
         this.exchangeUniversityForm = new FormField({
-            onChange,
-            form: new ExchangeUniversityDetailsPowerForm({ onChange })
+            form: new ExchangeUniversityDetailsPowerForm()
         });
         this.unitSetForms = FormListField.new({
             factory: ({ ...config } = {}) => {
                 const form = new UnitSetPowerForm({
                     ...config,
-                    onChange,
                     unitLevelOptions
                 });
                 form.id = config.id || null;
