@@ -10,11 +10,12 @@ import CheckboxGroup from '../FormHelpers/CheckboxGroup';
 import RadioGroup from '../FormHelpers/RadioGroup';
 
 export class UnitPowerForm extends Form {
-    constructor({ ...config }) {
-        super(config);
-        this.unitName = StringField.new({ required: true });
-        this.unitCode = StringField.new({ required: true });
+    constructor({ onChange, ...config }) {
+        super({ onChange, ...config });
+        this.unitName = StringField.new({ onChange, required: true });
+        this.unitCode = StringField.new({ onChange, required: true });
         this.unitHref = StringField.new({
+            onChange,
             required: true,
             regex: /^https?\:\/\//,
             regexErrorMessage: 'Enter a URL of the from https://...'
@@ -25,9 +26,10 @@ export class UnitPowerForm extends Form {
 }
 
 export class StaffUnitSetApprovalPowerForm extends Form {
-    constructor({ unitLevelOptions, ...config }) {
-        super(config);
+    constructor({ unitLevelOptions, onChange, ...config }) {
+        super({ ...onChange, config });
         this.equivalentUnitLevel = OptionsField.new({
+            onChange,
             required: true,
             options: [
                 { value: null, label: 'Pending' },
@@ -36,6 +38,7 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             default: { value: null, label: 'Pending', selected: true }
         });
         this.isContextuallyApproved = OptionsField.new({
+            onChange,
             required: true,
             options: [
                 { value: null, label: 'Pending' },
@@ -45,6 +48,7 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             default: { value: null, label: 'Pending', selected: true }
         });
         this.isEquivalent = OptionsField.new({
+            onChange,
             required: true,
             options: [
                 { value: null, label: 'Pending' },
@@ -53,27 +57,30 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
-        this.comment = StringField.new();
+        this.comment = StringField.new({ onChange });
         Form.new.call(() => this, config);
         this.config = config;
     }
 }
 
 export class UnitSetPowerForm extends Form {
-    constructor({ unitLevelOptions, ...config }) {
-        super(config);
-        this.precedentUnitSetId = IntegerField.new();
-        this.applicationId = IntegerField.new();
+    constructor({ unitLevelOptions, onChange, ...config }) {
+        super({ onChange, config });
+        this.precedentUnitSetId = IntegerField.new({ onChange });
+        this.applicationId = IntegerField.new({ onChange });
         this.exchangeUnitsForm = FormListField.new({
-            factory: ({...config}) => new UnitPowerForm({ ...config, unitLevelOptions }),
+            onChange,
+            factory: ({...config}) => new UnitPowerForm({ onChange, ...config, unitLevelOptions }),
             required: true
         });
         this.uwaUnitsForm = FormListField.new({
-            factory: ({...config}) => new UnitPowerForm({ ...config, unitLevelOptions }),
+            onChange,
+            factory: ({...config}) => new UnitPowerForm({ onChange, ...config, unitLevelOptions }),
             required: true
         });
         this.staffApprovalForm = new FormField({
-            form: new StaffUnitSetApprovalPowerForm({ unitLevelOptions })
+            onChange,
+            form: new StaffUnitSetApprovalPowerForm({ onChange, unitLevelOptions })
         })
         Form.new.call(() => this, config);
         this.config = config;
@@ -145,7 +152,6 @@ export function UnitSetForm() {
                                 jumps={false}
                                 form={UnitForm}
                                 readonly={readonly}
-                                onchange={console.log}
                             />
                         </div>
                     </div>
@@ -159,7 +165,6 @@ export function UnitSetForm() {
                                 jumps={false}
                                 form={UnitForm}
                                 readonly={readonly}
-                                onchange={console.log}
                             />
                         </div>
                     </div>

@@ -20,13 +20,16 @@ export function FormRepeater() {
             field,
             form: Form,
             jumps = true,
-            onchange = noop,
             defaultConfig = {},
             ...formAttrs
         },
         dom: ref
     }) {
         const numberOfForms = field.forms.length;
+        const feedback = field.getError();
+        const validationClass = field.isDirty()
+            ? (field.isValid() ? 'is-valid' : 'is-invalid')
+            : '';
         return (
             <div>
                 {(jumps && numberOfForms > 1
@@ -42,10 +45,12 @@ export function FormRepeater() {
                         <Form {...f} {...formAttrs} form={f}/>
                     </div>
                 ))}
+                <input type="hidden" class={classNames("form-control", validationClass)} />
+                <div class="invalid-feedback mt-2 mb-2" style="line-height: 1.5em;">{feedback}</div>
                 <button
                     type="button"
                     class={classNames(numberOfForms > 0 ? "mt-3" : null, "mb-1 mr-3 btn btn-primary")}
-                    onclick={() => addForm(field, { ...defaultConfig, onChange: onchange })}
+                    onclick={() => addForm(field, { ...defaultConfig })}
                 >
                         Add Request
                 </button>

@@ -52,10 +52,15 @@ export class FormListField extends Field {
     }
 
     validate() {
-        if (this.config.required && this.forms.length === 0) {
-            throw new ValidationError('This section requires at least one entry.');
+        if (this.config.required &&
+            (
+                this.forms.length === 0 ||
+                this.forms.some(f => f._fields.some(n => !f[n].isValid()))
+            )
+        ) {
+            throw new ValidationError('This section requires at least one valid entry.');
         }
-        return this.forms.map(f => f.isValid());
+        return ;
     }
 
     isDirty() {
@@ -64,16 +69,19 @@ export class FormListField extends Field {
 
     pushForm(config) {
         this.forms.push(this.formFactory(config));
+        this.triggerOnChange();
     }
 
     unshiftForm(config) {
         this.forms.unshift(this.formFactory(config));
+        this.triggerOnChange();
     }
 
     removeForm(form) {
         const index = this.forms.indexOf(form);
         if (index >= 0) {
             this.forms.splice(index, 1);
+            this.triggerOnChange();
         }
     }
 }
@@ -91,7 +99,7 @@ export class FormField extends Field {
     }
 
     setData(data) {
-        return this.config.form.setData(data)
+        this.config.form.setData(data);
     }
 
     validate() {
