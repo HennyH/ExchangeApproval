@@ -147,7 +147,7 @@ function StaffUnitSetApprovalForm() {
 export function UnitSetForm() {
 
     function view({ attrs: { formIndex, onDelete, form, class: classes, ...otherAttrs }}) {
-        const title = `Unit Set ${formIndex + 1}`;
+        const title = `Unit Set ${formIndex + 1} ${form.config.cartItem ? "(From Cart)" : ""}`;
         const readonly = form.readonly.getData();
         return (
             <div class={classNames("card", "bg-light", classes)} {...otherAttrs}>
