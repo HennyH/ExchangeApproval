@@ -144,7 +144,7 @@ export default function ApplicationForm() {
         formsToDrop.map(f => form.unitSetForms.removeForm(f));
         items.map(i => {
             if (!form.unitSetForms.forms.some(f => f.precedentUnitSetId.getData() === i.unitSetId)) {
-                form.unitSetForms.pushForm({
+                form.unitSetForms.unshiftForm({
                     data: {
                         precedentUnitSetId: i.unitSetId,
                         exchangeUnitsForm: i.exchangeUnits.map(u => ({
