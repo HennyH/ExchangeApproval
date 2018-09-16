@@ -33,7 +33,7 @@ Automation of the exchange unit approval process.
 | Client Meeting 4 Notes | 10/09/2018 14:45-15:30 | https://docs.google.com/document/d/1WGtJdJ8kiP21bQZckdQBsUeQRMVsXHPwDcUoUEH3q-U/edit |
 | Mentor Meeting 1 Questions and Notes | 16/08/2018 | https://docs.google.com/document/d/14y2D4a-uu6OoEJcWEIlkJRlL4-V6u4nSdY39QSU35YI/edit?usp=sharing |
 | Mentor Meeting 1 Notes | 16/08/2018 15:05-16:20 | https://docs.google.com/document/d/11RsvLUr-8UpzFFUaTtm9Y-LTiv4-HBJnazVkOKdygpg/edit?usp=sharing |
-| Mentor Meeting 2 Notes | 13/09/2018 15:50-16:42 | https://docs.google.com/document/d/1ozcu-jQSejZb3oU5lOLX4U4AYRpXipGOcQnXjjuo2sY/edit |
+| Mentor Meeting 2 Notes | 13/09/2018 16:50-17:42 | https://docs.google.com/document/d/1ozcu-jQSejZb3oU5lOLX4U4AYRpXipGOcQnXjjuo2sY/edit |
 | Audited Meeting 2 Notes & Task Allocation | 24/08/2018 15:03-16:13 | https://docs.google.com/document/d/1VmcXWwOu-_Aae3WXsIyDmmJdd4bla0evX2GGk1aISis/edit |
 | Audited Meeting 3 Notes & Task Allocation | 07/09/2018 13:03-13:56 | https://docs.google.com/document/d/1VlGiPCwzeYtbhAuUCwOp9VkFe9EVCBhT2kHLiLq1Go0/edit |
 ## License
