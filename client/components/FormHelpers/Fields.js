@@ -1,7 +1,14 @@
 import { Field, ValidationError } from 'powerform'
 
 export class StudentEmailField extends Field {
+    constructor({ ...config } = {}) {
+        super(config);
+        Field.new.call(() => this, config);
+        this.config = config;
+    }
+
     validate(value, allValues) {
+        value = this.getData();
         if (!value || !value.match(/^\d{8}$/)) {
             throw new ValidationError('Please enter a valid UWA email.');
         }
@@ -9,17 +16,28 @@ export class StudentEmailField extends Field {
 }
 
 export class BooleanField extends Field {
+    constructor({ ...config } = {}) {
+        super(config);
+        Field.new.call(() => this, config);
+        this.config = config;
+    }
+
     modify(newValue, oldValue) {
         return !!newValue;
     }
 
-    validate() {
-
-    }
+    validate() { }
 }
 
 export class StringField extends Field {
+    constructor({ ...config } = {}) {
+        super(config);
+        Field.new.call(() => this, config);
+        this.config = config;
+    }
+
     validate(value, allValues) {
+        value = this.getData();
         const required = this.config.required ||
                          (this.config.requiredIf && this.config.requiredIf(value, allValues));
         if (required && (!value || !value.trim())) {
@@ -32,7 +50,14 @@ export class StringField extends Field {
 }
 
 export class IntegerField extends Field {
+    constructor({ ...config } = {}) {
+        super(config);
+        Field.new.call(() => this, config);
+        this.config = config;
+    }
+
     validate(value, allValues) {
+        value = this.getData();
         const required = this.config.required ||
                          (this.config.requiredIf && this.config.requiredIf(value, allValues));
         if (required && (value === null || value === undefined)) {
@@ -54,6 +79,8 @@ export class FormListField extends Field {
         super(config);
         this.formFactory = factory;
         this.forms = [];
+        Field.new.call(() => this, config);
+        this.config = config;
     }
 
     getData() {
@@ -173,6 +200,9 @@ export class OptionsField extends Field {
             }
 
         }
+
+        Field.new.call(() => this, config);
+        this.config = config;
     }
 
     validate() {
@@ -214,14 +244,14 @@ export class OptionsField extends Field {
         if (!this.config.multiple) {
             return (!previousOption || newOption.value !== previousOption.value)
                 ? newOption
-                : null;
+                : previousOption;
         }
 
         if (Array.isArray(newOption)) {
             return newOption;
         }
 
-        return [
+        const value = [
             ...(previousOption || []),
             newOption
         ]
@@ -229,6 +259,8 @@ export class OptionsField extends Field {
         .filter((o, i, self) => self.findIndex(x => x.value == o.value) === i)
         /* Remove ones that were just de-selected */
         .filter(o => newOption.selected || o.value != newOption.value);
+
+        return value;
     }
 }
 

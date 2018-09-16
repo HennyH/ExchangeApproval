@@ -109,6 +109,8 @@ export default function ApplicationForm() {
         state.hasTriedToSubmit = true;
         if (form.isValid()) {
             console.log("APPLICATION SUBMITED", form.getData());
+        } else {
+            console.log("ERRORS", form.getError());
         }
     }
 

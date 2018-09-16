@@ -7,7 +7,7 @@ import Styles from './UnitSetForm.css'
 import { FormRepeater } from '../FormHelpers/FormRepeater';
 import { FormField } from '../FormHelpers/Fields';
 import CheckboxGroup from '../FormHelpers/CheckboxGroup';
-import RadioGroup from '../FormHelpers/RadioGroup';
+import RadioButtonGroup from '../FormHelpers/RadioButtonGroup';
 import DeleteButton from '../FormHelpers/DeleteButton';
 import { removeItemFromCart } from 'Components/Cart'
 
@@ -40,18 +40,18 @@ export class StaffUnitSetApprovalPowerForm extends Form {
         this.isContextuallyApproved = OptionsField.new({
             required: true,
             options: [
-                { value: null, label: 'Pending' },
-                { value: true, label: 'Approved' },
-                { value: false, label: 'Denied' }
+                { value: null, label: 'Pending', class: 'btn-outline-primary' },
+                { value: true, label: 'Approved', class: 'btn-outline-success'  },
+                { value: false, label: 'Denied', class: 'btn-outline-danger' }
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
         this.isEquivalent = OptionsField.new({
             required: true,
             options: [
-                { value: null, label: 'Pending' },
-                { value: true, label: 'Approved' },
-                { value: false, label: 'Denied' }
+                { value: null, label: 'Pending', class: 'btn-outline-primary' },
+                { value: true, label: 'Approved', class: 'btn-outline-success' },
+                { value: false, label: 'Denied', class: 'btn-outline-danger' }
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
@@ -131,11 +131,11 @@ function StaffUnitSetApprovalForm() {
                 </div>
                 <div class="col-4 ml-auto">
                     <label class="col-form-label-sm ml-3" for="exch-unit-code">Contextual Approval:</label>
-                    <RadioGroup field={form.isContextuallyApproved} />
+                    <RadioButtonGroup field={form.isContextuallyApproved} />
                 </div>
                 <div class="col-4">
                     <label class="col-form-label-sm" for="exch-unit-code">Equivalence Decision:</label>
-                    <RadioGroup field={form.isEquivalent} />
+                    <RadioButtonGroup field={form.isEquivalent} />
                 </div>
             </div>
         )
