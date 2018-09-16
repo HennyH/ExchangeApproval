@@ -21,6 +21,7 @@ Automation of the exchange unit approval process.
 | Proposed Communication Process Flowchart | A flowchart showing how and to who different entities will communicate when the project is implemented | https://www.lucidchart.com/invitations/accept/329e5b98-ea86-45e4-bef4-c8e9ee3badf8
 | Project Acceptance Tests | For now, this is only for the search form | https://docs.google.com/document/d/17f8f_OZ8KZg9K_H_xM-yoc8FRIKmNsvT_1tsB5NaC5Q/edit?usp=sharing
 | User Stories | Document detailing per sprint what our user stories are. | https://docs.google.com/document/d/177y5c7_CgxiBHOAfjFETm31pY17ebNv8PxTSsWcy-Iw/edit?usp=sharing
+| User Stories 2| Document detailing sprint 3 what our user stories are. | https://docs.google.com/document/d/1FTKFka7grYutcZPPNK3gXVgXveGnF7vIEeXtd6uqgA0/edit#
 | Risk Register | Some risks and actions to avoid them. | https://docs.google.com/document/d/1XezEW9XmIpJqe9lMXQ4i1SXS8p3d2UZSIqWs1Siq0Bo/edit?usp=sharing
 
 ### Client Meeting Notes
