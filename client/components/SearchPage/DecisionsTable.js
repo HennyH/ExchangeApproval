@@ -130,7 +130,7 @@ export default function DecisionsTable() {
                         trigger: 'hover'
                     });
                 }}
-                cache={true}
+                cache={false}
             />
         )
     }

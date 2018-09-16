@@ -81,7 +81,7 @@ export default function InboxTable() {
                         const decision = datatable.row($(event.target).parents('tr')).data();
                     })
                 }}
-                cache={true}
+                cache={false}
             />
         )
     }
