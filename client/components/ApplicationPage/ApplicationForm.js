@@ -115,6 +115,7 @@ export default function ApplicationForm() {
     /* cart functionality */
     function onbeforeupdate(vnode, old) {
         reRegisterCartChangeHandler(vnode);
+        updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
     }
 
     function reRegisterCartChangeHandler(vnode) {
@@ -138,7 +139,7 @@ export default function ApplicationForm() {
             []
         );
         let redraw = formsToDrop.length > 0;
-        formsToDrop.map(form.unitSetForms.removeForm);
+        formsToDrop.map(f => form.unitSetForms.removeForm(f));
         items.map(i => {
             if (!form.unitSetForms.forms.some(f => f.precedentUnitSetId.getData() === i.unitSetId)) {
                 form.unitSetForms.pushForm({
@@ -154,7 +155,8 @@ export default function ApplicationForm() {
                             unitCode: u.unitCode,
                             unitHref: u.unitHref
                         }))
-                    }
+                    },
+                    cartItem: i
                 });
                 redraw = true;
             }

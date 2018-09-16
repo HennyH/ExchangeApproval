@@ -9,6 +9,7 @@ import { FormField } from '../FormHelpers/Fields';
 import CheckboxGroup from '../FormHelpers/CheckboxGroup';
 import RadioGroup from '../FormHelpers/RadioGroup';
 import DeleteButton from '../FormHelpers/DeleteButton';
+import { removeItemFromCart } from 'Components/Cart'
 
 export class UnitPowerForm extends Form {
     constructor({ ...config }) {
@@ -156,7 +157,14 @@ export function UnitSetForm() {
                             {title}
                         </div>
                         <div class="col-auto align-self-end" style="width: 3em">
-                            <DeleteButton onClick={onDelete} />
+                            <DeleteButton
+                                onClick={() => {
+                                    if (form.config.cartItem) {
+                                        removeItemFromCart(form.config.cartItem);
+                                    }
+                                    onDelete();
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
