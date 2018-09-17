@@ -27,7 +27,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
             : displayName;
         const link = href
             ? `
-                <a href="${href}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em">
+                <a href="${href}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em" target="_blank">
                     ↪
                 </a>
             `
