@@ -24,6 +24,7 @@ Automation of the exchange unit approval process.
 | User Stories 2| Document detailing sprint 3 what our user stories are. | https://docs.google.com/document/d/1FTKFka7grYutcZPPNK3gXVgXveGnF7vIEeXtd6uqgA0/edit#
 | Users Stores 2 Henry | Description of the tasks for sprint 3 | https://docs.google.com/document/d/177y5c7_CgxiBHOAfjFETm31pY17ebNv8PxTSsWcy-Iw/edit?usp=sharing
 | Risk Register | Some risks and actions to avoid them. | https://docs.google.com/document/d/1XezEW9XmIpJqe9lMXQ4i1SXS8p3d2UZSIqWs1Siq0Bo/edit?usp=sharing
+| Sprint 2 Internal Retrospective | | https://docs.google.com/document/d/1Hs0OYgm4uluKmphfZgwkgVobJxJziggRVCnOh7YbJ3E/edit?usp=sharing
 
 ### Client Meeting Notes
 | Name | Purpose | Location|
