@@ -85,8 +85,6 @@ namespace ExchangeApproval
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
