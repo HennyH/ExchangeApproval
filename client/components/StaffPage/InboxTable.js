@@ -50,7 +50,7 @@ export function makeInboxTableConfig(decisions) {
                 data: "exchangeUniversityName",
                 width: '30%',
                 render: (data, type, row, meta) =>
-                `<a href=${encodeURI(row.exchangeUniversityHref)}>${data}</a>`
+                `<a href=${encodeURI(row.exchangeUniversityHref)} target="_blank">${data}</a>`
             },
             {
                 title: COLUMN_NAMES.Approved,
