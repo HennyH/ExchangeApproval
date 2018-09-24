@@ -56,18 +56,6 @@ export default function StaffPage() {
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                            <h5>Fii</h5>
-                        </div>
                     </div>
                     
                 </div>
