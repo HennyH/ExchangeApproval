@@ -121,24 +121,39 @@ function UnitForm() {
     return { view }
 }
 
+function StaffApprovalContainer(staffView, form) {
+	if(staffView){
+		return (
+			<div class="card mt-3">
+				<div class="card-header">
+					<em>Staff Approval</em>
+				</div>
+				<div class="card-body">
+					<StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
+				</div>
+			</div>
+		)
+	}
+}
+
 function StaffUnitSetApprovalForm() {
     function view({ attrs: { form }}) {
-        return (
-            <div class="form-row">
-                <div class="col-3">
-                    <label class="col-form-label-sm" for="exch-unit-code">Equivalent UWA Level:</label>
-                    <Select field={form.equivalentUnitLevel} />
-                </div>
-                <div class="col-4 ml-auto">
-                    <label class="col-form-label-sm ml-3" for="exch-unit-code">Contextual Approval:</label>
-                    <RadioButtonGroup field={form.isContextuallyApproved} />
-                </div>
-                <div class="col-4">
-                    <label class="col-form-label-sm" for="exch-unit-code">Equivalence Decision:</label>
-                    <RadioButtonGroup field={form.isEquivalent} />
-                </div>
-            </div>
-        )
+		return (
+			<div class="form-row">
+				<div class="col-3">
+					<label class="col-form-label-sm" for="exch-unit-code">Equivalent UWA Level:</label>
+					<Select field={form.equivalentUnitLevel} />
+				</div>
+				<div class="col-4 ml-auto">
+					<label class="col-form-label-sm ml-3" for="exch-unit-code">Contextual Approval:</label>
+					<RadioButtonGroup field={form.isContextuallyApproved} />
+				</div>
+				<div class="col-4">
+					<label class="col-form-label-sm" for="exch-unit-code">Equivalence Decision:</label>
+					<RadioButtonGroup field={form.isEquivalent} />
+				</div>
+			</div>
+		)
     }
 
     return { view }
@@ -146,9 +161,10 @@ function StaffUnitSetApprovalForm() {
 
 export function UnitSetForm() {
 
-    function view({ attrs: { formIndex, onDelete, form, class: classes, ...otherAttrs }}) {
+    function view({ attrs: { formIndex, onDelete, form, class: classes, staffView, ...otherAttrs }}) {
+		console.log(staffView); // TESTING
         const title = `Unit Set ${formIndex + 1} ${form.config.cartItem ? "(From Cart)" : ""}`;
-        const readonly = form.readonly.getData();
+        const readonly = (form.readonly.getData() || staffView);
         return (
             <div class={classNames("card", "bg-light", classes)} {...otherAttrs}>
                 <div class="card-header">
@@ -157,14 +173,17 @@ export function UnitSetForm() {
                             {title}
                         </div>
                         <div class="col-auto align-self-end" style="width: 3em">
-                            <DeleteButton
-                                onClick={() => {
-                                    if (form.config.cartItem) {
-                                        removeItemFromCart(form.config.cartItem);
-                                    }
-                                    onDelete();
-                                }}
-                            />
+                            {(staffView) ? 
+								<div/> 
+								: <DeleteButton
+									onClick={() => {
+										if (form.config.cartItem) {
+											removeItemFromCart(form.config.cartItem);
+										}
+										onDelete();
+									}}
+								/> 
+							}
                         </div>
                     </div>
                 </div>
@@ -197,14 +216,7 @@ export function UnitSetForm() {
                             />
                         </div>
                     </div>
-                    <div class="card mt-3">
-                        <div class="card-header">
-                            <em>Staff Approval</em>
-                        </div>
-                        <div class="card-body">
-                            <StaffUnitSetApprovalForm form={form.staffApprovalForm} />
-                        </div>
-                    </div>
+                    {StaffApprovalContainer(staffView, form)}
                 </div>
             </div>
         )

@@ -24,8 +24,9 @@ export function FormRepeater() {
             titleFactory = () => null,
             jumps = true,
             readonly,
-            defaultConfig = {},
-            ...formAttrs
+			defaultConfig = {},
+			staffView,
+			...formAttrs
         },
         dom: ref
     }) {
@@ -51,7 +52,8 @@ export function FormRepeater() {
                             readonly={readonly}
                             form={f}
                             formIndex={i}
-                            onDelete={() => removeForm(field, f)}
+							onDelete={() => removeForm(field, f)}
+							staffView = {staffView}
                         />
                     </div>
                 ))}
@@ -59,7 +61,7 @@ export function FormRepeater() {
                 <div class="invalid-feedback mt-2 mb-2" style="line-height: 1.5em;">
                     {error}
                 </div>
-                {readonly
+                {(readonly || staffView)
                     ? <div />
                     : (
                         <button
