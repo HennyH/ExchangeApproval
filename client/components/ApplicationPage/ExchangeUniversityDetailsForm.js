@@ -19,19 +19,24 @@ export class ExchangeUniversityDetailsPowerForm extends Form {
 
 export function ExchangeUniversityDetailsForm() {
 
-    function view({ attrs: { form } }) {
+    function view({ attrs: { form, staffView } }) {
+
+		function oninit(vnode) {
+			vnode.staffView
+		}
+
         return (
             <form novalidate>
                 <div class="form-group row">
                     <label class="col-form-label col-4" for="email">Exchange University Name: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityName} type="text" />
+                        <Input field={form.universityName} type="text" readOnly = {staffView} />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-4" for="email">Exchange University Homepage: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityHomepage} type="text" />
+                        <Input field={form.universityHomepage} type="text" readOnly = {staffView} />
                     </div>
                 </div>
             </form>

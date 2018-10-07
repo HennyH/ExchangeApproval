@@ -23,6 +23,7 @@ const Data = {
 }
 
 const applicationPowerForm = new ApplicationPowerForm({
+	staffView: false,
     onChange: showData,
     unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
 })
@@ -50,7 +51,7 @@ export default function ApplicationPage() {
                     			<div class="card-header">
                         			Exchange Application
                     			</div>
-                            	<ApplicationForm form={applicationPowerForm} />
+                            	<ApplicationForm form={applicationPowerForm} staffView ={false} /> // SET STAFF VIEW TO TRUE
 							</div>
                         </div>
                     )

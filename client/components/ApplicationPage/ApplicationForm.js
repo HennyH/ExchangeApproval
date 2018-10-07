@@ -17,7 +17,8 @@ import { FormField, FormListField } from '../FormHelpers/Fields.js';
 
 
 export class ApplicationPowerForm extends Form {
-    constructor({ unitLevelOptions, ...config }) {
+    constructor({ unitLevelOptions, staffView, ...config }) {
+		console.log(staffView);
         super(config);
         this.studentDetailsForm = new FormField({
             form: new StudentDetailsPowerForm()
@@ -29,14 +30,15 @@ export class ApplicationPowerForm extends Form {
             factory: ({ ...config } = {}) => {
                 const form = new UnitSetPowerForm({
                     ...config,
-                    unitLevelOptions
+					unitLevelOptions,
+					staffView
                 });
                 return form;
             },
             required: true
         });
         Form.new.call(() => this, config);
-        this.config = config;
+		this.config = config;
     }
 }
 
@@ -52,7 +54,7 @@ export default function ApplicationForm() {
         updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
     }
 
-    function view({ attrs: { form } }) {
+    function view({ attrs: { form, staffView } }) {
         const validationClass = state.hasTriedToSubmit
             ? (form.isValid() ? 'is-valid' : 'is-invalid')
             : '';
@@ -68,13 +70,13 @@ export default function ApplicationForm() {
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Student Details</div>
                             <div class="card-body">
-                                <StudentDetailsForm form={form.studentDetailsForm} />
+                                <StudentDetailsForm form={form.studentDetailsForm} staffView={staffView} />
                             </div>
                         </div>
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Exchange University Details</div>
                             <div class="card-body">
-                                <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} />
+                                <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} staffView={staffView} />
                             </div>
                         </div>
                         <div class="card bg-light mt-3 mb-3">
@@ -84,26 +86,35 @@ export default function ApplicationForm() {
                                     field={form.unitSetForms}
                                     render={UnitSetForm}
                                     addItemText="Add Unit Set"
-                                    class="mt-3"
+									class="mt-3"
+									staffView = {staffView}
                                 />
                             </div>
                         </div>
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-body">
-                                <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form)}>
-                                    Submit Application
-                                </button>
-                                <input type="hidden" class={classNames("form-control", validationClass)} />
-                                <span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
-                                    {error}
-                                </span>
-                            </div>
-                        </div>
+						{submitButton(staffView, validationClass, error)}
                     </div>
                 {/* </div> */}
             </div>
         )
     }
+
+	function submitButton(staffView, validationClass, error) {
+		if (!staffView) {
+			return (
+				<div class="card bg-light mt-3 mb-3">
+					<div class="card-body">
+						<button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form)}>
+							Submit Application
+						</button>
+						<input type="hidden" class={classNames("form-control", validationClass)} />
+						<span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
+							{error}
+						</span>
+					</div>
+				</div>
+			)
+		}
+	}
 
     function handleSubmit(form) {
         state.hasTriedToSubmit = true;
