@@ -60,10 +60,10 @@ export default function ApplicationForm() {
 
         return (
             <div class="container">
-                <div class="card mt-3">
-                    <div class="card-header">
+                {/* <div class="card mt-3"> */}
+                    {/* <div class="card-header">
                         Exchange Application
-                    </div>
+                    </div> */}
                     <div class="card-body">
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Student Details</div>
@@ -100,7 +100,7 @@ export default function ApplicationForm() {
                             </div>
                         </div>
                     </div>
-                </div>
+                {/* </div> */}
             </div>
         )
     }
@@ -108,7 +108,7 @@ export default function ApplicationForm() {
     function handleSubmit(form) {
         state.hasTriedToSubmit = true;
         if (form.isValid()) {
-            console.log("APPLICATION SUBMITED", form.getData());
+            console.log("APPLICATION SUBMITTED", form.getData());
         } else {
             console.log("ERRORS", form.getError());
         }
