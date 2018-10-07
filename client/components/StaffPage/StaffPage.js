@@ -3,6 +3,8 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
+import { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm';
+import ApplicationModal from './ApplicationModal.js';
 
 const MOCK_DECISIONS = [
     {
@@ -34,7 +36,17 @@ const MOCK_DECISIONS = [
     }
 ]
 
+// const applicationPowerForm = new ApplicationPowerForm({
+//     onChange: showData,
+//     unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
+// })
+
+// function showData() {
+//     return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
+// }
+
 export default function StaffPage() {
+
     function view() {
         return (
             <Layout>
@@ -57,8 +69,11 @@ export default function StaffPage() {
                             </div>
                         </div>
                     </div>
-                    
                 </div>
+				<ApplicationModal 
+					// form={applicationPowerForm}
+					// studentName = {} // Hard-coded
+				/>
             </Layout>
         );
     }

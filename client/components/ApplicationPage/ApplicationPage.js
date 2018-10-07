@@ -46,7 +46,12 @@ export default function ApplicationPage() {
                     ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
                     : (
                         <div class="container">
-                            <ApplicationForm form={applicationPowerForm} />
+							<div class="card mt-3">
+                    			<div class="card-header">
+                        			Exchange Application
+                    			</div>
+                            	<ApplicationForm form={applicationPowerForm} />
+							</div>
                         </div>
                     )
                 )}
