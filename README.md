@@ -44,6 +44,7 @@ Automation of the exchange unit approval process.
 | Audited Meeting 4 Notes | 21/09/2018 15:00 - 15:39 | https://docs.google.com/document/d/1-BZYPpfkPbOjXOtfVdcVAUipCT_hS2__yoclegEBx3E/edit?usp=sharing |
 | Team Meeting Wk9 Notes | 05/10/2018 15:00 - 16:30 | https://docs.google.com/document/d/10D27gvT61aWb0pvq-3kSixtBWhDc5etATkCe0hrH_Pc/edit?usp=sharing |
 | Mentor Meeting 3 Notes | 11/10/2018 16:30 - 15:20 | https://docs.google.com/document/d/11iUe_JYIAw84fE_bCJS0ZNOIaFgV5psoX-eUBxa_bWQ/edit |
+| Audited Meeting 5 Notes | 12/10/2018 16:00 - 17:00 | https://docs.google.com/document/d/1UF1F4U5ym0LvgFYbLgMxHV6pW_4LLFcar4V5YrTnpwo/edit?usp=sharing |
 
 ## License
 
