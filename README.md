@@ -27,7 +27,7 @@ Automation of the exchange unit approval process.
 | Risk Register | Some risks and actions to avoid them. | https://docs.google.com/document/d/1XezEW9XmIpJqe9lMXQ4i1SXS8p3d2UZSIqWs1Siq0Bo/edit?usp=sharing
 | Sprint 2 Internal Retrospective | | https://docs.google.com/document/d/1Hs0OYgm4uluKmphfZgwkgVobJxJziggRVCnOh7YbJ3E/edit?usp=sharing
 
-### Client Meeting Notes
+### Meeting Notes
 | Name | Purpose | Location|
 |------|---------|---------|
 | Client Meeting 1 Notes | 06/08/2018 | https://docs.google.com/document/d/1HcdILR31IKStN5MduLGdf4MgZpuen0HVt0qO1BcZ0CE/edit?usp=sharing
@@ -40,8 +40,10 @@ Automation of the exchange unit approval process.
 | Mentor Meeting 2 Notes | 13/09/2018 16:50-17:42 | https://docs.google.com/document/d/1ozcu-jQSejZb3oU5lOLX4U4AYRpXipGOcQnXjjuo2sY/edit |
 | Audited Meeting 2 Notes & Task Allocation | 24/08/2018 15:03-16:13 | https://docs.google.com/document/d/1VmcXWwOu-_Aae3WXsIyDmmJdd4bla0evX2GGk1aISis/edit |
 | Audited Meeting 3 Notes & Task Allocation | 07/09/2018 13:03-13:56 | https://docs.google.com/document/d/1VlGiPCwzeYtbhAuUCwOp9VkFe9EVCBhT2kHLiLq1Go0/edit |
-| Team Meeting Notes | 17/09/2018 14:00-16:00 | https://docs.google.com/document/d/1_Vsc-ZxxkGC2msrfMPvPdQrP5i5Wz5wCgFeXUn499Gc/edit?usp=sharing |
+| Team Meeting Wk8 Notes | 17/09/2018 14:00-16:00 | https://docs.google.com/document/d/1_Vsc-ZxxkGC2msrfMPvPdQrP5i5Wz5wCgFeXUn499Gc/edit?usp=sharing |
 | Audited Meeting 4 Notes | 21/09/2018 15:00 - 15:39 | https://docs.google.com/document/d/1-BZYPpfkPbOjXOtfVdcVAUipCT_hS2__yoclegEBx3E/edit?usp=sharing |
+| Team Meeting Wk9 Notes | 05/10/2018 15:00 - 16:30 | https://docs.google.com/document/d/10D27gvT61aWb0pvq-3kSixtBWhDc5etATkCe0hrH_Pc/edit?usp=sharing |
+| Mentor Meeting 3 Notes | 11/10/2018 16:30 - 15:20 | https://docs.google.com/document/d/11iUe_JYIAw84fE_bCJS0ZNOIaFgV5psoX-eUBxa_bWQ/edit |
 
 ## License
 
