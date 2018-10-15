@@ -51,7 +51,7 @@ export default function ApplicationPage() {
                     			<div class="card-header">
                         			Exchange Application
                     			</div>
-                            	<ApplicationForm form={applicationPowerForm} staffView ={false} /> // SET STAFF VIEW TO TRUE
+                            	<ApplicationForm form={applicationPowerForm} staffView ={false} />
 							</div>
                         </div>
                     )
