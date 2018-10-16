@@ -3,10 +3,11 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
-import Modal from '../Modal/Modal.js';
-import ApplicationForm from '../ApplicationPage/ApplicationForm.js';
+import Modal, { showModal }from '../Modal/Modal.js';
+import ApplicationForm, { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import classNames from 'classnames'
+import { loadavg } from 'os';
 
 const MOCK_DECISIONS = [
     {
@@ -55,28 +56,31 @@ const Data = {
     }
 }
 
+const ModalState = {
+	selectedApplication: null,
+	onclose: () => {ModalState.selectedApplication = null}
+}
 
-// const applicationPowerForm = new ApplicationPowerForm({
-// 	staffView: true,
-//     onChange: showData,
-//     unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
-// })
+const applicationPowerForm = new ApplicationPowerForm({
+	staffView: true,
+    onChange: showData,
+    unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
+})
 
 function showData() {
     return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
-}
-
-
-const ModalState = {
-	selectedApplication: null
 }
 
 export default function StaffPage() {
 
 	function oninit() {
         if (Data.filters.options === null) {
-            Data.filters.fetch();
-        }
+			Data.filters.fetch();
+		}
+	}
+
+	function onupdate() {
+		showModal();
 	}
 
     function view() {
@@ -103,17 +107,26 @@ export default function StaffPage() {
                         </div>
                     </div>
                 </div>
-				<Modal title={ModalState ? ModalState.selectedApplication : ''}>
-					{(Data.filters.loading
-						? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
-						: (
-							<ApplicationForm form={applicationPowerForm} staffView = {true} />
-						)
-					)}	
-				</Modal>
+				{(ModalState.selectedApplication 
+					? <Modal 
+						title = '' 
+						modalData = {ModalState}
+						// onclose = { function() { this.selectedApplication = null } }
+						>
+						{(Data.filters.loading
+							? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
+							: (
+								<ApplicationForm 
+									form={applicationPowerForm} 
+									staffView = {true} 
+								/>
+							)
+						)}	
+					</Modal>
+					: <div/>)}
             </Layout>
         );
     }
 
-    return { view };
+    return { oninit, onupdate, view };
 }
