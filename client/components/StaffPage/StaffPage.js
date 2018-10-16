@@ -58,7 +58,11 @@ const Data = {
 
 const ModalState = {
 	selectedApplication: null,
-	onclose: () => {ModalState.selectedApplication = null}
+	onclose: () => {ModalState.selectedApplication = null},
+	// student: null,
+	// exchangeUniversity: null,
+	// unitsets: null,
+	// // fetch: () => 
 }
 
 const applicationPowerForm = new ApplicationPowerForm({
@@ -109,9 +113,9 @@ export default function StaffPage() {
                 </div>
 				{(ModalState.selectedApplication 
 					? <Modal 
-						title = '' 
+						title = {"Edit Application: " + ModalState.selectedApplication.studentName}
 						modalData = {ModalState}
-						// onclose = { function() { this.selectedApplication = null } }
+						size = {"xl"}
 						>
 						{(Data.filters.loading
 							? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />

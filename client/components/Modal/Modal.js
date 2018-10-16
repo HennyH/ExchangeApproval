@@ -1,6 +1,6 @@
 import m from 'mithril';
 import classNames from 'classnames'
-import Styles from '../ApplicationPage/ApplicationPage.css'
+import ModalStyles from './Modal.css'
 
 export function showModal() {
 	$("#Modal").modal(focus = true);
@@ -15,15 +15,21 @@ $(document).on('hidden.bs.modal', '#Modal', function() {
 var hideModal = () => {};
 
 export default function ApplicationModal() {
-	
+
 	function oncreate(vnode) {
 		hideModal = vnode.attrs.modalData.onclose;
 	}
 
-    function view({ attrs: {title}, children}) {
+	var modalSize
+
+    function view({ attrs: {title, size}, children}) {
         return (
 			<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div 
+					class= {classNames((size == 'xl' ? ModalStyles.modalXl 
+											: (size == 'lg' ? 'modal-lg' : 'modal-sm')), "modal-dialog modal-dialog-centered")} 
+					role="document"
+					>
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="ModalTitle">{title}</h5>

@@ -75,6 +75,7 @@ export default function InboxTable() {
 		
 		function selectApplication(decision) {
 			modalDetails.selectedApplication = decision;
+			// modalDetails.fetch();
 		}
 		
 		return (
