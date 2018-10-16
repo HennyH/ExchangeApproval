@@ -162,7 +162,6 @@ function StaffUnitSetApprovalForm() {
 export function UnitSetForm() {
 
     function view({ attrs: { formIndex, onDelete, form, class: classes, staffView, ...otherAttrs }}) {
-		console.log(staffView); // TESTING
         const title = `Unit Set ${formIndex + 1} ${form.config.cartItem ? "(From Cart)" : ""}`;
         const readonly = (form.readonly.getData() || staffView);
         return (
