@@ -18,7 +18,6 @@ import { FormField, FormListField } from '../FormHelpers/Fields.js';
 
 export class ApplicationPowerForm extends Form {
     constructor({ unitLevelOptions, staffView, ...config }) {
-		console.log(staffView);
         super(config);
         this.studentDetailsForm = new FormField({
             form: new StudentDetailsPowerForm()
