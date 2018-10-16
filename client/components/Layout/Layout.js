@@ -3,7 +3,6 @@ import classNames from 'classnames'
 
 import Styles from './Layout.css';
 
-
 export default function Layout() {
     function view({ children }) {
         const currentRoute = m.route.get();

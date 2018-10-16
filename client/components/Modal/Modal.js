@@ -2,9 +2,24 @@ import m from 'mithril';
 import classNames from 'classnames'
 import Styles from '../ApplicationPage/ApplicationPage.css'
 
+export function showModal() {
+	$("#Modal").modal(focus = true);
+}
+
+$(document).on('hidden.bs.modal', '#Modal', function() { 
+	hideModal() 
+	m.redraw();
+});
+
+// This function is passed in as part of the ModalState
+var hideModal = () => {};
 
 export default function ApplicationModal() {
 	
+	function oncreate(vnode) {
+		hideModal = vnode.attrs.modalData.onclose;
+	}
+
     function view({ attrs: {title}, children}) {
         return (
 			<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
@@ -29,5 +44,5 @@ export default function ApplicationModal() {
         );
     }
 
-	return { view }
+	return { view, oncreate }
 }

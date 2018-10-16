@@ -71,16 +71,21 @@ export function makeInboxTableConfig(decisions) {
 
 export default function InboxTable() {
 
-    function view({ attrs: { decisions }}) {
-        return (
+    function view({ attrs: { decisions, modalDetails }}) {
+		
+		function selectApplication(decision) {
+			modalDetails.selectedApplication = decision;
+		}
+		
+		return (
             <DataTable
                 id="inbox-table"
                 config={makeInboxTableConfig(decisions)}
-                setup={(id, datatable, modalDetails) => {
+                setup={(id, datatable) => {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
 						const decision = datatable.row($(event.target).parents('tr')).data();
-						modalDetails.selectedApplication = decision;
-						$("#Modal").modal();
+						selectApplication(decision);
+						m.redraw();
 					})
                 }}
                 cache={false}
