@@ -6,21 +6,19 @@ export function showModal() {
 	$("#Modal").modal(focus = true);
 }
 
-$(document).on('hidden.bs.modal', '#Modal', function() { 
-	hideModal() 
-	m.redraw();
-});
-
-// This function is passed in as part of the ModalState
+// This function is defined by vnode.attrs
 var hideModal = () => {};
 
-export default function ApplicationModal() {
+export default function Modal() {
 
-	function oncreate(vnode) {
-		hideModal = vnode.attrs.modalData.onclose;
+	function oncreate({attrs: {modalData}, dom: ref}) {
+		hideModal = modalData ? modalData.onclose : {};
+		
+		$(ref).on('hidden.bs.modal', function() { 
+			hideModal() 
+			m.redraw();
+		});
 	}
-
-	var modalSize
 
     function view({ attrs: {title, size}, children}) {
         return (
@@ -52,3 +50,43 @@ export default function ApplicationModal() {
 
 	return { view, oncreate }
 }
+
+// CHANGE EVENT CLICK HANDLER TO DOM REF
+// oncreate({ ref }) {
+// 	$(ref).on('hidden.bs.model');
+// }
+
+// THIS IS CALLED FROM STAFF PAGE
+// <ApplicationFormSubmitter>
+// 	{({ handleSubmit }) => (
+// 		<Modal onSubmit={handleSubmit}>
+// 			<ApplicationForm />
+// 		</Modal>
+// 	)}
+// </ApplicationFormSubmitter>
+
+// THIS IS CALLED FROM APPLICATION PAGE
+// <ApplicationFormSubmitter>
+// 	{
+// 		({ handleSubmit }) => (
+// 			<div>
+// 				<ApplicationForm />
+// 				<button type="submit" onclick={handleSubmit} />
+// 			</div>
+// 		)
+// 	}
+	
+// </ApplicationFormSubmitter>
+
+
+// // APPLICATION SUB
+// export default function ApplicationFormSubmitter() {
+
+// 	function submitToServer(applicationData) {
+// 		fetch("/application", "POST", fancyLogic(applicationData));
+// 	}
+
+// 	function view({ children }) {
+// 		return children({ handleSubmit: submitToServer })
+// 	}
+// }
