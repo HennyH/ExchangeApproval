@@ -3,11 +3,11 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
-import Modal, { showModal }from '../Modal/Modal.js';
+import Modal, { showModal } from '../Modal/Modal.js';
+import {DownloadModalContents} from '../Modal/ModalContents.js'
 import ApplicationForm, { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import classNames from 'classnames'
-import { loadavg } from 'os';
 
 const MOCK_DECISIONS = [
     {
@@ -57,13 +57,18 @@ const Data = {
 }
 
 const ModalState = {
+	downloadmodal: false,
 	selectedApplication: null,
-	onclose: () => {ModalState.selectedApplication = null},
+	onclose: () => {ModalState.selectedApplication = null}
 	// student: null,
 	// exchangeUniversity: null,
 	// unitsets: null,
 	// // fetch: () => 
 }
+
+// const NavBarModalState = {
+// 	downloadModal: false
+// }
 
 const applicationPowerForm = new ApplicationPowerForm({
 	staffView: true,
@@ -89,7 +94,7 @@ export default function StaffPage() {
 
     function view() {
         return (
-            <Layout>
+            <Layout showNavDropdown = {true} >
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
@@ -111,26 +116,46 @@ export default function StaffPage() {
                         </div>
                     </div>
                 </div>
-				{(ModalState.selectedApplication 
-					? <Modal 
-						title = {"Edit Application: " + ModalState.selectedApplication.studentName}
-						modalData = {ModalState}
-						size = {"xl"}
-						>
-						{(Data.filters.loading
-							? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
-							: (
-								<ApplicationForm 
-									form={applicationPowerForm} 
-									staffView = {true} 
-								/>
-							)
-						)}	
-					</Modal>
-					: <div/>)}
+				{(ModalState.selectedApplication ? <ApplicationModal/> : <div/>)}
+				{ ModalState.downloadmodal ? <DownloadModal/> : <div/>}
             </Layout>
         );
     }
 
     return { oninit, onupdate, view };
+}
+
+var ApplicationModal = {
+	view: function() {
+		return(
+			<Modal 
+				title = {"Edit Application: " + ModalState.selectedApplication.studentName}
+				modalData = {ModalState}
+				size = {"xl"}
+			>
+				{(Data.filters.loading
+					? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
+					: (
+						<ApplicationForm 
+							form={applicationPowerForm} 
+							staffView = {true} 
+						/>
+					)
+				)}	
+			</Modal>
+		);	
+	}
+}
+
+var DownloadModal = {
+	view: function() {
+		return(
+			<Modal 
+				title = {"Download Faculty List"}
+				size = {"sm"}
+			>
+					<DownloadModalContents/>
+			</Modal>
+		);
+	}
 }
