@@ -1,17 +1,24 @@
 import m from 'mithril'
 
-export function DownloadModalContents() {
+export var DownloadModalContent = {
 
-	function view() {
+	view: function() {
 		return (
 			<form>
-				<button type="button" class="btn btn-outline-primary">Download Faculty List</button>
 				<div class="form-group">
-					<label for="UploadCSV">Upload Faculty List</label>
+					<label for="DownloadCSV">Download Faculty List: </label>
+					<br/>
+					<button id="DownloadCSV" type="button" class="btn btn-outline-primary">
+						{/* <span class="fas fa-cloud-download" aria-hidden="true"></span> */}
+						Download
+					</button>
+				</div>
+				<div class="form-group">
+					<br/>
+					<label for="UploadCSV">Upload Faculty List: </label>
 					<input type="file" class="form-control-file" id="UploadCSV"/>
 				</div>
 			</form >
 		);
 	}
-	return (view);
 }

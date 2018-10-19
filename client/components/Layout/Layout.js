@@ -1,5 +1,6 @@
 import m from 'mithril';
 import classNames from 'classnames'
+import {showDownloadModal} from '../Modal/Modal'
 
 import Styles from './Layout.css';
 
@@ -38,7 +39,7 @@ var Navbar = {
 							<li class="dropdown">
 								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
 								<div class="dropdown-menu dropdown-menu-right">
-									<button class="dropdown-item" href="#">Download / Upload Faculty List</button>
+									<button class="dropdown-item" onclick={showDownloadModal}>Download / Upload Faculty List</button>
 									<div class="dropdown-divider"></div>
 									<button class="dropdown-item" href="#">Log Out</button>
 								</div>
