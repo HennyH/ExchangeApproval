@@ -2,6 +2,7 @@ import m from 'mithril'
 
 import DataTable from 'Components/DataTable/DataTable.js';
 import Styles from '../SearchPage/DecisionsTable.css'
+import { showApplicationModal } from '../Modal/Modal';
 
 export const COLUMN_NAMES = {
     Id: 'Id',
@@ -71,12 +72,7 @@ export function makeInboxTableConfig(decisions) {
 
 export default function InboxTable() {
 
-    function view({ attrs: { decisions, modalDetails }}) {
-		
-		function selectApplication(decision) {
-			modalDetails.selectedApplication = decision;
-			// modalDetails.fetch();
-		}
+    function view({ attrs: { decisions }}) {
 		
 		return (
             <DataTable
@@ -85,8 +81,7 @@ export default function InboxTable() {
                 setup={(id, datatable) => {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
 						const decision = datatable.row($(event.target).parents('tr')).data();
-						selectApplication(decision);
-						m.redraw();
+						showApplicationModal(decision);
 					})
                 }}
                 cache={false}

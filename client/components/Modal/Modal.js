@@ -2,20 +2,38 @@ import m from 'mithril';
 import classNames from 'classnames'
 import ModalStyles from './Modal.css'
 
-export function showModal() {
-	$("#Modal").modal(focus = true);
+export const ModalState = {
+	downloadModal: false,
+	selectedApplication: null,
+	onHide: () => {},
+	// student: null,
+	// exchangeUniversity: null,
+	// unitsets: null,
+	// // fetch: () => 
 }
 
-// This function is defined by vnode.attrs
-var hideModal = () => {};
+export function showDownloadModal() {
+	ModalState.downloadModal = true;
+	ModalState.onHide = () => {ModalState.downloadModal = false}
+	m.redraw();
+}
+
+export function showApplicationModal(decision) {
+	ModalState.selectedApplication = decision;
+	ModalState.onHide = () => {ModalState.selectedApplication = null}
+	// ModalState.fetch();
+	m.redraw();
+}
 
 export default function Modal() {
 
-	function oncreate({attrs: {modalData}, dom: ref}) {
-		hideModal = modalData ? modalData.onclose : {};
-		
+	var hideModal = () => {};
+
+	function oncreate({dom: ref}) {
+		( function showModal() {$(ref).modal(focus = true)}() );
+		hideModal = ModalState ? ModalState.onHide : {};
 		$(ref).on('hidden.bs.modal', function() { 
-			hideModal() 
+			hideModal(); 
 			m.redraw();
 		});
 	}

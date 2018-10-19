@@ -3,8 +3,8 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
-import Modal, { showModal } from '../Modal/Modal.js';
-import {DownloadModalContents} from '../Modal/ModalContents.js'
+import Modal, {ModalState} from '../Modal/Modal.js';
+import {DownloadModalContent} from '../Modal/ModalContents.js'
 import ApplicationForm, { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import classNames from 'classnames'
@@ -56,20 +56,6 @@ const Data = {
     }
 }
 
-const ModalState = {
-	downloadmodal: false,
-	selectedApplication: null,
-	onclose: () => {ModalState.selectedApplication = null}
-	// student: null,
-	// exchangeUniversity: null,
-	// unitsets: null,
-	// // fetch: () => 
-}
-
-// const NavBarModalState = {
-// 	downloadModal: false
-// }
-
 const applicationPowerForm = new ApplicationPowerForm({
 	staffView: true,
     onChange: showData,
@@ -86,10 +72,6 @@ export default function StaffPage() {
         if (Data.filters.options === null) {
 			Data.filters.fetch();
 		}
-	}
-
-	function onupdate() {
-		showModal();
 	}
 
     function view() {
@@ -109,7 +91,6 @@ export default function StaffPage() {
                                 <div class="card-body">
                                     <InboxTable
 										decisions={MOCK_DECISIONS}
-										modalDetails={ModalState}
                                     />
                                 </div>
                             </div>
@@ -117,12 +98,12 @@ export default function StaffPage() {
                     </div>
                 </div>
 				{(ModalState.selectedApplication ? <ApplicationModal/> : <div/>)}
-				{ ModalState.downloadmodal ? <DownloadModal/> : <div/>}
+				{ ModalState.downloadModal ? <DownloadModal/> : <div/>}
             </Layout>
         );
     }
 
-    return { oninit, onupdate, view };
+    return { oninit, view };
 }
 
 var ApplicationModal = {
@@ -130,7 +111,6 @@ var ApplicationModal = {
 		return(
 			<Modal 
 				title = {"Edit Application: " + ModalState.selectedApplication.studentName}
-				modalData = {ModalState}
 				size = {"xl"}
 			>
 				{(Data.filters.loading
@@ -151,10 +131,10 @@ var DownloadModal = {
 	view: function() {
 		return(
 			<Modal 
-				title = {"Download Faculty List"}
+				title = {"Faculty List"}
 				size = {"sm"}
 			>
-					<DownloadModalContents/>
+					<DownloadModalContent/>
 			</Modal>
 		);
 	}
