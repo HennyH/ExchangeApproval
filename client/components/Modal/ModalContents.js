@@ -1,7 +1,6 @@
 import m from 'mithril'
 
 export var DownloadModalContent = {
-
 	view: function() {
 		return (
 			<form>
@@ -17,6 +16,18 @@ export var DownloadModalContent = {
 					<br/>
 					<label for="UploadCSV">Upload Faculty List: </label>
 					<input type="file" class="form-control-file" id="UploadCSV"/>
+				</div>
+			</form >
+		);
+	}
+}
+
+export var LoginModalContent = {
+	view: function() {
+		return (
+			<form>
+				<div class="form-group">
+					<input class="form-control" type="password" placeholder="Password" name ="Password"/>
 				</div>
 			</form >
 		);
