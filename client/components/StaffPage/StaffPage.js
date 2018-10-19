@@ -4,9 +4,7 @@ import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
 import Modal, {ModalState} from '../Modal/Modal.js';
-import {DownloadModalContent} from '../Modal/ModalContents.js'
-import ApplicationForm, { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm.js';
-import Spinner from 'Components/Spinners/RectangularSpinner.js';
+import {DownloadModalContent, ApplicationModalContent} from '../Modal/ModalContents.js'
 import classNames from 'classnames'
 
 const MOCK_DECISIONS = [
@@ -39,40 +37,7 @@ const MOCK_DECISIONS = [
     }
 ]
 
-const Data = {
-    filters: {
-        loading: false,
-        options: null,
-        fetch: () => {
-            Data.filters.loading = true;
-            m.request({
-                method: "GET",
-                url: "/api/requests/filters"
-            }).then(options => {
-                Data.filters.options = options;
-                Data.filters.loading = false;
-            });
-        }
-    }
-}
-
-const applicationPowerForm = new ApplicationPowerForm({
-	staffView: true,
-    onChange: showData,
-    unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
-})
-
-function showData() {
-    return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
-}
-
 export default function StaffPage() {
-
-	function oninit() {
-        if (Data.filters.options === null) {
-			Data.filters.fetch();
-		}
-	}
 
     function view() {
         return (
@@ -103,25 +68,14 @@ export default function StaffPage() {
         );
     }
 
-    return { oninit, view };
+    return { view };
 }
 
 var ApplicationModal = {
 	view: function() {
 		return(
-			<Modal 
-				title = {"Edit Application: " + ModalState.selectedApplication.studentName}
-				size = {"xl"}
-			>
-				{(Data.filters.loading
-					? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
-					: (
-						<ApplicationForm 
-							form={applicationPowerForm} 
-							staffView = {true} 
-						/>
-					)
-				)}	
+			<Modal size = {"xl"}>
+				<ApplicationModalContent title = {"Edit Application: " + ModalState.selectedApplication.studentName}/>
 			</Modal>
 		);	
 	}
@@ -130,10 +84,7 @@ var ApplicationModal = {
 var DownloadModal = {
 	view: function() {
 		return(
-			<Modal 
-				title = {"Faculty List"}
-				size = {"sm"}
-			>
+			<Modal size = {"sm"}>
 					<DownloadModalContent/>
 			</Modal>
 		);

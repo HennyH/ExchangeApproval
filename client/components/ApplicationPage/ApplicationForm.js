@@ -14,6 +14,7 @@ import {
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
 import { FormField, FormListField } from '../FormHelpers/Fields.js';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 
 export class ApplicationPowerForm extends Form {
@@ -57,7 +58,7 @@ export default function ApplicationForm() {
         const validationClass = state.hasTriedToSubmit
             ? (form.isValid() ? 'is-valid' : 'is-invalid')
             : '';
-        const error = "This form is not valid. Please check all fields for validation errors";
+		const error = "This form is not valid. Please check all fields for validation errors";
 
         return (
             <div class="container">
@@ -90,19 +91,19 @@ export default function ApplicationForm() {
                                 />
                             </div>
                         </div>
-						{submitButton(staffView, validationClass, error)}
+						{submitButton(staffView, validationClass, error, success, form)}
                     </div>
                 {/* </div> */}
             </div>
         )
     }
 
-	function submitButton(staffView, validationClass, error) {
+	function submitButton(staffView, validationClass, error, success, form) {
 		if (!staffView) {
 			return (
 				<div class="card bg-light mt-3 mb-3">
 					<div class="card-body">
-						<button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form)}>
+						<button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, success)}>
 							Submit Application
 						</button>
 						<input type="hidden" class={classNames("form-control", validationClass)} />
@@ -115,10 +116,12 @@ export default function ApplicationForm() {
 		}
 	}
 
-    function handleSubmit(form) {
+    function handleSubmit(form, success) {
         state.hasTriedToSubmit = true;
         if (form.isValid()) {
-            console.log("APPLICATION SUBMITTED", form.getData());
+			// TODO: Push to application db
+			alert(success);
+			console.log("APPLICATION SUBMITTED", form.getData());
         } else {
             console.log("ERRORS", form.getError());
         }

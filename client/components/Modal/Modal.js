@@ -38,29 +38,14 @@ export default function Modal() {
 		});
 	}
 
-    function view({ attrs: {title, size}, children}) {
+    function view({ attrs: {size}, children}) {
         return (
 			<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
 				<div 
-					class= {classNames((size == 'xl' ? ModalStyles.modalXl 
-											: (size == 'lg' ? 'modal-lg' : 'modal-sm')), "modal-dialog modal-dialog-centered")} 
+					class= {classNames((size == 'xl' ? ModalStyles.modalXl : (size == 'lg' ? 'modal-lg' : 'modal-sm')), "modal-dialog modal-dialog-centered")} 
 					role="document"
-					>
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="ModalTitle">{title}</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							{children}
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
-						</div>
-					</div>
+				>
+					{children}
 				</div>
 			</div>
         );
@@ -68,43 +53,3 @@ export default function Modal() {
 
 	return { view, oncreate }
 }
-
-// CHANGE EVENT CLICK HANDLER TO DOM REF
-// oncreate({ ref }) {
-// 	$(ref).on('hidden.bs.model');
-// }
-
-// THIS IS CALLED FROM STAFF PAGE
-// <ApplicationFormSubmitter>
-// 	{({ handleSubmit }) => (
-// 		<Modal onSubmit={handleSubmit}>
-// 			<ApplicationForm />
-// 		</Modal>
-// 	)}
-// </ApplicationFormSubmitter>
-
-// THIS IS CALLED FROM APPLICATION PAGE
-// <ApplicationFormSubmitter>
-// 	{
-// 		({ handleSubmit }) => (
-// 			<div>
-// 				<ApplicationForm />
-// 				<button type="submit" onclick={handleSubmit} />
-// 			</div>
-// 		)
-// 	}
-	
-// </ApplicationFormSubmitter>
-
-
-// // APPLICATION SUB
-// export default function ApplicationFormSubmitter() {
-
-// 	function submitToServer(applicationData) {
-// 		fetch("/application", "POST", fancyLogic(applicationData));
-// 	}
-
-// 	function view({ children }) {
-// 		return children({ handleSubmit: submitToServer })
-// 	}
-// }
