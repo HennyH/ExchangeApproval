@@ -42,19 +42,33 @@ namespace ExchangeApproval.Data
 
     public enum UWAUnitLevel
     {
-        [EnumMember(Value = "Insufficent")]
         Zero,
-        [EnumMember(Value = "1000")]
         One,
-        [EnumMember(Value = "2000")]
         Two,
-        [EnumMember(Value = "3000")]
         Three,
-        [EnumMember(Value = "4000")]
         Four,
-        [EnumMember(Value = ">4000")]
         GtFour
     };
+
+	public static class UWAUnitLevelExtensions
+	{
+		public static string GetLabel(this UWAUnitLevel level) {
+			switch (level) {
+				case UWAUnitLevel.Zero:
+					return "Insufficent";
+				case UWAUnitLevel.One:
+					return "1000";
+				case UWAUnitLevel.Two:
+					return "2000";
+				case UWAUnitLevel.Three:
+					return "3000";
+				case UWAUnitLevel.Four:
+					return "4000";
+				default:
+					return ">4000";
+			} 
+		}
+	}
 
     public enum StaffRole { StudentOffice, UnitCoordinator };
 

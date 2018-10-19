@@ -17,7 +17,7 @@ namespace ExchangeApproval.ViewModels
             this._isEnumType = typeof(TValue).IsEnum;
         }
         
-        public SelectOption(string label, TValue value, bool selected = false) : base()
+        public SelectOption(TValue value, string label, bool selected = false) : base()
         {
             this.Label = label ?? throw new ArgumentNullException(nameof(label));
             this.Value = value;

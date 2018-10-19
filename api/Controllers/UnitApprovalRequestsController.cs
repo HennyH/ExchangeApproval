@@ -37,17 +37,17 @@ namespace ExchangeApproval.Controllers
             {
                 ExchangeUniversityNames = Universities()
                     .OrderByDescending(n => n)
-                    .Select(n => new SelectOption<string>(n, n))
+                    .Select(n => new SelectOption<string>(n, n.ToString()))
                     .ToList(),
                 UWAUnitContextOptions = Enum
                     .GetValues(typeof(UWAUnitContext))
                     .Cast<UWAUnitContext>()
-                    .Select(c => new SelectOption<UWAUnitContext>(c, true))
+                    .Select(c => new SelectOption<UWAUnitContext>(c, c.ToString(), true))
                     .ToList(),
                 UWAUnitLevelOptions = Enum
                     .GetValues(typeof(UWAUnitLevel))
                     .Cast<UWAUnitLevel>()
-                    .Select(l => new SelectOption<UWAUnitLevel>(l, true))
+                    .Select(l => new SelectOption<UWAUnitLevel>(l, l.GetLabel(), true))
                     .ToList()
             };
         }

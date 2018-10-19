@@ -27,7 +27,7 @@ var Navbar = {
 							const isActive = href === currentRoute;
 							const classes = classNames("nav-item nav-link", isActive ? "active" : "");
 							return (
-								<li oncreate={m.route.link} href={href} class={classes}>
+								<li oncreate={m.route.link} style="cursor: pointer;" href={href} class={classes}>
 									{text}
 									{ isActive ? <span class="sr-only">(current)</span> : <span /> }
 								</li>
