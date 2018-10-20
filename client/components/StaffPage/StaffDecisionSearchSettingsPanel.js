@@ -8,9 +8,9 @@ import Styles from './StaffDecisionSearchSettingsPanel.css';
 export class StaffUnitSearchSettingsPowerForm extends Form {
     constructor({
         studentOptions,
-        decisionStateOptions,
-        unitCoordinatorOptions,
-        toggleOptions,
+        studentOfficeOptions,
+        applicationStateOptions,
+        dateOptions,
         ...config
     }) {
         super(config)
@@ -18,16 +18,16 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
             multiple: true,
             options: studentOptions
         });
-        this.decisionStates = OptionsField.new({
-            multiple: true,
-            options: decisionStateOptions
+        this.studentOffices = OptionsField.new({
+			multiple: true,
+            options: studentOfficeOptions
         });
-        this.unitCoordinators = OptionsField.new({
-            multiple: true,
-            options: unitCoordinatorOptions
-        });
-        this.toggles = OptionsField.new({
-            options: toggleOptions
+		this.applicationStates = OptionsField.new({
+			multiple: true,
+			options: applicationStateOptions
+		});
+        this.date = OptionsField.new({
+            options: dateOptions
         });
         Form.new.call(() => this, config);
         this.config = config;
@@ -52,9 +52,9 @@ export default function StaffDecisionSearchSettingsPanel() {
     function view({
         attrs: {
             studentOptions,
-            decisionStateOptions,
-            unitCoordinatorOptions,
-            toggleOptions,
+			studentOfficeOptions,
+			applicationStateOptions,
+			dateOptions
         }
     }) {
         console.log(CheckboxGroup());
@@ -77,14 +77,14 @@ export default function StaffDecisionSearchSettingsPanel() {
                         />
                     </div>
                     <div class="col-lg-6 col-md-12 form-group">
-                        <label>Unit Coordinators</label>
+                        <label>Student Office</label>
                         <Select2
-                            field={state.form.unitCoordinators}
+                            field={state.form.studentOffices}
                             config={{
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select unit coordinators to filter to...',
-                                data: unitCoordinatorOptions.map(name => ({
+                                data: studentOfficeOptions.map(name => ({
                                     id: name,
                                     text: name
                                 }))
@@ -92,19 +92,19 @@ export default function StaffDecisionSearchSettingsPanel() {
                         />
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-12 from-group">
-                        <label>Decision State(s)</label>
+                <div class="row mx-1">
+                    <div class="col-sm-6 form-group">
+                        <label>Application Status</label>
                         <CheckboxGroup
-                            field={state.form.decisionStates}
-                            options={decisionStateOptions}
+                            field={state.form.applicationStates}
+                            options={applicationStateOptions}
                         />
                     </div>
-                    <div class="col-lg-4 col-md-12 form-group">
+                    <div class="col form-group">
                         <label>Filters</label>
-                        <CheckboxGroup field={state.form.toggles} options={toggleOptions} />
+                        <CheckboxGroup field={state.form.date} options={dateOptions} />
                     </div>
-                    <div class="col-lg-4 col-md-12 form-group align-self-end">
+                    <div class="col-auto form-group align-self-end">
                         <button type="submit" class="btn btn-primary">
                             Search
                         </button>

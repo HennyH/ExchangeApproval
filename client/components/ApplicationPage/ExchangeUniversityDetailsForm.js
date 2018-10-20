@@ -27,16 +27,16 @@ export function ExchangeUniversityDetailsForm() {
 
         return (
             <form novalidate>
-                <div class="form-group row">
-                    <label class="col-form-label col-4" for="email">Exchange University Name: </label>
+                <div class="form-group row mx-1">
+                    <label class="col-form-label col-3" for="email">Exchange University Name: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityName} type="text" readOnly = {staffView} />
+                        <Input field={form.universityName} placeholder="University Name" type="text" readOnly = {staffView} />
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-4" for="email">Exchange University Homepage: </label>
+                <div class="form-group row mx-1">
+                    <label class="col-form-label col-3" for="email">Exchange University Homepage: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityHomepage} type="text" readOnly = {staffView} />
+                        <Input field={form.universityHomepage} placeholder="University Website" type="text" readOnly = {staffView} />
                     </div>
                 </div>
             </form>

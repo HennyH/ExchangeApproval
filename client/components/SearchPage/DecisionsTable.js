@@ -9,8 +9,8 @@ export const COLUMN_NAMES = {
     ExchangeUniversity: 'Exchange University',
     ExchangeUnit: 'Exchange Unit(s)',
     UWAUnit: 'UWA Unit(s)',
-    Approved: 'Appvoved',
-    Cart: 'Cart'
+    Approved: 'Approved',
+    Cart: 'Add'
 };
 
 export function makeDecisionsTableConfig(decisions, headers) {
@@ -105,7 +105,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 data: null,
                 render: (data, type, row, meta) => {
                     return row.approved
-                        ? "<button type='button' class='btn btn-primary'>🛒</button>"
+                        ? "<button type='button' class='btn btn-outline-secondary'>🛒</button>"
                         : ""
                 }
             }

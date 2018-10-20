@@ -121,19 +121,12 @@ function UnitForm() {
     return { view }
 }
 
-function StaffApprovalContainer(staffView, form) {
-	if(staffView){
-		return (
-			<div class="card mt-3">
-				<div class="card-header">
-					<em>Staff Approval</em>
-				</div>
-				<div class="card-body">
-					<StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
-				</div>
-			</div>
-		)
-	}
+function StaffApprovalContainer(form) {
+	return (
+		<div class="card-footer">
+				<StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
+		</div>
+	)
 }
 
 function StaffUnitSetApprovalForm() {
@@ -162,16 +155,16 @@ function StaffUnitSetApprovalForm() {
 export function UnitSetForm() {
 
     function view({ attrs: { formIndex, onDelete, form, class: classes, staffView, ...otherAttrs }}) {
-        const title = `Unit Set ${formIndex + 1} ${form.config.cartItem ? "(From Cart)" : ""}`;
+        const title = `Unit Set ${formIndex + 1} ${form.config.cartItem && !staffView ? "(From Cart)" : ""}`;
         const readonly = (form.readonly.getData() || staffView);
         return (
-            <div class={classNames("card", "bg-light", classes)} {...otherAttrs}>
+            <div class={classNames("card", classes)} {...otherAttrs}>
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-11">
+                        <div class="col-11 align-self-center">
                             {title}
                         </div>
-                        <div class="col-auto align-self-end" style="width: 3em">
+                        <div class="ml-auto" style="width: 3em">
                             {(staffView) ? 
 								<div/> 
 								: <DeleteButton
@@ -187,7 +180,7 @@ export function UnitSetForm() {
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="card">
+                    <div class="card bg-light">
                         <div class="card-header">
                             Exchange Units
                         </div>
@@ -201,7 +194,7 @@ export function UnitSetForm() {
                             />
                         </div>
                     </div>
-                    <div class="card mt-3">
+                    <div class="card bg-light mt-3">
                         <div class="card-header">
                             UWA Units
                         </div>
@@ -215,8 +208,8 @@ export function UnitSetForm() {
                             />
                         </div>
                     </div>
-                    {StaffApprovalContainer(staffView, form)}
                 </div>
+				{staffView ? StaffApprovalContainer(form) : null}
             </div>
         )
     }
