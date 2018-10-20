@@ -41,7 +41,7 @@ export default function StaffPage() {
 
     function view() {
         return (
-            <Layout showNavDropdown = {true} >
+            <Layout staff = {true} >
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">

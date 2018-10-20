@@ -14,8 +14,6 @@ import {
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
 import { FormField, FormListField } from '../FormHelpers/Fields.js';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
-
 
 export class ApplicationPowerForm extends Form {
     constructor({ unitLevelOptions, staffView, ...config }) {
@@ -42,7 +40,6 @@ export class ApplicationPowerForm extends Form {
     }
 }
 
-
 export default function ApplicationForm() {
 
     const state = {
@@ -59,13 +56,10 @@ export default function ApplicationForm() {
             ? (form.isValid() ? 'is-valid' : 'is-invalid')
             : '';
 		const error = "This form is not valid. Please check all fields for validation errors";
+		const success = "Form submitted successfully!"
 
         return (
-            <div class="container">
-                {/* <div class="card mt-3"> */}
-                    {/* <div class="card-header">
-                        Exchange Application
-                    </div> */}
+            <div class="container-fluid">
                     <div class="card-body">
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Student Details</div>
@@ -88,15 +82,28 @@ export default function ApplicationForm() {
                                     addItemText="Add Unit Set"
 									class="mt-3"
 									staffView = {staffView}
+									secondButton = {unitSearchButton()}
                                 />
                             </div>
                         </div>
 						{submitButton(staffView, validationClass, error, success, form)}
                     </div>
-                {/* </div> */}
             </div>
         )
     }
+
+	function unitSearchButton() {
+		return(
+			<button
+				class="btn btn-primary"
+				class={"mb-1 mr-3 btn btn-primary"}
+				oncreate={m.route.link}
+				href="/search"
+			>
+					Search for Units
+			</button>
+		)
+	}
 
 	function submitButton(staffView, validationClass, error, success, form) {
 		if (!staffView) {

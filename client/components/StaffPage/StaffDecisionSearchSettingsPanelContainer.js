@@ -6,17 +6,16 @@ const Data = {
     filters: {
         options: null,
         fetch: () => {
+			//This all needs to be replaced with requested data
             Data.filters.options = {
                 studentOptions: ['Henry Hollingworth (21471423)', 'Augustin Gan (21487462)'],
-                unitCoordinatorOptions: ['Dr Jim Strong', 'Dr Jin Won', 'Mr B Mash'],
-                decisionStateOptions: [
-                    'Approved',
-                    'Denied',
-                    'Pending'
+                studentOfficeOptions: ['Business School', 'Law School'],
+                applicationStateOptions: [
+                    'New',
+                    'Incomplete',
+                    'Complete'
                 ],
-                toggleOptions: [
-                    'For Me Only',
-                    'New Requests'
+                dateOptions: [
                 ]
             };
             // m.request({

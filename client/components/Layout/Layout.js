@@ -8,8 +8,8 @@ var Navbar = {
 	view: function(vnode) {
 		const currentRoute = m.route.get();
         const navLinks = [
-            { href: "/search", text: "Search Units" },
             { href: "/application", text: "Student Application" },
+            { href: "/search", text: "Search Units" },
             { href: "/student-office", text: "Staff Portal" }
 		];
 		return(
@@ -24,8 +24,9 @@ var Navbar = {
 				<div class="collapse navbar-collapse" id="navbarCollapsable">
 					<ul class="navbar-nav">
 						{navLinks.map(({ href, text }) => {
+							const isHidden = href === "/student-office" && !vnode.attrs.staff;
 							const isActive = href === currentRoute;
-							const classes = classNames("nav-item nav-link", isActive ? "active" : "");
+							const classes = classNames("nav-item nav-link", isActive ? "active" : "", isHidden ? "d-none" : "");
 							return (
 								<li oncreate={m.route.link} style="cursor: pointer;" href={href} class={classes}>
 									{text}
@@ -35,16 +36,15 @@ var Navbar = {
 						})}
 					</ul>
 					<ul class="navbar-nav ml-auto">
-						{vnode.attrs.showNavDropdown ? 
-							<li class="dropdown">
-								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-								<div class="dropdown-menu dropdown-menu-right">
+						<li class="dropdown">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								{vnode.attrs.staff ? 
 									<button class="dropdown-item" onclick={showDownloadModal}>Download / Upload Faculty List</button>
-									<div class="dropdown-divider"></div>
-									<button class="dropdown-item" href="#">Log Out</button>
-								</div>
-							</li>
-						: null}
+								:	<button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
+								}
+							</div>
+						</li>
 					</ul>
 				</div>
 			</nav>
@@ -53,10 +53,10 @@ var Navbar = {
 }
 
 export default function Layout() {
-    function view({ attrs: { showNavDropdown = false }, children }) {
+    function view({ attrs: { staff = false }, children }) {
         return (
             <div>
-                <Navbar showNavDropdown = {showNavDropdown}/>
+                <Navbar staff = {staff}/>
 				{children}
             </div>
         )

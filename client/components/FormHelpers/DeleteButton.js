@@ -8,7 +8,7 @@ export default function DeleteButton() {
                 class="btn btn-outline-danger"
                 onclick={onClick}
             >
-                🗙
+                &times;
             </button>
         )
     }

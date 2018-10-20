@@ -35,9 +35,9 @@ export default function DecisionSearchSettingsPanel() {
         }
     }) {
         return (
-            <form onsubmit={handleSubmit.bind(this, onSearchSettingsChanged)}>
-                <div class="row">
-                    <div class="col-lg-6 col-md-12 form-group">
+            <form class="mb-0" onsubmit={handleSubmit.bind(this, onSearchSettingsChanged)}>
+                <div class="row mb-4 mx-1">
+                    <div class="input-group">
                         <label for="universities">Exchange Universities</label>
                         <Select2
                             field={state.form.exchangeUniversities}
@@ -52,22 +52,24 @@ export default function DecisionSearchSettingsPanel() {
                             }}
                         />
                     </div>
-                    <div class="col-lg-auto col-md-12 from-group">
-                        <label>Approval Type(s)</label>
-                        <CheckboxGroup
-                            field={state.form.approvalTypes}
-                            options={contextOptions}
-                        />
-                    </div>
-                    <div class="col-lg-auto col-md-12 form-group">
+				</div>
+				<div class="row mx-1 mb-0">
+					<div class="col form-group">
                         <label>Unit Level(s)</label>
                         <CheckboxGroup
                             field={state.form.unitLevels}
                             options={levelOptions}
                         />
                     </div>
-                    <div class="col-lg-auto col-md-12 form-group align-self-end">
-                        <button type="submit" class="btn btn-primary">
+                    <div class="col-sm-6 form-group">
+                        <label>Approval Type(s)</label>
+                        <CheckboxGroup
+                            field={state.form.approvalTypes}
+                            options={contextOptions}
+                        />
+                    </div>
+                    <div class="col-auto form-group align-self-end mb-0">
+                        <button type="submit" class="btn btn-primary mb-0">
                             Search
                         </button>
                     </div>

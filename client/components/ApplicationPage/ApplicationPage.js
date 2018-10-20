@@ -46,8 +46,8 @@ export default function ApplicationPage() {
                 {(Data.filters.loading
                     ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
                     : (
-                        <div class="container">
-							<div class="card mt-3">
+                        <div class="container-fluid">
+							<div class="card my-3">
                     			<div class="card-header">
                         			Exchange Application
                     			</div>
