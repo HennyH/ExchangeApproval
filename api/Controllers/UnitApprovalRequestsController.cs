@@ -70,7 +70,7 @@ namespace ExchangeApproval.Controllers
         [HttpGet("/login")]
         public StatusCodeResult Login()
         {
-            return new StatusCodeResult((int)HttpStatusCode.OK);
+            return new StatusCodeResult((int)HttpStatusCode.Accepted);
         }
     }
 }
