@@ -57,7 +57,6 @@ export default function StaffDecisionSearchSettingsPanel() {
 			dateOptions
         }
     }) {
-        console.log(CheckboxGroup());
         return (
             <form onsubmit={handleSubmit.bind(this, onsubmit)}>
                 <div class="row">

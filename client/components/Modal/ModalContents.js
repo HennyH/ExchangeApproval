@@ -1,6 +1,7 @@
 import m from 'mithril'
 import ApplicationForm, { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
+import {EmailData} from '../ViewData'
 
 export var DownloadModalContent = {
 	view: function() {
@@ -119,9 +120,15 @@ export var ApplicationModalContent = {
 						)
 					)}	
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Save Application</button>
+				<div class="modal-footer d-flex justify-content-between">
+					<div class="">
+						<button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.SendEmail(applicationPowerForm.getData())}>Send Application Results</button>
+						<button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.CopyText(applicationPowerForm.getData())}>Copy to Clipboard</button>
+					</div>
+					<div class="">
+						<button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Save Application</button>
+					</div>
 				</div>
 			</div>
 		);

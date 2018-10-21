@@ -49,7 +49,7 @@ export function StudentDetailsForm() {
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="degree">2nd Major*: </label>
-                    <div class={"input-group col-3"}>
+                    <div class={"input-group col-8"}>
                         <Input field={form.major2nd} placeholder="Second Major (optional)" type="text" readOnly = {staffView} />
                     </div>
                 </div>

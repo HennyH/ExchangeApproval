@@ -1,6 +1,6 @@
 import m from 'mithril';
 import classNames from 'classnames'
-import {showDownloadModal} from '../Modal/Modal'
+import {ModalState} from '../ViewData'
 
 import Styles from './Layout.css';
 
@@ -40,7 +40,7 @@ var Navbar = {
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								{vnode.attrs.staff ? 
-									<button class="dropdown-item" onclick={showDownloadModal}>Download / Upload Faculty List</button>
+									<button class="dropdown-item" onclick={ModalState.DownloadModal.show}>Download / Upload Faculty List</button>
 								:	<button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
 								}
 							</div>
