@@ -3,8 +3,9 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
-import Modal, {ModalState} from '../Modal/Modal.js';
+import Modal from '../Modal/Modal.js';
 import {DownloadModalContent, ApplicationModalContent} from '../Modal/ModalContents.js'
+import {ModalState} from '../ViewData'
 import classNames from 'classnames'
 
 const MOCK_DECISIONS = [
@@ -62,8 +63,8 @@ export default function StaffPage() {
                         </div>
                     </div>
                 </div>
-				{(ModalState.selectedApplication ? <ApplicationModal/> : <div/>)}
-				{ ModalState.downloadModal ? <DownloadModal/> : <div/>}
+				{ModalState.ApplicationModal.selectedApplication ? <ApplicationModal/> : <div/>}
+				{ModalState.DownloadModal.visible ? <DownloadModal/> : <div/>}
             </Layout>
         );
     }
@@ -75,7 +76,7 @@ var ApplicationModal = {
 	view: function() {
 		return(
 			<Modal size = {"xl"}>
-				<ApplicationModalContent title = {"Edit Application: " + ModalState.selectedApplication.studentName}/>
+				<ApplicationModalContent title = {"Edit Application: " + ModalState.ApplicationModal.selectedApplication.studentName}/>
 			</Modal>
 		);	
 	}

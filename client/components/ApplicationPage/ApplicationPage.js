@@ -2,30 +2,11 @@ import m from 'mithril'
 
 import Layout from 'Components/Layout'
 import ApplicationForm, { ApplicationPowerForm } from './ApplicationForm'
-import { UnitSetForm, UnitSetPowerForm } from './UnitSetForm.js';
-import Spinner from 'Components/Spinners/RectangularSpinner.js';
-
-const Data = {
-    filters: {
-        loading: false,
-        options: null,
-        fetch: () => {
-            Data.filters.loading = true;
-            m.request({
-                method: "GET",
-                url: "/api/requests/filters"
-            }).then(options => {
-                Data.filters.options = options;
-                Data.filters.loading = false;
-            });
-        }
-    }
-}
+import {ApplicationData} from '../ViewData'
 
 const applicationPowerForm = new ApplicationPowerForm({
 	staffView: false,
     onChange: showData,
-    unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}]
 })
 
 function showData() {
@@ -34,31 +15,35 @@ function showData() {
 
 export default function ApplicationPage() {
 
-    function oninit() {
-        if (Data.filters.options === null) {
-            Data.filters.fetch();
-        }
-    }
-
     function view() {
         return (
             <Layout>
-                {(Data.filters.loading
-                    ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
-                    : (
-                        <div class="container-fluid">
-							<div class="card my-3">
-                    			<div class="card-header">
-                        			Exchange Application
-                    			</div>
-                            	<ApplicationForm form={applicationPowerForm} staffView ={false} />
-							</div>
-                        </div>
-                    )
-                )}
+				<div class="container-fluid">
+				{!ApplicationData.hasSubmitted ? 
+					(<div class="card my-3">
+						<div class="card-header">
+							Exchange Application
+						</div>
+						<ApplicationForm form={applicationPowerForm} staffView ={false} />
+					</div>)
+				:	(<div class="card my-3">
+						<div class="card-header">
+							Application complete!
+						</div>
+						<div class="card-body text-center">
+							<h6>Thank you for your application. </h6> 
+							<br/>
+							Your allocated student office staff will process the application and get back to you soon!
+							<br/>
+							<br/>
+							<em>Please check your student email regularly.</em>
+						</div>
+					</div>)
+				}
+				</div>
             </Layout>
         )
     }
 
-    return { oninit, view }
+    return { view }
 }

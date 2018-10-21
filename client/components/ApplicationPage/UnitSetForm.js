@@ -68,11 +68,11 @@ export class UnitSetPowerForm extends Form {
         this.precedentUnitSetId = IntegerField.new();
         this.applicationId = IntegerField.new();
         this.exchangeUnitsForm = FormListField.new({
-            factory: ({...config}) => new UnitPowerForm({ ...config, unitLevelOptions }),
+            factory: ({...config}) => new UnitPowerForm({ ...config }),
             required: true
         });
         this.uwaUnitsForm = FormListField.new({
-            factory: ({...config}) => new UnitPowerForm({ ...config, unitLevelOptions }),
+            factory: ({...config}) => new UnitPowerForm({ ...config }),
             required: true
         });
         this.staffApprovalForm = new FormField({
@@ -132,18 +132,26 @@ function StaffApprovalContainer(form) {
 function StaffUnitSetApprovalForm() {
     function view({ attrs: { form }}) {
 		return (
-			<div class="form-row">
-				<div class="col-3">
-					<label class="col-form-label-sm" for="exch-unit-code">Equivalent UWA Level:</label>
-					<Select field={form.equivalentUnitLevel} />
+			<div>
+				<div class="form-row">
+					<div class="col-xl-4 mr-3">
+						<label class="col-form-label-sm">Equivalent UWA Level:</label>
+						<Select field={form.equivalentUnitLevel} />
+					</div>
+					<div class="row col-xl-8">
+						<div class="col-md">
+							<label class="col-form-label-sm">Contextual Approval:</label>
+							<RadioButtonGroup field={form.isContextuallyApproved} />
+						</div>
+						<div class="col-md">
+							<label class="col-form-label-sm">Equivalence Decision:</label>
+							<RadioButtonGroup field={form.isEquivalent} />
+						</div>
+					</div>
 				</div>
-				<div class="col-4 ml-auto">
-					<label class="col-form-label-sm ml-3" for="exch-unit-code">Contextual Approval:</label>
-					<RadioButtonGroup field={form.isContextuallyApproved} />
-				</div>
-				<div class="col-4">
-					<label class="col-form-label-sm" for="exch-unit-code">Equivalence Decision:</label>
-					<RadioButtonGroup field={form.isEquivalent} />
+				<div class="form-row px-1">
+					<label class="col-form-label-sm">Comments</label>
+					<textarea class="form-control" field={form.comment}/>
 				</div>
 			</div>
 		)

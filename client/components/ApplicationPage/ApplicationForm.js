@@ -14,9 +14,10 @@ import {
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
 import { FormField, FormListField } from '../FormHelpers/Fields.js';
+import {ApplicationData} from '../ViewData.js'
 
 export class ApplicationPowerForm extends Form {
-    constructor({ unitLevelOptions, staffView, ...config }) {
+    constructor({ unitLevelOptions = [], staffView, ...config }) {
         super(config);
         this.studentDetailsForm = new FormField({
             form: new StudentDetailsPowerForm()
@@ -128,7 +129,8 @@ export default function ApplicationForm() {
         if (form.isValid()) {
 			// TODO: Push to application db
 			alert(success);
-			console.log("APPLICATION SUBMITTED", form.getData());
+			ApplicationData.hasSubmitted = true;
+			console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
         } else {
             console.log("ERRORS", form.getError());
         }
