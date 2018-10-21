@@ -10,7 +10,7 @@ import StudentOfficePage from 'Components/StaffPage';
         "/application": ApplicationPage,
         "/student-office": {
             onmatch: function () {
-                return m.request("/login").then(() => StudentOfficePage, (() => SearchPage));
+                return m.request("/login").then(() => StudentOfficePage, () => SearchPage);
             }
         }
     });
