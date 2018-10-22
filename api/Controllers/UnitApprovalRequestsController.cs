@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using ExchangeApproval.Utilities;
 using static ExchangeApproval.Data.Queries;
+using System.Net;
 
 namespace ExchangeApproval.Controllers
 {
@@ -24,7 +25,6 @@ namespace ExchangeApproval.Controllers
         }
 
         [HttpGet("universities")]
-        [Authorize]
         public IEnumerable<string> Universities()
         {
             return QueryExchangeUniversities(_db, null).ToList();
@@ -64,6 +64,13 @@ namespace ExchangeApproval.Controllers
                 universityNames,
                 uwaUnitLevels
             );
+        }
+
+        [Authorize]
+        [HttpGet("/login")]
+        public StatusCodeResult Login()
+        {
+            return new StatusCodeResult((int)HttpStatusCode.Accepted);
         }
     }
 }
