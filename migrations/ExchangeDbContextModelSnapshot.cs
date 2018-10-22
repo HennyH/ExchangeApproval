@@ -122,6 +122,10 @@ namespace ExchangeApproval.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StaffLogons");
+
+                    b.HasData(
+                        new { Id = 1, PasswordHash = "cjb+4b758+uJV3ZphHssXHkCOswIOguPeh4DLDK8zGE=", Role = "StudentOffice", Salt = new byte[] { 101, 4, 199, 78, 78, 225, 192, 65, 72, 129, 52, 233, 56, 71, 79, 41 }, Username = "admin" }
+                    );
                 });
 
             modelBuilder.Entity("ExchangeApproval.Data.UWAUnit", b =>
