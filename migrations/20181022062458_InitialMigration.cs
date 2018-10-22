@@ -119,6 +119,11 @@ namespace ExchangeApproval.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "StaffLogons",
+                columns: new[] { "Id", "PasswordHash", "Role", "Salt", "Username" },
+                values: new object[] { 1, "cjb+4b758+uJV3ZphHssXHkCOswIOguPeh4DLDK8zGE=", "StudentOffice", new byte[] { 101, 4, 199, 78, 78, 225, 192, 65, 72, 129, 52, 233, 56, 71, 79, 41 }, "admin" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ExchangeUnits_UnitSetId",
                 table: "ExchangeUnits",
