@@ -90,6 +90,18 @@ namespace ExchangeApproval.Data
                 .Entity<UWAStaffLogon>()
                 .Property(l => l.Role)
                 .HasConversion<string>();
+            var salt = UWAStaffLogon.GenerateSalt();
+            var passwordHash = UWAStaffLogon.HashPassword("password", salt);
+            modelBuilder
+                .Entity<UWAStaffLogon>()
+                .HasData(new UWAStaffLogon
+                {
+                    Id = 1,
+                    Username = "admin",
+                    PasswordHash = passwordHash,
+                    Salt = salt,
+                    Role = UWAStaffRole.StudentOffice,
+                });
         }
 
         public static byte[] GenerateSalt()
