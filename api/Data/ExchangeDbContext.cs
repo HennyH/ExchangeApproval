@@ -151,7 +151,6 @@ namespace ExchangeApproval.Data
         public DateTime CompletedAt { get; set; }
         public string StudentName { get; set; }
         public string StudentNumber { get; set; }
-        public DateTime ExchangeDate { get; set; }
         public string Major1st { get; set; }
         public string Major2nd { get; set; }
         public string ExchangeUniversityCountry { get; set; }
