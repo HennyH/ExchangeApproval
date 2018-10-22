@@ -47,7 +47,7 @@ export function DownloadModalContent() {
                     <div class="form-group">
 
                         <label class="btn btn-outline-danger form-control-file">
-                            {"⇧ Upload New Equivalencies"}
+                            {"⇧ Upload Equivalencies"}
                             <input name="equivalencies" type="file" onchange={uploadNewEquivalencies} hidden />
                         </label>
                     </div>
