@@ -9,9 +9,13 @@ namespace ExchangeApproval.Data
         public ExchangeDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<ExchangeDbContext>();
-            var datasource = Environment.GetEnvironmentVariable("DATABASE");
-            builder.UseSqlite($"Data Source={datasource}");
-            builder.EnableSensitiveDataLogging();
+            var url = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var (scheme, connectionString) = DatabaseUrlHelpers.ParseDatabaseUrl(url);
+            if (scheme == "mysql") {
+                builder.UseMySql(connectionString);
+            } else {
+                throw new ArgumentOutOfRangeException($"Unsupported scheme {scheme}");
+            }
             return new ExchangeDbContext(builder.Options);
         }
     }

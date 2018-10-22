@@ -24,18 +24,6 @@ namespace ExchangeApproval.AdminTools
                 }
                 ApprovedUnitSetReader.UpdateUnitSetsInDatabase(db, unitSets);
             }
-
-            /* Create admin user */
-            var salt = UWAStaffLogon.GenerateSalt();
-            var passwordHash = UWAStaffLogon.HashPassword("password", salt);
-            db.StaffLogons.Add(new UWAStaffLogon
-            {
-                Username = "admin",
-                PasswordHash = passwordHash,
-                Salt = salt,
-                Role = UWAStaffRole.StudentOffice,
-            });
-            db.SaveChanges();
         }
     }
 }
