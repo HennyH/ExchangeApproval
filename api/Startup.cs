@@ -19,6 +19,8 @@ using ExchangeApproval.AdminTools;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using System.Linq;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace ExchangeApproval
 {
@@ -70,13 +72,34 @@ namespace ExchangeApproval
             services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ExchangeDbContext>(options =>
             {
-                options.UseInMemoryDatabase("ExchangeDb");
-                options.UseLoggerFactory(SqlLoggerFactory);
-                options.UseLazyLoadingProxies();
-                options.ConfigureWarnings(warningBuilder =>
+                var herokuDbUri = Environment.GetEnvironmentVariable("CLEARDB_DATABASE_URL");
+                if (herokuDbUri != null)
                 {
-                    warningBuilder.Ignore(InMemoryEventId.TransactionIgnoredWarning);
-                });
+                    Uri url;
+                    Uri.TryCreate(herokuDbUri, UriKind.Absolute, out url);
+                    var host = url.Host;
+                    var username = url.UserInfo.Split(":").First();
+                    var password = url.UserInfo.Split(":").Last();
+                    var db = url.LocalPath.TrimStart('/');
+                    var connectionString = $"Server={host};Database={db};User={username};Password={password}";
+                    options.UseMySql(
+                        connectionString,
+                        mySqlOptions =>
+                        {
+                            mySqlOptions.ServerVersion(new Version(5, 5), ServerType.MySql);
+                        }
+                    );
+                }
+                else
+                {
+                    options.UseInMemoryDatabase("ExchangeDb");
+                    options.ConfigureWarnings(warningBuilder =>
+                    {
+                        warningBuilder.Ignore(InMemoryEventId.TransactionIgnoredWarning);
+                    });
+                    // options.UseLoggerFactory(SqlLoggerFactory);
+                }
+                options.UseLazyLoadingProxies();
             });
         }
 
@@ -112,8 +135,14 @@ namespace ExchangeApproval
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var db = scope.ServiceProvider.GetService<ExchangeDbContext>();
-                db.Database.EnsureCreated();
-                SeedSampleData.SeedDatabase(db);
+                if (env.IsDevelopment() && db.Database.IsSqlite())
+                {
+                    SeedSampleData.SeedDatabase(db);
+                }
+                if (db.Database.IsMySql())
+                {
+                    db.Database.Migrate();
+                }
             }
         }
     }

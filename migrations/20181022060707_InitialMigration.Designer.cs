@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExchangeApproval.Migrations
 {
     [DbContext(typeof(ExchangeDbContext))]
-    [Migration("20181022044328_InitialMigration")]
+    [Migration("20181022060707_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,9 +109,6 @@ namespace ExchangeApproval.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email")
-                        .IsRequired();
-
                     b.Property<string>("PasswordHash")
                         .IsRequired();
 
@@ -119,6 +116,9 @@ namespace ExchangeApproval.Migrations
                         .IsRequired();
 
                     b.Property<byte[]>("Salt")
+                        .IsRequired();
+
+                    b.Property<string>("Username")
                         .IsRequired();
 
                     b.HasKey("Id");

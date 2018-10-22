@@ -107,9 +107,6 @@ namespace ExchangeApproval.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email")
-                        .IsRequired();
-
                     b.Property<string>("PasswordHash")
                         .IsRequired();
 
@@ -117,6 +114,9 @@ namespace ExchangeApproval.Migrations
                         .IsRequired();
 
                     b.Property<byte[]>("Salt")
+                        .IsRequired();
+
+                    b.Property<string>("Username")
                         .IsRequired();
 
                     b.HasKey("Id");
