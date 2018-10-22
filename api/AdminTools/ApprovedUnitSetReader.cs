@@ -7,7 +7,7 @@ using System;
 
 namespace ExchangeApproval.AdminTools
 {
-    public class ApprovedUnitSetRow
+    public class EquivalenceUnitSetRow
     {
         public int UnitSetId { get; set; }
         public bool IsExchangeUnit { get; set; }
@@ -20,9 +20,9 @@ namespace ExchangeApproval.AdminTools
         public UWAUnitLevel EquivalentUWAUnitLevel { get; set; }
     }
 
-    public static class ApprovedUnitSetReader
+    public static class EquivalenceUnitSetsReader
     {
-        public static IList<(int line, string error)> ValidateRows(IReadOnlyCollection<ApprovedUnitSetRow> rows)
+        public static IList<(int line, string error)> ValidateRows(IReadOnlyCollection<EquivalenceUnitSetRow> rows)
         {
             var errors = new List<string>();
             var numberedRows = rows.Select((r, i) => new { LineNumber = i + 1, Row = r });
@@ -53,12 +53,12 @@ namespace ExchangeApproval.AdminTools
                 .ToList();
         }
 
-        public static (IList<(int line, string error)> Errors, IEnumerable<UnitSet> unitSets) LoadUnitSets(TextReader reader)
+        public static (IList<(int line, string error)> Errors, IEnumerable<UnitSet> unitSets) LoadEquivalencies(TextReader reader)
         {
             var csv = new CsvReader(reader);
             try
             {
-                var rows = csv.GetRecords<ApprovedUnitSetRow>().ToList();
+                var rows = csv.GetRecords<EquivalenceUnitSetRow>().ToList();
                 var errors = ValidateRows(rows);
                 if (errors.Count > 0)
                 {
@@ -103,13 +103,13 @@ namespace ExchangeApproval.AdminTools
             }
         }
 
-        public static IEnumerable<ApprovedUnitSetRow> DumpUnitSets(ExchangeDbContext db)
+        public static IEnumerable<EquivalenceUnitSetRow> DumpEquivalencies(ExchangeDbContext db)
         {
             return db.UnitSets
                 .Where(us => us.StudentApplicationId == null)
                 .Select(us => new
                 {
-                    ExchangeUnits = us.ExchangeUnits.Select(u => new ApprovedUnitSetRow
+                    ExchangeUnits = us.ExchangeUnits.Select(u => new EquivalenceUnitSetRow
                     {
                         UnitSetId = us.UnitSetId,
                         IsExchangeUnit = true,
@@ -121,7 +121,7 @@ namespace ExchangeApproval.AdminTools
                         UnitHref = u.Href,
                         EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
                     }),
-                    UWAUnits = us.UWAUnits.Select(u => new ApprovedUnitSetRow
+                    UWAUnits = us.UWAUnits.Select(u => new EquivalenceUnitSetRow
                     {
                         UnitSetId = us.UnitSetId,
                         IsExchangeUnit = false,
@@ -141,7 +141,7 @@ namespace ExchangeApproval.AdminTools
                 .ToList();
         }
 
-        public static void UpdateUnitSetsInDatabase(ExchangeDbContext db, IEnumerable<UnitSet> newManualUnitApprovals)
+        public static void UpdateEquivalenciesInDatabase(ExchangeDbContext db, IEnumerable<UnitSet> newManualUnitApprovals)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
