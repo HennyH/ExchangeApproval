@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using ExchangeApproval.Utilities;
 using static ExchangeApproval.Data.Queries;
 using System.Net;
 
@@ -58,13 +54,47 @@ namespace ExchangeApproval.Controllers
                 UWAUnitLevel[] uwaUnitLevels
             )
         {
-            Console.WriteLine(universityNames);
-            return QueryUnitApprovalDecisions(
-                _db,
-                universityNames,
-                uwaUnitLevels
-            );
+            var unitSets = QueryUnitSets(this._db, universityNames, uwaUnitLevels).ToList();
+            return unitSets
+                .Select(us => new UnitSetDecisionVM
+                {
+                    ExchangeUniversityName = us.ExchangeUniversityName,
+                    ExchangeUniversityHref = us.ExchangeUniversityHref,
+                    UnitSetId = us.UnitSetId,
+                    DecisionDate = us.CompletedAt,
+                    Approved =
+                        us.IsEquivalent.HasValue
+                        && us.IsEquivalent.Value
+                        && us.EquivalentUWAUnitLevel.HasValue
+                        && us.EquivalentUWAUnitLevel.Value != UWAUnitLevel.Zero,
+                    ExchangeUnits = us.ExchangeUnits.Select(u => new UnitVM
+                    {
+                        UnitId = u.Id,
+                        UniversityName = us.ExchangeUniversityName,
+                        UniversityHref = us.ExchangeUniversityHref,
+                        UnitCode = u.Code,
+                        UnitName = u.Title,
+                        UnitHref = u.Href
+                    }),
+                    UWAUnits = us.UWAUnits.Select(u => new UnitVM
+                    {
+                        UnitId = u.Id,
+                        UniversityName = ReferenceData.UWAName,
+                        UniversityHref = ReferenceData.UWAHref,
+                        UnitCode = u.Code,
+                        UnitName = u.Title,
+                        UnitHref = u.Href
+                    })
+                })
+                .GroupBy(d => new
+                {
+                    d.ExchangeUniversityName,
+                    ExchangeUnits = d.UWAUnits.Select(u => new { u.UniversityName, u.UnitCode, u.UnitName }),
+                    UWAUnits = d.ExchangeUnits.Select(u => new { u.UnitCode, u.UnitName }),
+                })
+                .Select(g => g.OrderByDescending(d => d.DecisionDate).First());
         }
+
 
         [Authorize]
         [HttpGet("/login")]

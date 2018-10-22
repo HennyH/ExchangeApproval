@@ -15,11 +15,17 @@ using System;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json.Converters;
+using ExchangeApproval.AdminTools;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace ExchangeApproval
 {
     public class Startup
     {
+        public static readonly LoggerFactory SqlLoggerFactory = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
+
         private bool EnableCORS { get; set; } = false;
 
         public Startup(IConfiguration configuration)
@@ -65,6 +71,12 @@ namespace ExchangeApproval
             services.AddDbContext<ExchangeDbContext>(options =>
             {
                 options.UseInMemoryDatabase("ExchangeDb");
+                options.UseLoggerFactory(SqlLoggerFactory);
+                options.UseLazyLoadingProxies();
+                options.ConfigureWarnings(warningBuilder =>
+                {
+                    warningBuilder.Ignore(InMemoryEventId.TransactionIgnoredWarning);
+                });
             });
         }
 
@@ -101,6 +113,7 @@ namespace ExchangeApproval
             {
                 var db = scope.ServiceProvider.GetService<ExchangeDbContext>();
                 db.Database.EnsureCreated();
+                SeedSampleData.SeedDatabase(db);
             }
         }
     }
