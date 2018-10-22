@@ -16,13 +16,13 @@ namespace ExchangeApproval.AdminTools
             /* Load default approvals */
             using (var reader = new StreamReader("api/AdminTools/approved-unit-sets.csv"))
             {
-                var (errors, unitSets) = ApprovedUnitSetReader.LoadUnitSets(reader);
+                var (errors, unitSets) = EquivalenceUnitSetsReader.LoadEquivalencies(reader);
                 if (errors != null)
                 {
                     Console.WriteLine(errors);
                     return;
                 }
-                ApprovedUnitSetReader.UpdateUnitSetsInDatabase(db, unitSets);
+                EquivalenceUnitSetsReader.UpdateEquivalenciesInDatabase(db, unitSets);
             }
         }
     }

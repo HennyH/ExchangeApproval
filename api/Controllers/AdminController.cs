@@ -35,7 +35,7 @@ namespace ExchangeApproval.Controllers
                 using (var stream = equivalencies.OpenReadStream())
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 {
-                    var (errors, unitSets) = ApprovedUnitSetReader.LoadUnitSets(reader);
+                    var (errors, unitSets) = EquivalenceUnitSetsReader.LoadEquivalencies(reader);
                     if (errors != null && errors.Count > 0)
                     {
                         return new JsonResult(errors.Select(e => $"Line {e.line}: {e.error}"))
@@ -44,7 +44,7 @@ namespace ExchangeApproval.Controllers
                         };
                     }
 
-                    ApprovedUnitSetReader.UpdateUnitSetsInDatabase(this._db, unitSets);
+                    EquivalenceUnitSetsReader.UpdateEquivalenciesInDatabase(this._db, unitSets);
                     return new StatusCodeResult((int)HttpStatusCode.NoContent);
                 }
             }
@@ -61,11 +61,11 @@ namespace ExchangeApproval.Controllers
         [HttpGet("equivalencies")]
         public FileStreamResult GetEquivalencies()
         {
-            var equivalencies = ApprovedUnitSetReader.DumpUnitSets(this._db);
+            var equivalencies = EquivalenceUnitSetsReader.DumpEquivalencies(this._db);
             var memory = new MemoryStream();
             var writer = new StreamWriter(memory, Encoding.UTF8);
             var csv = new CsvHelper.CsvWriter(writer);
-            csv.WriteHeader<ApprovedUnitSetRow>();
+            csv.WriteHeader<EquivalenceUnitSetRow>();
             csv.NextRecord();
             csv.WriteRecords(equivalencies);
             csv.Flush();
