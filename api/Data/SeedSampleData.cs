@@ -33,7 +33,7 @@ namespace ExchangeApproval.Data
         {
             return GetIds(name, 1).Single();
         }
-        
+
 
         readonly static Random Random = new Random();
 
@@ -210,7 +210,7 @@ namespace ExchangeApproval.Data
                         {
                             Id = unitSets.Count + 1,
                             ApplicationId = int.Parse(studentNumber) + Random.Next(1, 5),
-                            LastUpdatedAt = approvedAt,
+                            ApplicationLastUpdatedAt = approvedAt,
                             StudentNumber = studentNumber,
                             ExchangeDate = exchangeDate,
                             CourseCode = courseCode,

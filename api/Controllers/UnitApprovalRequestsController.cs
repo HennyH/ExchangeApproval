@@ -66,6 +66,17 @@ namespace ExchangeApproval.Controllers
             );
         }
 
+        [HttpGet("/inbox")]
+        public IEnumerable<InboxItemVM> Inbox()
+        {
+            QueryUnitApprovalDecisions().Select(
+                d => new InboxItemVM
+                {
+                    ApplicationID = d.
+                }
+            )
+        }
+
         [Authorize]
         [HttpGet("/login")]
         public StatusCodeResult Login()

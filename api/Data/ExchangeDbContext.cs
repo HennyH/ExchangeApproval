@@ -13,6 +13,12 @@ using static ExchangeApproval.Data.SeedSampleData;
 
 namespace ExchangeApproval.Data
 {
+    public static class ReferenceData
+    {
+        public readonly static string UWAName = "University of Western Australia";
+        public readonly static string UWAHref = "https://www.uwa.edu.au/";
+    }
+
     public class ExchangeDbContext : DbContext
     {
         public ExchangeDbContext(DbContextOptions<ExchangeDbContext> options)
@@ -50,25 +56,27 @@ namespace ExchangeApproval.Data
         GtFour
     };
 
-	public static class UWAUnitLevelExtensions
-	{
-		public static string GetLabel(this UWAUnitLevel level) {
-			switch (level) {
-				case UWAUnitLevel.Zero:
-					return "Insufficent";
-				case UWAUnitLevel.One:
-					return "1000";
-				case UWAUnitLevel.Two:
-					return "2000";
-				case UWAUnitLevel.Three:
-					return "3000";
-				case UWAUnitLevel.Four:
-					return "4000";
-				default:
-					return ">4000";
-			} 
-		}
-	}
+    public static class UWAUnitLevelExtensions
+    {
+        public static string GetLabel(this UWAUnitLevel level)
+        {
+            switch (level)
+            {
+                case UWAUnitLevel.Zero:
+                    return "Insufficent";
+                case UWAUnitLevel.One:
+                    return "1000";
+                case UWAUnitLevel.Two:
+                    return "2000";
+                case UWAUnitLevel.Three:
+                    return "3000";
+                case UWAUnitLevel.Four:
+                    return "4000";
+                default:
+                    return ">4000";
+            }
+        }
+    }
 
     public enum StaffRole { StudentOffice, UnitCoordinator };
 
@@ -116,14 +124,27 @@ namespace ExchangeApproval.Data
         }
     }
 
+    public enum ApplicationStatus
+    {
+        New,
+        Incomplete,
+        Completed,
+        Deleted
+    }
+
     public class ExchangeApplicationUnitSet
     {
-        public int Id { get; set; }
+        [Key]
+        public int UnitSetId { get; set; }
         public int ApplicationId { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
+        public DateTime ApplicationSubmittedAt { get; set; }
+        public DateTime ApplicationLastUpdatedAt { get; set; }
+        public DateTime ApplicationCompletedAt { get; set; }
+        public string StudentName { get; set; }
         public string StudentNumber { get; set; }
         public DateTime ExchangeDate { get; set; }
-        public string CourseCode { get; set; }
+        public string Major1st { get; set; }
+        public string Major2nd { get; set; }
         public string ExchangeUniversityCountry { get; set; }
         public string ExchangeUniversityHref { get; set; }
         public string ExchangeUniversityName { get; set; }
@@ -131,11 +152,9 @@ namespace ExchangeApproval.Data
         public IList<UWAUnit> UWAUnits { get; set; }
         public bool? IsEquivalent { get; set; }
         public int? EquivalencePrecedentId { get; set; }
-        public ExchangeApplicationUnitSet EquivalencePrecedent { get; set; }
         public bool? IsContextuallyApproved { get; set; }
         public UWAUnitLevel? EquivalentUWAUnitLevel { get; set; }
         public string Notes { get; set; }
-        public bool RequiresEquivalenceDecision { get { return UWAUnits != null; } }
 
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -153,7 +172,7 @@ namespace ExchangeApproval.Data
                     v => JsonConvert.DeserializeObject<IList<UWAUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
     }
-    
+
     public class ExchangeUnit
     {
         public string Code { get; set; }
