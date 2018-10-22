@@ -97,7 +97,8 @@ export var ApplicationModalContent = {
 	oninit: function() {
         if (Data.filters.options === null) {
 			Data.filters.fetch();
-		}
+        }
+        EmailData.Form=applicationPowerForm;
 	},
 
 	view: function({attrs: {title}}) {
@@ -109,11 +110,11 @@ export var ApplicationModalContent = {
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body p-0">
 					{(Data.filters.loading
 						? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
 						: (
-							<ApplicationForm 
+							<ApplicationForm class="m-0 p-0"
 								form={applicationPowerForm} 
 								staffView = {true} 
 							/>
@@ -122,8 +123,8 @@ export var ApplicationModalContent = {
 				</div>
 				<div class="modal-footer d-flex justify-content-between">
 					<div class="">
-						<button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.SendEmail(applicationPowerForm.getData())}>Send Application Results</button>
-						<button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.CopyText(applicationPowerForm.getData())}>Copy to Clipboard</button>
+						<button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail(applicationPowerForm.getData())}>Send Application Results</button>
+						<button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText(applicationPowerForm.getData())}>Copy to Clipboard</button>
 					</div>
 					<div class="">
 						<button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
