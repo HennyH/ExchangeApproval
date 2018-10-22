@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace ExchangeApproval.ViewModels
 {
     public class UnitVM
-    {   
+    {
+        public int UnitId { get; set; }
         public string UniversityName { get; set; }
         public string UniversityHref { get; set; }
         public string UnitCode { get; set; }

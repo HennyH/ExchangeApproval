@@ -9,10 +9,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
-using static ExchangeApproval.Data.SeedSampleData;
 
 namespace ExchangeApproval.Data
 {
+    public static class ReferenceData
+    {
+        public readonly static string UWAName = "University of Western Australia";
+        public readonly static string UWAHref = "https://www.uwa.edu.au/";
+    }
+
     public class ExchangeDbContext : DbContext
     {
         public ExchangeDbContext(DbContextOptions<ExchangeDbContext> options)
@@ -23,18 +28,12 @@ namespace ExchangeApproval.Data
         {
             base.OnModelCreating(modelBuilder);
             UWAStaffLogon.OnModelCreating(modelBuilder);
-            ExchangeApplicationUnitSet.OnModelCreating(modelBuilder);
-
-            var (unitSets, staffLogons) = LoadSampleData();
-            modelBuilder
-                .Entity<UWAStaffLogon>()
-                .HasData(staffLogons.ToArray());
-            modelBuilder
-                .Entity<ExchangeApplicationUnitSet>()
-                .HasData(unitSets.ToArray());
         }
 
-        public DbSet<ExchangeApplicationUnitSet> ExchangeApplicationUnitSets { get; set; }
+        public DbSet<StudentApplication> StudentApplications { get; set; }
+        public DbSet<UnitSet> UnitSets { get; set; }
+        public DbSet<ExchangeUnit> ExchangeUnits { get; set; }
+        public DbSet<UWAUnit> UWAUnits { get; set; }
         public DbSet<UWAStaffLogon> StaffLogons { get; set; }
     }
 
@@ -50,34 +49,36 @@ namespace ExchangeApproval.Data
         GtFour
     };
 
-	public static class UWAUnitLevelExtensions
-	{
-		public static string GetLabel(this UWAUnitLevel level) {
-			switch (level) {
-				case UWAUnitLevel.Zero:
-					return "Insufficent";
-				case UWAUnitLevel.One:
-					return "1000";
-				case UWAUnitLevel.Two:
-					return "2000";
-				case UWAUnitLevel.Three:
-					return "3000";
-				case UWAUnitLevel.Four:
-					return "4000";
-				default:
-					return ">4000";
-			} 
-		}
-	}
+    public static class UWAUnitLevelExtensions
+    {
+        public static string GetLabel(this UWAUnitLevel level)
+        {
+            switch (level)
+            {
+                case UWAUnitLevel.Zero:
+                    return "Insufficent";
+                case UWAUnitLevel.One:
+                    return "1000";
+                case UWAUnitLevel.Two:
+                    return "2000";
+                case UWAUnitLevel.Three:
+                    return "3000";
+                case UWAUnitLevel.Four:
+                    return "4000";
+                default:
+                    return ">4000";
+            }
+        }
+    }
 
-    public enum StaffRole { StudentOffice, UnitCoordinator };
+    public enum UWAStaffRole { StudentOffice, UnitCoordinator };
 
     public class UWAStaffLogon
     {
         public int Id { get; set; }
         [Required]
-        public string Email { get; set; }
-        public StaffRole Role { get; set; }
+        public string Username { get; set; }
+        public UWAStaffRole Role { get; set; }
         [Required]
         public byte[] Salt { get; set; }
         [Required]
@@ -116,55 +117,67 @@ namespace ExchangeApproval.Data
         }
     }
 
-    public class ExchangeApplicationUnitSet
+    public enum ApplicationStatus
     {
-        public int Id { get; set; }
-        public int ApplicationId { get; set; }
+        New,
+        Incomplete,
+        Completed,
+        Deleted
+    }
+
+    public class StudentApplication
+    {
+        public int StudentApplicationId { get; set; }
+        public DateTime SubmittedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
+        public DateTime CompletedAt { get; set; }
+        public string StudentName { get; set; }
         public string StudentNumber { get; set; }
         public DateTime ExchangeDate { get; set; }
-        public string CourseCode { get; set; }
+        public string Major1st { get; set; }
+        public string Major2nd { get; set; }
         public string ExchangeUniversityCountry { get; set; }
         public string ExchangeUniversityHref { get; set; }
         public string ExchangeUniversityName { get; set; }
-        public IList<ExchangeUnit> ExchangeUnits { get; set; }
-        public IList<UWAUnit> UWAUnits { get; set; }
+        public string Notes { get; set; }
+        public virtual ICollection<UnitSet> UnitSets { get; set; }
+    }
+
+    public class UnitSet
+    {
+        public int UnitSetId { get; set; }
+        public int? StudentApplicationId { get; set; }
+        public virtual StudentApplication StudentApplication { get; set; }
+        public string ExchangeUniversityCountry { get; set; }
+        public string ExchangeUniversityHref { get; set; }
+        public string ExchangeUniversityName { get; set; }
+        public DateTime SubmittedAt { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
+        public DateTime CompletedAt { get; set; }
+        public virtual ICollection<ExchangeUnit> ExchangeUnits { get; set; }
+        public virtual ICollection<UWAUnit> UWAUnits { get; set; }
         public bool? IsEquivalent { get; set; }
-        public int? EquivalencePrecedentId { get; set; }
-        public ExchangeApplicationUnitSet EquivalencePrecedent { get; set; }
         public bool? IsContextuallyApproved { get; set; }
         public UWAUnitLevel? EquivalentUWAUnitLevel { get; set; }
-        public string Notes { get; set; }
-        public bool RequiresEquivalenceDecision { get { return UWAUnits != null; } }
-
-        public static void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<ExchangeApplicationUnitSet>()
-                .Property(s => s.ExchangeUnits)
-                .HasConversion(
-                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    v => JsonConvert.DeserializeObject<IList<ExchangeUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-            modelBuilder
-                .Entity<ExchangeApplicationUnitSet>()
-                .Property(s => s.UWAUnits)
-                .HasConversion(
-                    v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    v => JsonConvert.DeserializeObject<IList<UWAUnit>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-        }
     }
-    
+
     public class ExchangeUnit
     {
+        public int Id { get; set; }
         public string Code { get; set; }
         public string Title { get; set; }
         public string Href { get; set; }
+        public int? UnitSetId { get; set; }
+        public virtual UnitSet UnitSet { get; set; }
     }
 
     public class UWAUnit
     {
+        public int Id { get; set; }
         public string Code { get; set; }
         public string Title { get; set; }
         public string Href { get; set; }
+        public int? UnitSetId { get; set; }
+        public virtual UnitSet UnitSet { get; set; }
     }
 }
