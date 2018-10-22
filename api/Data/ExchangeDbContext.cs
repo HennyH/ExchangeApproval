@@ -14,6 +14,7 @@ namespace ExchangeApproval.Data
 {
     public static class ReferenceData
     {
+        public readonly static string UWACountry = "Australia";
         public readonly static string UWAName = "University of Western Australia";
         public readonly static string UWAHref = "https://www.uwa.edu.au/";
     }
