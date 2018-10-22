@@ -82,7 +82,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                             config={{
                                 multiple: true,
                                 width: '100%',
-                                placeholder: 'Select student office to filter to...',
+                                placeholder: 'Select unit coordinators to filter to...',
                                 data: studentOfficeOptions.map(name => ({
                                     id: name,
                                     text: name
