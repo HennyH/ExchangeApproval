@@ -14,7 +14,8 @@ namespace ExchangeApproval.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("ExchangeApproval.Data.ExchangeUnit", b =>
                 {
@@ -124,7 +125,7 @@ namespace ExchangeApproval.Migrations
                     b.ToTable("StaffLogons");
 
                     b.HasData(
-                        new { Id = 1, PasswordHash = "cjb+4b758+uJV3ZphHssXHkCOswIOguPeh4DLDK8zGE=", Role = "StudentOffice", Salt = new byte[] { 101, 4, 199, 78, 78, 225, 192, 65, 72, 129, 52, 233, 56, 71, 79, 41 }, Username = "admin" }
+                        new { Id = 1, PasswordHash = "InAdOAPwcGKRUuWmechPgSW7oKTL9rdL7YwnZWl8HP0=", Role = "StudentOffice", Salt = new byte[] { 228, 229, 226, 199, 166, 209, 206, 69, 214, 2, 152, 38, 135, 211, 129, 129 }, Username = "admin" }
                     );
                 });
 
@@ -159,7 +160,8 @@ namespace ExchangeApproval.Migrations
                 {
                     b.HasOne("ExchangeApproval.Data.StudentApplication", "StudentApplication")
                         .WithMany("UnitSets")
-                        .HasForeignKey("StudentApplicationId");
+                        .HasForeignKey("StudentApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ExchangeApproval.Data.UWAUnit", b =>

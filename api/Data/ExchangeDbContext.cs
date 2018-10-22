@@ -28,6 +28,7 @@ namespace ExchangeApproval.Data
         {
             base.OnModelCreating(modelBuilder);
             UWAStaffLogon.OnModelCreating(modelBuilder);
+            StudentApplication.OnModelCreating(modelBuilder);
         }
 
         public DbSet<StudentApplication> StudentApplications { get; set; }
@@ -102,6 +103,10 @@ namespace ExchangeApproval.Data
                     Salt = salt,
                     Role = UWAStaffRole.StudentOffice,
                 });
+            modelBuilder
+                .Entity<UWAStaffLogon>()
+                .Property(l => l.Id)
+                .ValueGeneratedOnAdd();
         }
 
         public static byte[] GenerateSalt()
@@ -153,10 +158,21 @@ namespace ExchangeApproval.Data
         public string ExchangeUniversityName { get; set; }
         public string Notes { get; set; }
         public virtual ICollection<UnitSet> UnitSets { get; set; }
+
+        public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<StudentApplication>()
+                .HasMany(a => a.UnitSets)
+                .WithOne(us => us.StudentApplication)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 
     public class UnitSet
     {
+        [Key]
         public int UnitSetId { get; set; }
         public int? StudentApplicationId { get; set; }
         public virtual StudentApplication StudentApplication { get; set; }
@@ -171,10 +187,25 @@ namespace ExchangeApproval.Data
         public bool? IsEquivalent { get; set; }
         public bool? IsContextuallyApproved { get; set; }
         public UWAUnitLevel? EquivalentUWAUnitLevel { get; set; }
+
+        public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<UnitSet>()
+                .HasMany(a => a.ExchangeUnits)
+                .WithOne(us => us.UnitSet)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder
+                .Entity<UnitSet>()
+                .HasMany(a => a.UWAUnits)
+                .WithOne(us => us.UnitSet)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 
     public class ExchangeUnit
     {
+        [Key]
         public int Id { get; set; }
         public string Code { get; set; }
         public string Title { get; set; }
@@ -185,6 +216,7 @@ namespace ExchangeApproval.Data
 
     public class UWAUnit
     {
+        [Key]
         public int Id { get; set; }
         public string Code { get; set; }
         public string Title { get; set; }

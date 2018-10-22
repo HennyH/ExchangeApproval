@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExchangeApproval.Migrations
@@ -12,7 +13,7 @@ namespace ExchangeApproval.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Username = table.Column<string>(nullable: false),
                     Role = table.Column<string>(nullable: false),
                     Salt = table.Column<byte[]>(nullable: false),
@@ -28,7 +29,7 @@ namespace ExchangeApproval.Migrations
                 columns: table => new
                 {
                     StudentApplicationId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     SubmittedAt = table.Column<DateTime>(nullable: false),
                     LastUpdatedAt = table.Column<DateTime>(nullable: false),
                     CompletedAt = table.Column<DateTime>(nullable: false),
@@ -52,7 +53,7 @@ namespace ExchangeApproval.Migrations
                 columns: table => new
                 {
                     UnitSetId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StudentApplicationId = table.Column<int>(nullable: true),
                     ExchangeUniversityCountry = table.Column<string>(nullable: true),
                     ExchangeUniversityHref = table.Column<string>(nullable: true),
@@ -72,7 +73,7 @@ namespace ExchangeApproval.Migrations
                         column: x => x.StudentApplicationId,
                         principalTable: "StudentApplications",
                         principalColumn: "StudentApplicationId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +81,7 @@ namespace ExchangeApproval.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Code = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Href = table.Column<string>(nullable: true),
@@ -102,7 +103,7 @@ namespace ExchangeApproval.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Code = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Href = table.Column<string>(nullable: true),
@@ -122,7 +123,7 @@ namespace ExchangeApproval.Migrations
             migrationBuilder.InsertData(
                 table: "StaffLogons",
                 columns: new[] { "Id", "PasswordHash", "Role", "Salt", "Username" },
-                values: new object[] { 1, "cjb+4b758+uJV3ZphHssXHkCOswIOguPeh4DLDK8zGE=", "StudentOffice", new byte[] { 101, 4, 199, 78, 78, 225, 192, 65, 72, 129, 52, 233, 56, 71, 79, 41 }, "admin" });
+                values: new object[] { 1, "InAdOAPwcGKRUuWmechPgSW7oKTL9rdL7YwnZWl8HP0=", "StudentOffice", new byte[] { 228, 229, 226, 199, 166, 209, 206, 69, 214, 2, 152, 38, 135, 211, 129, 129 }, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExchangeUnits_UnitSetId",

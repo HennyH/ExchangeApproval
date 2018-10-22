@@ -56,58 +56,60 @@ namespace ExchangeApproval.AdminTools
         public static (IList<(int line, string error)> Errors, IEnumerable<UnitSet> unitSets) LoadUnitSets(TextReader reader)
         {
             var csv = new CsvReader(reader);
-            var rows = csv.GetRecords<ApprovedUnitSetRow>().ToList();
-            var errors = ValidateRows(rows);
-            if (errors.Count > 0)
+            try
             {
-                return (errors, null);
-            }
-
-            var now = DateTime.UtcNow;
-            var approvedUnitSets = rows
-                .GroupBy(r => r.UnitSetId)
-                .Select(g => new UnitSet
+                var rows = csv.GetRecords<ApprovedUnitSetRow>().ToList();
+                var errors = ValidateRows(rows);
+                if (errors.Count > 0)
                 {
-                    SubmittedAt = now,
-                    LastUpdatedAt = now,
-                    CompletedAt = now,
-                    IsEquivalent = true,
-                    IsContextuallyApproved = null,
-                    EquivalentUWAUnitLevel = g.First().EquivalentUWAUnitLevel,
-                    ExchangeUniversityName = g.First().UniversityName,
-                    ExchangeUniversityCountry = g.First().UniversityCountry,
-                    ExchangeUniversityHref = g.First().UniversityHref,
-                    ExchangeUnits = g
-                        .Where(r => r.IsExchangeUnit)
-                        .Select(r => new ExchangeUnit
-                        {
-                            Code = r.UnitCode,
-                            Title = r.UnitTitle,
-                            Href = r.UnitHref
-                        }).ToList(),
-                    UWAUnits = g
-                        .Where(r => !r.IsExchangeUnit)
-                        .Select(r => new UWAUnit
-                        {
-                            Code = r.UnitCode,
-                            Title = r.UnitTitle,
-                            Href = r.UnitHref
-                        }).ToList()
-                });
-            return (null, approvedUnitSets);
+                    return (errors, null);
+                }
+                var now = DateTime.UtcNow;
+                var approvedUnitSets = rows
+                    .GroupBy(r => r.UnitSetId)
+                    .Select(g => new UnitSet
+                    {
+                        SubmittedAt = now,
+                        LastUpdatedAt = now,
+                        CompletedAt = now,
+                        IsEquivalent = true,
+                        IsContextuallyApproved = null,
+                        EquivalentUWAUnitLevel = g.First().EquivalentUWAUnitLevel,
+                        ExchangeUniversityName = g.First().UniversityName,
+                        ExchangeUniversityCountry = g.First().UniversityCountry,
+                        ExchangeUniversityHref = g.First().UniversityHref,
+                        ExchangeUnits = g
+                            .Where(r => r.IsExchangeUnit)
+                            .Select(r => new ExchangeUnit
+                            {
+                                Code = r.UnitCode,
+                                Title = r.UnitTitle,
+                                Href = r.UnitHref
+                            }).ToList(),
+                        UWAUnits = g
+                            .Where(r => !r.IsExchangeUnit)
+                            .Select(r => new UWAUnit
+                            {
+                                Code = r.UnitCode,
+                                Title = r.UnitTitle,
+                                Href = r.UnitHref
+                            }).ToList()
+                    });
+                return (null, approvedUnitSets);
+            }
+            catch (ValidationException ex)
+            {
+                return (new[] { (0, ex.Message.Split(".").First()) }, null);
+            }
         }
 
         public static void UpdateUnitSetsInDatabase(ExchangeDbContext db, IEnumerable<UnitSet> newManualUnitApprovals)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
-                var existingManualUnitSets = db.UnitSets.Where(u => u.StudentApplicationId == null);
-                var existingManualExchangeUnits = existingManualUnitSets.SelectMany(us => us.ExchangeUnits);
-                var existingManualUWAUnits = existingManualUnitSets.SelectMany(us => us.UWAUnits);
-                db.UWAUnits.RemoveRange(existingManualUWAUnits);
-                db.ExchangeUnits.RemoveRange(existingManualExchangeUnits);
-                db.UnitSets.RemoveRange(existingManualUnitSets);
-                db.UnitSets.AddRange(newManualUnitApprovals);
+                var existingManualUnitSets = db.UnitSets.Where(u => u.StudentApplicationId == null).ToList();
+                db.RemoveRange(existingManualUnitSets);
+                db.AddRange(newManualUnitApprovals);
                 db.SaveChanges();
                 transaction.Commit();
             }
