@@ -20,7 +20,6 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using System.Linq;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace ExchangeApproval
 {
@@ -72,23 +71,11 @@ namespace ExchangeApproval
             services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ExchangeDbContext>(options =>
             {
-                var herokuDbUri = Environment.GetEnvironmentVariable("CLEARDB_DATABASE_URL");
-                if (herokuDbUri != null)
+                var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                if (herokuDbUrl != null)
                 {
-                    Uri url;
-                    Uri.TryCreate(herokuDbUri, UriKind.Absolute, out url);
-                    var host = url.Host;
-                    var username = url.UserInfo.Split(":").First();
-                    var password = url.UserInfo.Split(":").Last();
-                    var db = url.LocalPath.TrimStart('/');
-                    var connectionString = $"Server={host};Database={db};User={username};Password={password}";
-                    options.UseMySql(
-                        connectionString,
-                        mySqlOptions =>
-                        {
-                            mySqlOptions.ServerVersion(new Version(5, 5), ServerType.MySql);
-                        }
-                    );
+                    var (_, connectionString) = DatabaseUrlHelpers.ParseDatabaseUrl(herokuDbUrl);
+                    options.UseMySql(connectionString);
                 }
                 else
                 {
@@ -135,11 +122,12 @@ namespace ExchangeApproval
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var db = scope.ServiceProvider.GetService<ExchangeDbContext>();
-                if (env.IsDevelopment() && db.Database.IsSqlite())
+                if (db.Database.IsInMemory())
                 {
+                    db.Database.EnsureCreated();
                     SeedSampleData.SeedDatabase(db);
                 }
-                if (db.Database.IsMySql())
+                else
                 {
                     db.Database.Migrate();
                 }

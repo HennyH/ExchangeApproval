@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static ExchangeApproval.Data.Queries;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace ExchangeApproval.Controllers
 {
@@ -24,6 +25,14 @@ namespace ExchangeApproval.Controllers
         public IEnumerable<string> Universities()
         {
             return QueryExchangeUniversities(_db, null).ToList();
+        }
+
+        [Authorize]
+        [HttpPost("admin/equivalencies")]
+        public StatusCodeResult UpdateEquivalencies(IFormFile equivalencies)
+        {
+            Console.WriteLine(equivalencies);
+            return new StatusCodeResult(204);
         }
 
         [HttpGet("filters")]
@@ -56,6 +65,7 @@ namespace ExchangeApproval.Controllers
         {
             var unitSets = QueryUnitSets(this._db, universityNames, uwaUnitLevels).ToList();
             return unitSets
+                .Where(us => us.EquivalentUWAUnitLevel.HasValue)
                 .Select(us => new UnitSetDecisionVM
                 {
                     ExchangeUniversityName = us.ExchangeUniversityName,
@@ -84,7 +94,12 @@ namespace ExchangeApproval.Controllers
                         UnitCode = u.Code,
                         UnitName = u.Title,
                         UnitHref = u.Href
-                    })
+                    }),
+                    EquivalentUnitLevel = new SelectOption<UWAUnitLevel>(
+                        us.EquivalentUWAUnitLevel.Value,
+                        us.EquivalentUWAUnitLevel.Value.GetLabel(),
+                        true
+                    )
                 })
                 .GroupBy(d => new
                 {
@@ -93,14 +108,6 @@ namespace ExchangeApproval.Controllers
                     UWAUnits = d.ExchangeUnits.Select(u => new { u.UnitCode, u.UnitName }),
                 })
                 .Select(g => g.OrderByDescending(d => d.DecisionDate).First());
-        }
-
-
-        [Authorize]
-        [HttpGet("/login")]
-        public StatusCodeResult Login()
-        {
-            return new StatusCodeResult((int)HttpStatusCode.Accepted);
         }
     }
 }
