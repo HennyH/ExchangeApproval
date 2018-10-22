@@ -13,7 +13,7 @@ namespace ExchangeApproval.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Email = table.Column<string>(nullable: false),
+                    Username = table.Column<string>(nullable: false),
                     Role = table.Column<string>(nullable: false),
                     Salt = table.Column<byte[]>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: false)
