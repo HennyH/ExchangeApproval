@@ -32,13 +32,14 @@ export default function ApplicationPage() {
                     <em>Please check your student email regularly.</em>
                 </div>
             </div>
-            : (Data.filters.loading ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
-            : <div class="container-fluid">
-                <div class="card my-3">
-                    <div class="card-header"> Exchange Application</div>
-                    <ApplicationForm form={applicationPowerForm} staffView ={false} />
+            : (Data.filters.loading
+                ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
+                : <div class="container-fluid">
+                    <div class="card my-3">
+                        <div class="card-header"> Exchange Application</div>
+                        <ApplicationForm form={applicationPowerForm} staffView ={false} />
+                    </div>
                 </div>
-            </div>
             )}
         </Layout>
         )

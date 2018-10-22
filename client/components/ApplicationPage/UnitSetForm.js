@@ -10,6 +10,7 @@ import CheckboxGroup from '../FormHelpers/CheckboxGroup';
 import RadioButtonGroup from '../FormHelpers/RadioButtonGroup';
 import DeleteButton from '../FormHelpers/DeleteButton';
 import { removeItemFromCart } from 'Components/Cart'
+import {EmailData} from '../ViewData'
 
 export class UnitPowerForm extends Form {
     constructor({ ...config }) {
@@ -168,21 +169,26 @@ export function UnitSetForm() {
         return (
             <div class={classNames("card", classes)} {...otherAttrs}>
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-11 align-self-center">
+                    <div class="d-flex justify-content-between">
+                        <div class="align-self-center">
                             {title}
                         </div>
-                        <div class="ml-auto" style="width: 3em">
+                        <div class="col" style="width: 3em">
                             {(staffView) ? 
-								<div/> 
-								: <DeleteButton
-									onClick={() => {
-										if (form.config.cartItem) {
-											removeItemFromCart(form.config.cartItem);
-										}
-										onDelete();
-									}}
-								/> 
+                                <span>
+                                    <button class="btn-sm ml-2 btn-outline-primary float-right" onclick={() => EmailData.Equivalence.SendEmail(formIndex)}>Email Equivalence</button>
+                                    <button class="btn-sm ml-2 btn-outline-secondary float-right" onclick={() => EmailData.Equivalence.CopyText(formIndex)}>Copy to Clipboard</button>
+                                </span>
+								: <span class="float-right">
+                                    <DeleteButton
+                                        onClick={() => {
+                                            if (form.config.cartItem) {
+                                                removeItemFromCart(form.config.cartItem);
+                                            }
+                                            onDelete();
+                                        }}
+                                    /> 
+                                </span>
 							}
                         </div>
                     </div>

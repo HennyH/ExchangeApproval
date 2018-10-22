@@ -1,4 +1,5 @@
 import m from 'mithril'
+import { FormListField } from './FormHelpers/Fields';
 
 export const ModalState = {
 	DownloadModal: {
@@ -71,47 +72,81 @@ export const UnitSearchData = {
 	hasSearched: false
 }
 
-export const EmailData = {
-	GenerateMessage: function(form) {
-		EmailData.To = form.studentDetailsForm.email;
-		EmailData.Name = form.studentDetailsForm.name;
-		EmailData.University = form.exchangeUniversityForm.universityName;
-		EmailData.Approvals = processUnitSets(form.unitSetForms);
-		EmailData.Message = 
-		`Hi ${EmailData.Name},
 
-		I hope this email finds you well. I am writing to update you on the status of your application for exchange at ${this.University}. Exchange units need both equivalence and contextual approval. Please see the approval status below.\n\n\t${EmailData.Approvals}\nRegards,
-		`,
-		EmailData.mailString = ('?subject=' + encodeURIComponent(EmailData.Subject) + '&body=' + encodeURIComponent(EmailData.Message));
-		},
-	SendEmail: function(form) {
-		EmailData.GenerateMessage(form);
-		window.location.href='mailto:' + EmailData.To + EmailData.mailString;
-	},
-	CopyText: function(form) {
-		EmailData.GenerateMessage(form);
-		navigator.clipboard.writeText(EmailData.Message).then(function() {
-			alert("Copied to clipboard: \n\n" + EmailData.Message);
-		}, function() {
-			alert("Failed to copy to clipboard");
-		});
-	},
-	To: null,
-	Name: null,
-	Subject: "An Update On Your Exchange Application",
-	University: null,
-	Approvals: null,
-	mailString: null,
-	Message: "turkey"	
+// EMAIL DATA + CLIPBOARD LOGIC AND DATA STRUCTURE
+export const EmailData = {
+    Form: null,
+    To: null,
+    Name: null,
+    Major: null,
+    Subject: null,
+    University: null,
+    Approvals: null,
+    mailString: null,
+    Message: null,
+    PopulateFields: function() {
+        var formData = EmailData.Form.getData();
+        EmailData.To = (formData.studentDetailsForm.email ? formData.studentDetailsForm.email : "");
+        EmailData.Major = (formData.studentDetailsForm.Major ? formData.studentDetailsForm.Major : "[_STUDENT_MAJOR_]" );
+        EmailData.Name = (formData.studentDetailsForm.name ? formData.studentDetailsForm.name : "[_STUDENT_NAME_]");
+        EmailData.University = (formData.exchangeUniversityForm.universityName ? formData.exchangeUniversityForm.universityName : "[_EXCHANGE_UNIVERSITY_]");
+    },
+    
+    Student: {
+        GenerateMessage: function() {
+            var unitSets = EmailData.Form.getData().unitSetForms;
+            EmailData.PopulateFields();
+            EmailData.Subject = "Exchange Application Update",
+            EmailData.Approvals = processUnitSets(unitSets);
+            EmailData.Message = studentMessage(EmailData);
+            EmailData.mailString = ('?subject=' + encodeURIComponent(EmailData.Subject) + '&body=' + encodeURIComponent(EmailData.Message));
+        },
+        SendEmail: function() {
+            EmailData.Student.GenerateMessage();
+            window.location.href='mailto:' + EmailData.mailString;
+        },
+        CopyText: function() {
+            EmailData.Student.GenerateMessage();
+            copyToClipboard(EmailData.Message);
+        },
+    },
+    Equivalence: {
+        GenerateMessage: function(formIndex) {
+            var unitSets = EmailData.Form.getData().unitSetForms;
+            EmailData.PopulateFields();
+            EmailData.Subject = "Exchange Units For Approval",
+            EmailData.Approvals = processUnitSetEquivalence(unitSets[formIndex]);
+            EmailData.Message = equivalenceMessage(EmailData);
+            EmailData.mailString = ('?subject=' + encodeURIComponent(EmailData.Subject) + '&body=' + encodeURIComponent(EmailData.Message));
+        },
+        SendEmail: function(formIndex) {
+            EmailData.Equivalence.GenerateMessage(formIndex);
+            window.location.href='mailto:' + EmailData.mailString;
+        },
+        CopyText: function(formIndex) {
+            EmailData.Equivalence.GenerateMessage(formIndex);
+            copyToClipboard(EmailData.Message);
+        } 
+    }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert("Copied to clipboard: \n\n" + text);
+    }, function() {
+        alert("Failed to copy to clipboard! CTR+C the text below:\n\n" + text);
+    });
 }
 
 function processUnitSets(form) {
-	var ApprovalsString = "";
+	var approvalsString = "";
 
 	for (var i = 0; i < form.length; i++ ) {
-		ApprovalsString = ApprovalsString + processUnitSet(form[i]);
-	}
-	return ApprovalsString;
+        approvalsString = approvalsString + processUnitSet(form[i]);
+    }
+    
+    // return forms.reduce((sb, f) => sb + processUnitSet(f), "")
+	return approvalsString;
 }
 
 
@@ -141,3 +176,50 @@ function printUnitLine(unit, index) {
 	unitText += unit.unitCode + ": " + unit.unitName;
 	return(unitText);
 }
+
+function processUnitSetEquivalence(unitSet) {
+	var uwaUnits;
+	var exchangeUnits;
+
+	for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
+		uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
+	}
+	
+	for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
+        exchangeUnits = printUnitLineEquivalence(unitSet.exchangeUnitsForm[k], k)
+	}
+
+	return(
+	`UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
+	Exchange Units:\t\t${exchangeUnits}
+	
+	`)
+}
+
+function printUnitLineEquivalence(unit, index) {
+	var unitText = (index == 0 ? "" : ", ");
+	unitText += unit.unitCode + ": " + unit.unitName + " (" + unit.unitHref + ")";
+	return(unitText);
+}
+
+function studentMessage(EmailData) {
+    return (
+`Hi ${EmailData.Name},
+
+I hope this email finds you well.\n\nI am writing to update you on the status of your application for exchange at ${EmailData.University}. Exchange units need both equivalence and contextual approval. Please see the approval status below.\n\n\t${EmailData.Approvals}
+Regards,
+`
+)}
+
+function equivalenceMessage(EmailData) {
+    return(
+`Hi,
+            
+I hope this email finds you well. 
+
+I am writing to kindly request your assistance with ${EmailData.Name}'s <${EmailData.To}> exchange unit approvals for ${EmailData.University}.
+
+${EmailData.Name} is enrolled in ${EmailData.Major} and is looking for approval on the following units:\n\n\t${EmailData.Approvals}
+Regards,
+`
+)}
