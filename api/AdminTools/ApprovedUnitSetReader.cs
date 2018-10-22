@@ -103,6 +103,44 @@ namespace ExchangeApproval.AdminTools
             }
         }
 
+        public static IEnumerable<ApprovedUnitSetRow> DumpUnitSets(ExchangeDbContext db)
+        {
+            return db.UnitSets
+                .Where(us => us.StudentApplicationId == null)
+                .Select(us => new
+                {
+                    ExchangeUnits = us.ExchangeUnits.Select(u => new ApprovedUnitSetRow
+                    {
+                        UnitSetId = us.UnitSetId,
+                        IsExchangeUnit = true,
+                        UniversityCountry = us.ExchangeUniversityCountry,
+                        UniversityName = us.ExchangeUniversityName,
+                        UniversityHref = us.ExchangeUniversityHref,
+                        UnitTitle = u.Title,
+                        UnitCode = u.Code,
+                        UnitHref = u.Href,
+                        EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
+                    }),
+                    UWAUnits = us.UWAUnits.Select(u => new ApprovedUnitSetRow
+                    {
+                        UnitSetId = us.UnitSetId,
+                        IsExchangeUnit = false,
+                        UniversityCountry = ReferenceData.UWACountry,
+                        UniversityName = ReferenceData.UWAName,
+                        UniversityHref = ReferenceData.UWAHref,
+                        UnitTitle = u.Title,
+                        UnitCode = u.Code,
+                        UnitHref = u.Href,
+                        EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
+                    })
+                })
+                .SelectMany(agg => agg.ExchangeUnits.Union(agg.UWAUnits))
+                .OrderBy(r => r.UnitSetId)
+                .ThenBy(r => r.IsExchangeUnit)
+                .ThenBy(r => r.UnitCode)
+                .ToList();
+        }
+
         public static void UpdateUnitSetsInDatabase(ExchangeDbContext db, IEnumerable<UnitSet> newManualUnitApprovals)
         {
             using (var transaction = db.Database.BeginTransaction())

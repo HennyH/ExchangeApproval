@@ -40,9 +40,9 @@ export function DownloadModalContent() {
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <button type="button" class="btn btn-outline-primary form-control-file">
+                        <a href="/admin/equivalencies" class="btn btn-outline-primary form-control-file" target="_blank" download="equivalencies.csv">
                             {"⇩ Download Equivalencies"}
-                        </button>
+                        </a>
                     </div>
                     <div class="form-group">
 

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text;
 using ExchangeApproval.AdminTools;
+using System.Net.Http.Headers;
 
 namespace ExchangeApproval.Controllers
 {
@@ -54,6 +55,23 @@ namespace ExchangeApproval.Controllers
                     StatusCode = (int)HttpStatusCode.InternalServerError
                 };
             }
+        }
+
+        [Authorize]
+        [HttpGet("equivalencies")]
+        public FileStreamResult GetEquivalencies()
+        {
+            var equivalencies = ApprovedUnitSetReader.DumpUnitSets(this._db);
+            var memory = new MemoryStream();
+            var writer = new StreamWriter(memory, Encoding.UTF8);
+            var csv = new CsvHelper.CsvWriter(writer);
+            csv.WriteHeader<ApprovedUnitSetRow>();
+            csv.NextRecord();
+            csv.WriteRecords(equivalencies);
+            csv.Flush();
+            writer.Flush();
+            memory.Seek(0, SeekOrigin.Begin);
+            return new FileStreamResult(memory, "text/csv");
         }
 
         [Authorize]
