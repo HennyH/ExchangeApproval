@@ -34,7 +34,7 @@ export function FormRepeater() {
         const numberOfForms = field.forms.length;
         const validationClass = readonly
             ? ''
-            : field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid';
+            : (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid');
         const error = field.getError({ childForms: false });
         return (
             <div>
