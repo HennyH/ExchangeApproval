@@ -5,13 +5,17 @@ import {ModalState} from '../ViewData'
 import Styles from './Layout.css';
 
 var Navbar = {
-    view: function(vnode) {
+    view: function({attrs: {staff}}) {
         const currentRoute = m.route.get();
-        const navLinks = [
+        const navLinks = (staff ? 
+        [
+            { href: "/student-office", text: "Application Inbox" },
+            { href: "/search", text: "Search Units" },
+        ]:
+        [
             { href: "/application", text: "Student Application" },
             { href: "/search", text: "Search Units" },
-            { href: "/student-office", text: "Staff Portal" }
-        ];
+        ]);
         return(
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
@@ -23,9 +27,8 @@ var Navbar = {
                 <div class="collapse navbar-collapse" id="navbarCollapsable">
                     <ul class="navbar-nav">
                         {navLinks.map(({ href, text }) => {
-                            const isHidden = href === "/student-office" && !vnode.attrs.staff;
                             const isActive = href === currentRoute;
-                            const classes = classNames("nav-item nav-link", isActive ? "active" : "", isHidden ? "d-none" : "");
+                            const classes = classNames("nav-item nav-link", isActive ? "active" : "");
                             return (
                                 <li oncreate={m.route.link} style="cursor: pointer;" href={href} class={classes}>
                                     {text}
@@ -38,7 +41,7 @@ var Navbar = {
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                {vnode.attrs.staff ? 
+                                {staff ? 
                                     <button class="dropdown-item" onclick={ModalState.DownloadModal.show}>Download / Upload</button>
                                 :    <button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
                                 }
