@@ -12,6 +12,21 @@ import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 export default function StaffPage() {
 
+    const state = { inboxSearchSettings: { applicationStatuses: [], studentNumbers: [], studentOffices: [] } };
+
+    function handleSearchSettingsChanged(settings) {
+        const applicationStatuses = settings.applicationStatuses.map(({ value }) => value);
+        const studentNumbers = settings.studentNumbers.map(({ value }) => value);
+        const studentOffices = settings.studentOffices.map(({ value }) => value);
+        state.inboxSearchSettings = { applicationStatuses, studentNumbers, studentOffices };
+        m.redraw();
+    }
+
+    function fetchInbox(settings) {
+        const qs = m.buildQueryString(settings);
+        return m.request({ method: "GET", url: `/api/inbox?${qs}` });
+    }
+
     function view() {
         return (
             <Layout staff = {true} >
@@ -20,31 +35,36 @@ export default function StaffPage() {
                         <div class="col">
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox Search Settings</div>
-                                <div class="card-body">
-                                    <DataLoader
-                                        requests={{filters: () => m.request("/api/filters/staff")}}
-                                        render={({ loading, error, data: { filters } = {}}) => (
-                                            loading
+                                <DataLoader
+                                    requests={{filters: () => m.request("/api/filters/staff")}}
+                                    render={({ loading, error, data: { filters } = {}}) => (
+                                        <div class={classNames("card-body", loading ? "text-center" : "")}>
+                                            {loading
                                                 ? <Spinner />
                                                 : (
                                                     <StaffDecisionSearchSettingsPanel
                                                         studentOptions={filters.studentOptions}
                                                         applicationStateOptions={filters.applicationStatusOptions}
                                                         studentOfficeOptions={filters.studentOfficeOptions}
+                                                        onSubmit={handleSearchSettingsChanged}
                                                     />
-                                                )
-                                        )}
-                                    />
-                                </div>
+                                                )}
+                                        </div>
+                                    )}
+                                />
                             </div>
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox</div>
                                 <DataLoader
-                                    requests={{inbox: () => m.request("/api/inbox")}}
+                                    settings={state.inboxSearchSettings}
+                                    requests={{inbox: settings => fetchInbox(settings)}}
                                     render={({ loading, error, data: { inbox } = {}}) => (
-                                        loading
-                                            ? <Spinner />
-                                            : <InboxTable data={inbox} />
+                                        <div class={classNames("card-body", loading ? "text-center" : "")}>
+                                            {loading
+                                                ? <Spinner />
+                                                : <InboxTable data={inbox} />
+                                            }
+                                        </div>
                                     )}
                                 />
                             </div>

@@ -14,7 +14,7 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
         ...config
     }) {
         super(config)
-        this.students = OptionsField.new({
+        this.studentNumbers = OptionsField.new({
             multiple: true,
             options: studentOptions
         });
@@ -22,12 +22,9 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
             multiple: true,
             options: studentOfficeOptions
         });
-        this.applicationStates = OptionsField.new({
+        this.applicationStatuses = OptionsField.new({
             multiple: true,
             options: applicationStateOptions
-        });
-        this.date = OptionsField.new({
-            options: dateOptions
         });
         Form.new.call(() => this, config);
         this.config = config;
@@ -43,26 +40,27 @@ export default function StaffDecisionSearchSettingsPanel() {
         state.form = new StaffUnitSearchSettingsPowerForm(attrs);
     }
 
-    function handleSubmit(callback, event) {
+    function handleSubmit(event, onSubmit) {
         event.preventDefault();
         event.stopPropagation();
-        callback(state.form.getData());
+        onSubmit(state.form.getData());
     }
 
     function view({
         attrs: {
             studentOptions,
             studentOfficeOptions,
-            applicationStateOptions
+            applicationStateOptions,
+            onSubmit
         }
     }) {
         return (
-            <form onsubmit={handleSubmit.bind(this, onsubmit)}>
+            <form onsubmit={e => handleSubmit(e, onSubmit)}>
                 <div class="row">
                     <div class="col-lg-4 col-md-12 form-group">
                         <label for="students">Students</label>
                         <Select2
-                            field={state.form.students}
+                            field={state.form.studentNumbers}
                             config={{
                                 multiple: true,
                                 width: '100%',
@@ -92,7 +90,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                     <div class="col-sm-1 form-group">
                         <label>Application Status</label>
                         <CheckboxGroup
-                            field={state.form.applicationStates}
+                            field={state.form.applicationStatuses}
                             options={applicationStateOptions}
                         />
                     </div>

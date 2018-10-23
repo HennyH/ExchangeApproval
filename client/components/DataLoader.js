@@ -1,6 +1,9 @@
 import m from 'mithril';
+import shallowEqualObjects from 'shallow-equal/objects';
 
 export default function DataLoader() {
+
+    let prevArgs = null;
 
     const state = {
         loading: true,
@@ -8,11 +11,11 @@ export default function DataLoader() {
         data: {}
     };
 
-    function oninit({ attrs: { requests }}) {
-        fetchData(requests);
+    function oninit({ attrs: { requests, render, ...arg }}) {
+        fetchData(requests, arg);
     }
 
-    function fetchData(requests) {
+    function fetchData(requests, arg) {
         state.loading = true;
         state.errored = false;
         state.data = {};
@@ -23,7 +26,7 @@ export default function DataLoader() {
         const mrs = Object.keys(requests).map(prop => {
             const $fetch = $.Deferred();
             fetches.push($fetch);
-            const $mr = requests[prop]().then((json) => {
+            const $mr = requests[prop](arg).then((json) => {
                 data[prop] = json;
                 $fetch.resolve();
                 return json;
@@ -44,8 +47,13 @@ export default function DataLoader() {
         });
     }
 
-    function view({ attrs: { render } }) {
-        return render({...state});
+    function view({ attrs: { requests, render, ...arg } }) {
+        if (prevArgs !== null && !shallowEqualObjects(prevArgs, arg)) {
+            fetchData(requests, arg);
+        }
+        const els = render({...state});
+        prevArgs = arg;
+        return els;
     }
 
     return { view, oninit };
