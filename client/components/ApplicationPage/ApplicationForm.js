@@ -57,16 +57,11 @@ export default function ApplicationForm() {
         });
         EmailData.Form = (vnode.attrs.staffView ? state.form : null);
         reRegisterCartChangeHandler(vnode);
-        console.log(state.form)
         updateUnitSetsFromCart(state.form, getItemsInCart());
     }
 
-    function view({ 
-        attrs: { 
-            unitLevelOptions,
-            studentOfficeOptions,
-            staffView
-        } 
+    function view({
+        attrs: { staffView, onSubmit }
     }) {
         const validationClass = state.hasTriedToSubmit
             ? (form.isValid() ? 'is-valid' : 'is-invalid')
@@ -102,7 +97,7 @@ export default function ApplicationForm() {
                                 />
                             </div>
                         </div>
-                        {submitButton(staffView, validationClass, error, success, state.form)}
+                        {submitButton(staffView, validationClass, error, success, state.form, onSubmit)}
                     </div>
             </div>
         )
@@ -121,12 +116,12 @@ export default function ApplicationForm() {
         )
     }
 
-    function submitButton(staffView, validationClass, error, success, form) {
+    function submitButton(staffView, validationClass, error, success, form, onSubmit) {
         if (!staffView) {
             return (
                 <div class="card bg-light mt-3 mb-3">
                     <div class="card-body">
-                        <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, success)}>
+                        <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, success, onSubmit)}>
                             Submit Application
                         </button>
                         <input type="hidden" class={classNames("form-control", validationClass)} />
@@ -139,12 +134,13 @@ export default function ApplicationForm() {
         }
     }
 
-    function handleSubmit(form, success) {
+    function handleSubmit(form, success, onSubmit) {
         state.hasTriedToSubmit = true;
         if (form.isValid()) {
             // TODO: Push to application db
             alert(success);
             ApplicationData.hasSubmitted = true;
+            onSubmit(form);
             console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
         } else {
             console.log("ERRORS", form.getError());

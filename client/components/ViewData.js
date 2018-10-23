@@ -29,82 +29,8 @@ export const CartData = {
     ]
 }
 
-export const UnitSearchData = {
-    filters: {
-        loading: false,
-        options: null,
-        fetch: () => {
-            UnitSearchData.filters.loading = true;
-            m.request({
-                method: "GET",
-                url: "/api/requests/filters"
-            }).then(options => {
-                UnitSearchData.filters.options = options;
-                UnitSearchData.filters.loading = false;
-            });
-        }
-    },
-    decisions: {
-        loading: false,
-        list: [],
-        fetch: ({ universityNames = [], uwaContextTypes = [], uwaUnitLevels = [] } = {}) => {
-            UnitSearchData.decisions.loading = true;
-            const qs = m.buildQueryString({
-                universityNames,
-                uwaContextTypes,
-                uwaUnitLevels
-            });
-            m.request({
-                method: "GET",
-                url: `/api/requests/decisions?${qs}`
-            }).then(items => {
-                UnitSearchData.decisions.list = items;
-                UnitSearchData.decisions.loading = false;
-            });
-        }
-    },
-    hasSearched: false
-}
+export const Data = {
 
-export const ApplicationData = {
-    hasSubmitted: false,
-    pushApplication: () => {},
-    getApplication: () => {},
-    config: null
-}
-
-export const ApplicationSearchData = {
-    filters: {
-        loading: false,
-        options: null,
-        fetch: () => { 
-            ApplicationSearchData.filters.options = {
-                studentOptions: ['Henry Hollingworth (21471423)', 'Augustin Gan (21487462)'],
-                studentOfficeOptions: [
-                    {"value":"Arts and Law","label":"Arts and Law","selected":false},
-                    {"value": "Business School","label": "Business School","selected":false},
-                    {"value": "Design and Education","label": "Design and Education","selected":false},
-                    {"value": "Engineering and Mathematical Sciences","label": "Engineering and Mathematical Sciences","selected":false},
-                    {"value": "Health and Medical Sciences","label": "Health and Medical Sciences","selected":false},
-                    {"value": "Science","label": "Science","selected":false},
-                    {"value": "Bachelor of Philosophy (Honours)","label": "Bachelor of Philosophy (Honours)","selected":false},
-                    {"value": "Ph.D and Master by Research Students","label": "Ph.D and Master by Research Students","selected":false},
-                    {"value": "School of Indigenous Studies","label": "School of Indigenous Studies","selected":false},
-                ],
-                applicationStateOptions: ['New','Incomplete','Complete'],
-                unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}],
-                dateOptions: []
-            }
-            // ApplicationSearchData.filters.loading = true;
-            // m.request({
-            //     method: "GET",
-            //     url: "/api/requests/filters"
-            // }).then(options => {
-            //     ApplicationSearchData.filters.options = options;
-            //     ApplicationSearchData.filters.loading = false;
-            // });
-        }
-    },
     applications: {
         loading: false,
         list: [],
@@ -124,8 +50,15 @@ export const ApplicationSearchData = {
             });
         }
     },
-    hasSearched: false
 }
+
+export const ApplicationData = {
+    hasSubmitted: false,
+    pushApplication: () => {},
+    getApplication: () => {},
+    config: null
+}
+
 
 // EMAIL DATA + CLIPBOARD LOGIC AND DATA STRUCTURE
 export const EmailData = {
@@ -145,7 +78,7 @@ export const EmailData = {
         EmailData.Name = (formData.studentDetailsForm.name ? formData.studentDetailsForm.name : "[_STUDENT_NAME_]");
         EmailData.University = (formData.exchangeUniversityForm.universityName ? formData.exchangeUniversityForm.universityName : "[_EXCHANGE_UNIVERSITY_]");
     },
-    
+
     Student: {
         GenerateMessage: function() {
             var unitSets = EmailData.Form.getData().unitSetForms;
@@ -180,7 +113,7 @@ export const EmailData = {
         CopyText: function(formIndex) {
             EmailData.Equivalence.GenerateMessage(formIndex);
             copyToClipboard(EmailData.Message);
-        } 
+        }
     }
 }
 
@@ -198,7 +131,7 @@ function processUnitSets(form) {
     for (var i = 0; i < form.length; i++ ) {
         approvalsString = approvalsString + processUnitSet(form[i]);
     }
-    
+
     // return forms.reduce((sb, f) => sb + processUnitSet(f), "")
     return approvalsString;
 }
@@ -211,7 +144,7 @@ function processUnitSet(unitSet) {
     for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
         uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
     }
-    
+
     for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
         exchangeUnits = printUnitLine(unitSet.exchangeUnitsForm[k], k)
     }
@@ -221,7 +154,7 @@ function processUnitSet(unitSet) {
     Exchange Units:\t\t${exchangeUnits}
     Equivalence Approval:\t${unitSet.staffApprovalForm.isEquivalent.label}
     Contextual Approval:\t${unitSet.staffApprovalForm.isContextuallyApproved.label}
-    
+
     `)
 }
 
@@ -238,7 +171,7 @@ function processUnitSetEquivalence(unitSet) {
     for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
         uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
     }
-    
+
     for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
         exchangeUnits = printUnitLineEquivalence(unitSet.exchangeUnitsForm[k], k)
     }
@@ -246,7 +179,7 @@ function processUnitSetEquivalence(unitSet) {
     return(
     `UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
     Exchange Units:\t\t${exchangeUnits}
-    
+
     `)
 }
 
@@ -268,8 +201,8 @@ Regards,
 function equivalenceMessage(EmailData) {
     return(
 `Hi,
-            
-I hope this email finds you well. 
+
+I hope this email finds you well.
 
 I am writing to kindly request your assistance with ${EmailData.Name}'s <${EmailData.To}> exchange unit approvals for ${EmailData.University}.
 

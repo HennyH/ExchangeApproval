@@ -4,11 +4,31 @@ import classNames from 'classnames';
 import Layout from 'Components/Layout';
 import { addItemToCart, default as Cart } from 'Components/Cart';
 import DecisionSearchSettingsPanel from './DecisionSearchSettingsPanel.js';
-import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import DecisionsTable from './DecisionsTable.js';
-import {UnitSearchData as Data} from '../ViewData.js'
+import DataLoader from 'Components/DataLoader.js'
+import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 function UnitSearch() {
+
+    const state = {
+        hasClickedSearch: false,
+        searchSettings: { universityNames: [], uwaContextTypes: [], uwaUnitLevels: [] }
+    }
+
+    function handleSearchSettingsChanged(settings) {
+        const universityNames = settings.exchangeUniversities.map(({ value }) => value);
+        const uwaContextTypes = settings.approvalTypes.map(({ value }) => value);
+        const uwaUnitLevels = settings.unitLevels.map(({ value }) => value);
+        state.hasClickedSearch = true;
+        state.searchSettings = { universityNames, uwaContextTypes, uwaUnitLevels };
+        m.redraw();
+    }
+
+    function fetchEquivalencies() {
+        const qs = m.buildQueryString(state.searchSettings);
+        return m.request({ method: "GET", url: `/api/equivalencies?${qs}` });
+    }
+
     function view() {
         return(
             <div class="card mt-3">
@@ -17,59 +37,50 @@ function UnitSearch() {
                 </div>
                 <div class="card bg-light m-3">
                 <div class="card-header">Search Settings</div>
-                <div class={classNames("card-body", Data.filters.loading ? "text-center" : "")}>
-                    {(Data.filters.loading
-                        ? <Spinner />
-                        : <DecisionSearchSettingsPanel
-                            onSearchSettingsChanged={handleSearchSettingsChanged}
-                            exchangeUniversityOptions={Data.filters.options.exchangeUniversityNames}
-                            levelOptions={Data.filters.options.uwaUnitLevelOptions}
-                            contextOptions={Data.filters.options.uwaUnitContextOptions}
-                        />
+                <DataLoader
+                    requests={{filters: () => m.request("/api/filters/student")}}
+                    render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions, uwaUnitContextOptions } = {} }}) => (
+                        <div class={classNames("card-body", loading ? "text-center" : "")}>
+                                {loading
+                                    ? <Spinner />
+                                    : <DecisionSearchSettingsPanel
+                                            onSearchSettingsChanged={handleSearchSettingsChanged}
+                                            exchangeUniversityOptions={exchangeUniversityNameOptions}
+                                            levelOptions={uwaUnitLevelOptions}
+                                            contextOptions={uwaUnitContextOptions}
+                                    />
+                                }
+                        </div>
                     )}
-                </div>
+                />
                 </div>
                 <div class="card bg-light m-3">
                     <div class="card-header">Search Results</div>
-                        <div class={classNames("card-body", Data.decisions.loading ? "text-center" : "")}>
-                            {Data.hasSearched ? 
-                                (Data.decisions.loading
-                                    ? <Spinner />
-                                    : <DecisionsTable
-                                        decisions={Data.decisions.list}
-                                        onAddToCart={addItemToCart}
-                                    />
-                                )
-                            : <p class="my-0"><em>Search to see previously approved exchange units</em></p>}
-                        </div>
+                        <DataLoader
+                            requests={{equivalencies: fetchEquivalencies}}
+                            render={({ loading, errored, data: { equivalencies } = {}}) => (
+                                <div class={classNames("card-body", loading ? "text-center" : "")}>
+                                    {state.hasClickedSearch ?
+                                        (loading
+                                            ? <Spinner />
+                                            : <DecisionsTable
+                                                decisions={equivalencies}
+                                                onAddToCart={addItemToCart}
+                                            />
+                                        )
+                                    : <p class="my-0"><em>Search to see previously approved exchange units</em></p>}
+                                </div>
+                            )}
+                        />
                 </div>
             </div>
         )
     }
 
-    function handleSearchSettingsChanged(settings) {
-        const universityNames = settings.exchangeUniversities.map(({ value }) => value);
-        const uwaContextTypes = settings.approvalTypes.map(({ value }) => value);
-        const uwaUnitLevels = settings.unitLevels.map(({ value }) => value);
-        Data.hasSearched = true;
-        Data.decisions.fetch({ universityNames, uwaContextTypes, uwaUnitLevels });
-        console.log(settings);
-        m.redraw();
-    }
-    
-    return{view};
+    return { view };
 }
 
 export default function SearchPage() {
-
-    function oninit() {
-        if (Data.filters.options == null) {
-            Data.filters.fetch();
-        }
-        if (Data.decisions.list.length === 0) {
-            Data.decisions.fetch();
-        }
-    }
 
     function view() {
 
@@ -85,5 +96,5 @@ export default function SearchPage() {
         );
     }
 
-    return { oninit, view };
+    return { view };
 }

@@ -23,7 +23,7 @@ namespace ExchangeApproval.Controllers
         {
             return new StaffFiltersVM
             {
-                ExchangeUniversityNames = this._db.StudentApplications
+                ExchangeUniversityNameOptions = this._db.StudentApplications
                     .Select(a => a.ExchangeUniversityName)
                     .OrderByDescending(n => n)
                     .Select(n => new SelectOption<string>(n, n.ToString(), false))
@@ -58,12 +58,12 @@ namespace ExchangeApproval.Controllers
             };
         }
 
-        [HttpGet("students")]
+        [HttpGet("student")]
         public StudentFiltersVM GetFiltersForStudents()
         {
             return new StudentFiltersVM
             {
-                ExchangeUniversityNames = this._db.StudentApplications
+                ExchangeUniversityNameOptions = this._db.StudentApplications
                     .Select(a => a.ExchangeUniversityName)
                     .OrderByDescending(n => n)
                     .Select(n => new SelectOption<string>(n, n.ToString(), false))
