@@ -195,7 +195,7 @@ export class OptionsField extends Field {
             if (config.multiple) {
                 this.setData(config.options.filter(o => o.selected))
             } else {
-                const selected = this.defaultValue || config.options.find(o => o.selected) || config.options[0];
+                const selected = this.defaultValue || config.options.find(o => o.selected);
                 this.setData(selected);
             }
 
@@ -258,7 +258,7 @@ export class OptionsField extends Field {
         /* Dedupe */
         .filter((o, i, self) => self.findIndex(x => x.value == o.value) === i)
         /* Remove ones that were just de-selected */
-        .filter(o => newOption.selected || o.value != newOption.value);
+        .filter(o => o.value != newOption.value);
 
         return value;
     }
