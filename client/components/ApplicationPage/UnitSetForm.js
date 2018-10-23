@@ -219,6 +219,7 @@ export function UnitSetForm() {
                                 jumps={false}
                                 render={UnitForm}
                                 readonly={readonly}
+                                instructionText="To nominate an Exchange Unit as an elective in your course, leave UWA units empty."
                             />
                         </div>
                     </div>
