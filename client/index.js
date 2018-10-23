@@ -8,11 +8,10 @@ import StudentOfficePage from 'Components/StaffPage';
     m.route(document.body, "/search", {
         "/search": SearchPage,
         "/application": ApplicationPage,
-        "/student-office": StudentOfficePage
-        // {
-        //     onmatch: function () {
-        //         return m.request("/login").then(() => StudentOfficePage, () => SearchPage);
-        //     }
-        // }
+        "/student-office": {
+            onmatch: function () {
+                return m.request("/login").then(() => StudentOfficePage, () => SearchPage);
+            }
+        }
     });
 })()
