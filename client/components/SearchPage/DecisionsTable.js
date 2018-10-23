@@ -52,7 +52,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
         columns: [
             {
                 title: COLUMN_NAMES.Date,
-                data: "decisionDate",
+                data: "lastUpdatedAt",
                 render: (data, type, row, meta) => {
                     const options = { month: "short", year: "2-digit" };
                     return new Date(data).toLocaleDateString(undefined, options);

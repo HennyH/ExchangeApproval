@@ -71,7 +71,7 @@ namespace ExchangeApproval.Controllers
                     ExchangeUniversityName = us.ExchangeUniversityName,
                     ExchangeUniversityHref = us.ExchangeUniversityHref,
                     UnitSetId = us.UnitSetId,
-                    DecisionDate = us.CompletedAt,
+                    LastUpdatedAt = us.LastUpdatedAt,
                     Approved =
                         us.IsEquivalent.HasValue
                         && us.IsEquivalent.Value
@@ -85,7 +85,7 @@ namespace ExchangeApproval.Controllers
                         UnitCode = u.Code,
                         UnitName = u.Title,
                         UnitHref = u.Href
-                    }),
+                    }).ToList(),
                     UWAUnits = us.UWAUnits.Select(u => new UnitVM
                     {
                         UnitId = u.Id,
@@ -94,7 +94,7 @@ namespace ExchangeApproval.Controllers
                         UnitCode = u.Code,
                         UnitName = u.Title,
                         UnitHref = u.Href
-                    }),
+                    }).ToList(),
                     EquivalentUnitLevel = new SelectOption<UWAUnitLevel>(
                         us.EquivalentUWAUnitLevel.Value,
                         us.EquivalentUWAUnitLevel.Value.GetLabel(),
@@ -107,7 +107,7 @@ namespace ExchangeApproval.Controllers
                     ExchangeUnits = d.UWAUnits.Select(u => new { u.UniversityName, u.UnitCode, u.UnitName }),
                     UWAUnits = d.ExchangeUnits.Select(u => new { u.UnitCode, u.UnitName }),
                 })
-                .Select(g => g.OrderByDescending(d => d.DecisionDate).First());
+                .Select(g => g.OrderByDescending(d => d.LastUpdatedAt).First());
         }
     }
 }
