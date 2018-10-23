@@ -3,21 +3,13 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import ApplicationForm, { ApplicationPowerForm } from './ApplicationForm'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
-import {ApplicationData, UnitSearchData as Data} from '../ViewData'
+import {ApplicationSearchData, ApplicationData} from '../ViewData'
 
-const applicationPowerForm = new ApplicationPowerForm({
-	staffView: false,
-    onChange: showData,
-})
-
-function showData() {
-    return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
-}
 
 export default function ApplicationPage() {
 
     function oninit() {
-        Data.filters.fetch();
+        ApplicationSearchData.filters.fetch();
     }
 
     function view() {
@@ -32,12 +24,17 @@ export default function ApplicationPage() {
                     <em>Please check your student email regularly.</em>
                 </div>
             </div>
-            : (Data.filters.loading
+            : (ApplicationSearchData.filters.loading
                 ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
                 : <div class="container-fluid">
                     <div class="card my-3">
                         <div class="card-header"> Exchange Application</div>
-                        <ApplicationForm form={applicationPowerForm} staffView ={false} />
+                        <ApplicationForm 
+                            // WE WILL NEED TO REDIRECT THESE TO THE CORRECT FILTERS
+                            unitLevelOptions = {ApplicationSearchData.filters.options.unitLevelOptions}
+                            studentOfficeOptions = {ApplicationSearchData.filters.options.studentOfficeOptions}
+                            staffView ={false} 
+                        />
                     </div>
                 </div>
             )}

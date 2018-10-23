@@ -1,6 +1,7 @@
 import m from 'mithril'
 import ApplicationForm, { ApplicationPowerForm } from '../ApplicationPage/ApplicationForm.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
+import {EmailData, ApplicationSearchData} from '../ViewData'
 
 export function DownloadModalContent() {
 
@@ -66,7 +67,6 @@ export function DownloadModalContent() {
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
-
         );
     }
 
@@ -86,7 +86,7 @@ export var LoginModalContent = {
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <input class="form-control" type="password" placeholder="Password" name="Password" />
+                            <input class="form-control" type="password" placeholder="Password" name ="Password"/>
                         </div>
                     </form >
                 </div>
@@ -99,42 +99,12 @@ export var LoginModalContent = {
     }
 }
 
-const Data = {
-    filters: {
-        loading: false,
-        options: null,
-        fetch: () => {
-            Data.filters.loading = true;
-            m.request({
-                method: "GET",
-                url: "/api/requests/filters"
-            }).then(options => {
-                Data.filters.options = options;
-                Data.filters.loading = false;
-            });
-        }
-    }
-}
-
-const applicationPowerForm = new ApplicationPowerForm({
-    staffView: true,
-    onChange: showData,
-    unitLevelOptions: [{ "label": "Zero", "value": 0, "selected": true }, { "label": "One", "value": 1, "selected": true }, { "label": "Two", "value": 2, "selected": true }, { "label": "Three", "value": 3, "selected": true }, { "label": "Four", "value": 4, "selected": true }, { "label": "GtFour", "value": 5, "selected": true }]
-})
-
-function showData() {
-    return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
-}
-
 export var ApplicationModalContent = {
-    oninit: function () {
-        if (Data.filters.options === null) {
-            Data.filters.fetch();
-        }
-        EmailData.Form=applicationPowerForm;
+    oninit: function() {
+            ApplicationSearchData.filters.fetch();
     },
 
-    view: function ({ attrs: { title } }) {
+    view: function({attrs: {title}}) {
         return (
             <div class="modal-content">
                 <div class="modal-header">
@@ -143,26 +113,29 @@ export var ApplicationModalContent = {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-				<div class="modal-body p-0">
-                    {(Data.filters.loading
+                <div class="modal-body p-0">
+                    {(ApplicationSearchData.filters.loading
                         ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
                         : (
-							<ApplicationForm class="m-0 p-0"
-                                form={applicationPowerForm}
-                                staffView={true}
+                            <ApplicationForm 
+                                // WE WILL NEED TO REDIRECT THESE TO THE CORRECT FILTERS
+                                unitLevelOptions = {ApplicationSearchData.filters.options.unitLevelOptions}
+                                studentOfficeOptions = {ApplicationSearchData.filters.options.studentOfficeOptions}
+                                staffView ={true} 
+                                // config = {Fetched application data}
                             />
                         )
-                    )}
+                    )}    
                 </div>
-				<div class="modal-footer d-flex justify-content-between">
-					<div class="">
-						<button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail(applicationPowerForm.getData())}>Send Application Results</button>
-						<button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText(applicationPowerForm.getData())}>Copy to Clipboard</button>
-					</div>
-					<div class="">
-						<button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Save Application</button>
-					</div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div class="">
+                        <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>Send Application Results</button>
+                        <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>Copy to Clipboard</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Save Application</button>
+                    </div>
                 </div>
             </div>
         );

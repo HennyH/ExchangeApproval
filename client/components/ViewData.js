@@ -2,34 +2,28 @@ import m from 'mithril'
 import { FormListField } from './FormHelpers/Fields';
 
 export const ModalState = {
-	DownloadModal: {
-		visible: false,
-		show: () => {
-			ModalState.DownloadModal.visible = true;
-			ModalState.onHide = () => {ModalState.DownloadModal.visible = false}
-			m.redraw();
-		},
-	},
-	ApplicationModal: {
-		selectedApplication: null,
-		show: (decision) => {
-			ModalState.ApplicationModal.selectedApplication = decision;
-			ModalState.onHide = () => {ModalState.ApplicationModal.selectedApplication = null}
-			m.redraw();
-		}
-	},
-	onHide: () => {},
-}
-
-export const ApplicationData = {
-	hasSubmitted: false,
-	pushApplication: () => {},
-	getApplication: () => {}
+    DownloadModal: {
+        visible: false,
+        show: () => {
+            ModalState.DownloadModal.visible = true;
+            ModalState.onHide = () => {ModalState.DownloadModal.visible = false}
+            m.redraw();
+        },
+    },
+    ApplicationModal: {
+        selectedApplication: null,
+        show: (decision) => {
+            ModalState.ApplicationModal.selectedApplication = decision;
+            ModalState.onHide = () => {ModalState.ApplicationModal.selectedApplication = null}
+            m.redraw();
+        }
+    },
+    onHide: () => {},
 }
 
 export const CartData = {
-	handlers: [],
-	items: [
+    handlers: [],
+    items: [
         {"unitSetId":548,"lastUpdatedAt":"2018-09-20T00:00:00","approved":true,"exchangeUniversityName":"University Of Rochester","exchangeUniversityHref":"https://university.com","exchangeUnits":[{"universityName":"University Of Rochester","universityHref":"https://university.com","unitCode":"CHE 116","unitName":"Numerical Methods And Stat","unitHref":"https://unit.com"}],"uwaUnits":[{"universityName":"University of Western Australia","universityHref":"https://uwa.edu.au","unitCode":"L2 ELECTIVE","unitName":"Knowledge Story Art","unitHref":"https://uwa.edu.au"}],"equivalentUnitLevel":{"label":"Two","value":2,"selected":true}},
         {"unitSetId":549,"lastUpdatedAt":"2018-09-20T00:00:00","approved":true,"exchangeUniversityName":"University Of Rochester","exchangeUniversityHref":"https://university.com","exchangeUnits":[{"universityName":"University Of Rochester","universityHref":"https://university.com","unitCode":"CHE 116","unitName":"Numerical Methods And Stat","unitHref":"https://unit.com"}],"uwaUnits":[{"universityName":"University of Western Australia","universityHref":"https://uwa.edu.au","unitCode":"L2 ELECTIVE","unitName":"Knowledge Story Art","unitHref":"https://uwa.edu.au"}],"equivalentUnitLevel":{"label":"Two","value":2,"selected":true}}
     ]
@@ -68,10 +62,70 @@ export const UnitSearchData = {
                 UnitSearchData.decisions.loading = false;
             });
         }
-	},
-	hasSearched: false
+    },
+    hasSearched: false
 }
 
+export const ApplicationData = {
+    hasSubmitted: false,
+    pushApplication: () => {},
+    getApplication: () => {},
+    config: null
+}
+
+export const ApplicationSearchData = {
+    filters: {
+        loading: false,
+        options: null,
+        fetch: () => { 
+            ApplicationSearchData.filters.options = {
+                studentOptions: ['Henry Hollingworth (21471423)', 'Augustin Gan (21487462)'],
+                studentOfficeOptions: [
+                    {"value":"Arts and Law","label":"Arts and Law","selected":false},
+                    {"value": "Business School","label": "Business School","selected":false},
+                    {"value": "Design and Education","label": "Design and Education","selected":false},
+                    {"value": "Engineering and Mathematical Sciences","label": "Engineering and Mathematical Sciences","selected":false},
+                    {"value": "Health and Medical Sciences","label": "Health and Medical Sciences","selected":false},
+                    {"value": "Science","label": "Science","selected":false},
+                    {"value": "Bachelor of Philosophy (Honours)","label": "Bachelor of Philosophy (Honours)","selected":false},
+                    {"value": "Ph.D and Master by Research Students","label": "Ph.D and Master by Research Students","selected":false},
+                    {"value": "School of Indigenous Studies","label": "School of Indigenous Studies","selected":false},
+                ],
+                applicationStateOptions: ['New','Incomplete','Complete'],
+                unitLevelOptions: [{"label":"Zero","value":0,"selected":true},{"label":"One","value":1,"selected":true},{"label":"Two","value":2,"selected":true},{"label":"Three","value":3,"selected":true},{"label":"Four","value":4,"selected":true},{"label":"GtFour","value":5,"selected":true}],
+                dateOptions: []
+            }
+            // ApplicationSearchData.filters.loading = true;
+            // m.request({
+            //     method: "GET",
+            //     url: "/api/requests/filters"
+            // }).then(options => {
+            //     ApplicationSearchData.filters.options = options;
+            //     ApplicationSearchData.filters.loading = false;
+            // });
+        }
+    },
+    applications: {
+        loading: false,
+        list: [],
+        fetch: ({ universityNames = [], uwaContextTypes = [], uwaUnitLevels = [] } = {}) => {
+            ApplicationSearchData.applications.loading = true;
+            // const qs = m.buildQueryString({
+            //     universityNames,
+            //     uwaContextTypes,
+            //     uwaUnitLevels
+            // });
+            m.request({
+                method: "GET",
+                url: `/api/requests/applications?${qs}`
+            }).then(items => {
+                ApplicationSearchData.applications.list = items;
+                ApplicationSearchData.applications.loading = false;
+            });
+        }
+    },
+    hasSearched: false
+}
 
 // EMAIL DATA + CLIPBOARD LOGIC AND DATA STRUCTURE
 export const EmailData = {
@@ -139,67 +193,67 @@ function copyToClipboard(text) {
 }
 
 function processUnitSets(form) {
-	var approvalsString = "";
+    var approvalsString = "";
 
-	for (var i = 0; i < form.length; i++ ) {
+    for (var i = 0; i < form.length; i++ ) {
         approvalsString = approvalsString + processUnitSet(form[i]);
     }
     
     // return forms.reduce((sb, f) => sb + processUnitSet(f), "")
-	return approvalsString;
+    return approvalsString;
 }
 
 
 function processUnitSet(unitSet) {
-	var uwaUnits;
-	var exchangeUnits;
+    var uwaUnits;
+    var exchangeUnits;
 
-	for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
-		uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
-	}
-	
-	for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
-		exchangeUnits = printUnitLine(unitSet.exchangeUnitsForm[k], k)
-	}
+    for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
+        uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
+    }
+    
+    for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
+        exchangeUnits = printUnitLine(unitSet.exchangeUnitsForm[k], k)
+    }
 
-	return(
-	`UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
-	Exchange Units:\t\t${exchangeUnits}
-	Equivalence Approval:\t${unitSet.staffApprovalForm.isEquivalent.label}
-	Contextual Approval:\t${unitSet.staffApprovalForm.isContextuallyApproved.label}
-	
-	`)
+    return(
+    `UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
+    Exchange Units:\t\t${exchangeUnits}
+    Equivalence Approval:\t${unitSet.staffApprovalForm.isEquivalent.label}
+    Contextual Approval:\t${unitSet.staffApprovalForm.isContextuallyApproved.label}
+    
+    `)
 }
 
 function printUnitLine(unit, index) {
-	var unitText = (index == 0 ? "" : ", ");
-	unitText += unit.unitCode + ": " + unit.unitName;
-	return(unitText);
+    var unitText = (index == 0 ? "" : ", ");
+    unitText += unit.unitCode + ": " + unit.unitName;
+    return(unitText);
 }
 
 function processUnitSetEquivalence(unitSet) {
-	var uwaUnits;
-	var exchangeUnits;
+    var uwaUnits;
+    var exchangeUnits;
 
-	for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
-		uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
-	}
-	
-	for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
+    for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
+        uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
+    }
+    
+    for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
         exchangeUnits = printUnitLineEquivalence(unitSet.exchangeUnitsForm[k], k)
-	}
+    }
 
-	return(
-	`UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
-	Exchange Units:\t\t${exchangeUnits}
-	
-	`)
+    return(
+    `UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
+    Exchange Units:\t\t${exchangeUnits}
+    
+    `)
 }
 
 function printUnitLineEquivalence(unit, index) {
-	var unitText = (index == 0 ? "" : ", ");
-	unitText += unit.unitCode + ": " + unit.unitName + " (" + unit.unitHref + ")";
-	return(unitText);
+    var unitText = (index == 0 ? "" : ", ");
+    unitText += unit.unitCode + ": " + unit.unitName + " (" + unit.unitHref + ")";
+    return(unitText);
 }
 
 function studentMessage(EmailData) {

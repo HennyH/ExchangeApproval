@@ -24,10 +24,10 @@ export function FormRepeater() {
             titleFactory = () => null,
             jumps = true,
             readonly,
-			defaultConfig = {},
-			staffView,
-			secondButton = <div/>,
-			...formAttrs
+            defaultConfig = {},
+            staffView,
+            secondButton = <div/>,
+            ...formAttrs
         },
         dom: ref
     }) {
@@ -40,11 +40,11 @@ export function FormRepeater() {
             <div>
                 {(jumps && numberOfForms > 1 && !staffView
                     ? (
-						<div class="row my-0">
-							<button type="button" class="btn btn-link my-0 ml-auto" onclick={() => scrollToLastForm(ref)}>
-								Jump To Bottom
-							</button>
-						</div>
+                        <div class="row my-0">
+                            <button type="button" class="btn btn-link my-0 ml-auto" onclick={() => scrollToLastForm(ref)}>
+                                Jump To Bottom
+                            </button>
+                        </div>
                     )
                     : <div />
                 )}
@@ -55,8 +55,8 @@ export function FormRepeater() {
                             readonly={readonly}
                             form={f}
                             formIndex={i}
-							onDelete={() => removeForm(field, f)}
-							staffView = {staffView}
+                            onDelete={() => removeForm(field, f)}
+                            staffView = {staffView}
                         />
                     </div>
                 ))}
@@ -64,34 +64,34 @@ export function FormRepeater() {
                 <div class="invalid-feedback mt-2 mb-2" style="line-height: 1.5em;">
                     {error}
                 </div>
-				<div class="row mx-2">
-					{(readonly || staffView)
-						? <div />
-						: (
-							<div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
-								<button
-									type="button"
-									class="mb-1 mr-3 btn btn-primary"
-									onclick={() => addForm(field, { ...defaultConfig })}
-								>
-										{addItemText}
-								</button>
-								{secondButton}
-							</div>
-						)
-					}
-					{(jumps && numberOfForms > 1 && !staffView
-						? (
-							<button
-								type="button"
-								class={classNames(numberOfForms > 0 ? "mt-3" : null, "mb-1 mr-3 btn btn-link ml-auto")}
-								onclick={() => scrollToFirstItem(ref)}>
-									Jump To Top
-							</button>
-						)
-						: <div />
-					)}
-				</div>
+                <div class="row mx-2">
+                    {(readonly || staffView)
+                        ? <div />
+                        : (
+                            <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
+                                <button
+                                    type="button"
+                                    class="mb-1 mr-3 btn btn-primary"
+                                    onclick={() => addForm(field, { ...defaultConfig })}
+                                >
+                                        {addItemText}
+                                </button>
+                                {secondButton}
+                            </div>
+                        )
+                    }
+                    {(jumps && numberOfForms > 1 && !staffView
+                        ? (
+                            <button
+                                type="button"
+                                class={classNames(numberOfForms > 0 ? "mt-3" : null, "mb-1 mr-3 btn btn-link ml-auto")}
+                                onclick={() => scrollToFirstItem(ref)}>
+                                    Jump To Top
+                            </button>
+                        )
+                        : <div />
+                    )}
+                </div>
             </div>
         )
     }

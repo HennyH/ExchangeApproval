@@ -29,10 +29,10 @@ export function makeCartTableConfig(cartItems) {
                 data: null,
                 defaultContent: "<button type='button' class='btn btn-outline-secondary'>🗑️</button>"
             }
-		],
-		paging: false,
-		searching: false,
-		info: false
+        ],
+        paging: false,
+        searching: false,
+        info: false
     }
 }
 
@@ -97,32 +97,32 @@ export default function Cart() {
 
     function view() {
         return (
-			<div class="card bg-light my-3">
-				<div class="card-header d-flex align-items-center">Cart</div>
-				<div class="card-body">
-					{CART.items.length === 0 ? <h6>Cart is empty.</h6> : ''}
-					<DataTable
-						config={makeCartTableConfig(CART.items)}
-						setup={(id, datatable) => {
-							$(`#${id} tbody`).on('click', 'button', function(event) {
-								const item = datatable.row($(event.target).parents('tr')).data();
-								removeItemFromCart(item);
-							});
-							$(`#${id} tbody`).tooltip({
-								selector: '[rel="popover"]',
-								trigger: 'hover'
-							});
-						}}
-					/>
-				</div>
-				<div class="card-footer">
-					<button class="btn btn-primary float-right ml-auto" oncreate={m.route.link} href="/application" disabled={CART.items.length === 0}>
-							<span class="ml-2">Go to Application
-								<span class="badge badge-secondary mx-2">{CART.items.length}</span>
-							</span>
-					</button>
-				</div>
-			</div>
+            <div class="card bg-light my-3">
+                <div class="card-header d-flex align-items-center">Cart</div>
+                <div class="card-body">
+                    {CART.items.length === 0 ? <h6>Cart is empty.</h6> : ''}
+                    <DataTable
+                        config={makeCartTableConfig(CART.items)}
+                        setup={(id, datatable) => {
+                            $(`#${id} tbody`).on('click', 'button', function(event) {
+                                const item = datatable.row($(event.target).parents('tr')).data();
+                                removeItemFromCart(item);
+                            });
+                            $(`#${id} tbody`).tooltip({
+                                selector: '[rel="popover"]',
+                                trigger: 'hover'
+                            });
+                        }}
+                    />
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary float-right ml-auto" oncreate={m.route.link} href="/application" disabled={CART.items.length === 0}>
+                            <span class="ml-2">Go to Application
+                                <span class="badge badge-secondary mx-2">{CART.items.length}</span>
+                            </span>
+                    </button>
+                </div>
+            </div>
         );
     }
 

@@ -14,13 +14,13 @@ import {
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
 import { FormField, FormListField } from '../FormHelpers/Fields.js';
-import {ApplicationData} from '../ViewData.js'
+import {ApplicationData, EmailData} from '../ViewData.js'
 
 export class ApplicationPowerForm extends Form {
-    constructor({ unitLevelOptions = [], staffView, ...config }) {
+    constructor({ unitLevelOptions = [], studentOfficeOptions = [], staffView, ...config }) {
         super(config);
         this.studentDetailsForm = new FormField({
-            form: new StudentDetailsPowerForm()
+            form: new StudentDetailsPowerForm({studentOfficeOptions})
         });
         this.exchangeUniversityForm = new FormField({
             form: new ExchangeUniversityDetailsPowerForm()
@@ -29,35 +29,50 @@ export class ApplicationPowerForm extends Form {
             factory: ({ ...config } = {}) => {
                 const form = new UnitSetPowerForm({
                     ...config,
-					unitLevelOptions,
-					staffView
+                    unitLevelOptions,
+                    staffView
                 });
                 return form;
             },
             required: true
         });
         Form.new.call(() => this, config);
-		this.config = config;
+        this.config = config;
     }
 }
 
 export default function ApplicationForm() {
 
     const state = {
-        hasTriedToSubmit: false
+        hasTriedToSubmit: false,
+        form: null
     };
 
     function oninit(vnode) {
-        reRegisterCartChangeHandler(vnode)
-        updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
+        state.form = new ApplicationPowerForm({
+            staffView: vnode.attrs.staffView,
+            onChange: showData,
+            unitLevelOptions: vnode.attrs.unitLevelOptions,
+            studentOfficeOptions: vnode.attrs.studentOfficeOptions
+        });
+        EmailData.Form = (vnode.attrs.staffView ? state.form : null);
+        reRegisterCartChangeHandler(vnode);
+        console.log(state.form)
+        updateUnitSetsFromCart(state.form, getItemsInCart());
     }
 
-    function view({ attrs: { form, staffView } }) {
+    function view({ 
+        attrs: { 
+            unitLevelOptions,
+            studentOfficeOptions,
+            staffView
+        } 
+    }) {
         const validationClass = state.hasTriedToSubmit
             ? (form.isValid() ? 'is-valid' : 'is-invalid')
             : '';
-		const error = "This form is not valid. Please check all fields for validation errors";
-		const success = "Form submitted successfully!"
+        const error = "This form is not valid. Please check all fields for validation errors";
+        const success = "Form submitted successfully!"
 
         return (
             <div class="container-fluid">
@@ -65,81 +80,85 @@ export default function ApplicationForm() {
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Student Details</div>
                             <div class="card-body">
-                                <StudentDetailsForm form={form.studentDetailsForm} staffView={staffView} />
+                                <StudentDetailsForm form={state.form.studentDetailsForm} staffView={staffView} />
                             </div>
                         </div>
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Exchange University Details</div>
                             <div class="card-body">
-                                <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} staffView={staffView} />
+                                <ExchangeUniversityDetailsForm form={state.form.exchangeUniversityForm} staffView={staffView} />
                             </div>
                         </div>
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-header">Unit Approval Requests</div>
                             <div class="card-body">
                                 <FormRepeater
-                                    field={form.unitSetForms}
+                                    field={state.form.unitSetForms}
                                     render={UnitSetForm}
                                     addItemText="Add Unit Set"
-									class="mt-3"
-									staffView = {staffView}
-									secondButton = {unitSearchButton()}
+                                    class="mt-3"
+                                    staffView = {staffView}
+                                    secondButton = {unitSearchButton()}
                                 />
                             </div>
                         </div>
-						{submitButton(staffView, validationClass, error, success, form)}
+                        {submitButton(staffView, validationClass, error, success, state.form)}
                     </div>
             </div>
         )
     }
 
-	function unitSearchButton() {
-		return(
-			<button
-				class="btn btn-primary"
-				class={"mb-1 mr-3 btn btn-primary"}
-				oncreate={m.route.link}
-				href="/search"
-			>
-					Search for Units
-			</button>
-		)
-	}
+    function unitSearchButton() {
+        return(
+            <button
+                class="btn btn-primary"
+                class={"mb-1 mr-3 btn btn-primary"}
+                oncreate={m.route.link}
+                href="/search"
+            >
+                    Search for Units
+            </button>
+        )
+    }
 
-	function submitButton(staffView, validationClass, error, success, form) {
-		if (!staffView) {
-			return (
-				<div class="card bg-light mt-3 mb-3">
-					<div class="card-body">
-						<button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, success)}>
-							Submit Application
-						</button>
-						<input type="hidden" class={classNames("form-control", validationClass)} />
-						<span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
-							{error}
-						</span>
-					</div>
-				</div>
-			)
-		}
-	}
+    function submitButton(staffView, validationClass, error, success, form) {
+        if (!staffView) {
+            return (
+                <div class="card bg-light mt-3 mb-3">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, success)}>
+                            Submit Application
+                        </button>
+                        <input type="hidden" class={classNames("form-control", validationClass)} />
+                        <span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
+                            {error}
+                        </span>
+                    </div>
+                </div>
+            )
+        }
+    }
 
     function handleSubmit(form, success) {
         state.hasTriedToSubmit = true;
         if (form.isValid()) {
-			// TODO: Push to application db
-			alert(success);
-			ApplicationData.hasSubmitted = true;
-			console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
+            // TODO: Push to application db
+            alert(success);
+            ApplicationData.hasSubmitted = true;
+            console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
         } else {
             console.log("ERRORS", form.getError());
         }
     }
 
+    function showData() {
+        return console.log(state.form ? JSON.stringify(state.form.getData(), null, 4) : null);
+    }
+
     /* cart functionality */
     function onbeforeupdate(vnode, old) {
         reRegisterCartChangeHandler(vnode);
-        updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
+        updateUnitSetsFromCart(state.form, getItemsInCart());
     }
 
     function reRegisterCartChangeHandler(vnode) {
@@ -147,7 +166,7 @@ export default function ApplicationForm() {
         addCartEventHandler(
             CART_EVENTS.CART_CHANGED,
             "application-form",
-            items => updateUnitSetsFromCart(vnode.attrs.form, items)
+            items => updateUnitSetsFromCart(state.form, items)
         );
     }
 

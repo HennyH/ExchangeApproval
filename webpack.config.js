@@ -20,7 +20,7 @@ module.exports = (env, options) => {
       alias: {
         FormHelpers: path.resolve(__dirname, 'client', 'components', 'FormHelpers'),
         Components: path.resolve(__dirname, 'client', 'components'),
-		Assets: path.resolve(__dirname, 'client', 'assets'),
+        Assets: path.resolve(__dirname, 'client', 'assets'),
       },
       plugins: [
         new DirectoryNamedWebpackPlugin()
