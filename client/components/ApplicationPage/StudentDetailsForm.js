@@ -65,15 +65,6 @@ export function StudentDetailsForm() {
                     <div class="input-group col-8">
                         <Select
                             field={form.studentOffice}
-                            // config={{
-                            //     multiple: true,
-                            //     width: '100%',
-                            //     placeholder: 'Select your allocated Student Office',
-                            //     data: ApplicationSearchData.filters.options.studentOfficeOptions.map(name => ({
-                            //         id: name,
-                            //         text: name
-                            //     }))
-                            // }}
                         />
                     </div>
                 </div>
