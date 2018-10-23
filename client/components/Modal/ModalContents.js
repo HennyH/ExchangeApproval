@@ -30,23 +30,27 @@ export function DownloadModalContent() {
         });
     }
 
+    function uploadNewDB() {
+
+    }
+
     function view() {
         return (
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalTitle">Edit Unit Equivalencies</h5>
+                    <h5 class="modal-title" id="ModalTitle">Upload / Download</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <h6 class="text-muted">Edit Unit Equivalencies</h6>
                     <div class="form-group">
                         <a href="/admin/equivalencies" class="btn btn-outline-primary form-control-file" target="_blank" download="equivalencies.csv">
                             {"⇩ Download Equivalencies"}
                         </a>
                     </div>
                     <div class="form-group">
-
                         <label class="btn btn-outline-danger form-control-file">
                             {"⇧ Upload Equivalencies"}
                             <input name="equivalencies" type="file" onchange={uploadNewEquivalencies} hidden />
@@ -61,6 +65,19 @@ export function DownloadModalContent() {
                         )
                         : <span />
                     }
+                    <hr/>
+                    <h6 class="text-muted">Backup Database</h6>
+                    <div class="form-group">
+                        <a href="/admin/database" class="btn btn-outline-primary form-control-file" target="_blank" download="ExchangeApprovalsDB.csv">
+                            {"⇩ Download Database"}
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label class="btn btn-outline-danger form-control-file">
+                            {"⇧ Upload Database"}
+                            <input name="Database" type="file" onchange={uploadNewDB} hidden />
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
