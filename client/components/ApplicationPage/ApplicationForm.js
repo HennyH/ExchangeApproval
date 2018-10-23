@@ -45,6 +45,8 @@ export class ApplicationPowerForm extends Form {
 
 export default function ApplicationForm() {
 
+    const state = { hasTriedToSubmit: false };
+
     function oninit(vnode) {
         EmailData.Form = vnode.attrs.staffView ? vnode.attrs.form : null;
         reRegisterCartChangeHandler(vnode);
@@ -52,11 +54,12 @@ export default function ApplicationForm() {
     }
 
     function view({
-        attrs: { form, staffView, onSubmit }
+        attrs: { form, staffView = false, onSubmit }
     }) {
-        // const validationClass = ApplicationData.hasTriedToSubmit
-        //     ? (form.isValid() ? 'is-valid' : 'is-invalid')
-        //     : '';
+        const validationClass = state.hasTriedToSubmit
+            ? (form.isValid() ? 'is-valid' : 'is-invalid')
+            : '';
+        const errorMessage = "This form is not valid. Please check all fields for validation errors";
 
         return (
             <div class="container-fluid">
@@ -101,9 +104,9 @@ export default function ApplicationForm() {
                                 <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, onSubmit)}>
                                     Submit Application
                                 </button>
-                                <input type="hidden" class={classNames("form-control")} />
+                                <input type="hidden" class={classNames(validationClass, "form-control")} />
                                 <span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
-                                    {error}
+                                    {errorMessage}
                                 </span>
                             </div>
                         </div>
@@ -113,20 +116,13 @@ export default function ApplicationForm() {
         )
     }
 
-    // function handleSubmit(form, onSubmit) {
-    //     ApplicationData.hasTriedToSubmit = true;
-    //     const error = "This form is not valid. Please check all fields for validation errors";
-    //     const success = "Form submitted successfully!"
-    //     if (form.isValid()) {
-    //         // TODO: Push to application db
-    //         alert(success);
-    //         ApplicationData.hasSubmitted = true;
-    //         onSubmit(form);
-    //         console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
-    //     } else {
-    //         console.log("ERRORS", form.getError());
-    //     }
-    // }
+    function handleSubmit(form, onSubmit) {
+        if (form.isValid()) {
+            onSubmit();
+        } else {
+            state.hasTriedToSubmit = true;
+        }
+    }
 
 
     /* cart functionality */

@@ -21,8 +21,13 @@ export default function ApplicationPage() {
     }
 
     function handleFormSubmitted() {
-        state.hasSubmittedForm = true;
-        m.redraw();
+        m.request({
+            method: "POST",
+            url: "api/application/submit",
+            data: state.applicationForm.getData()
+        }).then(() => {
+            state.hasSubmittedForm = true;
+        });
     }
 
     function view() {
