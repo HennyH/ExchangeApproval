@@ -50,25 +50,25 @@ namespace ExchangeApproval.Data
         GtFour
     };
 
-	public static class UWAUnitLevelExtensions
-	{
-		public static string GetLabel(this UWAUnitLevel level) {
-			switch (level) {
-				case UWAUnitLevel.Zero:
-					return "Insufficent";
-				case UWAUnitLevel.One:
-					return "1000";
-				case UWAUnitLevel.Two:
-					return "2000";
-				case UWAUnitLevel.Three:
-					return "3000";
-				case UWAUnitLevel.Four:
-					return "4000";
-				default:
-					return ">4000";
-			} 
-		}
-	}
+    public static class UWAUnitLevelExtensions
+    {
+        public static string GetLabel(this UWAUnitLevel level) {
+            switch (level) {
+                case UWAUnitLevel.Zero:
+                    return "Insufficent";
+                case UWAUnitLevel.One:
+                    return "1000";
+                case UWAUnitLevel.Two:
+                    return "2000";
+                case UWAUnitLevel.Three:
+                    return "3000";
+                case UWAUnitLevel.Four:
+                    return "4000";
+                default:
+                    return ">4000";
+            } 
+        }
+    }
 
     public enum StaffRole { StudentOffice, UnitCoordinator };
 

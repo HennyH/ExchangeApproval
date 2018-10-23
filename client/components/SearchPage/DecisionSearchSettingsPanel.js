@@ -52,9 +52,9 @@ export default function DecisionSearchSettingsPanel() {
                             }}
                         />
                     </div>
-				</div>
-				<div class="row mx-1 mb-0">
-					<div class="col form-group">
+                </div>
+                <div class="row mx-1 mb-0">
+                    <div class="col form-group">
                         <label>Unit Level(s)</label>
                         <CheckboxGroup
                             field={state.form.unitLevels}

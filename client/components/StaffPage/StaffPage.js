@@ -56,15 +56,15 @@ export default function StaffPage() {
                                 <div class="card-header">Search Results</div>
                                 <div class="card-body">
                                     <InboxTable
-										decisions={MOCK_DECISIONS}
+                                        decisions={MOCK_DECISIONS}
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-				{ModalState.ApplicationModal.selectedApplication ? <ApplicationModal/> : <div/>}
-				{ModalState.DownloadModal.visible ? <DownloadModal/> : <div/>}
+                {ModalState.ApplicationModal.selectedApplication ? <ApplicationModal/> : <div/>}
+                {ModalState.DownloadModal.visible ? <DownloadModal/> : <div/>}
             </Layout>
         );
     }
@@ -73,21 +73,21 @@ export default function StaffPage() {
 }
 
 var ApplicationModal = {
-	view: function() {
-		return(
-			<Modal size = {"xl"}>
-				<ApplicationModalContent title = {"Edit Application: " + ModalState.ApplicationModal.selectedApplication.studentName}/>
-			</Modal>
-		);	
-	}
+    view: function() {
+        return(
+            <Modal size = {"xl"}>
+                <ApplicationModalContent title = {"Edit Application: " + ModalState.ApplicationModal.selectedApplication.studentName}/>
+            </Modal>
+        );    
+    }
 }
 
 var DownloadModal = {
-	view: function() {
-		return(
-			<Modal size = {"sm"}>
-					<DownloadModalContent/>
-			</Modal>
-		);
-	}
+    view: function() {
+        return(
+            <Modal size = {"sm"}>
+                    <DownloadModalContent/>
+            </Modal>
+        );
+    }
 }

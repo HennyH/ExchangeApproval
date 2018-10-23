@@ -19,13 +19,13 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
             options: studentOptions
         });
         this.studentOffices = OptionsField.new({
-			multiple: true,
+            multiple: true,
             options: studentOfficeOptions
         });
-		this.applicationStates = OptionsField.new({
-			multiple: true,
-			options: applicationStateOptions
-		});
+        this.applicationStates = OptionsField.new({
+            multiple: true,
+            options: applicationStateOptions
+        });
         this.date = OptionsField.new({
             options: dateOptions
         });
@@ -52,9 +52,9 @@ export default function StaffDecisionSearchSettingsPanel() {
     function view({
         attrs: {
             studentOptions,
-			studentOfficeOptions,
-			applicationStateOptions,
-			dateOptions
+            studentOfficeOptions,
+            applicationStateOptions,
+            dateOptions
         }
     }) {
         return (

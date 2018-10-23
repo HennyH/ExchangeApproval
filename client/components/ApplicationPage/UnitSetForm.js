@@ -123,39 +123,39 @@ function UnitForm() {
 }
 
 function StaffApprovalContainer(form) {
-	return (
-		<div class="card-footer">
-				<StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
-		</div>
-	)
+    return (
+        <div class="card-footer">
+                <StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
+        </div>
+    )
 }
 
 function StaffUnitSetApprovalForm() {
     function view({ attrs: { form }}) {
-		return (
-			<div>
-				<div class="form-row">
-					<div class="col-xl-4 mr-3">
-						<label class="col-form-label-sm">Equivalent UWA Level:</label>
-						<Select field={form.equivalentUnitLevel} />
-					</div>
-					<div class="row col-xl-8">
-						<div class="col-md">
-							<label class="col-form-label-sm">Contextual Approval:</label>
-							<RadioButtonGroup field={form.isContextuallyApproved} />
-						</div>
-						<div class="col-md">
-							<label class="col-form-label-sm">Equivalence Decision:</label>
-							<RadioButtonGroup field={form.isEquivalent} />
-						</div>
-					</div>
-				</div>
-				<div class="form-row px-1">
-					<label class="col-form-label-sm">Comments</label>
-					<textarea class="form-control" field={form.comment}/>
-				</div>
-			</div>
-		)
+        return (
+            <div>
+                <div class="form-row">
+                    <div class="col-xl-4 mr-3">
+                        <label class="col-form-label-sm">Equivalent UWA Level:</label>
+                        <Select field={form.equivalentUnitLevel} />
+                    </div>
+                    <div class="row col-xl-8">
+                        <div class="col-md">
+                            <label class="col-form-label-sm">Contextual Approval:</label>
+                            <RadioButtonGroup field={form.isContextuallyApproved} />
+                        </div>
+                        <div class="col-md">
+                            <label class="col-form-label-sm">Equivalence Decision:</label>
+                            <RadioButtonGroup field={form.isEquivalent} />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row px-1">
+                    <label class="col-form-label-sm">Comments</label>
+                    <textarea class="form-control" field={form.comment}/>
+                </div>
+            </div>
+        )
     }
 
     return { view }
@@ -179,7 +179,7 @@ export function UnitSetForm() {
                                     <button class="btn-sm ml-2 btn-outline-primary float-right" onclick={() => EmailData.Equivalence.SendEmail(formIndex)}>Email Equivalence</button>
                                     <button class="btn-sm ml-2 btn-outline-secondary float-right" onclick={() => EmailData.Equivalence.CopyText(formIndex)}>Copy to Clipboard</button>
                                 </span>
-								: <span class="float-right">
+                                : <span class="float-right">
                                     <DeleteButton
                                         onClick={() => {
                                             if (form.config.cartItem) {
@@ -189,7 +189,7 @@ export function UnitSetForm() {
                                         }}
                                     /> 
                                 </span>
-							}
+                            }
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@ export function UnitSetForm() {
                         </div>
                     </div>
                 </div>
-				{staffView ? StaffApprovalContainer(form) : null}
+                {staffView ? StaffApprovalContainer(form) : null}
             </div>
         )
     }

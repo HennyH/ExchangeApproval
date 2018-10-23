@@ -8,7 +8,7 @@ class Searchtest():
         self.driver = driver
     
     def pagetest(self,Searchinput):
-       	Searchinput = self.driver.find_element_by_xpath("//*[@id='__table__decisions-table_filter']/label/input")
+           Searchinput = self.driver.find_element_by_xpath("//*[@id='__table__decisions-table_filter']/label/input")
         Searchinput.send_keys(Searchinput)
 
 

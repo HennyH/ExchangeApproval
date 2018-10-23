@@ -21,9 +21,9 @@ export function ExchangeUniversityDetailsForm() {
 
     function view({ attrs: { form, staffView } }) {
 
-		function oninit(vnode) {
-			vnode.staffView
-		}
+        function oninit(vnode) {
+            vnode.staffView
+        }
 
         return (
             <form novalidate>

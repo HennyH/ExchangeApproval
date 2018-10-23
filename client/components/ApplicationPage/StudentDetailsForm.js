@@ -1,17 +1,23 @@
 import m from 'mithril'
 import { Form } from 'powerform'
 import classNames from 'classnames'
-
-import { Input, StudentEmailField, StringField } from 'FormHelpers'
+import { Input, Select, OptionsField, StudentEmailField, StringField } from 'FormHelpers'
 
 export class StudentDetailsPowerForm extends Form {
-    constructor({ ...config }) {
+    constructor({ studentOfficeOptions, ...config }) {
 		super(config);
 		this.name = StringField.new({ required: true });
         this.email = StudentEmailField.new({ required: true });
         this.degree = StringField.new({ required: true  });
         this.major = StringField.new({ required: true });
         this.major2nd = StringField.new({ required: false });
+        this.studentOffice = OptionsField.new({
+			multiple: false,
+            options: [
+                {value: null, label: "Select your allocated Student Office"},
+                ...studentOfficeOptions
+            ]
+        });
         Form.new.call(() => this, config);
         this.config = config;
     }
@@ -42,17 +48,37 @@ export function StudentDetailsForm() {
                     </div>
                 </div>
                 <div class="form-group row mx-1">
-                    <label class="col-form-label col-3" for="degree">Major: </label>
+                    <label class="col-form-label col-3" for="major">Major: </label>
                     <div class="input-group col-8">
                         <Input field={form.major} placeholder="First Major" type="text" readOnly = {staffView} />
                     </div>
                 </div>
                 <div class="form-group row mx-1">
-                    <label class="col-form-label col-3" for="degree">2nd Major*: </label>
+                    <label class="col-form-label col-3" for="2ndMajor">2nd Major*: </label>
                     <div class={"input-group col-8"}>
                         <Input field={form.major2nd} placeholder="Second Major (optional)" type="text" readOnly = {staffView} />
                     </div>
                 </div>
+                {!staffView ? 
+                <div class="form-group row mx-1">
+                    <label class="col-form-label col-3" for="studentOffice">Student Office: </label>
+                    <div class="input-group col-8">
+                        <Select
+                            field={form.studentOffice}
+                            // config={{
+                            //     multiple: true,
+                            //     width: '100%',
+                            //     placeholder: 'Select your allocated Student Office',
+                            //     data: ApplicationSearchData.filters.options.studentOfficeOptions.map(name => ({
+                            //         id: name,
+                            //         text: name
+                            //     }))
+                            // }}
+                        />
+                    </div>
+                </div>
+                : <div/>
+                }
             </form>
         )
     }
