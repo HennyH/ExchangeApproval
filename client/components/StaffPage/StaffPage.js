@@ -2,7 +2,7 @@ import m from 'mithril'
 import classNames from 'classnames';
 
 import Layout from 'Components/Layout'
-import StaffDecisionSearchSettingsPanel from './StaffDecisionSearchSettingsPanel.js'
+import StaffDecisionSearchSettingsPanel, { StaffUnitSearchSettingsPowerForm } from './StaffDecisionSearchSettingsPanel.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
 import Modal from '../Modal/Modal.js';
 import {DownloadModalContent, ApplicationModalContent} from '../Modal/ModalContents.js'
@@ -12,7 +12,10 @@ import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 export default function StaffPage() {
 
-    const state = { inboxSearchSettings: { applicationStatuses: [], studentNumbers: [], studentOffices: [] } };
+    const state = {
+        inboxSearchSettings: { applicationStatuses: [], studentNumbers: [], studentOffices: [] },
+        inboxSearchSettingsForm: null
+    };
 
     function handleSearchSettingsChanged(settings) {
         const applicationStatuses = settings.applicationStatuses.map(({ value }) => value);
@@ -37,20 +40,32 @@ export default function StaffPage() {
                                 <div class="card-header">Inbox Search Settings</div>
                                 <DataLoader
                                     requests={{filters: () => m.request("/api/filters/staff")}}
-                                    render={({ loading, error, data: { filters } = {}}) => (
-                                        <div class={classNames("card-body", loading ? "text-center" : "")}>
-                                            {loading
-                                                ? <Spinner />
-                                                : (
-                                                    <StaffDecisionSearchSettingsPanel
-                                                        studentOptions={filters.studentOptions}
-                                                        applicationStateOptions={filters.applicationStatusOptions}
-                                                        studentOfficeOptions={filters.studentOfficeOptions}
-                                                        onSubmit={handleSearchSettingsChanged}
-                                                    />
-                                                )}
-                                        </div>
-                                    )}
+                                    render={({ loading, error, data: { filters } = {}}) => {
+                                        if (loading || error) {
+                                            return <Spinner />;
+                                        }
+                                        if (state.inboxSearchSettingsForm == null) {
+                                            state.inboxSearchSettingsForm = new StaffUnitSearchSettingsPowerForm({
+                                                studentOptions: filters.studentOptions,
+                                                applicationStateOptions: filters.applicationStatusOptions,
+                                                studentOfficeOptions: filters.studentOfficeOptions
+                                            });
+                                        }
+                                        return (
+                                            <div class={classNames("card-body", loading ? "text-center" : "")}>
+                                                {loading
+                                                    ? <Spinner />
+                                                    :
+                                                    (
+                                                        <StaffDecisionSearchSettingsPanel
+                                                            form={state.inboxSearchSettingsForm}
+                                                            onSubmit={handleSearchSettingsChanged}
+                                                        />
+                                                    )
+                                                }
+                                            </div>
+                                        );
+                                    }}
                                 />
                             </div>
                             <div class="card bg-light mt-3 mb-3">

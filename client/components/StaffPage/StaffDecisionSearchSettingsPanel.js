@@ -10,7 +10,6 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
         studentOptions,
         studentOfficeOptions,
         applicationStateOptions,
-        dateOptions,
         ...config
     }) {
         super(config)
@@ -34,38 +33,25 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
 
 export default function StaffDecisionSearchSettingsPanel() {
 
-    const state = {};
-
-    function oninit({ attrs }) {
-        state.form = new StaffUnitSearchSettingsPowerForm(attrs);
-    }
-
-    function handleSubmit(event, onSubmit) {
+    function handleSubmit(event, form, onSubmit) {
         event.preventDefault();
         event.stopPropagation();
-        onSubmit(state.form.getData());
+        onSubmit(form.getData());
     }
 
-    function view({
-        attrs: {
-            studentOptions,
-            studentOfficeOptions,
-            applicationStateOptions,
-            onSubmit
-        }
-    }) {
+    function view({ attrs: { form, onSubmit } }) {
         return (
-            <form onsubmit={e => handleSubmit(e, onSubmit)}>
+            <form onsubmit={e => handleSubmit(e, form, onSubmit)}>
                 <div class="row">
                     <div class="col-lg-4 col-md-12 form-group">
                         <label for="students">Students</label>
                         <Select2
-                            field={state.form.studentNumbers}
+                            field={form.studentNumbers}
                             config={{
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select students to filter to...',
-                                data: studentOptions.map(({ label, value }) => ({
+                                data: form.studentNumbers.config.options.map(({ label, value }) => ({
                                     id: value,
                                     text: label
                                 }))
@@ -75,12 +61,12 @@ export default function StaffDecisionSearchSettingsPanel() {
                     <div class="col-lg-5 col-md-12 form-group">
                         <label>Student Office</label>
                         <Select2
-                            field={state.form.studentOffices}
+                            field={form.studentOffices}
                             config={{
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select unit coordinators to filter to...',
-                                data: studentOfficeOptions.map(({ label, value }) => ({
+                                data: form.studentOffices.config.options.map(({ label, value }) => ({
                                     id: value,
                                     text: label
                                 }))
@@ -89,10 +75,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                     </div>
                     <div class="col-sm-1 form-group">
                         <label>Application Status</label>
-                        <CheckboxGroup
-                            field={state.form.applicationStatuses}
-                            options={applicationStateOptions}
-                        />
+                        <CheckboxGroup field={form.applicationStatuses} />
                     </div>
                     <div class="col-auto form-group align-self-end">
                         <button type="submit" class="btn btn-primary">
@@ -104,5 +87,5 @@ export default function StaffDecisionSearchSettingsPanel() {
         );
     }
 
-    return { view, oninit };
+    return { view };
 }

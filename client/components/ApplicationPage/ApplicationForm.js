@@ -13,12 +13,15 @@ import {
     removeCartEventHandler
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
-import { FormField, FormListField } from '../FormHelpers/Fields.js';
+import { FormField, FormListField, IntegerField } from '../FormHelpers/Fields.js';
 import { EmailData } from '../ViewData.js'
 
 export class ApplicationPowerForm extends Form {
     constructor({ unitLevelOptions = [], studentOfficeOptions = [], ...config }) {
         super(config);
+        this.applicationId = new IntegerField({
+            required: false
+        });
         this.studentDetailsForm = new FormField({
             form: new StudentDetailsPowerForm({studentOfficeOptions})
         });

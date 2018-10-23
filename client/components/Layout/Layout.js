@@ -1,11 +1,20 @@
 import m from 'mithril';
 import classNames from 'classnames'
-import {ModalState} from '../ViewData'
+import { DownloadModalContent } from '../Modal/ModalContents.js';
+import Modal from '../Modal/Modal.js';
 
 import Styles from './Layout.css';
 
-var Navbar = {
-    view: function(vnode) {
+function Navbar() {
+
+    const state = { showAdminModal: false };
+
+    function toggleAdminModal() {
+        state.showAdminModal = !state.showAdminModal;
+        m.redraw();
+    }
+
+    function view(vnode) {
         const currentRoute = m.route.get();
         const navLinks = [
             { href: "/application", text: "Student Application" },
@@ -38,17 +47,24 @@ var Navbar = {
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                {vnode.attrs.staff ? 
-                                    <button class="dropdown-item" onclick={ModalState.DownloadModal.show}>Download / Upload Faculty List</button>
+                                {vnode.attrs.staff ?
+                                    <button class="dropdown-item" onclick={toggleAdminModal}>Download / Upload Faculty List</button>
                                 :    <button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
                                 }
                             </div>
                         </li>
                     </ul>
                 </div>
+                {state.showAdminModal && (
+                    <Modal onClose={toggleAdminModal}>
+                        <DownloadModalContent />
+                    </Modal>
+                )}
             </nav>
         );
     }
+
+    return { view }
 }
 
 export default function Layout() {

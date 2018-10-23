@@ -91,51 +91,67 @@ export default function InboxTable() {
                     cache={false}
                 />
                 <DataLoader
-                    application={state.applicationId}
+                    applicationId={state.applicationId}
                     requests={{
-                        application: ({ application }) => m.request("/api/application?id=1"),
+                        application: ({ applicationId }) => {
+                            if (applicationId == null) {
+                                return Promise.resolve(null);
+                            }
+                            const qs = m.buildQueryString({ id: applicationId });
+                            return m.request(`/api/application?${qs}`);
+                        },
                         filters: () => m.request("/api/filters/staff")
                     }}
                     render={({ loading, errored, data: { application, filters } = {} }) => {
-                        if (loading || errored) {
-                            return <Spinner />;
-                        }
-                        if (state.applicationForm == null) {
+                        const showLoading = loading || errored;
+                        if (state.applicationForm == null && application) {
                             state.applicationForm = new ApplicationPowerForm({
                                 unitLevelOptions: filters.unitLevelOptions,
                                 studentOfficeOptions: filters.studentOfficeOptions,
                             });
                             state.applicationForm.setData(application);
                         }
-                        return (
-                            <Modal size = {"xl"}>
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalTitle">Edit Application</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body p-0">
-                                        <ApplicationForm form={state.applicationForm} staffView={true} />
-                                    </div>
-                                    <div class="modal-footer d-flex justify-content-between">
-                                        <div>
-                                            <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
-                                                Send Application Results
-                                            </button>
-                                            <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
-                                                Copy to Clipboard
+                        return state.applicationId !== null
+                            ? (
+                                <Modal
+                                    size="xl"
+                                    onClose={() => {
+                                        state.applicationId = null;
+                                        state.applicationForm = null;
+                                        console.log("closing modal");
+                                    }}
+                                >
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalTitle">Edit Application</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
-                                            <button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Save Application</button>
+                                        <div class="modal-body p-0">
+                                            {showLoading
+                                                ? <Spinner />
+                                                : <ApplicationForm form={state.applicationForm} staffView={true} />}
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-between">
+                                            <div>
+                                                <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
+                                                    Send Application Results
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
+                                                    Copy to Clipboard
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Save Application</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Modal>
-                        );
+
+                                </Modal>
+                            )
+                            : <div />;
                     }}
                 />
             </div>
