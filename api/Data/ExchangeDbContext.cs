@@ -17,6 +17,17 @@ namespace ExchangeApproval.Data
         public readonly static string UWACountry = "Australia";
         public readonly static string UWAName = "University of Western Australia";
         public readonly static string UWAHref = "https://www.uwa.edu.au/";
+        public readonly static string[] UWAStudentOffices = new string[]
+        {
+            "Arts and Law", "Business School",
+            "Design and Education",
+            "Engineering and Mathematical Sciences",
+            "Health and Medical Sciences",
+            "Science",
+            "Bachelor of Philosophy (Honours)",
+            "Ph.D and Master by Research Students",
+            "School of Indigenous Studies"
+        };
     }
 
     public class ExchangeDbContext : DbContext
@@ -135,7 +146,7 @@ namespace ExchangeApproval.Data
         }
     }
 
-    public enum ApplicationStatus
+    public enum StudentApplicationStatus
     {
         New,
         Incomplete,

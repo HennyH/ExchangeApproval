@@ -15,7 +15,7 @@ using System.Net.Http.Headers;
 
 namespace ExchangeApproval.Controllers
 {
-    [Route("admin")]
+    [Route("api/admin")]
     public class AdminController : Controller
     {
         private readonly ExchangeDbContext _db;

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExchangeApproval.Controllers
 {
-    [Route("/application")]
+    [Route("/api/application")]
     public class ExchangeApplicationController : Controller
     {
         private readonly ExchangeDbContext _db;
