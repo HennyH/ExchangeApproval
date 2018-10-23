@@ -95,7 +95,7 @@ export default function ApplicationForm() {
                             />
                         </div>
                     </div>
-                    {/* {!staffView && (
+                    {!staffView && (
                         <div class="card bg-light mt-3 mb-3">
                             <div class="card-body">
                                 <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, onSubmit)}>
@@ -107,7 +107,7 @@ export default function ApplicationForm() {
                                 </span>
                             </div>
                         </div>
-                    )} */}
+                    )}
                 </div>
             </div>
         )

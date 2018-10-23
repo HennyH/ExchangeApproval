@@ -74,6 +74,15 @@ export default function InboxTable() {
         applicationForm: null
     };
 
+    function submitAppliction() {
+        console.log(state.applicationForm.getData());
+        m.request({
+            method: "POST",
+            url: "/api/application/update",
+            data: state.applicationForm.getData()
+        });
+    }
+
     function view({ attrs: { data }}) {
 
         return (
@@ -143,8 +152,12 @@ export default function InboxTable() {
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
-                                                <button type="button" class="btn btn-primary mx-1" data-dismiss="modal">Save Application</button>
+                                                <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <button type="button" class="btn btn-primary mx-1" data-dismiss="modal" onclick={submitAppliction}>
+                                                    Save Application
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

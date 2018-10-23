@@ -23,6 +23,14 @@ namespace ExchangeApproval.Controllers
         private static StudentApplication MapApplicationFormToApplication(ExchangeDbContext db, ApplicationFormVM form, bool asStaff)
         {
             var now = DateTime.UtcNow;
+            Func<String, UWAUnitLevel?> parseUnitLevel = (label) => {
+                object level;
+                if (Enum.TryParse(typeof(UWAUnitLevel), label, true, out level)) {
+                    return (UWAUnitLevel?)level;
+                }
+                return (UWAUnitLevel?)null;
+            };
+
             var newApplication = new StudentApplication
             {
                 SubmittedAt = now,
@@ -31,7 +39,7 @@ namespace ExchangeApproval.Controllers
                 StudentNumber = form.StudentDetailsForm.Email,
                 Major1st = form.StudentDetailsForm.Major,
                 Major2nd = form.StudentDetailsForm.Major2nd,
-                StudentOffice = form.StudentDetailsForm.StudentOffice.Value,
+                StudentOffice = form.StudentDetailsForm.StudentOffice?.Value,
                 ExchangeUniversityCountry = form.ExchangeUniversityForm.UniversityCountry,
                 ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
                 ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
@@ -47,7 +55,7 @@ namespace ExchangeApproval.Controllers
                         ? f.StaffApprovalForm.IsContextuallyApproved.Value
                         : (bool?)null,
                     EquivalentUWAUnitLevel = asStaff
-                        ? (UWAUnitLevel?)Enum.Parse(typeof(UWAUnitLevel), f.StaffApprovalForm.EquivalentUnitLevel.Label)
+                        ? parseUnitLevel(f.StaffApprovalForm.EquivalentUnitLevel.Label)
                         : (UWAUnitLevel?)null,
                     ExchangeUnits = f.ExchangeUnitsForm.Select(u => new ExchangeUnit
                     {
