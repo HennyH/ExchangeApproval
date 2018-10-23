@@ -38,7 +38,8 @@ namespace ExchangeApproval.Controllers
                 StudentName = a.StudentName,
                 StudentNumber = a.StudentNumber,
                 LastUpdatedAt = a.LastUpdatedAt,
-                ExchangeUniversity = a.ExchangeUniversityName,
+                ExchangeUniversityName = a.ExchangeUniversityName,
+                ExchangeUniversityHref = a.ExchangeUniversityHref,
                 StudentApplicationStatus = new SelectOption<StudentApplicationStatus>(
                     StudentApplication.GetStatus(a),
                     StudentApplication.GetStatus(a).ToString(),

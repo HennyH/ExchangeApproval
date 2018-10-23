@@ -9,7 +9,8 @@ namespace ExchangeApproval.ViewModels
         public string StudentName { get; set; }
         public string StudentNumber { get; set; }
         public DateTime LastUpdatedAt { get; set; }
-        public string ExchangeUniversity { get; set; }
+        public string ExchangeUniversityName { get; set; }
+        public string ExchangeUniversityHref { get; set; }
         public SelectOption<StudentApplicationStatus> StudentApplicationStatus { get; set; }
     }
 }

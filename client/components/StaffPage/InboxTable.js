@@ -20,10 +20,6 @@ export function makeInboxTableConfig(decisions) {
         data: decisions,
         columns: [
             {
-                title: COLUMN_NAMES.Id,
-                data: "id"
-            },
-            {
                 title: COLUMN_NAMES.StudentName,
                 data: "studentName"
             },
@@ -33,7 +29,7 @@ export function makeInboxTableConfig(decisions) {
             },
             {
                 title: COLUMN_NAMES.Date,
-                data: "decisionDate",
+                data: "lastUpdatedAt",
                 render: (data, type, row, meta) => {
                     if (data === null) {
                         return `
@@ -55,16 +51,13 @@ export function makeInboxTableConfig(decisions) {
             },
             {
                 title: COLUMN_NAMES.Approved,
-                data: "approved",
-                render: (data, type, row, meta) => data ? "✅" : data == null ? "💭" : "❌"
+                data: "studentApplicationStatus",
+                render: (data, type, row, meta) => data.label
             },
             {
                 title: COLUMN_NAMES.Edit,
-                render: (data, type, row, meta) => {
-                    return row.approved === null
-                        ? `<button type='button' class='btn btn-primary'>🖉 Edit</button>`
-                        : `<button type='button' class='btn btn-secondary' disabled>⚿ Edit</button>`
-                }
+                render: (data, type, row, meta) =>
+                    `<button type='button' class='btn btn-primary'>🖉 Edit</button>`
             }
         ]
     }
@@ -72,12 +65,12 @@ export function makeInboxTableConfig(decisions) {
 
 export default function InboxTable() {
 
-    function view({ attrs: { decisions }}) {
-        
+    function view({ attrs: { data }}) {
+
         return (
             <DataTable
                 id="inbox-table"
-                config={makeInboxTableConfig(decisions)}
+                config={makeInboxTableConfig(data)}
                 setup={(id, datatable) => {
                     $(`#${id} tbody`).on('click', 'button', function(event) {
                         const decision = datatable.row($(event.target).parents('tr')).data();
