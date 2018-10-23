@@ -53,6 +53,7 @@ export const Data = {
 }
 
 export const ApplicationData = {
+    hasTriedToSubmit: false,
     hasSubmitted: false,
     pushApplication: () => {},
     getApplication: () => {},

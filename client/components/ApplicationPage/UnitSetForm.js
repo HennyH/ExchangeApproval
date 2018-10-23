@@ -74,7 +74,7 @@ export class UnitSetPowerForm extends Form {
         });
         this.uwaUnitsForm = FormListField.new({
             factory: ({...config}) => new UnitPowerForm({ ...config }),
-            required: true
+            required: false
         });
         this.staffApprovalForm = new FormField({
             form: new StaffUnitSetApprovalPowerForm({ unitLevelOptions })
