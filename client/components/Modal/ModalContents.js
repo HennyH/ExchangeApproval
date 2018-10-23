@@ -16,7 +16,7 @@ export function DownloadModalContent() {
         data.append("equivalencies", file);
         m.request({
             method: "POST",
-            url: "/admin/equivalencies",
+            url: "/api/admin/equivalencies",
             data
         })
         .then(() => {
@@ -46,7 +46,7 @@ export function DownloadModalContent() {
                 <div class="modal-body">
                     <h6 class="text-muted">Edit Unit Equivalencies</h6>
                     <div class="form-group">
-                        <a href="/admin/equivalencies" class="btn btn-outline-primary form-control-file" target="_blank" download="equivalencies.csv">
+                        <a href="/api/admin/equivalencies" class="btn btn-outline-primary form-control-file" target="_blank" download="equivalencies.csv">
                             {"⇩ Download Equivalencies"}
                         </a>
                     </div>
@@ -68,20 +68,20 @@ export function DownloadModalContent() {
                     <hr/>
                     <h6 class="text-muted">Backup Database</h6>
                     <div class="form-group">
-                        <a href="/admin/database" class="btn btn-outline-primary form-control-file" target="_blank" download="ExchangeApprovalsDB.csv">
-                            {"⇩ Download Database"}
+                        <a href="/api/admin/applications" class="btn btn-outline-primary form-control-file" target="_blank" download="ExchangeApprovalsDB.json">
+                            {"⇩ Download Applications"}
                         </a>
                     </div>
                     <div class="form-group">
                         <label class="btn btn-outline-danger form-control-file">
-                            {"⇧ Upload Database"}
-                            <input name="Database" type="file" onchange={uploadNewDB} hidden />
+                            {"⇧ Upload Applications"}
+                            <input name="applications" type="file" onchange={uploadNewDB} hidden />
                         </label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    {/* <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button> */}
                 </div>
             </div>
         );
