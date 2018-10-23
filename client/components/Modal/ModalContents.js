@@ -30,8 +30,24 @@ export function DownloadModalContent() {
         });
     }
 
-    function uploadNewDB() {
-
+    function uploadNewDB(event) {
+        const file = event.target.files[0];
+        var data = new FormData();
+        data.append("applications", file);
+        m.request({
+            method: "POST",
+            url: "/api/admin/applications",
+            data
+        })
+        .then(() => {
+            state.message = "Upload Successful.";
+            state.errors = [];
+        })
+        .catch(e => {
+            state.message = null;
+            state.errors = JSON.parse(e.message);
+            m.redraw();
+        });
     }
 
     function view() {

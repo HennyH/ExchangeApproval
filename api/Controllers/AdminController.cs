@@ -13,6 +13,7 @@ using System.Text;
 using ExchangeApproval.AdminTools;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace ExchangeApproval.Controllers
 {
@@ -85,9 +86,10 @@ namespace ExchangeApproval.Controllers
                 using (var stream = applications.OpenReadStream())
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 {
-                    JsonConvert.DeserializeObject<StudentApplication>(reader.ToString());
+                    var str = reader.ReadToEnd();
 
-                    // EquivalenceUnitSetsReader.UpdateEquivalenciesInDatabase(this._db, applications);
+                    StudentApplication[] js = JsonConvert.DeserializeObject<StudentApplication[]>(str);
+                    ApplicationsBackup.UpdateApplicationsDB(this._db, js);
                     return new StatusCodeResult((int)HttpStatusCode.NoContent);
                 }
             }
