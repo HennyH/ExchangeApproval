@@ -53,14 +53,13 @@ export default function StaffDecisionSearchSettingsPanel() {
         attrs: {
             studentOptions,
             studentOfficeOptions,
-            applicationStateOptions,
-            dateOptions
+            applicationStateOptions
         }
     }) {
         return (
             <form onsubmit={handleSubmit.bind(this, onsubmit)}>
                 <div class="row">
-                    <div class="col-lg-6 col-md-12 form-group">
+                    <div class="col-lg-4 col-md-12 form-group">
                         <label for="students">Students</label>
                         <Select2
                             field={state.form.students}
@@ -68,14 +67,14 @@ export default function StaffDecisionSearchSettingsPanel() {
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select students to filter to...',
-                                data: studentOptions.map(name => ({
-                                    id: name,
-                                    text: name
+                                data: studentOptions.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
                                 }))
                             }}
                         />
                     </div>
-                    <div class="col-lg-6 col-md-12 form-group">
+                    <div class="col-lg-5 col-md-12 form-group">
                         <label>Student Office</label>
                         <Select2
                             field={state.form.studentOffices}
@@ -83,25 +82,19 @@ export default function StaffDecisionSearchSettingsPanel() {
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select unit coordinators to filter to...',
-                                data: studentOfficeOptions.map(name => ({
-                                    id: name,
-                                    text: name
+                                data: studentOfficeOptions.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
                                 }))
                             }}
                         />
                     </div>
-                </div>
-                <div class="row mx-1">
-                    <div class="col-sm-6 form-group">
+                    <div class="col-sm-1 form-group">
                         <label>Application Status</label>
                         <CheckboxGroup
                             field={state.form.applicationStates}
                             options={applicationStateOptions}
                         />
-                    </div>
-                    <div class="col form-group">
-                        <label>Filters</label>
-                        <CheckboxGroup field={state.form.date} options={dateOptions} />
                     </div>
                     <div class="col-auto form-group align-self-end">
                         <button type="submit" class="btn btn-primary">

@@ -2,7 +2,7 @@ import m from 'mithril'
 import classNames from 'classnames';
 
 import Layout from 'Components/Layout'
-import StaffDecisionSearchSettingsPanelContainer from './StaffDecisionSearchSettingsPanelContainer.js'
+import StaffDecisionSearchSettingsPanel from './StaffDecisionSearchSettingsPanel.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
 import Modal from '../Modal/Modal.js';
 import {DownloadModalContent, ApplicationModalContent} from '../Modal/ModalContents.js'
@@ -18,12 +18,25 @@ export default function StaffPage() {
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
-                            {/* <div class="card bg-light mt-3 mb-3">
+                            <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox Search Settings</div>
                                 <div class="card-body">
-                                    <StaffDecisionSearchSettingsPanelContainer onsubmit={console.log} />
+                                    <DataLoader
+                                        requests={{filters: () => m.request("/api/filters/staff")}}
+                                        render={({ loading, error, data: { filters } = {}}) => (
+                                            loading
+                                                ? <Spinner />
+                                                : (
+                                                    <StaffDecisionSearchSettingsPanel
+                                                        studentOptions={filters.studentOptions}
+                                                        applicationStateOptions={filters.applicationStatusOptions}
+                                                        studentOfficeOptions={filters.studentOfficeOptions}
+                                                    />
+                                                )
+                                        )}
+                                    />
                                 </div>
-                            </div> */}
+                            </div>
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox</div>
                                 <DataLoader
