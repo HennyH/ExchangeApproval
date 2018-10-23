@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
 
 namespace ExchangeApproval.Data
@@ -8,69 +9,38 @@ namespace ExchangeApproval.Data
     {
         public static IQueryable<string> QueryExchangeUniversities(ExchangeDbContext db, string searchText)
         {
-            return db.ExchangeApplicationUnitSets
+            return db.StudentApplications
                 .Select(s => s.ExchangeUniversityName)
                 .Where(n => searchText == null || n.Contains(searchText))
                 .Distinct();
         }
 
-        public static IQueryable<UnitSetDecisionVM> QueryUnitApprovalDecisions(
+        public static IQueryable<UnitSet> QueryUnitSets(
                 ExchangeDbContext db,
                 IReadOnlyList<string> universityNames = null,
                 IReadOnlyList<UWAUnitLevel> uwaUnitLevels = null
             )
         {
-            var query = db.ExchangeApplicationUnitSets.AsQueryable();
+            return db.UnitSets
+                .Where(a =>
+                    universityNames == null ||
+                    universityNames.Count() == 0
+                    || universityNames.Contains(a.ExchangeUniversityName))
+                .Where(us =>
+                        uwaUnitLevels == null ||
+                        uwaUnitLevels.Count() == 0 ||
+                        uwaUnitLevels.Contains(us.EquivalentUWAUnitLevel.Value));
+        }
 
-            if (universityNames != null && universityNames.Count > 0)
-            {
-                query = query.Where(s => universityNames.Any(n => s.ExchangeUniversityName == n));
-            }
-            if (uwaUnitLevels != null && uwaUnitLevels.Count > 0)
-            {
-                query = query.Where(s => s.EquivalentUWAUnitLevel.HasValue && uwaUnitLevels.Contains(s.EquivalentUWAUnitLevel.Value));
-            }
-
-            return query
-                .GroupBy(s => new { s.UWAUnits, s.ExchangeUnits, s.ExchangeUniversityName })
-                .SelectMany(g => g.Distinct())
-                .OrderByDescending(s => s.LastUpdatedAt)
-                .ThenByDescending(s => s.ExchangeUniversityName)
-                .Select(s => new UnitSetDecisionVM
-                {
-                    UnitSetId = s.Id,
-                    LastUpdatedAt = s.LastUpdatedAt,
-                    Approved =
-                        (s.RequiresEquivalenceDecision && s.IsEquivalent == true)
-                        || (!s.RequiresEquivalenceDecision && s.EquivalentUWAUnitLevel != UWAUnitLevel.Zero),
-                    ExchangeUniversityName = s.ExchangeUniversityName,
-                    ExchangeUniversityHref = s.ExchangeUniversityHref,
-                    ExchangeUnits = s.ExchangeUnits.Select(u => new UnitVM
-                    {
-                        UniversityName = s.ExchangeUniversityName,
-                        UniversityHref = s.ExchangeUniversityHref,
-                        UnitCode = u.Code,
-                        UnitName = u.Title,
-                        UnitHref = u.Href
-                    }).ToList(),
-                    UWAUnits = s.UWAUnits.Select(u => new UnitVM
-                    {
-                        UniversityName = "University of Western Australia",
-                        UniversityHref = "https://uwa.edu.au",
-                        UnitCode = u.Code,
-                        UnitName = u.Title,
-                        UnitHref = u.Href,
-                    }).ToList(),
-                    EquivalentUnitLevel = s.EquivalentUWAUnitLevel == null
-                        ? null
-                        : new SelectOption<UWAUnitLevel>(s.EquivalentUWAUnitLevel.Value, true)
-                });
+        public static IQueryable<StudentApplication> QueryApplications(ExchangeDbContext db)
+        {
+            return db.StudentApplications.AsQueryable();
         }
 
         public static bool QueryIsValidStaffLogon(ExchangeDbContext db, string email, string password)
         {
             var user = db.StaffLogons
-                .Where(l => l.Email == email)
+                .Where(l => l.Username == email)
                 .Select(l => new { l.Salt, l.PasswordHash })
                 .FirstOrDefault();
             if (user == null)

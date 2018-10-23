@@ -127,7 +127,6 @@ export const ApplicationSearchData = {
     hasSearched: false
 }
 
-
 // EMAIL DATA + CLIPBOARD LOGIC AND DATA STRUCTURE
 export const EmailData = {
     Form: null,

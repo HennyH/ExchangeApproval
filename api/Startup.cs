@@ -15,11 +15,18 @@ using System;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json.Converters;
+using ExchangeApproval.AdminTools;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using System.Linq;
 
 namespace ExchangeApproval
 {
     public class Startup
     {
+        public static readonly LoggerFactory SqlLoggerFactory = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
+
         private bool EnableCORS { get; set; } = false;
 
         public Startup(IConfiguration configuration)
@@ -64,7 +71,22 @@ namespace ExchangeApproval
             services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ExchangeDbContext>(options =>
             {
-                options.UseInMemoryDatabase("ExchangeDb");
+                var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                if (herokuDbUrl != null)
+                {
+                    var (_, connectionString) = DatabaseUrlHelpers.ParseDatabaseUrl(herokuDbUrl);
+                    options.UseMySql(connectionString);
+                }
+                else
+                {
+                    options.UseInMemoryDatabase("ExchangeDb");
+                    options.ConfigureWarnings(warningBuilder =>
+                    {
+                        warningBuilder.Ignore(InMemoryEventId.TransactionIgnoredWarning);
+                    });
+                    // options.UseLoggerFactory(SqlLoggerFactory);
+                }
+                options.UseLazyLoadingProxies();
             });
         }
 
@@ -100,7 +122,15 @@ namespace ExchangeApproval
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var db = scope.ServiceProvider.GetService<ExchangeDbContext>();
-                db.Database.EnsureCreated();
+                if (db.Database.IsInMemory())
+                {
+                    db.Database.EnsureCreated();
+                    SeedSampleData.SeedDatabase(db);
+                }
+                else
+                {
+                    db.Database.Migrate();
+                }
             }
         }
     }

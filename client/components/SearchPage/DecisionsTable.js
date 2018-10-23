@@ -98,7 +98,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
             {
                 title: COLUMN_NAMES.Approved,
                 data: "approved",
-                render: (data, type, row, meta) => data ? "✅" : data == null ? "💭" : "❌"
+                render: (data, type, row, meta) => data ? "✅" : "❌"
             },
             {
                 title: COLUMN_NAMES.Cart,
@@ -115,13 +115,13 @@ export function makeDecisionsTableConfig(decisions, headers) {
 
 export default function DecisionsTable() {
 
-    function view({ attrs: { decisions, onAddToCart, headers = null }}) {
+    function view({ attrs: { decisions, onAddToCart, headers = null } }) {
         return (
             <DataTable
                 id="decisions-table"
                 config={makeDecisionsTableConfig(decisions, headers)}
                 setup={(id, datatable) => {
-                    $(`#${id} tbody`).on('click', 'button', function(event) {
+                    $(`#${id} tbody`).on('click', 'button', function (event) {
                         const decision = datatable.row($(event.target).parents('tr')).data();
                         onAddToCart(decision);
                     });
