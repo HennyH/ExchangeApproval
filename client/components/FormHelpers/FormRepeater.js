@@ -1,5 +1,6 @@
 import m from 'mithril'
 import classNames from 'classnames'
+import {ApplicationData} from '../ViewData'
 
 const noop = () => {}
 let NEXT_ID = 1;
@@ -32,9 +33,9 @@ export function FormRepeater() {
         dom: ref
     }) {
         const numberOfForms = field.forms.length;
-        const validationClass = readonly
-            ? ''
-            : field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid';
+        const validationClass = (!readonly && ApplicationData.hasTriedToSubmit)
+            ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
+            : '';
         const error = field.getError({ childForms: false });
         return (
             <div>

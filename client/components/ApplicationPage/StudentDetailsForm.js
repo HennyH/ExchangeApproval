@@ -14,9 +14,9 @@ export class StudentDetailsPowerForm extends Form {
         this.studentOffice = OptionsField.new({
 			multiple: false,
             options: [
-                {value: null, label: "Select your allocated Student Office"},
                 ...studentOfficeOptions
-            ]
+            ],
+            required: true
         });
         Form.new.call(() => this, config);
         this.config = config;

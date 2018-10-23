@@ -17,7 +17,7 @@ import { FormField, FormListField } from '../FormHelpers/Fields.js';
 import {ApplicationData, EmailData} from '../ViewData.js'
 
 export class ApplicationPowerForm extends Form {
-    constructor({ unitLevelOptions = [], studentOfficeOptions = [], staffView, ...config }) {
+    constructor({ unitLevelOptions = [], studentOfficeOptions = [], ...config }) {
         super(config);
         this.studentDetailsForm = new FormField({
             form: new StudentDetailsPowerForm({studentOfficeOptions})
@@ -29,8 +29,7 @@ export class ApplicationPowerForm extends Form {
             factory: ({ ...config } = {}) => {
                 const form = new UnitSetPowerForm({
                     ...config,
-                    unitLevelOptions,
-                    staffView
+                    unitLevelOptions
                 });
                 return form;
             },
@@ -44,7 +43,6 @@ export class ApplicationPowerForm extends Form {
 export default function ApplicationForm() {
 
     const state = {
-        hasTriedToSubmit: false,
         form: null
     };
 
@@ -63,8 +61,8 @@ export default function ApplicationForm() {
     function view({
         attrs: { staffView, onSubmit }
     }) {
-        const validationClass = state.hasTriedToSubmit
-            ? (form.isValid() ? 'is-valid' : 'is-invalid')
+        const validationClass = ApplicationData.hasTriedToSubmit
+            ? (state.form.isValid() ? 'is-valid' : 'is-invalid')
             : '';
         const error = "This form is not valid. Please check all fields for validation errors";
         const success = "Form submitted successfully!"
@@ -135,7 +133,7 @@ export default function ApplicationForm() {
     }
 
     function handleSubmit(form, success, onSubmit) {
-        state.hasTriedToSubmit = true;
+        ApplicationData.hasTriedToSubmit = true;
         if (form.isValid()) {
             // TODO: Push to application db
             alert(success);
