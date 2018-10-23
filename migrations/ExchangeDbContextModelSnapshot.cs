@@ -42,10 +42,6 @@ namespace ExchangeApproval.Migrations
                     b.Property<int>("StudentApplicationId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CompletedAt");
-
-                    b.Property<DateTime>("ExchangeDate");
-
                     b.Property<string>("ExchangeUniversityCountry");
 
                     b.Property<string>("ExchangeUniversityHref");
@@ -76,8 +72,6 @@ namespace ExchangeApproval.Migrations
                     b.Property<int>("UnitSetId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CompletedAt");
-
                     b.Property<int?>("EquivalentUWAUnitLevel");
 
                     b.Property<string>("ExchangeUniversityCountry");
@@ -90,11 +84,7 @@ namespace ExchangeApproval.Migrations
 
                     b.Property<bool?>("IsEquivalent");
 
-                    b.Property<DateTime>("LastUpdatedAt");
-
                     b.Property<int?>("StudentApplicationId");
-
-                    b.Property<DateTime>("SubmittedAt");
 
                     b.HasKey("UnitSetId");
 
@@ -125,7 +115,7 @@ namespace ExchangeApproval.Migrations
                     b.ToTable("StaffLogons");
 
                     b.HasData(
-                        new { Id = 1, PasswordHash = "InAdOAPwcGKRUuWmechPgSW7oKTL9rdL7YwnZWl8HP0=", Role = "StudentOffice", Salt = new byte[] { 228, 229, 226, 199, 166, 209, 206, 69, 214, 2, 152, 38, 135, 211, 129, 129 }, Username = "admin" }
+                        new { Id = 1, PasswordHash = "siD36VF+8Kbt7QnBd6iwNuWLZLjb0GUfgRAxLP2lNc8=", Role = "StudentOffice", Salt = new byte[] { 25, 219, 44, 17, 72, 57, 55, 150, 4, 103, 114, 160, 215, 255, 235, 232 }, Username = "admin" }
                     );
                 });
 

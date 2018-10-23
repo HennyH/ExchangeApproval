@@ -71,7 +71,8 @@ namespace ExchangeApproval
             services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ExchangeDbContext>(options =>
             {
-                var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL")
+                    ?? Environment.GetEnvironmentVariable("JAWSDB_URL");
                 if (herokuDbUrl != null)
                 {
                     var (_, connectionString) = DatabaseUrlHelpers.ParseDatabaseUrl(herokuDbUrl);
