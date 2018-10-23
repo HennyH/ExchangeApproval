@@ -5,15 +5,6 @@ import ApplicationForm, { ApplicationPowerForm } from './ApplicationForm'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import {ApplicationSearchData, ApplicationData} from '../ViewData'
 
-// const applicationPowerForm = new ApplicationPowerForm({
-//     staffView: false,
-//     onChange: showData,
-// })
-
-// function showData() {
-//     return console.log(applicationPowerForm ? JSON.stringify(applicationPowerForm.getData(), null, 4) : null);
-// }
-
 export default function ApplicationPage() {
 
     function oninit() {

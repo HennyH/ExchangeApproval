@@ -96,8 +96,8 @@ export var ApplicationModalContent = {
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <div class="">
-                        <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail(applicationPowerForm.getData())}>Send Application Results</button>
-                        <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText(applicationPowerForm.getData())}>Copy to Clipboard</button>
+                        <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>Send Application Results</button>
+                        <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>Copy to Clipboard</button>
                     </div>
                     <div class="">
                         <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
