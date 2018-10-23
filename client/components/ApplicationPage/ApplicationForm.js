@@ -14,7 +14,7 @@ import {
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
 import { FormField, FormListField } from '../FormHelpers/Fields.js';
-import {ApplicationData, EmailData} from '../ViewData.js'
+import { EmailData } from '../ViewData.js'
 
 export class ApplicationPowerForm extends Form {
     constructor({ unitLevelOptions = [], studentOfficeOptions = [], ...config }) {
@@ -42,117 +42,94 @@ export class ApplicationPowerForm extends Form {
 
 export default function ApplicationForm() {
 
-    const state = {
-        form: null
-    };
-
     function oninit(vnode) {
-        state.form = new ApplicationPowerForm({
-            staffView: vnode.attrs.staffView,
-            onChange: showData,
-            unitLevelOptions: vnode.attrs.unitLevelOptions,
-            studentOfficeOptions: vnode.attrs.studentOfficeOptions
-        });
-        EmailData.Form = (vnode.attrs.staffView ? state.form : null);
+        EmailData.Form = vnode.attrs.staffView ? vnode.attrs.form : null;
         reRegisterCartChangeHandler(vnode);
-        updateUnitSetsFromCart(state.form, getItemsInCart());
+        updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
     }
 
     function view({
-        attrs: { staffView, onSubmit }
+        attrs: { form, staffView, onSubmit }
     }) {
-        const validationClass = ApplicationData.hasTriedToSubmit
-            ? (state.form.isValid() ? 'is-valid' : 'is-invalid')
-            : '';
-        const error = "This form is not valid. Please check all fields for validation errors";
-        const success = "Form submitted successfully!"
+        // const validationClass = ApplicationData.hasTriedToSubmit
+        //     ? (form.isValid() ? 'is-valid' : 'is-invalid')
+        //     : '';
 
         return (
             <div class="container-fluid">
-                    <div class="card-body">
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-header">Student Details</div>
-                            <div class="card-body">
-                                <StudentDetailsForm form={state.form.studentDetailsForm} staffView={staffView} />
-                            </div>
+                <div class="card-body">
+                    <div class="card bg-light mt-3 mb-3">
+                        <div class="card-header">Student Details</div>
+                        <div class="card-body">
+                            <StudentDetailsForm form={form.studentDetailsForm} staffView={staffView} />
                         </div>
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-header">Exchange University Details</div>
-                            <div class="card-body">
-                                <ExchangeUniversityDetailsForm form={state.form.exchangeUniversityForm} staffView={staffView} />
-                            </div>
-                        </div>
-                        <div class="card bg-light mt-3 mb-3">
-                            <div class="card-header">Unit Approval Requests</div>
-                            <div class="card-body">
-                                <FormRepeater
-                                    field={state.form.unitSetForms}
-                                    render={UnitSetForm}
-                                    addItemText="Add Unit Set"
-                                    class="mt-3"
-                                    staffView = {staffView}
-                                    secondButton = {unitSearchButton()}
-                                />
-                            </div>
-                        </div>
-                        {submitButton(staffView, validationClass, error, success, state.form, onSubmit)}
                     </div>
+                    <div class="card bg-light mt-3 mb-3">
+                        <div class="card-header">Exchange University Details</div>
+                        <div class="card-body">
+                            <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} staffView={staffView} />
+                        </div>
+                    </div>
+                    <div class="card bg-light mt-3 mb-3">
+                        <div class="card-header">Unit Approval Requests</div>
+                        <div class="card-body">
+                            <FormRepeater
+                                field={form.unitSetForms}
+                                render={UnitSetForm}
+                                addItemText="Add Unit Set"
+                                class="mt-3"
+                                staffView = {staffView}
+                                secondButton = {
+                                    <button
+                                        class="btn btn-primary"
+                                        class={"mb-1 mr-3 btn btn-primary"}
+                                        oncreate={m.route.link}
+                                        href="/search"
+                                    >
+                                            Search for Units
+                                    </button>
+                                }
+                            />
+                        </div>
+                    </div>
+                    {/* {!staffView && (
+                        <div class="card bg-light mt-3 mb-3">
+                            <div class="card-body">
+                                <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, onSubmit)}>
+                                    Submit Application
+                                </button>
+                                <input type="hidden" class={classNames("form-control")} />
+                                <span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
+                                    {error}
+                                </span>
+                            </div>
+                        </div>
+                    )} */}
+                </div>
             </div>
         )
     }
 
-    function unitSearchButton() {
-        return(
-            <button
-                class="btn btn-primary"
-                class={"mb-1 mr-3 btn btn-primary"}
-                oncreate={m.route.link}
-                href="/search"
-            >
-                    Search for Units
-            </button>
-        )
-    }
+    // function handleSubmit(form, onSubmit) {
+    //     ApplicationData.hasTriedToSubmit = true;
+    //     const error = "This form is not valid. Please check all fields for validation errors";
+    //     const success = "Form submitted successfully!"
+    //     if (form.isValid()) {
+    //         // TODO: Push to application db
+    //         alert(success);
+    //         ApplicationData.hasSubmitted = true;
+    //         onSubmit(form);
+    //         console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
+    //     } else {
+    //         console.log("ERRORS", form.getError());
+    //     }
+    // }
 
-    function submitButton(staffView, validationClass, error, success, form, onSubmit) {
-        if (!staffView) {
-            return (
-                <div class="card bg-light mt-3 mb-3">
-                    <div class="card-body">
-                        <button type="button" class="btn btn-success" style="width: 100%" onclick={() => handleSubmit(form, success, onSubmit)}>
-                            Submit Application
-                        </button>
-                        <input type="hidden" class={classNames("form-control", validationClass)} />
-                        <span class="invalid-feedback mt-3 mb-2" style="width: 100%; text-align: center; font-size: 100%">
-                            {error}
-                        </span>
-                    </div>
-                </div>
-            )
-        }
-    }
-
-    function handleSubmit(form, success, onSubmit) {
-        ApplicationData.hasTriedToSubmit = true;
-        if (form.isValid()) {
-            // TODO: Push to application db
-            alert(success);
-            ApplicationData.hasSubmitted = true;
-            onSubmit(form);
-            console.log("APPLICATION SUBMITTED", JSON.stringify(form.getData(), null, 4));
-        } else {
-            console.log("ERRORS", form.getError());
-        }
-    }
-
-    function showData() {
-        return console.log(state.form ? JSON.stringify(state.form.getData(), null, 4) : null);
-    }
 
     /* cart functionality */
     function onbeforeupdate(vnode, old) {
         reRegisterCartChangeHandler(vnode);
-        updateUnitSetsFromCart(state.form, getItemsInCart());
+        updateUnitSetsFromCart(vnode.attrs.form, getItemsInCart());
     }
 
     function reRegisterCartChangeHandler(vnode) {
@@ -160,7 +137,7 @@ export default function ApplicationForm() {
         addCartEventHandler(
             CART_EVENTS.CART_CHANGED,
             "application-form",
-            items => updateUnitSetsFromCart(state.form, items)
+            items => updateUnitSetsFromCart(vnode.attrs.form, items)
         );
     }
 
@@ -203,6 +180,6 @@ export default function ApplicationForm() {
         }
     }
 
-    return { oninit, onbeforeupdate, view }
+    return { oninit, onbeforeupdate,  view }
 }
 

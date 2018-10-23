@@ -12,6 +12,7 @@ export class ExchangeUniversityDetailsPowerForm extends Form {
             regex: /^https?\:\/\//,
             regexErrorMessage: 'Enter a URL of the from https://...'
         });
+        this.universityCountry = StringField.new({ required: true });
         Form.new.call(() => this, config);
         this.config = config;
     }
@@ -27,6 +28,12 @@ export function ExchangeUniversityDetailsForm() {
 
         return (
             <form novalidate>
+                <div class="form-group row mx-1">
+                    <label class="col-form-label col-3" for="email">Exchange University Country: </label>
+                    <div class="input-group col-8">
+                        <Input field={form.universityCountry} placeholder="University Country" type="text" readOnly = {staffView} />
+                    </div>
+                </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="email">Exchange University Name: </label>
                     <div class="input-group col-8">

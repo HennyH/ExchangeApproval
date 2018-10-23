@@ -18,7 +18,7 @@ export default function RadioButtonGroup() {
         options = options || field.config.options || [];
         const defaultOption = field.defaultValue;
         const name = field.fieldName;
-        const validationClass = (!readonly && ApplicationData.hasTriedToSubmit)
+        const validationClass = !readonly
             ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
             : '';
         const selectedOption = field.getData();

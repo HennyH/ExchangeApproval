@@ -8,7 +8,10 @@ import DataLoader from 'Components/DataLoader.js'
 
 export default function ApplicationPage() {
 
-    const state = { hasSubmittedForm: false }
+    const state = {
+        hasSubmittedForm: false,
+        applicationForm: null
+    };
 
     function fetchFilters() {
         return m.request({
@@ -17,43 +20,49 @@ export default function ApplicationPage() {
         });
     }
 
+    function handleFormSubmitted() {
+        state.hasSubmittedForm = true;
+        m.redraw();
+    }
+
     function view() {
         return (
-        <Layout>
-            {state.hasSubmittedForm
-                ? (
-                    <div class="card my-3">
-                        <div class="card-header">Application complete!</div>
-                        <div class="card-body text-center">
-                            <h6>Thank you for your application. </h6>
-                            <br/>Your allocated student office staff will process the application and get back to you soon!<br/><br/>
-                            <em>Please check your student email regularly.</em>
-                        </div>
-                    </div>
-                ) : (
-                    <DataLoader
-                        requests={{filters: fetchFilters}}
-                        render={({ loading, errored, data: { filters } = {}}) => (
-                            loading
-                            ? <Spinner style="top: calc(50% - 32px); left: calc(50% - 32px); position: absolute;" />
-                            : <div class="container-fluid">
-                                <div class="card my-3">
-                                    <div class="card-header"> Exchange Application</div>
-                                    <ApplicationForm
-                                        unitLevelOptions = {filters.unitLevelOptions}
-                                        studentOfficeOptions = {filters.studentOfficeOptions}
-                                        staffView ={window.LOGGED_IN}
-                                        onSubmit={() => {
-                                            state.hasSubmittedForm = true;
-                                            m.redraw();
-                                        }}
-                                    />
-                                </div>
+            <Layout>
+                {state.hasSubmittedForm
+                    ? (
+                        <div class="card my-3">
+                            <div class="card-header">Application complete!</div>
+                            <div class="card-body text-center">
+                                <h6>Thank you for your application. </h6>
+                                <br/>Your allocated student office staff will process the application and get back to you soon!<br/><br/>
+                                <em>Please check your student email regularly.</em>
                             </div>
-                        )}
-                    />
-                )}
-        </Layout>
+                        </div>
+                    ) : (
+                        <DataLoader
+                            requests={{filters: fetchFilters}}
+                            render={({ loading, errored, data: { filters } = {}}) => {
+                                if (loading || errored) {
+                                    return <Spinner />
+                                }
+                                if (state.applicationForm === null) {
+                                    state.applicationForm = new ApplicationPowerForm({
+                                        unitLevelOptions: filters.unitLevelOptions,
+                                        studentOfficeOptions: filters.studentOfficeOptions,
+                                    });
+                                }
+                                return (
+                                    <div class="container-fluid">
+                                        <div class="card my-3">
+                                            <div class="card-header"> Exchange Application</div>
+                                            <ApplicationForm form={state.applicationForm} onSubmit={handleFormSubmitted} />
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        />
+                    )}
+            </Layout>
         )
     }
 

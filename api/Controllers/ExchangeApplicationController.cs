@@ -6,6 +6,7 @@ using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeApproval.Controllers
 {
@@ -30,7 +31,8 @@ namespace ExchangeApproval.Controllers
                 StudentNumber = form.StudentDetailsForm.Email,
                 Major1st = form.StudentDetailsForm.Major,
                 Major2nd = form.StudentDetailsForm.Major2nd,
-                ExchangeUniversityCountry = null,
+                StudentOffice = form.StudentDetailsForm.StudentOffice.Value,
+                ExchangeUniversityCountry = form.ExchangeUniversityForm.UniversityCountry,
                 ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
                 ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
                 Notes = null,
@@ -39,10 +41,10 @@ namespace ExchangeApproval.Controllers
                     ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
                     ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
                     IsEquivalent = asStaff
-                        ? f.StaffApprovalForm.IsEquivalent.IsApproved
+                        ? f.StaffApprovalForm.IsEquivalent.Value
                         : (bool?)null,
                     IsContextuallyApproved = asStaff
-                        ? f.StaffApprovalForm.IsContextuallyApproved.IsApproved
+                        ? f.StaffApprovalForm.IsContextuallyApproved.Value
                         : (bool?)null,
                     EquivalentUWAUnitLevel = asStaff
                         ? (UWAUnitLevel?)Enum.Parse(typeof(UWAUnitLevel), f.StaffApprovalForm.EquivalentUnitLevel.Label)
@@ -71,6 +73,72 @@ namespace ExchangeApproval.Controllers
                 }
             }
             return newApplication;
+        }
+
+        [HttpGet]
+        public ActionResult GetAppliction(int id)
+        {
+            var application = this._db.StudentApplications
+                .Include(a => a.UnitSets)
+                .Single(a => a.StudentApplicationId == id);
+            var form = new ApplicationFormVM
+            {
+                ApplicationId = application.StudentApplicationId,
+                StudentDetailsForm = new StudentDetailsFormVM
+                {
+                    Name = application.StudentName,
+                    Degree = application.Degree,
+                    Email = application.StudentNumber,
+                    Major = application.Major1st,
+                    Major2nd = application.Major2nd,
+                    StudentOffice = new SelectOption<string>
+                    {
+                        Value = application.StudentOffice,
+                        Label = application.StudentOffice,
+                        Selected = application.StudentOffice != null
+                    }
+                },
+                ExchangeUniversityForm = new ExchangeUniversityFormVM
+                {
+                    UniversityCountry = application.ExchangeUniversityCountry,
+                    UniversityName = application.ExchangeUniversityName,
+                    UniversityHomepage = application.ExchangeUniversityHref
+                },
+                UnitSetForms = application.UnitSets.Select(us => new UnitSetFormVM
+                {
+                    ExchangeUnitsForm = us.ExchangeUnits.Select(u => new UnitFormVM
+                    {
+                        UnitName = u.Title,
+                        UnitCode = u.Code,
+                        UnitHref = u.Href
+                    }).ToList(),
+                    UWAUnitsFormForm = us.UWAUnits.Select(u => new UnitFormVM
+                    {
+                        UnitName = u.Title,
+                        UnitCode = u.Code,
+                        UnitHref = u.Href
+                    }).ToList(),
+                    StaffApprovalForm = new StaffApprovalFormVM
+                    {
+                        EquivalentUnitLevel = new SelectOption<UWAUnitLevel?>(
+                            us.EquivalentUWAUnitLevel,
+                            us.EquivalentUWAUnitLevel?.ToString() ?? "Pending",
+                            us.EquivalentUWAUnitLevel.HasValue
+                        ),
+                        IsContextuallyApproved = new SelectOption<bool?>(
+                            us.IsContextuallyApproved,
+                            us.IsContextuallyApproved?.ToString() ?? "Pending",
+                            us.IsContextuallyApproved.HasValue
+                        ),
+                        IsEquivalent = new SelectOption<bool?>(
+                            us.IsEquivalent,
+                            us.IsEquivalent?.ToString() ?? "Pending",
+                            us.IsEquivalent.HasValue
+                        )
+                    }
+                }).ToList()
+            };
+            return Json(form);
         }
 
         [HttpPost("submit")]

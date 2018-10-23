@@ -29,36 +29,6 @@ export const CartData = {
     ]
 }
 
-export const Data = {
-
-    applications: {
-        loading: false,
-        list: [],
-        fetch: ({ universityNames = [], uwaContextTypes = [], uwaUnitLevels = [] } = {}) => {
-            ApplicationSearchData.applications.loading = true;
-            // const qs = m.buildQueryString({
-            //     universityNames,
-            //     uwaContextTypes,
-            //     uwaUnitLevels
-            // });
-            m.request({
-                method: "GET",
-                url: `/api/requests/applications?${qs}`
-            }).then(items => {
-                ApplicationSearchData.applications.list = items;
-                ApplicationSearchData.applications.loading = false;
-            });
-        }
-    },
-}
-
-export const ApplicationData = {
-    hasTriedToSubmit: false,
-    hasSubmitted: false,
-    pushApplication: () => {},
-    getApplication: () => {},
-    config: null
-}
 
 
 // EMAIL DATA + CLIPBOARD LOGIC AND DATA STRUCTURE

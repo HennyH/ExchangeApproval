@@ -71,8 +71,6 @@ export default function StaffPage() {
                         </div>
                     </div>
                 </div>
-                {ModalState.ApplicationModal.selectedApplication ? <ApplicationModal/> : <div/>}
-                {ModalState.DownloadModal.visible ? <DownloadModal/> : <div/>}
             </Layout>
         );
     }

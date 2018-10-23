@@ -211,25 +211,21 @@ export class OptionsField extends Field {
         }
     }
 
-    setData(value) {
-        if (value instanceof HTMLCollection) {
-            value = Array.from(value);
+    setData(option) {
+        if (option instanceof HTMLCollection) {
+            option = Array.from(option);
         }
         /* We need to normalize first because behind the scenes powerform
          * uses JSON.stringify on our value. If we are setting data with a
          * HTMLOptionElement we are in trouble because it is recursive and
          * so doesn't play well with this approach...
          */
-        let normalizedValue = value;
-        if (value instanceof HTMLOptionElement) {
-            normalizedValue = {
-                label: value.label,
-                value: value.value,
-                selected: value.selected
-            }
-        } if (Array.isArray(value)) {
-            normalizedValue = value.map(
-                ({ label, value, selected }) => ({ label, value, selected })
+        let normalizedValue = option;
+        if ((option !== null && option !== undefined) && (option instanceof HTMLOptionElement || !Array.isArray(option))) {
+            normalizedValue = this.config.options.find(o => o.value === option.value || o.label === option.label);
+        } if (Array.isArray(option)) {
+            normalizedValue = option.map(
+                opt => this.config.options.find(o => o.value === opt.value || o.label === opt.label)
             );
         }
 

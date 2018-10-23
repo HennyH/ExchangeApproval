@@ -28,7 +28,8 @@ export class UnitPowerForm extends Form {
 }
 
 export class StaffUnitSetApprovalPowerForm extends Form {
-    constructor({ unitLevelOptions, ...config }) {
+    constructor({
+            unitLevelOptions, ...config }) {
         super(config);
         this.equivalentUnitLevel = OptionsField.new({
             required: true,
@@ -174,7 +175,7 @@ export function UnitSetForm() {
                             {title}
                         </div>
                         <div class="col" style="width: 3em">
-                            {(staffView) ? 
+                            {(staffView) ?
                                 <span>
                                     <button class="btn-sm ml-2 btn-outline-primary float-right" onclick={() => EmailData.Equivalence.SendEmail(formIndex)}>Email Equivalence</button>
                                     <button class="btn-sm ml-2 btn-outline-secondary float-right" onclick={() => EmailData.Equivalence.CopyText(formIndex)}>Copy to Clipboard</button>
@@ -187,7 +188,7 @@ export function UnitSetForm() {
                                             }
                                             onDelete();
                                         }}
-                                    /> 
+                                    />
                                 </span>
                             }
                         </div>
