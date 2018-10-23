@@ -28,6 +28,7 @@ export function FormRepeater() {
             defaultConfig = {},
             staffView,
             secondButton = <div/>,
+            instructionText,
             ...formAttrs
         },
         dom: ref
@@ -78,6 +79,7 @@ export function FormRepeater() {
                                         {addItemText}
                                 </button>
                                 {secondButton}
+                                {numberOfForms == 0 ? <small class="text-muted mt-1">{instructionText}</small> : null }
                             </div>
                         )
                     }
