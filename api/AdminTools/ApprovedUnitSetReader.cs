@@ -64,14 +64,10 @@ namespace ExchangeApproval.AdminTools
                 {
                     return (errors, null);
                 }
-                var now = DateTime.UtcNow;
                 var approvedUnitSets = rows
                     .GroupBy(r => r.UnitSetId)
                     .Select(g => new UnitSet
                     {
-                        SubmittedAt = now,
-                        LastUpdatedAt = now,
-                        CompletedAt = now,
                         IsEquivalent = true,
                         IsContextuallyApproved = null,
                         EquivalentUWAUnitLevel = g.First().EquivalentUWAUnitLevel,

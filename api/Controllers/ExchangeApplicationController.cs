@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExchangeApproval.Controllers
@@ -17,16 +19,13 @@ namespace ExchangeApproval.Controllers
             this._db = db;
         }
 
-        [HttpPost]
-        public ActionResult SubmitApplication([FromBody]ApplicationFormVM form)
+        private static StudentApplication MapApplicationFormToApplication(ExchangeDbContext db, ApplicationFormVM form, bool asStaff)
         {
-            Console.WriteLine(form);
             var now = DateTime.UtcNow;
-            var application = new StudentApplication
+            var newApplication = new StudentApplication
             {
                 SubmittedAt = now,
                 LastUpdatedAt = now,
-                CompletedAt  = now,
                 StudentName = form.StudentDetailsForm.Name,
                 StudentNumber = form.StudentDetailsForm.Email,
                 Major1st = form.StudentDetailsForm.Major,
@@ -39,12 +38,15 @@ namespace ExchangeApproval.Controllers
                 {
                     ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
                     ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
-                    SubmittedAt = now,
-                    LastUpdatedAt = now,
-                    CompletedAt  = now,
-                    IsEquivalent = null,
-                    IsContextuallyApproved = null,
-                    EquivalentUWAUnitLevel = null,
+                    IsEquivalent = asStaff
+                        ? f.StaffApprovalForm.IsEquivalent.IsApproved
+                        : (bool?)null,
+                    IsContextuallyApproved = asStaff
+                        ? f.StaffApprovalForm.IsContextuallyApproved.IsApproved
+                        : (bool?)null,
+                    EquivalentUWAUnitLevel = asStaff
+                        ? (UWAUnitLevel?)Enum.Parse(typeof(UWAUnitLevel), f.StaffApprovalForm.EquivalentUnitLevel.Label)
+                        : (UWAUnitLevel?)null,
                     ExchangeUnits = f.ExchangeUnitsForm.Select(u => new ExchangeUnit
                     {
                         Code = u.UnitCode,
@@ -57,11 +59,46 @@ namespace ExchangeApproval.Controllers
                         Title = u.UnitName,
                         Href = u.UnitHref
                     }).ToList() ?? new List<UWAUnit>(),
-                }).ToList()
+                }).ToList(),
             };
+            /* Preserve when the student submitted the application */
+            if (asStaff && form.ApplicationId.HasValue)
+            {
+                var oldApplication = db.StudentApplications.FirstOrDefault(a => a.StudentApplicationId == form.ApplicationId);
+                if (oldApplication != null)
+                {
+                    newApplication.SubmittedAt = oldApplication.SubmittedAt;
+                }
+            }
+            return newApplication;
+        }
+
+        [HttpPost("submit")]
+        public ActionResult SubmitApplication([FromBody]ApplicationFormVM form)
+        {
+            var application = MapApplicationFormToApplication(this._db, form, asStaff: false);
             this._db.Add(application);
             this._db.SaveChanges();
             return Json(form);
+        }
+
+        [Authorize]
+        [HttpPost("update")]
+        public ActionResult UpdateApplication([FromBody]ApplicationFormVM form)
+        {
+            var now = DateTime.UtcNow;
+
+            using (var transaction = this._db.Database.BeginTransaction())
+            {
+                var newVersion = MapApplicationFormToApplication(this._db, form, asStaff: true);
+                var oldVersion = this._db.StudentApplications.FirstOrDefault(a => a.StudentApplicationId == form.ApplicationId);
+                this._db.Remove(oldVersion);
+                this._db.Add(newVersion);
+                this._db.SaveChanges();
+                transaction.Commit();
+            }
+
+            return new StatusCodeResult((int)HttpStatusCode.NoContent);
         }
     }
 }

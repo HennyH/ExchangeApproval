@@ -35,7 +35,6 @@ namespace ExchangeApproval.Controllers
                     ExchangeUniversityName = us.ExchangeUniversityName,
                     ExchangeUniversityHref = us.ExchangeUniversityHref,
                     UnitSetId = us.UnitSetId,
-                    LastUpdatedAt = us.LastUpdatedAt,
                     Approved =
                         us.IsEquivalent.HasValue
                         && us.IsEquivalent.Value

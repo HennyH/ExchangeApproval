@@ -159,7 +159,6 @@ namespace ExchangeApproval.Data
         public int StudentApplicationId { get; set; }
         public DateTime SubmittedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
-        public DateTime CompletedAt { get; set; }
         public string StudentName { get; set; }
         public string StudentNumber { get; set; }
         public string Major1st { get; set; }
@@ -179,6 +178,22 @@ namespace ExchangeApproval.Data
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
         }
+
+        public static StudentApplicationStatus GetStatus(StudentApplication application)
+        {
+            if (application.UnitSets.All(us => !us.EquivalentUWAUnitLevel.HasValue && !us.IsEquivalent.HasValue && !us.IsContextuallyApproved.HasValue))
+            {
+                return StudentApplicationStatus.New;
+            }
+            if (application.UnitSets.All(us => us.EquivalentUWAUnitLevel.HasValue && us.IsEquivalent.HasValue && us.IsContextuallyApproved.HasValue))
+            {
+                return StudentApplicationStatus.Completed;
+            }
+            else
+            {
+                return StudentApplicationStatus.Incomplete;
+            }
+        }
     }
 
     public class UnitSet
@@ -190,9 +205,6 @@ namespace ExchangeApproval.Data
         public string ExchangeUniversityCountry { get; set; }
         public string ExchangeUniversityHref { get; set; }
         public string ExchangeUniversityName { get; set; }
-        public DateTime SubmittedAt { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
-        public DateTime CompletedAt { get; set; }
         public virtual ICollection<ExchangeUnit> ExchangeUnits { get; set; }
         public virtual ICollection<UWAUnit> UWAUnits { get; set; }
         public bool? IsEquivalent { get; set; }

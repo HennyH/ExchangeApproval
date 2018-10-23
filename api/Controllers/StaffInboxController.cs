@@ -19,25 +19,33 @@ namespace ExchangeApproval.Controllers
         }
 
         [Authorize]
-        [HttpGet("students")]
-        public ActionResult GetStudents()
+        [HttpGet]
+        public ActionResult GetInbox(
+            StudentApplicationStatus[] applicationStatuses,
+            string[] studentNumbers,
+            string[] studentOffices
+        )
         {
-            var students = this._db.StudentApplications
-                .Select(a => new { Name = a.StudentName, Number = a.StudentNumber })
-                .Distinct()
-                .Select(s => new SelectOption<string>(
-                    s.Number,
-                    $"{s.Name} ({s.Number})",
+            var applications = this._db.StudentApplications
+                .Where(a =>
+                    applicationStatuses == null
+                    || applicationStatuses.Count() == 0
+                    || applicationStatuses.Contains(StudentApplication.GetStatus(a)))
+                .ToList();
+            var inboxItems = applications.Select(a => new StaffInboxItemVM
+            {
+                StudentApplicationId = a.StudentApplicationId,
+                StudentName = a.StudentName,
+                StudentNumber = a.StudentNumber,
+                LastUpdatedAt = a.LastUpdatedAt,
+                ExchangeUniversity = a.ExchangeUniversityName,
+                StudentApplicationStatus = new SelectOption<StudentApplicationStatus>(
+                    StudentApplication.GetStatus(a),
+                    StudentApplication.GetStatus(a).ToString(),
                     false
-                ));
-            return Json(students);
-        }
-
-        [Authorize]
-        [HttpGet("s")]
-        public ActionResult GetStudentOffices()
-        {
-            return Json(ReferenceData.UWAStudentOffices);
+                )
+            });
+            return Json(inboxItems);
         }
     }
 }
