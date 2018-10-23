@@ -58,7 +58,7 @@ function UnitSearch() {
                     <div class="card-header">Search Results</div>
                         <DataLoader
                             settings={state.searchSettings}
-                            requests={{equivalencies: settings => fetchEquivalencies(settings)}}
+                            requests={{equivalencies: ({settings}) => fetchEquivalencies(settings)}}
                             render={({ loading, errored, data: { equivalencies } = {}}) => (
                                 <div class={classNames("card-body", loading ? "text-center" : "")}>
                                     {state.hasClickedSearch ?

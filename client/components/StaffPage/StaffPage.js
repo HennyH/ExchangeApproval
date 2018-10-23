@@ -57,7 +57,7 @@ export default function StaffPage() {
                                 <div class="card-header">Inbox</div>
                                 <DataLoader
                                     settings={state.inboxSearchSettings}
-                                    requests={{inbox: settings => fetchInbox(settings)}}
+                                    requests={{inbox: ({settings}) => fetchInbox(settings)}}
                                     render={({ loading, error, data: { inbox } = {}}) => (
                                         <div class={classNames("card-body", loading ? "text-center" : "")}>
                                             {loading
