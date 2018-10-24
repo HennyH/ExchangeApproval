@@ -11,6 +11,11 @@ function Navbar() {
         m.redraw();
     }
 
+    function logOut() {
+        window.LOGGED_IN=false;
+        m.route.set('/search');
+    }
+
     function view(vnode) {
         const currentRoute = m.route.get();
         const navLinks = (window.LOGGED_IN ?
@@ -46,12 +51,16 @@ function Navbar() {
                     <ul class="navbar-nav ml-auto">
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                {window.LOGGED_IN ?
+                            {window.LOGGED_IN ?
+                                <div class="dropdown-menu dropdown-menu-right">
                                     <button class="dropdown-item" onclick={toggleAdminModal}>Download / Upload Faculty List</button>
-                                :    <button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
-                                }
-                            </div>
+                                    <div class="dropdown-divider"/>
+                                    <button class="dropdown-item" onclick={()=>logOut()}>Log Out</button>
+                                </div>
+                                :<div class="dropdown-menu dropdown-menu-right">
+                                    <button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
+                                </div>
+                            }
                         </li>
                     </ul>
                 </div>
