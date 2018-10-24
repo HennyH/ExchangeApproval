@@ -222,13 +222,17 @@ export class OptionsField extends Field {
          */
         let normalizedValue = option;
         if ((option !== null && option !== undefined) && (option instanceof HTMLOptionElement || !Array.isArray(option))) {
-            normalizedValue = this.config.options.find(o => o.value === option.value || o.label === option.label);
+            /* The == here is important, we want strings to be coerced if nessacery for comparison */
+            normalizedValue = this.config.options.find(o => o.value == option.value || o.label === option.label);
         } if (Array.isArray(option)) {
+            /* The == here is important, we want strings to be coerced if nessacery for comparison */
             normalizedValue = option.map(
-                opt => this.config.options.find(o => o.value === opt.value || o.label === opt.label)
+                opt => this.config.options.find(o => o.value == opt.value || o.label === opt.label)
             );
         }
-
+        if (option && normalizedValue) {
+            normalizedValue.selected = option.selected
+        }
         super.setData(normalizedValue);
     }
 
@@ -254,7 +258,7 @@ export class OptionsField extends Field {
         /* Dedupe */
         .filter((o, i, self) => self.findIndex(x => x.value == o.value) === i)
         /* Remove ones that were just de-selected */
-        .filter(o => o.value != newOption.value);
+        .filter(o => o.value == newOption.value ? newOption.selected : o.selected);
 
         return value;
     }

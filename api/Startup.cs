@@ -87,7 +87,7 @@ namespace ExchangeApproval
                     {
                         warningBuilder.Ignore(InMemoryEventId.TransactionIgnoredWarning);
                     });
-                    // options.UseLoggerFactory(SqlLoggerFactory);
+                    options.UseLoggerFactory(SqlLoggerFactory);
                 }
                 options.UseLazyLoadingProxies();
             });

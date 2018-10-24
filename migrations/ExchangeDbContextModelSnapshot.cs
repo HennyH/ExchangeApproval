@@ -58,6 +58,8 @@ namespace ExchangeApproval.Migrations
 
                     b.Property<string>("Notes");
 
+                    b.Property<int>("Status");
+
                     b.Property<string>("StudentName");
 
                     b.Property<string>("StudentNumber");
@@ -119,7 +121,7 @@ namespace ExchangeApproval.Migrations
                     b.ToTable("StaffLogons");
 
                     b.HasData(
-                        new { Id = 1, PasswordHash = "fOqFsoq+hSQrVN2MBSVbpB3JV7pZ/C4wb18Vv3c8SWw=", Role = "StudentOffice", Salt = new byte[] { 101, 82, 68, 2, 116, 22, 37, 160, 111, 223, 89, 11, 63, 183, 156, 20 }, Username = "admin" }
+                        new { Id = 1, PasswordHash = "YL/Z1doeub21aTP9otLKlXIy2oDIQW6abpqE9H0rmjU=", Role = "StudentOffice", Salt = new byte[] { 76, 145, 232, 148, 83, 198, 180, 185, 99, 38, 111, 223, 60, 48, 215, 26 }, Username = "admin" }
                     );
                 });
 

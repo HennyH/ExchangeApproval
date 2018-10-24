@@ -148,7 +148,11 @@ function StaffEditApplicationModal() {
                             }}
                         >
                             {(showLoading
-                                ? <Spinner />
+                                ? (
+                                    <div class="text-center pt-3 pb-3">
+                                        <Spinner />
+                                    </div>
+                                )
                                 : <ApplicationForm form={state.applicationForm} staffView={true} />
                             )}
                         </Modal>

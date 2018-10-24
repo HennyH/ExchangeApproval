@@ -28,7 +28,7 @@ namespace ExchangeApproval.Controllers
             )
         {
             var unitSets = QueryUnitSets(this._db, universityNames, uwaUnitLevels).ToList();
-            return unitSets
+            var groups = unitSets
                 .Where(us => us.EquivalentUWAUnitLevel.HasValue)
                 .Select(us => new UnitSetDecisionVM
                 {
@@ -70,7 +70,8 @@ namespace ExchangeApproval.Controllers
                     ExchangeUnits = string.Join(',', d.ExchangeUnits.Select(u => u.UnitCode)),
                     UWAUnits = string.Join(',', d.UWAUnits.Select(u => u.UnitCode)),
                 })
-                .Select(g => g.OrderByDescending(d => d.LastUpdatedAt).First());
+                .ToList();
+            return groups.Select(g => g.OrderByDescending(d => d.LastUpdatedAt).First());
         }
     }
 }

@@ -5,7 +5,7 @@ import Styles from './RectangularSpinner.css'
 
 export default function RectangularSpinner() {
 
-    function view({ attrs: { class: classes, ...otherAttrs }}) {
+    function view({ attrs: { className: classes, ...otherAttrs }}) {
         return (
             <div class={classNames(Styles.ldsGrid, classes)} {...otherAttrs}>
                 <div/>

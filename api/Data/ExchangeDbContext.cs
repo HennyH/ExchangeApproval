@@ -181,6 +181,7 @@ namespace ExchangeApproval.Data
         public string ExchangeUniversityName { get; set; }
         public string Notes { get; set; }
         public virtual ICollection<UnitSet> UnitSets { get; set; }
+        public StudentApplicationStatus Status { get; set; }
 
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -190,22 +191,6 @@ namespace ExchangeApproval.Data
                 .WithOne(us => us.StudentApplication)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
-        }
-
-        public static StudentApplicationStatus GetStatus(StudentApplication application)
-        {
-            if (application.UnitSets.All(us => !us.EquivalentUWAUnitLevel.HasValue && !us.IsEquivalent.HasValue && !us.IsContextuallyApproved.HasValue))
-            {
-                return StudentApplicationStatus.New;
-            }
-            if (application.UnitSets.All(us => us.EquivalentUWAUnitLevel.HasValue && us.IsEquivalent.HasValue && us.IsContextuallyApproved.HasValue))
-            {
-                return StudentApplicationStatus.Completed;
-            }
-            else
-            {
-                return StudentApplicationStatus.Incomplete;
-            }
         }
     }
 

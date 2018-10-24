@@ -35,6 +35,8 @@ namespace ExchangeApproval.AdminTools
                 ExchangeUniversityCountry = "Finalnd",
                 ExchangeUniversityHref = "http://finalnd.com",
                 ExchangeUniversityName = "Finland University",
+                Status = StudentApplicationStatus.Incomplete,
+                Notes = "Hello yes",
                 UnitSets = new UnitSet[]
                 {
                     new UnitSet
@@ -82,6 +84,8 @@ namespace ExchangeApproval.AdminTools
                 ExchangeUniversityCountry = "Finalnd",
                 ExchangeUniversityHref = "http://finalnd.com",
                 ExchangeUniversityName = "Holloween University",
+                Status = StudentApplicationStatus.New,
+                Notes = "Hello very good",
                 UnitSets = new UnitSet[]
                 {
                     new UnitSet
@@ -89,9 +93,9 @@ namespace ExchangeApproval.AdminTools
                         ExchangeUniversityCountry = "Finalnd",
                         ExchangeUniversityHref = "http://finalnd.com",
                         ExchangeUniversityName = "Finland University",
-                        IsContextuallyApproved = true,
+                        IsContextuallyApproved = null,
                         IsEquivalent = null,
-                        EquivalentUWAUnitLevel = UWAUnitLevel.Two,
+                        EquivalentUWAUnitLevel = null,
                         ExchangeUnits = new ExchangeUnit[]
                         {
                             new ExchangeUnit

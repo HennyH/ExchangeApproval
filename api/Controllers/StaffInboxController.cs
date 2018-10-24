@@ -30,8 +30,8 @@ namespace ExchangeApproval.Controllers
                 ExchangeUniversityName = application.ExchangeUniversityName,
                 ExchangeUniversityHref = application.ExchangeUniversityHref,
                 StudentApplicationStatus = new SelectOption<StudentApplicationStatus>(
-                    StudentApplication.GetStatus(application),
-                    StudentApplication.GetStatus(application).ToString(),
+                    application.Status,
+                    application.Status.ToString(),
                     false
                 )
             };
@@ -46,13 +46,23 @@ namespace ExchangeApproval.Controllers
         )
         {
             var inboxItems = this._db.StudentApplications
-                .Include(a => a.UnitSets)
-                .ToList()
                 .Where(a =>
                     applicationStatuses == null
                     || applicationStatuses.Count() == 0
-                    || applicationStatuses.Contains(StudentApplication.GetStatus(a)))
-                .Select(MapApplicationToInboxItemVM);
+                    || applicationStatuses.Contains(a.Status))
+                .Where(a =>
+                    studentNumbers == null
+                    || studentNumbers.Count() == 0
+                    || studentNumbers.Contains(a.StudentNumber))
+                .Where(a =>
+                    studentOffices == null
+                    || studentOffices.Count() == 0
+                    || a.StudentOffice == null
+                    || studentOffices.Contains(a.StudentOffice))
+                .Select(MapApplicationToInboxItemVM)
+                .OrderByDescending(i => i.StudentApplicationStatus.Value == StudentApplicationStatus.New)
+                .ThenByDescending(i => i.LastUpdatedAt)
+                .ThenBy(i => i.StudentApplicationStatus.Value);
             return Json(inboxItems);
         }
 

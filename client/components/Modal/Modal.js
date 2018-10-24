@@ -28,7 +28,7 @@ export default function Modal() {
         }
     }
 
-    function view({ attrs: { size, title, header, footer }, children}) {
+    function view({ attrs: { size, title, header, footer }, children }) {
         showModal();
         const headerContent = header || ([
                 <h5 class="modal-title" id="ModalTitle">{title}</h5>,

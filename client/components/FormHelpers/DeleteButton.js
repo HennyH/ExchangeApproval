@@ -6,6 +6,7 @@ export default function DeleteButton() {
             <button
                 type="button"
                 class="btn btn-outline-danger"
+                style="font-weight: 800"
                 onclick={onClick}
             >
                 &times;

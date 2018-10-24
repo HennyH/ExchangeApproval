@@ -16,13 +16,15 @@ namespace ExchangeApproval.Data
                 .Distinct();
         }
 
-        public static IQueryable<UnitSet> QueryUnitSets(
+        public static IEnumerable<UnitSet> QueryUnitSets(
                 ExchangeDbContext db,
                 IReadOnlyList<string> universityNames = null,
                 IReadOnlyList<UWAUnitLevel> uwaUnitLevels = null
             )
         {
             return db.UnitSets
+                .Include(u => u.ExchangeUnits)
+                .Include(u => u.UWAUnits)
                 .Where(a =>
                     universityNames == null ||
                     universityNames.Count() == 0

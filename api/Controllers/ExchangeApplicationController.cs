@@ -20,6 +20,22 @@ namespace ExchangeApproval.Controllers
             this._db = db;
         }
 
+        public static StudentApplicationStatus MapUnitSetsToStatus(ICollection<UnitSet> unitSets)
+        {
+            if (unitSets.All(us => !us.EquivalentUWAUnitLevel.HasValue && !us.IsEquivalent.HasValue && !us.IsContextuallyApproved.HasValue))
+            {
+                return StudentApplicationStatus.New;
+            }
+            if (unitSets.All(us => us.EquivalentUWAUnitLevel.HasValue && us.IsEquivalent.HasValue && us.IsContextuallyApproved.HasValue))
+            {
+                return StudentApplicationStatus.Completed;
+            }
+            else
+            {
+                return StudentApplicationStatus.Incomplete;
+            }
+        }
+
         private static StudentApplication MapApplicationFormToApplication(ExchangeDbContext db, ApplicationFormVM form, bool asStaff)
         {
             var now = DateTime.UtcNow;
@@ -71,6 +87,8 @@ namespace ExchangeApproval.Controllers
                     }).ToList() ?? new List<UWAUnit>(),
                 }).ToList(),
             };
+            /* Calculate the status of the application */
+            newApplication.Status = MapUnitSetsToStatus(newApplication.UnitSets);
             /* Preserve when the student submitted the application */
             if (asStaff && form.ApplicationId.HasValue)
             {

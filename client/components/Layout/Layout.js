@@ -1,9 +1,6 @@
 import m from 'mithril';
 import classNames from 'classnames'
-import { DownloadModalContent } from '../Modal/ModalContents.js';
-import Modal from '../Modal/Modal.js';
-
-import Styles from './Layout.css';
+import AdminToolsModal from 'Components/StaffPage/AdminToolsModal.js'
 
 function Navbar() {
 
@@ -16,7 +13,7 @@ function Navbar() {
 
     function view(vnode) {
         const currentRoute = m.route.get();
-        const navLinks = (vnode.attrs.staff ? 
+        const navLinks = (vnode.attrs.staff ?
         [
             { href: "/student-office", text: "Application Inbox" },
             { href: "/search", text: "Search Units" },
@@ -59,9 +56,7 @@ function Navbar() {
                     </ul>
                 </div>
                 {state.showAdminModal && (
-                    <Modal onClose={toggleAdminModal}>
-                        <DownloadModalContent />
-                    </Modal>
+                    <DownloadModalContent onClose={toggleAdminModal} />
                 )}
             </nav>
         );

@@ -5,7 +5,6 @@ import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanel, { StaffUnitSearchSettingsPowerForm } from './StaffDecisionSearchSettingsPanel.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
 import Modal from '../Modal/Modal.js';
-import {DownloadModalContent} from '../Modal/ModalContents.js'
 import {ModalState} from '../ViewData'
 import DataLoader from 'Components/DataLoader.js'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
@@ -88,24 +87,4 @@ export default function StaffPage() {
     }
 
     return { view };
-}
-
-var ApplicationModal = {
-    view: function() {
-        return(
-            <Modal size = {"xl"}>
-                <ApplicationModalContent title = {"Edit Application: " + ModalState.ApplicationModal.selectedApplication.studentName}/>
-            </Modal>
-        );
-    }
-}
-
-var DownloadModal = {
-    view: function() {
-        return(
-            <Modal size = {"sm"}>
-                    <DownloadModalContent/>
-            </Modal>
-        );
-    }
 }
