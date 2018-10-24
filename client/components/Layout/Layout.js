@@ -16,11 +16,15 @@ function Navbar() {
 
     function view(vnode) {
         const currentRoute = m.route.get();
-        const navLinks = [
+        const navLinks = (vnode.attrs.staff ? 
+        [
+            { href: "/student-office", text: "Application Inbox" },
+            { href: "/search", text: "Search Units" },
+        ]:
+        [
             { href: "/application", text: "Student Application" },
             { href: "/search", text: "Search Units" },
-            { href: "/student-office", text: "Staff Portal" }
-        ];
+        ]);
         return(
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
@@ -32,9 +36,8 @@ function Navbar() {
                 <div class="collapse navbar-collapse" id="navbarCollapsable">
                     <ul class="navbar-nav">
                         {navLinks.map(({ href, text }) => {
-                            const isHidden = href === "/student-office" && !vnode.attrs.staff;
                             const isActive = href === currentRoute;
-                            const classes = classNames("nav-item nav-link", isActive ? "active" : "", isHidden ? "d-none" : "");
+                            const classes = classNames("nav-item nav-link", isActive ? "active" : "");
                             return (
                                 <li oncreate={m.route.link} style="cursor: pointer;" href={href} class={classes}>
                                     {text}

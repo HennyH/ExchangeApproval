@@ -9,8 +9,8 @@ export class ExchangeUniversityDetailsPowerForm extends Form {
         this.universityName = StringField.new({ required: true });
         this.universityHomepage = StringField.new({
             required: true,
-            regex: /^https?\:\/\//,
-            regexErrorMessage: 'Enter a URL of the from https://...'
+            regex: /(^https?\:\/\/)|(^www.)/,
+            regexErrorMessage: 'Enter a URL of the form https:// or http://...'
         });
         this.universityCountry = StringField.new({ required: true });
         Form.new.call(() => this, config);

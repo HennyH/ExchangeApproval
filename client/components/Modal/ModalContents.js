@@ -16,7 +16,27 @@ export function DownloadModalContent() {
         data.append("equivalencies", file);
         m.request({
             method: "POST",
-            url: "/admin/equivalencies",
+            url: "/api/admin/equivalencies",
+            data
+        })
+        .then(() => {
+            state.message = "Upload Successful.";
+            state.errors = [];
+        })
+        .catch(e => {
+            state.message = null;
+            state.errors = JSON.parse(e.message);
+            m.redraw();
+        });
+    }
+
+    function uploadNewDB(event) {
+        const file = event.target.files[0];
+        var data = new FormData();
+        data.append("applications", file);
+        m.request({
+            method: "POST",
+            url: "/api/admin/applications",
             data
         })
         .then(() => {
@@ -34,19 +54,19 @@ export function DownloadModalContent() {
         return (
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalTitle">Edit Unit Equivalencies</h5>
+                    <h5 class="modal-title" id="ModalTitle">Upload / Download</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <h6 class="text-muted">Edit Unit Equivalencies</h6>
                     <div class="form-group">
-                        <a href="/admin/equivalencies" class="btn btn-outline-primary form-control-file" target="_blank" download="equivalencies.csv">
+                        <a href="/api/admin/equivalencies" class="btn btn-outline-primary form-control-file" target="_blank" download="equivalencies.csv">
                             {"⇩ Download Equivalencies"}
                         </a>
                     </div>
                     <div class="form-group">
-
                         <label class="btn btn-outline-danger form-control-file">
                             {"⇧ Upload Equivalencies"}
                             <input name="equivalencies" type="file" onchange={uploadNewEquivalencies} hidden />
@@ -61,10 +81,23 @@ export function DownloadModalContent() {
                         )
                         : <span />
                     }
+                    <hr/>
+                    <h6 class="text-muted">Backup Database</h6>
+                    <div class="form-group">
+                        <a href="/api/admin/applications" class="btn btn-outline-primary form-control-file" target="_blank" download="ExchangeApprovalsDB.json">
+                            {"⇩ Download Applications"}
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label class="btn btn-outline-danger form-control-file">
+                            {"⇧ Upload Applications"}
+                            <input name="applications" type="file" onchange={uploadNewDB} hidden />
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    {/* <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button> */}
                 </div>
             </div>
         );

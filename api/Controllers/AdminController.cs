@@ -12,6 +12,8 @@ using System.IO;
 using System.Text;
 using ExchangeApproval.AdminTools;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace ExchangeApproval.Controllers
 {
@@ -72,6 +74,48 @@ namespace ExchangeApproval.Controllers
             writer.Flush();
             memory.Seek(0, SeekOrigin.Begin);
             return new FileStreamResult(memory, "text/csv");
+        }
+
+
+        [Authorize]
+        [HttpPost("applications")]
+        public ActionResult UpdateApplications(IFormFile applications) 
+        {
+            try
+            {
+                using (var stream = applications.OpenReadStream())
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    var str = reader.ReadToEnd();
+
+                    StudentApplication[] js = JsonConvert.DeserializeObject<StudentApplication[]>(str);
+                    ApplicationsBackup.UpdateApplicationsDB(this._db, js);
+                    return new StatusCodeResult((int)HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new string[] { ex.Message })
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        [Authorize]
+        [HttpGet("applications")]
+        public FileStreamResult GetApplications()
+        {
+            var applications = this._db.StudentApplications.ToList();
+
+            var memory = new MemoryStream();
+            var writer = new StreamWriter(memory, Encoding.UTF8);
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            serializer.Serialize(writer, applications);
+            writer.Flush();
+            memory.Seek(0, SeekOrigin.Begin);
+            return new FileStreamResult(memory, "application/json");
         }
 
         [Authorize]

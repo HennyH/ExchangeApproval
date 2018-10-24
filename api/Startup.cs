@@ -66,8 +66,8 @@ namespace ExchangeApproval
 
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ExchangeDbContext>(options =>
             {
