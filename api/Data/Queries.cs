@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExchangeApproval.Data;
 using ExchangeApproval.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeApproval.Data
 {

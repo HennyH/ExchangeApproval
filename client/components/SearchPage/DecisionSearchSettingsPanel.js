@@ -7,7 +7,6 @@ import { CheckboxGroup, Select2, OptionsField } from 'FormHelpers'
 
 class DecisionSearchSettingsPowerForm extends Form {
     exchangeUniversities = OptionsField.new({ multiple: true });
-    approvalTypes = OptionsField.new({ multiple: true });
     unitLevels = OptionsField.new({ multiple: true })
 }
 
@@ -30,14 +29,13 @@ export default function DecisionSearchSettingsPanel() {
         attrs: {
             onSearchSettingsChanged,
             levelOptions,
-            contextOptions,
             exchangeUniversityOptions
         }
     }) {
         return (
             <form class="mb-0" onsubmit={handleSubmit.bind(this, onSearchSettingsChanged)}>
-                <div class="row mb-4 mx-1">
-                    <div class="input-group">
+                <div class="row">
+                    <div class="col-auto from-group">
                         <label for="universities">Exchange Universities</label>
                         <Select2
                             field={state.form.exchangeUniversities}
@@ -52,27 +50,18 @@ export default function DecisionSearchSettingsPanel() {
                             }}
                         />
                     </div>
-                </div>
-                <div class="row mx-1 mb-0">
-                    <div class="col form-group">
+                    <div class="col-auto form-group pt-md-2">
                         <label>Unit Level(s)</label>
                         <CheckboxGroup
                             field={state.form.unitLevels}
                             options={levelOptions}
                         />
                     </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Approval Type(s)</label>
-                        <CheckboxGroup
-                            field={state.form.approvalTypes}
-                            options={contextOptions}
-                        />
-                    </div>
-                    <div class="col-auto form-group align-self-end mb-0">
-                        <button type="submit" class="btn btn-primary mb-0">
-                            Search
-                        </button>
-                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-primary ml-3 mr-2" style="width: 100%">
+                        Search
+                    </button>
                 </div>
             </form>
         );

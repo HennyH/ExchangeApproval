@@ -67,8 +67,8 @@ namespace ExchangeApproval.Controllers
                 .GroupBy(d => new
                 {
                     d.ExchangeUniversityName,
-                    ExchangeUnits = d.UWAUnits.Select(u => new { u.UniversityName, u.UnitCode, u.UnitName }),
-                    UWAUnits = d.ExchangeUnits.Select(u => new { u.UnitCode, u.UnitName }),
+                    ExchangeUnits = string.Join(',', d.ExchangeUnits.Select(u => u.UnitCode)),
+                    UWAUnits = string.Join(',', d.UWAUnits.Select(u => u.UnitCode)),
                 })
                 .Select(g => g.OrderByDescending(d => d.LastUpdatedAt).First());
         }

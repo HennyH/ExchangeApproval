@@ -74,13 +74,17 @@ export default function StaffDecisionSearchSettingsPanel() {
                         />
                     </div>
                     <div class="col-sm-1 form-group">
-                        <label>Application Status</label>
-                        <CheckboxGroup field={form.applicationStatuses} />
-                    </div>
-                    <div class="col-auto form-group align-self-end">
-                        <button type="submit" class="btn btn-primary">
-                            Search
-                        </button>
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Application Status</label>
+                                <CheckboxGroup field={form.applicationStatuses} />
+                            </div>
+                            <div class="col-12 form-group align-self-end">
+                                <button type="submit" class="btn btn-primary">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

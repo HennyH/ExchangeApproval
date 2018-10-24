@@ -10,17 +10,12 @@ import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 function UnitSearch() {
 
-    const state = {
-        hasClickedSearch: false,
-        searchSettings: { universityNames: [], uwaContextTypes: [], uwaUnitLevels: [] }
-    }
+    const state = { searchSettings: { universityNames: [], uwaUnitLevels: [] } }
 
     function handleSearchSettingsChanged(settings) {
         const universityNames = settings.exchangeUniversities.map(({ value }) => value);
-        const uwaContextTypes = settings.approvalTypes.map(({ value }) => value);
         const uwaUnitLevels = settings.unitLevels.map(({ value }) => value);
-        state.hasClickedSearch = true;
-        state.searchSettings = { universityNames, uwaContextTypes, uwaUnitLevels };
+        state.searchSettings = { universityNames, uwaUnitLevels };
         m.redraw();
     }
 
@@ -47,7 +42,6 @@ function UnitSearch() {
                                             onSearchSettingsChanged={handleSearchSettingsChanged}
                                             exchangeUniversityOptions={exchangeUniversityNameOptions}
                                             levelOptions={uwaUnitLevelOptions}
-                                            contextOptions={uwaUnitContextOptions}
                                     />
                                 }
                         </div>
@@ -61,15 +55,9 @@ function UnitSearch() {
                             requests={{equivalencies: ({settings}) => fetchEquivalencies(settings)}}
                             render={({ loading, errored, data: { equivalencies } = {}}) => (
                                 <div class={classNames("card-body", loading ? "text-center" : "")}>
-                                    {state.hasClickedSearch ?
-                                        (loading
-                                            ? <Spinner />
-                                            : <DecisionsTable
-                                                decisions={equivalencies}
-                                                onAddToCart={addItemToCart}
-                                            />
-                                        )
-                                    : <p class="my-0"><em>Search to see previously approved exchange units</em></p>}
+                                    {(loading
+                                        ? <Spinner />
+                                        : <DecisionsTable decisions={equivalencies} onAddToCart={addItemToCart} />)}
                                 </div>
                             )}
                         />
