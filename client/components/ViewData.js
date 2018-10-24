@@ -42,7 +42,7 @@ export const EmailData = {
     PopulateFields: function() {
         var formData = EmailData.Form.getData();
         EmailData.To = (formData.studentDetailsForm.email ? formData.studentDetailsForm.email : "");
-        EmailData.Major = (formData.studentDetailsForm.Major ? formData.studentDetailsForm.Major : "[_STUDENT_MAJOR_]" );
+        EmailData.Major = (formData.studentDetailsForm.major ? formData.studentDetailsForm.major : "[_STUDENT_MAJOR_]" );
         EmailData.Name = (formData.studentDetailsForm.name ? formData.studentDetailsForm.name : "[_STUDENT_NAME_]");
         EmailData.University = (formData.exchangeUniversityForm.universityName ? formData.exchangeUniversityForm.universityName : "[_EXCHANGE_UNIVERSITY_]");
     },
@@ -54,7 +54,7 @@ export const EmailData = {
             EmailData.Subject = "Exchange Application Update",
             EmailData.Approvals = processUnitSets(unitSets);
             EmailData.Message = studentMessage(EmailData);
-            EmailData.mailString = ('?subject=' + encodeURIComponent(EmailData.Subject) + '&body=' + encodeURIComponent(EmailData.Message));
+            EmailData.mailString = (EmailData.To + '@student.uwa.edu.au?subject=' + encodeURIComponent(EmailData.Subject) + '&body=' + encodeURIComponent(EmailData.Message));
         },
         SendEmail: function() {
             EmailData.Student.GenerateMessage();
@@ -172,7 +172,7 @@ function equivalenceMessage(EmailData) {
 
 I hope this email finds you well.
 
-I am writing to kindly request your assistance with ${EmailData.Name}'s <${EmailData.To}> exchange unit approvals for ${EmailData.University}.
+I am writing to kindly request your assistance with ${EmailData.Name}'s <${EmailData.To}@student.uwa.edu.au> exchange unit approvals for ${EmailData.University}.
 
 ${EmailData.Name} is enrolled in ${EmailData.Major} and is looking for approval on the following units:\n\n\t${EmailData.Approvals}
 Regards,
