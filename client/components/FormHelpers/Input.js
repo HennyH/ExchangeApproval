@@ -12,6 +12,7 @@ export default function Input() {
             appendInputText = null,
             prependInputText = null,
             readonly = false,
+            hasTriedToSubmit,
             ...otherAttrs
         },
         children
@@ -21,7 +22,7 @@ export default function Input() {
          * presumably having either been already sumitted to or provided by
          * the server.
          */
-        const validationClass = !readonly
+        const validationClass = (!readonly && hasTriedToSubmit)
             ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
             : '';
         const input = (

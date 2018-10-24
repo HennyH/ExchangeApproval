@@ -20,7 +20,7 @@ export class ExchangeUniversityDetailsPowerForm extends Form {
 
 export function ExchangeUniversityDetailsForm() {
 
-    function view({ attrs: { form, staffView } }) {
+    function view({ attrs: { form, staffView, hasTriedToSubmit } }) {
 
         function oninit(vnode) {
             vnode.staffView
@@ -31,19 +31,19 @@ export function ExchangeUniversityDetailsForm() {
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="email">Exchange University Country: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityCountry} placeholder="University Country" type="text" readonly={staffView} />
+                        <Input field={form.universityCountry} placeholder="University Country" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
                     </div>
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="email">Exchange University Name: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityName} placeholder="University Name" type="text" readonly={staffView} />
+                        <Input field={form.universityName} placeholder="University Name" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
                     </div>
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="email">Exchange University Homepage: </label>
                     <div class="input-group col-8">
-                        <Input field={form.universityHomepage} placeholder="University Website" type="text" readonly={staffView} />
+                        <Input field={form.universityHomepage} placeholder="University Website" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
                     </div>
                 </div>
             </form>
