@@ -179,7 +179,6 @@ namespace ExchangeApproval.Data
         public string ExchangeUniversityCountry { get; set; }
         public string ExchangeUniversityHref { get; set; }
         public string ExchangeUniversityName { get; set; }
-        public string Notes { get; set; }
         public virtual ICollection<UnitSet> UnitSets { get; set; }
         public StudentApplicationStatus Status { get; set; }
 
@@ -208,6 +207,7 @@ namespace ExchangeApproval.Data
         public bool? IsEquivalent { get; set; }
         public bool? IsContextuallyApproved { get; set; }
         public UWAUnitLevel? EquivalentUWAUnitLevel { get; set; }
+        public string Comments { get; set; }
 
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -56,8 +56,6 @@ namespace ExchangeApproval.Migrations
 
                     b.Property<string>("Major2nd");
 
-                    b.Property<string>("Notes");
-
                     b.Property<int>("Status");
 
                     b.Property<string>("StudentName");
@@ -77,6 +75,8 @@ namespace ExchangeApproval.Migrations
                 {
                     b.Property<int>("UnitSetId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comments");
 
                     b.Property<int?>("EquivalentUWAUnitLevel");
 
@@ -121,7 +121,7 @@ namespace ExchangeApproval.Migrations
                     b.ToTable("StaffLogons");
 
                     b.HasData(
-                        new { Id = 1, PasswordHash = "YL/Z1doeub21aTP9otLKlXIy2oDIQW6abpqE9H0rmjU=", Role = "StudentOffice", Salt = new byte[] { 76, 145, 232, 148, 83, 198, 180, 185, 99, 38, 111, 223, 60, 48, 215, 26 }, Username = "admin" }
+                        new { Id = 1, PasswordHash = "R8U/8tx1LwqJwQZfmsx+xnjjyyUrlUCDu5jt1EAVbh0=", Role = "StudentOffice", Salt = new byte[] { 156, 102, 190, 114, 114, 244, 119, 247, 140, 252, 60, 197, 255, 134, 205, 181 }, Username = "admin" }
                     );
                 });
 

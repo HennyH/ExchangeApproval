@@ -36,7 +36,6 @@ namespace ExchangeApproval.AdminTools
                 ExchangeUniversityHref = "http://finalnd.com",
                 ExchangeUniversityName = "Finland University",
                 Status = StudentApplicationStatus.Incomplete,
-                Notes = "Hello yes",
                 UnitSets = new UnitSet[]
                 {
                     new UnitSet
@@ -70,7 +69,8 @@ namespace ExchangeApproval.AdminTools
                                 Title = "Mathematics II",
                                 Href = "http://uwa-unit.com"
                             }
-                        }
+                        },
+                        Comments = "Very good!"
                     }
                 }
             });
@@ -85,7 +85,6 @@ namespace ExchangeApproval.AdminTools
                 ExchangeUniversityHref = "http://finalnd.com",
                 ExchangeUniversityName = "Holloween University",
                 Status = StudentApplicationStatus.New,
-                Notes = "Hello very good",
                 UnitSets = new UnitSet[]
                 {
                     new UnitSet
@@ -119,7 +118,8 @@ namespace ExchangeApproval.AdminTools
                                 Title = "Mathematics II",
                                 Href = "http://uwa-unit.com"
                             }
-                        }
+                        },
+                        Comments = "Not a good choice"
                     }
                 }
             });

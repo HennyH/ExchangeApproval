@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env, options) => {
   const devMode = options.mode !== "production";
@@ -31,7 +32,8 @@ module.exports = (env, options) => {
         hash: devMode ? false : true,
         template: './index.html'
       }),
-      new MiniCssExtractPlugin()
+      new MiniCssExtractPlugin(),
+      ...(devMode ? [new BundleAnalyzerPlugin()] : [])
     ],
     devtool: 'eval-source-map',
     module: {

@@ -57,7 +57,7 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
-        this.comment = StringField.new();
+        this.comments = StringField.new();
         Form.new.call(() => this, config);
         this.config = config;
     }
@@ -145,7 +145,16 @@ function StaffUnitSetApprovalForm() {
                 </div>
                 <div class="form-row px-1">
                     <label class="col-form-label-sm">Comments</label>
-                    <textarea class="form-control" field={form.comment}/>
+                    <textarea
+                        class="form-control"
+                        spellcheck={true}
+                        placeholder="Enter a comment to the student..."
+                        oninput={(event) => {
+                            form.comments.setData(event.target.value);
+                        }}
+                    >
+                        {form.comments.getData()}
+                    </textarea>
                 </div>
             </div>
         )

@@ -59,7 +59,6 @@ namespace ExchangeApproval.Controllers
                 ExchangeUniversityCountry = form.ExchangeUniversityForm.UniversityCountry,
                 ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
                 ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
-                Notes = null,
                 UnitSets = form.UnitSetForms.Select(f => new UnitSet
                 {
                     ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
@@ -85,6 +84,7 @@ namespace ExchangeApproval.Controllers
                         Title = u.UnitName,
                         Href = u.UnitHref
                     }).ToList() ?? new List<UWAUnit>(),
+                    Comments = f.StaffApprovalForm.Comments
                 }).ToList(),
             };
             /* Calculate the status of the application */
@@ -159,7 +159,8 @@ namespace ExchangeApproval.Controllers
                             us.IsEquivalent,
                             us.IsEquivalent?.ToString() ?? "Pending",
                             us.IsEquivalent.HasValue
-                        )
+                        ),
+                        Comments = us.Comments
                     }
                 }).ToList()
             };

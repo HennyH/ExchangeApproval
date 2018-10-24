@@ -36,6 +36,7 @@ namespace ExchangeApproval.ViewModels
         public SelectOption<UWAUnitLevel?> EquivalentUnitLevel { get; set; }
         public SelectOption<bool?> IsContextuallyApproved { get; set; }
         public SelectOption<bool?> IsEquivalent { get; set; }
+        public string Comments { get; set; }
     }
 
     public class UnitSetFormVM
