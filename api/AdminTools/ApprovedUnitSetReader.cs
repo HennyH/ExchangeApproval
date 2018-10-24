@@ -102,9 +102,12 @@ namespace ExchangeApproval.AdminTools
         public static IEnumerable<EquivalenceUnitSetRow> DumpEquivalencies(ExchangeDbContext db)
         {
             return db.UnitSets
-                .Where(us => us.StudentApplicationId == null)
                 .Select(us => new
                 {
+                    LastUpdated = us.StudentApplicationId == null ? (DateTime?)null : us.StudentApplication.LastUpdatedAt,
+                    UniversityCountry = us.ExchangeUniversityCountry,
+                    UniversityName = us.ExchangeUniversityName,
+                    UniversityHref = us.ExchangeUniversityHref,
                     ExchangeUnits = us.ExchangeUnits.Select(u => new EquivalenceUnitSetRow
                     {
                         UnitSetId = us.UnitSetId,
@@ -116,7 +119,7 @@ namespace ExchangeApproval.AdminTools
                         UnitCode = u.Code,
                         UnitHref = u.Href,
                         EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
-                    }),
+                    }).ToList(),
                     UWAUnits = us.UWAUnits.Select(u => new EquivalenceUnitSetRow
                     {
                         UnitSetId = us.UnitSetId,
@@ -128,8 +131,16 @@ namespace ExchangeApproval.AdminTools
                         UnitCode = u.Code,
                         UnitHref = u.Href,
                         EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
-                    })
+                    }).ToList()
                 })
+                .GroupBy(us => new
+                {
+                    us.UniversityCountry,
+                    us.UniversityName,
+                    UWAUnits = string.Join(',', us.UWAUnits.Select(u => u.UnitCode)),
+                    ExchangeUnits = string.Join(',', us.ExchangeUnits.Select(u => u.UnitCode))
+                })
+                .Select(g => g.OrderByDescending(us => us.LastUpdated).First())
                 .SelectMany(agg => agg.ExchangeUnits.Union(agg.UWAUnits))
                 .OrderBy(r => r.UnitSetId)
                 .ThenBy(r => r.IsExchangeUnit)
