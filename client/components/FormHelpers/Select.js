@@ -19,7 +19,6 @@ export default function Select() {
             const currentSelection = field.getData();
             if (!currentSelection || currentSelection.value !== selected.value) {
                 field.setData(selected);
-                m.redraw();
             }
         }
         return (

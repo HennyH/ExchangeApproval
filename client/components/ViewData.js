@@ -23,42 +23,9 @@ export const ModalState = {
 
 export const CartData = {
     handlers: [],
-    items: [
-        {"unitSetId":548,"lastUpdatedAt":"2018-09-20T00:00:00","approved":true,"exchangeUniversityName":"University Of Rochester","exchangeUniversityHref":"https://university.com","exchangeUnits":[{"universityName":"University Of Rochester","universityHref":"https://university.com","unitCode":"CHE 116","unitName":"Numerical Methods And Stat","unitHref":"https://unit.com"}],"uwaUnits":[{"universityName":"University of Western Australia","universityHref":"https://uwa.edu.au","unitCode":"L2 ELECTIVE","unitName":"Knowledge Story Art","unitHref":"https://uwa.edu.au"}],"equivalentUnitLevel":{"label":"Two","value":2,"selected":true}},
-        {"unitSetId":549,"lastUpdatedAt":"2018-09-20T00:00:00","approved":true,"exchangeUniversityName":"University Of Rochester","exchangeUniversityHref":"https://university.com","exchangeUnits":[{"universityName":"University Of Rochester","universityHref":"https://university.com","unitCode":"CHE 116","unitName":"Numerical Methods And Stat","unitHref":"https://unit.com"}],"uwaUnits":[{"universityName":"University of Western Australia","universityHref":"https://uwa.edu.au","unitCode":"L2 ELECTIVE","unitName":"Knowledge Story Art","unitHref":"https://uwa.edu.au"}],"equivalentUnitLevel":{"label":"Two","value":2,"selected":true}}
-    ]
+    items: []
 }
 
-export const Data = {
-
-    applications: {
-        loading: false,
-        list: [],
-        fetch: ({ universityNames = [], uwaContextTypes = [], uwaUnitLevels = [] } = {}) => {
-            ApplicationSearchData.applications.loading = true;
-            // const qs = m.buildQueryString({
-            //     universityNames,
-            //     uwaContextTypes,
-            //     uwaUnitLevels
-            // });
-            m.request({
-                method: "GET",
-                url: `/api/requests/applications?${qs}`
-            }).then(items => {
-                ApplicationSearchData.applications.list = items;
-                ApplicationSearchData.applications.loading = false;
-            });
-        }
-    },
-}
-
-export const ApplicationData = {
-    hasTriedToSubmit: false,
-    hasSubmitted: false,
-    pushApplication: () => {},
-    getApplication: () => {},
-    config: null
-}
 
 
 // EMAIL DATA + CLIPBOARD LOGIC AND DATA STRUCTURE

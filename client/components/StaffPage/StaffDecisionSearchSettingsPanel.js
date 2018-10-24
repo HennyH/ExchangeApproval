@@ -10,11 +10,10 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
         studentOptions,
         studentOfficeOptions,
         applicationStateOptions,
-        dateOptions,
         ...config
     }) {
         super(config)
-        this.students = OptionsField.new({
+        this.studentNumbers = OptionsField.new({
             multiple: true,
             options: studentOptions
         });
@@ -22,12 +21,9 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
             multiple: true,
             options: studentOfficeOptions
         });
-        this.applicationStates = OptionsField.new({
+        this.applicationStatuses = OptionsField.new({
             multiple: true,
             options: applicationStateOptions
-        });
-        this.date = OptionsField.new({
-            options: dateOptions
         });
         Form.new.call(() => this, config);
         this.config = config;
@@ -37,71 +33,49 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
 
 export default function StaffDecisionSearchSettingsPanel() {
 
-    const state = {};
-
-    function oninit({ attrs }) {
-        state.form = new StaffUnitSearchSettingsPowerForm(attrs);
-    }
-
-    function handleSubmit(callback, event) {
+    function handleSubmit(event, form, onSubmit) {
         event.preventDefault();
         event.stopPropagation();
-        callback(state.form.getData());
+        onSubmit(form.getData());
     }
 
-    function view({
-        attrs: {
-            studentOptions,
-            studentOfficeOptions,
-            applicationStateOptions,
-            dateOptions
-        }
-    }) {
+    function view({ attrs: { form, onSubmit } }) {
         return (
-            <form onsubmit={handleSubmit.bind(this, onsubmit)}>
+            <form onsubmit={e => handleSubmit(e, form, onSubmit)}>
                 <div class="row">
-                    <div class="col-lg-6 col-md-12 form-group">
+                    <div class="col-lg-4 col-md-12 form-group">
                         <label for="students">Students</label>
                         <Select2
-                            field={state.form.students}
+                            field={form.studentNumbers}
                             config={{
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select students to filter to...',
-                                data: studentOptions.map(name => ({
-                                    id: name,
-                                    text: name
+                                data: form.studentNumbers.config.options.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
                                 }))
                             }}
                         />
                     </div>
-                    <div class="col-lg-6 col-md-12 form-group">
+                    <div class="col-lg-5 col-md-12 form-group">
                         <label>Student Office</label>
                         <Select2
-                            field={state.form.studentOffices}
+                            field={form.studentOffices}
                             config={{
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select unit coordinators to filter to...',
-                                data: studentOfficeOptions.map(name => ({
-                                    id: name,
-                                    text: name
+                                data: form.studentOffices.config.options.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
                                 }))
                             }}
                         />
                     </div>
-                </div>
-                <div class="row mx-1">
-                    <div class="col-sm-6 form-group">
+                    <div class="col-sm-1 form-group">
                         <label>Application Status</label>
-                        <CheckboxGroup
-                            field={state.form.applicationStates}
-                            options={applicationStateOptions}
-                        />
-                    </div>
-                    <div class="col form-group">
-                        <label>Filters</label>
-                        <CheckboxGroup field={state.form.date} options={dateOptions} />
+                        <CheckboxGroup field={form.applicationStatuses} />
                     </div>
                     <div class="col-auto form-group align-self-end">
                         <button type="submit" class="btn btn-primary">
@@ -113,5 +87,5 @@ export default function StaffDecisionSearchSettingsPanel() {
         );
     }
 
-    return { view, oninit };
+    return { view };
 }

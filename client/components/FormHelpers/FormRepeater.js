@@ -1,6 +1,5 @@
 import m from 'mithril'
 import classNames from 'classnames'
-import {ApplicationData} from '../ViewData'
 
 const noop = () => {}
 let NEXT_ID = 1;
@@ -26,7 +25,6 @@ export function FormRepeater() {
             jumps = true,
             readonly,
             defaultConfig = {},
-            staffView,
             secondButton = <div/>,
             instructionText,
             ...formAttrs
@@ -34,13 +32,13 @@ export function FormRepeater() {
         dom: ref
     }) {
         const numberOfForms = field.forms.length;
-        const validationClass = (!readonly && ApplicationData.hasTriedToSubmit)
+        const validationClass = !readonly
             ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
             : '';
         const error = field.getError({ childForms: false });
         return (
             <div>
-                {(jumps && numberOfForms > 1 && !staffView
+                {(jumps && numberOfForms > 1
                     ? (
                         <div class="row my-0">
                             <button type="button" class="btn btn-link my-0 ml-auto" onclick={() => scrollToLastForm(ref)}>
@@ -58,7 +56,6 @@ export function FormRepeater() {
                             form={f}
                             formIndex={i}
                             onDelete={() => removeForm(field, f)}
-                            staffView = {staffView}
                         />
                     </div>
                 ))}
@@ -67,7 +64,7 @@ export function FormRepeater() {
                     {error}
                 </div>
                 <div class="row mx-2">
-                    {(readonly || staffView)
+                    {readonly
                         ? <div />
                         : (
                             <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
@@ -83,7 +80,7 @@ export function FormRepeater() {
                             </div>
                         )
                     }
-                    {(jumps && numberOfForms > 1 && !staffView
+                    {(jumps && numberOfForms > 1
                         ? (
                             <button
                                 type="button"

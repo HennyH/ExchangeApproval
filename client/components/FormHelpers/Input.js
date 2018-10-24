@@ -1,6 +1,5 @@
 import m from 'mithril'
 import classNames from 'classnames'
-import {ApplicationData} from '../ViewData'
 
 const noop = () => {};
 
@@ -22,13 +21,14 @@ export default function Input() {
          * presumably having either been already sumitted to or provided by
          * the server.
          */
-        const validationClass = (!readonly && ApplicationData.hasTriedToSubmit)
+        const validationClass = !readonly
             ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
             : '';
         const input = (
             <input
                 name={field.fieldName}
                 readonly={readonly}
+                disabled={readonly}
                 {...otherAttrs}
                 value={field.getData()}
                 oninput={e => {

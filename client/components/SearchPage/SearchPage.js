@@ -24,8 +24,8 @@ function UnitSearch() {
         m.redraw();
     }
 
-    function fetchEquivalencies() {
-        const qs = m.buildQueryString(state.searchSettings);
+    function fetchEquivalencies(settings) {
+        const qs = m.buildQueryString(settings);
         return m.request({ method: "GET", url: `/api/equivalencies?${qs}` });
     }
 
@@ -57,7 +57,8 @@ function UnitSearch() {
                 <div class="card bg-light m-3">
                     <div class="card-header">Search Results</div>
                         <DataLoader
-                            requests={{equivalencies: fetchEquivalencies}}
+                            settings={state.searchSettings}
+                            requests={{equivalencies: ({settings}) => fetchEquivalencies(settings)}}
                             render={({ loading, errored, data: { equivalencies } = {}}) => (
                                 <div class={classNames("card-body", loading ? "text-center" : "")}>
                                     {state.hasClickedSearch ?

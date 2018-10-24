@@ -14,12 +14,14 @@ namespace ExchangeApproval.ViewModels
         public string Email { get; set; }
         public string Major { get; set; }
         public string Major2nd { get; set; }
+        public SelectOption<string> StudentOffice { get; set; }
     }
 
     public class ExchangeUniversityFormVM
     {
         public string UniversityHomepage { get; set; }
         public string UniversityName { get; set; }
+        public string UniversityCountry { get; set; }
     }
 
     public class UnitFormVM
@@ -29,28 +31,11 @@ namespace ExchangeApproval.ViewModels
         public string UnitHref { get; set; }
     }
 
-    public class UnitLevelOutcome
-    {
-        public bool? Value { get; set; }
-        public string Label { get; set; }
-        public bool Selected { get; set; }
-    }
-
-    public class ApprovalOutcome
-    {
-        public bool? Value { get; set; }
-        public string Label { get; set; }
-        public bool Selected { get; set; }
-
-        [NotMapped]
-        public bool IsApproved { get { return Value.HasValue && Value.Value; } }
-    }
-
     public class StaffApprovalFormVM
     {
-        public UnitLevelOutcome EquivalentUnitLevel { get; set; }
-        public ApprovalOutcome IsContextuallyApproved { get; set; }
-        public ApprovalOutcome IsEquivalent { get; set; }
+        public SelectOption<UWAUnitLevel?> EquivalentUnitLevel { get; set; }
+        public SelectOption<bool?> IsContextuallyApproved { get; set; }
+        public SelectOption<bool?> IsEquivalent { get; set; }
     }
 
     public class UnitSetFormVM
