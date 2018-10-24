@@ -41,10 +41,8 @@ export default function StaffPage() {
                                 <DataLoader
                                     requests={{filters: () => m.request("/api/filters/staff")}}
                                     render={({ loading, error, data: { filters } = {}}) => {
-                                        if (loading || error) {
-                                            return <Spinner />;
-                                        }
-                                        if (state.inboxSearchSettingsForm == null) {
+                                        const hidePanel = !!(loading || error);
+                                        if (state.inboxSearchSettingsForm == null && !hidePanel) {
                                             state.inboxSearchSettingsForm = new StaffUnitSearchSettingsPowerForm({
                                                 studentOptions: filters.studentOptions,
                                                 applicationStateOptions: filters.applicationStatusOptions,
@@ -52,11 +50,10 @@ export default function StaffPage() {
                                             });
                                         }
                                         return (
-                                            <div class={classNames("card-body", loading ? "text-center" : "")}>
-                                                {loading
+                                            <div class={classNames("card-body", hidePanel ? "text-center" : "")}>
+                                                {hidePanel
                                                     ? <Spinner />
-                                                    :
-                                                    (
+                                                    : (
                                                         <StaffDecisionSearchSettingsPanel
                                                             form={state.inboxSearchSettingsForm}
                                                             onSubmit={handleSearchSettingsChanged}
