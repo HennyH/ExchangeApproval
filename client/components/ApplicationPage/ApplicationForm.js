@@ -67,13 +67,21 @@ export default function ApplicationForm() {
                     <div class="card bg-light mt-3 mb-3">
                         <div class="card-header">Student Details</div>
                         <div class="card-body">
-                            <StudentDetailsForm form={form.studentDetailsForm} staffView={staffView} />
+                            <StudentDetailsForm 
+                                form={form.studentDetailsForm} 
+                                staffView={staffView}
+                                hasTriedToSubmit={state.hasTriedToSubmit}
+                            />
                         </div>
                     </div>
                     <div class="card bg-light mt-3 mb-3">
                         <div class="card-header">Exchange University Details</div>
                         <div class="card-body">
-                            <ExchangeUniversityDetailsForm form={form.exchangeUniversityForm} staffView={staffView} />
+                            <ExchangeUniversityDetailsForm
+                            form={form.exchangeUniversityForm}
+                            staffView={staffView} 
+                            hasTriedToSubmit={state.hasTriedToSubmit}
+                        />
                         </div>
                     </div>
                     <div class="card bg-light mt-3 mb-3">
@@ -88,6 +96,7 @@ export default function ApplicationForm() {
                                         formIndex={index}
                                         onDelete={removeForm}
                                         staffView={staffView}
+                                        hasTriedToSubmit={state.hasTriedToSubmit}
                                         className="mt-3"
                                     />
                                 )}
