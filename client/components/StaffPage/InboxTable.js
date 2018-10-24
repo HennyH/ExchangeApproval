@@ -100,24 +100,6 @@ function StaffEditApplicationModal() {
     }
 
     function view({ attrs: { applicationId, onSubmit = noop, onClose = noop } }) {
-        const editApplicationModalFooter = ([
-                <div>
-                    <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
-                        Send Application Results
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
-                        Copy to Clipboard
-                    </button>
-                </div>,
-                <div>
-                    <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">
-                        Cancel
-                    </button>
-                    <button type="button" class="btn btn-primary mx-1" onclick={() => submitAppliction(onSubmit, onClose)}>
-                        Save Application
-                    </button>
-                </div>
-        ]);
         return (
             <DataLoader
                 applicationId={applicationId}
@@ -126,20 +108,37 @@ function StaffEditApplicationModal() {
                     filters: () => m.request("/api/filters/staff")
                 }}
                 render={({ loading, errored, data: { application, filters } = {} }) => {
-                    const showLoading = loading || errored;
+                    const showLoading = !!(loading || errored);
                     if (state.applicationForm === null && !showLoading) {
                         state.applicationForm = new ApplicationPowerForm({
-                            unitLevelOptions: filters.unitLevelOptions,
+                            unitLevelOptions: filters.uwaUnitLevelOptions,
                             studentOfficeOptions: filters.studentOfficeOptions,
                         });
                         state.applicationForm.setData(application);
                     }
-                    console.log("rendering modal");
+                    const modalFooter = ([
+                        <div>
+                            <button disabled={showLoading} type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
+                                Send Application Results
+                            </button>
+                            <button disabled={showLoading} type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
+                                Copy to Clipboard
+                            </button>
+                        </div>,
+                        <div>
+                            <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button disabled={showLoading} type="button" class="btn btn-primary mx-1" onclick={() => submitAppliction(onSubmit, onClose)}>
+                                Save Application
+                            </button>
+                        </div>
+                    ]);
                     return applicationId && (
                         <Modal
                             size="xl"
                             title="Edit Application"
-                            footer={editApplicationModalFooter}
+                            footer={modalFooter}
                             onClose={() => {
                                 state.applicationForm = null;
                                 onClose();
