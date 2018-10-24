@@ -48,7 +48,11 @@ export default function ApplicationPage() {
                             requests={{filters: fetchFilters}}
                             render={({ loading, errored, data: { filters } = {}}) => {
                                 if (loading || errored) {
-                                    return <Spinner />
+                                    return (
+                                        <div class="text-center">
+                                            <Spinner style="top: calc(50% - 32px); position: absolute" />
+                                        </div>
+                                    );
                                 }
                                 if (state.applicationForm === null) {
                                     state.applicationForm = new ApplicationPowerForm({
