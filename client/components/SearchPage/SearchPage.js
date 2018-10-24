@@ -3,14 +3,17 @@ import classNames from 'classnames';
 
 import Layout from 'Components/Layout';
 import { addItemToCart, default as Cart } from 'Components/Cart';
-import DecisionSearchSettingsPanel from './DecisionSearchSettingsPanel.js';
+import DecisionSearchSettingsPanel, { DecisionSearchSettingsPowerForm } from './DecisionSearchSettingsPanel.js';
 import DecisionsTable from './DecisionsTable.js';
 import DataLoader from 'Components/DataLoader.js'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 function UnitSearch() {
 
-    const state = { searchSettings: { universityNames: [], uwaUnitLevels: [] } }
+    const state = {
+        searchSettings: { universityNames: [], uwaUnitLevels: [] },
+        searchSettingsForm: null
+    }
 
     function handleSearchSettingsChanged(settings) {
         const universityNames = settings.exchangeUniversities.map(({ value }) => value);
@@ -34,18 +37,27 @@ function UnitSearch() {
                 <div class="card-header">Search Settings</div>
                 <DataLoader
                     requests={{filters: () => m.request("/api/filters/student")}}
-                    render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions, uwaUnitContextOptions } = {} }}) => (
-                        <div class={classNames("card-body", loading ? "text-center" : "")}>
-                                {loading
+                    render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions, uwaUnitContextOptions } = {} }}) => {
+                        const hideForm = !!(loading || errored)
+                        if (!hideForm) {
+                            state.searchSettingsForm = new DecisionSearchSettingsPowerForm({
+                                exchangeUniversityNameOptions,
+                                uwaUnitLevelOptions
+                            })
+                        }
+                        return (
+                            <div class={classNames("card-body", loading ? "text-center" : "")}>
+                                {hideForm
                                     ? <Spinner />
-                                    : <DecisionSearchSettingsPanel
+                                    : (
+                                        <DecisionSearchSettingsPanel
+                                            form={state.searchSettingsForm}
                                             onSearchSettingsChanged={handleSearchSettingsChanged}
-                                            exchangeUniversityOptions={exchangeUniversityNameOptions}
-                                            levelOptions={uwaUnitLevelOptions}
-                                    />
-                                }
-                        </div>
-                    )}
+                                        />
+                                    )}
+                            </div>
+                        );
+                    }}
                 />
                 </div>
                 <div class="card bg-light m-3">

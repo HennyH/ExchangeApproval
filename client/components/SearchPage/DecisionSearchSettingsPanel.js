@@ -5,45 +5,48 @@ import { Form } from 'powerform'
 import { CheckboxGroup, Select2, OptionsField } from 'FormHelpers'
 
 
-class DecisionSearchSettingsPowerForm extends Form {
-    exchangeUniversities = OptionsField.new({ multiple: true });
-    unitLevels = OptionsField.new({ multiple: true })
+export class DecisionSearchSettingsPowerForm extends Form {
+    constructor({
+        exchangeUniversityNameOptions,
+        uwaUnitLevelOptions,
+        ...config
+    }) {
+        super(config)
+        this.exchangeUniversities = OptionsField.new({
+            multiple: true,
+            options: exchangeUniversityNameOptions
+        });
+        this.unitLevels = OptionsField.new({
+            multiple: true,
+            options: uwaUnitLevelOptions
+        })
+        Form.new.call(() => this, config);
+        this.config = config;
+    }
 }
 
 
 export default function DecisionSearchSettingsPanel() {
 
-    const state = {};
-
-    function oninit() {
-        state.form = DecisionSearchSettingsPowerForm.new();
-    }
-
-    function handleSubmit(callback, event) {
+    function handleSubmit(event, form, callback) {
         event.preventDefault();
         event.stopPropagation();
-        callback(state.form.getData());
+        callback(form.getData());
     }
 
-    function view({
-        attrs: {
-            onSearchSettingsChanged,
-            levelOptions,
-            exchangeUniversityOptions
-        }
-    }) {
+    function view({ attrs: { onSearchSettingsChanged, form } }) {
         return (
-            <form class="mb-0" onsubmit={handleSubmit.bind(this, onSearchSettingsChanged)}>
+            <form class="mb-0" onsubmit={(e) => handleSubmit(e, form, onSearchSettingsChanged)}>
                 <div class="row">
-                    <div class="col-auto from-group">
+                    <div class="col-6 from-group">
                         <label for="universities">Exchange Universities</label>
                         <Select2
-                            field={state.form.exchangeUniversities}
+                            field={form.exchangeUniversities}
                             config={{
                                 multiple: true,
                                 width: '100%',
                                 placeholder: 'Select universities to filter to...',
-                                data: exchangeUniversityOptions.map(({ label, value }) => ({
+                                data: form.exchangeUniversities.config.options.map(({ label, value }) => ({
                                     id: value,
                                     text: label
                                 }))
@@ -53,8 +56,8 @@ export default function DecisionSearchSettingsPanel() {
                     <div class="col-auto form-group pt-md-2">
                         <label>Unit Level(s)</label>
                         <CheckboxGroup
-                            field={state.form.unitLevels}
-                            options={levelOptions}
+                            field={form.unitLevels}
+                            options={form.unitLevels.config.options}
                         />
                     </div>
                 </div>
@@ -67,5 +70,5 @@ export default function DecisionSearchSettingsPanel() {
         );
     }
 
-    return { oninit, view };
+    return { view };
 }
