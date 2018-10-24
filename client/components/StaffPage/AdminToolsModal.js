@@ -54,7 +54,7 @@ export default function AdminToolsModal() {
             <Modal
                 title="Admin Tools"
                 footer={(
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: block; margin-left: auto; margin-right: 0;">
                         Close
                     </button>
                 )}

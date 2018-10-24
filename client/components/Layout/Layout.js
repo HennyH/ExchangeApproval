@@ -56,7 +56,7 @@ function Navbar() {
                     </ul>
                 </div>
                 {state.showAdminModal && (
-                    <DownloadModalContent onClose={toggleAdminModal} />
+                    <AdminToolsModal onClose={toggleAdminModal} />
                 )}
             </nav>
         );

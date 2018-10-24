@@ -46,7 +46,7 @@ export default function Modal() {
                         <div class="modal-header">
                             {headerContent}
                         </div>
-                        <div class="modal-body p-0">
+                        <div class="modal-body">
                             {children}
                         </div>
                         {footer && (
