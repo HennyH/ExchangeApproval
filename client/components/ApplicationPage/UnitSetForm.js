@@ -42,18 +42,18 @@ export class StaffUnitSetApprovalPowerForm extends Form {
         this.isContextuallyApproved = OptionsField.new({
             required: true,
             options: [
-                { value: null, label: 'Pending', class: 'btn-outline-primary' },
-                { value: true, label: 'Approved', class: 'btn-outline-success'  },
-                { value: false, label: 'Denied', class: 'btn-outline-danger' }
+                { value: null, label: 'Pending', className: 'btn-outline-primary' },
+                { value: true, label: 'Approved', className: 'btn-outline-success'  },
+                { value: false, label: 'Denied', className: 'btn-outline-danger' }
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
         this.isEquivalent = OptionsField.new({
             required: true,
             options: [
-                { value: null, label: 'Pending', class: 'btn-outline-primary' },
-                { value: true, label: 'Approved', class: 'btn-outline-success' },
-                { value: false, label: 'Denied', class: 'btn-outline-danger' }
+                { value: null, label: 'Pending', className: 'btn-outline-primary' },
+                { value: true, label: 'Approved', className: 'btn-outline-success' },
+                { value: false, label: 'Denied', className: 'btn-outline-danger' }
             ],
             default: { value: null, label: 'Pending', selected: true }
         });
@@ -123,14 +123,6 @@ function UnitForm() {
     return { view }
 }
 
-function StaffApprovalContainer(form) {
-    return (
-        <div class="card-footer">
-                <StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
-        </div>
-    )
-}
-
 function StaffUnitSetApprovalForm() {
     function view({ attrs: { form }}) {
         return (
@@ -164,7 +156,7 @@ function StaffUnitSetApprovalForm() {
 
 export function UnitSetForm() {
 
-    function view({ attrs: { formIndex, onDelete, form, class: classes, staffView, ...otherAttrs }}) {
+    function view({ attrs: { formIndex, onDelete, form, className: classes, staffView, ...otherAttrs }}) {
         const title = `Unit Set ${formIndex + 1} ${form.config.cartItem && !staffView ? "(From Cart)" : ""}`;
         const readonly = (form.readonly.getData() || staffView);
         return (
@@ -202,10 +194,29 @@ export function UnitSetForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.exchangeUnitsForm}
-                                addItemText="Add Exchange Unit"
+                                readonly={staffView}
                                 jumps={false}
-                                render={UnitForm}
-                                readonly={readonly}
+                                render={({ form, removeForm }) => (
+                                    <UnitForm
+                                        form={form}
+                                        onDelete={removeForm}
+                                        readonly={staffView}
+                                    />
+                                )}
+                                footer={({ forms, addForm }) => {
+                                    const numberOfForms = forms.length;
+                                    return !staffView && (
+                                        <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
+                                            <button
+                                                type="button"
+                                                class="mb-1 mr-3 btn btn-primary"
+                                                onclick={() => addForm({ staffView })}
+                                            >
+                                                Add Exchange Unit
+                                            </button>
+                                        </div>
+                                    );
+                                }}
                             />
                         </div>
                     </div>
@@ -216,16 +227,43 @@ export function UnitSetForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.uwaUnitsForm}
-                                addItemText="Add UWA Unit"
+                                readonly={staffView}
                                 jumps={false}
-                                render={UnitForm}
-                                readonly={readonly}
-                                instructionText="To nominate an Exchange Unit as an elective in your course, leave UWA units empty."
+                                render={({ form, removeForm }) => (
+                                    <UnitForm
+                                        form={form}
+                                        onDelete={removeForm}
+                                        readonly={staffView}
+                                    />
+                                )}
+                                footer={({ forms, addForm }) => {
+                                    const numberOfForms = forms.length;
+                                    return !staffView && (
+                                        <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
+                                            <button
+                                                type="button"
+                                                class="mb-1 mr-3 btn btn-primary"
+                                                onclick={() => addForm({ staffView })}
+                                            >
+                                                Add UWA Unit
+                                            </button>
+                                            {numberOfForms == 0 && (
+                                                <small class="text-muted mt-1">
+                                                    To nominate an Exchange Unit as an elective in your course, leave UWA units empty.
+                                                </small>
+                                            )}
+                                        </div>
+                                    );
+                                }}
                             />
                         </div>
                     </div>
                 </div>
-                {staffView ? StaffApprovalContainer(form) : null}
+                {staffView && (
+                    <div class="card-footer">
+                        <StaffUnitSetApprovalForm form={form.staffApprovalForm}/>
+                    </div>
+                )}
             </div>
         )
     }

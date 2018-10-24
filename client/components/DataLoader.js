@@ -51,7 +51,7 @@ export default function DataLoader() {
         if (prevArgs !== null && !shallowEqualObjects(prevArgs, arg)) {
             fetchData(requests, arg);
         }
-        const els = render({...state});
+        const els = render({...state, refresh: () => fetchData(requests, arg)});
         prevArgs = arg;
         return els;
     }

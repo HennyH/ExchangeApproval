@@ -87,7 +87,6 @@ namespace ExchangeApproval.Controllers
         public ActionResult GetAppliction(int id)
         {
             var application = this._db.StudentApplications
-                .Include(a => a.UnitSets)
                 .Single(a => a.StudentApplicationId == id);
             var form = new ApplicationFormVM
             {
@@ -163,12 +162,13 @@ namespace ExchangeApproval.Controllers
         public ActionResult UpdateApplication([FromBody]ApplicationFormVM form)
         {
             var now = DateTime.UtcNow;
-
             using (var transaction = this._db.Database.BeginTransaction())
             {
                 var newVersion = MapApplicationFormToApplication(this._db, form, asStaff: true);
                 var oldVersion = this._db.StudentApplications.FirstOrDefault(a => a.StudentApplicationId == form.ApplicationId);
                 this._db.Remove(oldVersion);
+                this._db.SaveChanges();
+                newVersion.StudentApplicationId = oldVersion.StudentApplicationId;
                 this._db.Add(newVersion);
                 this._db.SaveChanges();
                 transaction.Commit();

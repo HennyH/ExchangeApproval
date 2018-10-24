@@ -19,6 +19,24 @@ namespace ExchangeApproval.Controllers
             this._db = db;
         }
 
+        private StaffInboxItemVM MapApplicationToInboxItemVM(StudentApplication application)
+        {
+            return new StaffInboxItemVM
+            {
+                StudentApplicationId = application.StudentApplicationId,
+                StudentName = application.StudentName,
+                StudentNumber = application.StudentNumber,
+                LastUpdatedAt = application.LastUpdatedAt,
+                ExchangeUniversityName = application.ExchangeUniversityName,
+                ExchangeUniversityHref = application.ExchangeUniversityHref,
+                StudentApplicationStatus = new SelectOption<StudentApplicationStatus>(
+                    StudentApplication.GetStatus(application),
+                    StudentApplication.GetStatus(application).ToString(),
+                    false
+                )
+            };
+        }
+
         [Authorize]
         [HttpGet]
         public ActionResult GetInbox(
@@ -34,21 +52,16 @@ namespace ExchangeApproval.Controllers
                     applicationStatuses == null
                     || applicationStatuses.Count() == 0
                     || applicationStatuses.Contains(StudentApplication.GetStatus(a)))
-                .Select(a => new StaffInboxItemVM
-                {
-                    StudentApplicationId = a.StudentApplicationId,
-                    StudentName = a.StudentName,
-                    StudentNumber = a.StudentNumber,
-                    LastUpdatedAt = a.LastUpdatedAt,
-                    ExchangeUniversityName = a.ExchangeUniversityName,
-                    ExchangeUniversityHref = a.ExchangeUniversityHref,
-                    StudentApplicationStatus = new SelectOption<StudentApplicationStatus>(
-                        StudentApplication.GetStatus(a),
-                        StudentApplication.GetStatus(a).ToString(),
-                        false
-                    )
-                });
+                .Select(MapApplicationToInboxItemVM);
             return Json(inboxItems);
+        }
+
+        [Authorize]
+        [HttpGet("application")]
+        public ActionResult GetInboxItem(int applicationId)
+        {
+            var application = this._db.StudentApplications.Find(applicationId);
+            return Json(MapApplicationToInboxItemVM(application));
         }
     }
 }

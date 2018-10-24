@@ -8,6 +8,8 @@ import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import Modal from '../Modal/Modal.js';
 import { EmailData } from '../ViewData.js';
 
+const noop = () => {};
+
 export const COLUMN_NAMES = {
     Id: 'Id',
     StudentName: "Student Name",
@@ -67,12 +69,14 @@ export function makeInboxTableConfig(decisions) {
     }
 }
 
-export default function InboxTable() {
+function StaffEditApplicationModal() {
 
-    const state = {
-        applicationId: null,
-        applicationForm: null
-    };
+    const state = { applicationForm: null };
+
+    function fetchApplication(applicationId) {
+        const qs = m.buildQueryString({ id: applicationId });
+        return m.request(`/api/application?${qs}`);
+    }
 
     function submitAppliction() {
         console.log(state.applicationForm.getData());
@@ -83,8 +87,71 @@ export default function InboxTable() {
         });
     }
 
-    function view({ attrs: { data }}) {
+    function view({ attrs: { applicationId, onClose = noop } }) {
+        const editApplicationModalFooter = ([
+                <div>
+                    <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
+                        Send Application Results
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
+                        Copy to Clipboard
+                    </button>
+                </div>,
+                <div>
+                    <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary mx-1" data-dismiss="modal" onclick={submitAppliction}>
+                        Save Application
+                    </button>
+                </div>
+        ]);
+        return (
+            <DataLoader
+                applicationId={applicationId}
+                requests={{
+                    application: ({ applicationId }) => fetchApplication(applicationId),
+                    filters: () => m.request("/api/filters/staff")
+                }}
+                render={({ loading, errored, data: { application, filters } = {} }) => {
+                    const showLoading = loading || errored;
+                    if (state.applicationForm === null && !showLoading) {
+                        state.applicationForm = new ApplicationPowerForm({
+                            unitLevelOptions: filters.unitLevelOptions,
+                            studentOfficeOptions: filters.studentOfficeOptions,
+                        });
+                        state.applicationForm.setData(application);
+                    }
+                    console.log("rendering modal");
+                    return applicationId && (
+                        <Modal
+                            size="xl"
+                            title="Edit Application"
+                            footer={editApplicationModalFooter}
+                            onClose={() => {
+                                state.applicationForm = null;
+                                onClose();
+                            }}
+                        >
+                            {(showLoading
+                                ? <Spinner />
+                                : <ApplicationForm form={state.applicationForm} staffView={true} />
+                            )}
+                        </Modal>
+                    );
+                }}
+            />
+        );
+    }
 
+    return { view };
+}
+
+export default function InboxTable() {
+
+    const state = { selectedApplicationId: null };
+
+    function view({ attrs: { data }}) {
         return (
             <div>
                 <DataTable
@@ -93,80 +160,20 @@ export default function InboxTable() {
                     setup={(id, datatable) => {
                         $(`#${id} tbody`).on('click', 'button', (event) => {
                             const inboxItem = datatable.row($(event.target).parents('tr')).data();
-                            state.applicationId = inboxItem.studentApplicationId;
+                            state.selectedApplicationId = inboxItem.studentApplicationId;
                             m.redraw();
                         });
                     }}
                     cache={false}
                 />
-                <DataLoader
-                    applicationId={state.applicationId}
-                    requests={{
-                        application: ({ applicationId }) => {
-                            if (applicationId == null) {
-                                return Promise.resolve(null);
-                            }
-                            const qs = m.buildQueryString({ id: applicationId });
-                            return m.request(`/api/application?${qs}`);
-                        },
-                        filters: () => m.request("/api/filters/staff")
-                    }}
-                    render={({ loading, errored, data: { application, filters } = {} }) => {
-                        const showLoading = loading || errored;
-                        if (state.applicationForm == null && application) {
-                            state.applicationForm = new ApplicationPowerForm({
-                                unitLevelOptions: filters.unitLevelOptions,
-                                studentOfficeOptions: filters.studentOfficeOptions,
-                            });
-                            state.applicationForm.setData(application);
-                        }
-                        return state.applicationId !== null
-                            ? (
-                                <Modal
-                                    size="xl"
-                                    onClose={() => {
-                                        state.applicationId = null;
-                                        state.applicationForm = null;
-                                        console.log("closing modal");
-                                    }}
-                                >
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="ModalTitle">Edit Application</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body p-0">
-                                            {showLoading
-                                                ? <Spinner />
-                                                : <ApplicationForm form={state.applicationForm} staffView={true} />}
-                                        </div>
-                                        <div class="modal-footer d-flex justify-content-between">
-                                            <div>
-                                                <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
-                                                    Send Application Results
-                                                </button>
-                                                <button type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
-                                                    Copy to Clipboard
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">
-                                                    Cancel
-                                                </button>
-                                                <button type="button" class="btn btn-primary mx-1" data-dismiss="modal" onclick={submitAppliction}>
-                                                    Save Application
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </Modal>
-                            )
-                            : <div />;
-                    }}
-                />
+                {state.selectedApplicationId && (
+                    <StaffEditApplicationModal
+                        applicationId={state.selectedApplicationId}
+                        onClose={() => {
+                            state.selectedApplicationId = null;
+                        }}
+                    />
+                )}
             </div>
         )
     }

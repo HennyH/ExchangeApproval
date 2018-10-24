@@ -26,11 +26,11 @@ export default function RadioButtonGroup() {
             <div class="form-group">
                 <div class={classNames("btn-group btn-group-toggle", validationClass)}>
                     {options.map(option => {
-                        const { label, value, class: classes = "btn-outline-secondary" } = option;
+                        const { label, value, className: optionClasses = "btn-outline-secondary" } = option;
                         const id = `${name}_${label}`;
                         const selected = value === selectedOption.value;
                         return (
-                            <label class={classNames("btn", classes, selected ? "active" : "")} key={id}>
+                            <label class={classNames("btn", optionClasses, selected ? "active" : "")} key={id}>
                                 <input
                                     type="radio"
                                     id={id}

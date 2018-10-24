@@ -42,6 +42,8 @@ namespace ExchangeApproval.Migrations
                     b.Property<int>("StudentApplicationId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Degree");
+
                     b.Property<string>("ExchangeUniversityCountry");
 
                     b.Property<string>("ExchangeUniversityHref");
@@ -59,6 +61,8 @@ namespace ExchangeApproval.Migrations
                     b.Property<string>("StudentName");
 
                     b.Property<string>("StudentNumber");
+
+                    b.Property<string>("StudentOffice");
 
                     b.Property<DateTime>("SubmittedAt");
 
@@ -115,7 +119,7 @@ namespace ExchangeApproval.Migrations
                     b.ToTable("StaffLogons");
 
                     b.HasData(
-                        new { Id = 1, PasswordHash = "siD36VF+8Kbt7QnBd6iwNuWLZLjb0GUfgRAxLP2lNc8=", Role = "StudentOffice", Salt = new byte[] { 25, 219, 44, 17, 72, 57, 55, 150, 4, 103, 114, 160, 215, 255, 235, 232 }, Username = "admin" }
+                        new { Id = 1, PasswordHash = "fOqFsoq+hSQrVN2MBSVbpB3JV7pZ/C4wb18Vv3c8SWw=", Role = "StudentOffice", Salt = new byte[] { 101, 82, 68, 2, 116, 22, 37, 160, 111, 223, 89, 11, 63, 183, 156, 20 }, Username = "admin" }
                     );
                 });
 
@@ -143,7 +147,8 @@ namespace ExchangeApproval.Migrations
                 {
                     b.HasOne("ExchangeApproval.Data.UnitSet", "UnitSet")
                         .WithMany("ExchangeUnits")
-                        .HasForeignKey("UnitSetId");
+                        .HasForeignKey("UnitSetId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ExchangeApproval.Data.UnitSet", b =>
@@ -158,7 +163,8 @@ namespace ExchangeApproval.Migrations
                 {
                     b.HasOne("ExchangeApproval.Data.UnitSet", "UnitSet")
                         .WithMany("UWAUnits")
-                        .HasForeignKey("UnitSetId");
+                        .HasForeignKey("UnitSetId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

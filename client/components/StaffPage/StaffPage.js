@@ -5,7 +5,7 @@ import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanel, { StaffUnitSearchSettingsPowerForm } from './StaffDecisionSearchSettingsPanel.js'
 import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
 import Modal from '../Modal/Modal.js';
-import {DownloadModalContent, ApplicationModalContent} from '../Modal/ModalContents.js'
+import {DownloadModalContent} from '../Modal/ModalContents.js'
 import {ModalState} from '../ViewData'
 import DataLoader from 'Components/DataLoader.js'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
@@ -73,11 +73,11 @@ export default function StaffPage() {
                                 <DataLoader
                                     settings={state.inboxSearchSettings}
                                     requests={{inbox: ({settings}) => fetchInbox(settings)}}
-                                    render={({ loading, error, data: { inbox } = {}}) => (
+                                    render={({ loading, error, refresh, data: { inbox } = {}}) => (
                                         <div class={classNames("card-body", loading ? "text-center" : "")}>
                                             {loading
                                                 ? <Spinner />
-                                                : <InboxTable data={inbox} />
+                                                : <InboxTable data={inbox} refresh={refresh} />
                                             }
                                         </div>
                                     )}

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 
@@ -39,8 +40,18 @@ namespace ExchangeApproval.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            UWAStaffLogon.OnModelCreating(modelBuilder);
-            StudentApplication.OnModelCreating(modelBuilder);
+            var modelBuilderMethods = this.GetType()
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                .SelectMany(p => p.PropertyType.GetGenericArguments().Single().GetMethods(BindingFlags.Public | BindingFlags.Static))
+                .Where(m =>
+                    m.GetParameters().Count() == 1
+                    && m.GetParameters().First().ParameterType == typeof(ModelBuilder))
+                .ToList();
+            foreach (var modelBuilderMethod in modelBuilderMethods)
+            {
+                modelBuilderMethod.Invoke(null, new object[] { modelBuilder });
+            }
         }
 
         public DbSet<StudentApplication> StudentApplications { get; set; }

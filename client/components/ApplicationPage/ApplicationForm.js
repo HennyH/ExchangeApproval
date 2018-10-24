@@ -81,20 +81,38 @@ export default function ApplicationForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.unitSetForms}
-                                render={UnitSetForm}
-                                addItemText="Add Unit Set"
-                                class="mt-3"
-                                staffView = {staffView}
-                                secondButton = {
-                                    <button
-                                        class="btn btn-primary"
-                                        class={"mb-1 mr-3 btn btn-primary"}
-                                        oncreate={m.route.link}
-                                        href="/search"
-                                    >
-                                            Search for Units
-                                    </button>
-                                }
+                                readonly={staffView}
+                                render={({ index, form, removeForm }) => (
+                                    <UnitSetForm
+                                        form={form}
+                                        formIndex={index}
+                                        onDelete={removeForm}
+                                        staffView={staffView}
+                                        className="mt-3"
+                                    />
+                                )}
+                                footer={({ forms, addForm }) => {
+                                    const numberOfForms = forms.length;
+                                    return !staffView && (
+                                        <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
+                                            <button
+                                                type="button"
+                                                class="mb-1 mr-3 btn btn-primary"
+                                                onclick={() => addForm({ staffView })}
+                                            >
+                                                    {"Add Unit Set"}
+                                            </button>
+                                            <button
+                                                class="btn btn-primary"
+                                                class={"mb-1 mr-3 btn btn-primary"}
+                                                oncreate={m.route.link}
+                                                href="/search"
+                                            >
+                                                    Search for Units
+                                            </button>
+                                        </div>
+                                    );
+                                }}
                             />
                         </div>
                     </div>
