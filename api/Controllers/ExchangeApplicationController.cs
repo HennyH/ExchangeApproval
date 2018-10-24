@@ -102,7 +102,7 @@ namespace ExchangeApproval.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAppliction(int id)
+        public ActionResult GetApplication(int id)
         {
             var application = this._db.StudentApplications
                 .Single(a => a.StudentApplicationId == id);

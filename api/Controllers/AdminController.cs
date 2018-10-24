@@ -89,7 +89,7 @@ namespace ExchangeApproval.Controllers
                     var str = reader.ReadToEnd();
 
                     StudentApplication[] js = JsonConvert.DeserializeObject<StudentApplication[]>(str);
-                    // ApplicationsBackup.UpdateApplicationsDB(this._db, js);
+                    ApplicationsBackup.UpdateApplicationsinDatabase(this._db, js);
                     return new StatusCodeResult((int)HttpStatusCode.NoContent);
                 }
             }
