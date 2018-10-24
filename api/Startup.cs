@@ -72,7 +72,7 @@ namespace ExchangeApproval
             services.AddDbContext<ExchangeDbContext>(options =>
             {
                 var herokuDbUrl = Environment.GetEnvironmentVariable("DATABASE_URL")
-                    ?? Environment.GetEnvironmentVariable("JAWS_DB");
+                    ?? Environment.GetEnvironmentVariable("JAWSDB_URL");
                 if (herokuDbUrl != null)
                 {
                     var (_, connectionString) = DatabaseUrlHelpers.ParseDatabaseUrl(herokuDbUrl);
