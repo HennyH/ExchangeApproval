@@ -13,7 +13,7 @@ function Navbar() {
 
     function view(vnode) {
         const currentRoute = m.route.get();
-        const navLinks = (vnode.attrs.staff ?
+        const navLinks = (window.LOGGED_IN ?
         [
             { href: "/student-office", text: "Application Inbox" },
             { href: "/search", text: "Search Units" },
@@ -47,7 +47,7 @@ function Navbar() {
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Staff</a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                {vnode.attrs.staff ?
+                                {window.LOGGED_IN ?
                                     <button class="dropdown-item" onclick={toggleAdminModal}>Download / Upload Faculty List</button>
                                 :    <button class="dropdown-item" oncreate={m.route.link} href="/student-office">Log In</button>
                                 }
