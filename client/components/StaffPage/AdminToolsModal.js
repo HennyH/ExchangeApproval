@@ -77,7 +77,7 @@ export default function AdminToolsModal() {
                         {state.errors
                             ? (
                                 <ol>
-                                    {state.errors.map(e => <li key={e}>{e}</li>)}
+                                    {state.errors.map(e => <li class="small text-danger" key={e}>{e}</li>)}
                                 </ol>
                             )
                             : <span />

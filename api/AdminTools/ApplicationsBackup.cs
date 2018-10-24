@@ -8,15 +8,15 @@ using System;
 namespace ExchangeApproval.AdminTools 
 {
     public static class ApplicationsBackup {
-        public static void UpdateApplicationsDB (ExchangeDbContext db, IEnumerable<StudentApplication> newUploadedApplications)
+        public static void UpdateApplicationsinDatabase (ExchangeDbContext db, IEnumerable<StudentApplication> newUploadedApplications)
         {
-            // using (var transaction = db.Database.BeginTransaction())
-            // {
-            //     db.RemoveRange();
-            //     db.AddRange(newUploadedApplications);
-            //     db.SaveChanges();
-            //     transaction.Commit();
-            // }
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                IEnumerable<StudentApplication> diff = newUploadedApplications.Except(db.StudentApplications.Where(s => s.StudentApplicationId != null));
+                db.AddRange(diff);
+                db.SaveChanges();
+                transaction.Commit();
+            }
         }
     }
 }
