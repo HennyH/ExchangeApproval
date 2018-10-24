@@ -197,6 +197,9 @@ export default function InboxTable() {
                                 if (state.selectedInboxRow) {
                                     state.inboxDatatable.row(state.selectedInboxRow).data(inboxItem).invalidate();
                                     state.selectedInboxRow.addClass(Styles.blink);
+                                    setTimeout(() => {
+                                        state.selectedInboxRow.removeClass(Styles.blink);
+                                    }, 1000);
                                 }
                             });
                         }}
