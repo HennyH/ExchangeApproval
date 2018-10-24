@@ -7,23 +7,24 @@ const noop = () => {}
 
 export default function Modal() {
 
-    const state = { $ref: null };
+    const state = { $dom: null };
 
-    function oncreate({ dom: ref, attrs: { onClose = noop } }) {
-        state.$ref = $(ref);
-        state.$ref.on('hidden.bs.modal', function() {
+    function oncreate({ dom, attrs: { ref = noop, onClose = noop } }) {
+        state.$dom = $(dom);
+        state.$dom.on('hidden.bs.modal', function() {
             onClose();
             m.redraw();
         });
+        ref(state.$dom);
         showModal();
     }
 
     function showModal() {
-        if (!state.$ref) {
+        if (!state.$dom) {
             return;
         }
-        if (!state.$ref.hasClass('show.bs.modal') && !state.$ref.hasClass('shown.bs.modal')) {
-            state.$ref.modal();
+        if (!state.$dom.hasClass('show.bs.modal') && !state.$dom.hasClass('shown.bs.modal')) {
+            state.$dom.modal();
         }
     }
 

@@ -7,6 +7,7 @@ import ApplicationForm, { ApplicationPowerForm } from 'Components/ApplicationPag
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import Modal from '../Modal/Modal.js';
 import { EmailData } from '../ViewData.js';
+import Styles from './InboxTable.css';
 
 const noop = () => {};
 
@@ -71,23 +72,34 @@ export function makeInboxTableConfig(decisions) {
 
 function StaffEditApplicationModal() {
 
-    const state = { applicationForm: null };
+    const state = {
+        applicationForm: null,
+        modalRef: null
+    };
 
     function fetchApplication(applicationId) {
         const qs = m.buildQueryString({ id: applicationId });
         return m.request(`/api/application?${qs}`);
     }
 
-    function submitAppliction() {
-        console.log(state.applicationForm.getData());
+    function submitAppliction(onSubmit, onClose) {
+        state.submittingApplication = true;
         m.request({
             method: "POST",
             url: "/api/application/update",
             data: state.applicationForm.getData()
+        })
+        .then(async () => {
+            if (state.modalRef) {
+                state.modalRef.modal('hide');
+            }
+            await onSubmit();
+            return onClose();
         });
+
     }
 
-    function view({ attrs: { applicationId, onClose = noop } }) {
+    function view({ attrs: { applicationId, onSubmit = noop, onClose = noop } }) {
         const editApplicationModalFooter = ([
                 <div>
                     <button type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
@@ -101,7 +113,7 @@ function StaffEditApplicationModal() {
                     <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-primary mx-1" data-dismiss="modal" onclick={submitAppliction}>
+                    <button type="button" class="btn btn-primary mx-1" onclick={() => submitAppliction(onSubmit, onClose)}>
                         Save Application
                     </button>
                 </div>
@@ -132,6 +144,9 @@ function StaffEditApplicationModal() {
                                 state.applicationForm = null;
                                 onClose();
                             }}
+                            ref={(ref) => {
+                                state.modalRef = ref;
+                            }}
                         >
                             {(showLoading
                                 ? <Spinner />
@@ -149,7 +164,11 @@ function StaffEditApplicationModal() {
 
 export default function InboxTable() {
 
-    const state = { selectedApplicationId: null };
+    const state = {
+        inboxDatatable: null,
+        selectedInboxApplicationId: null,
+        selectedInboxRow: null
+    };
 
     function view({ attrs: { data }}) {
         return (
@@ -158,19 +177,32 @@ export default function InboxTable() {
                     id="inbox-table"
                     config={makeInboxTableConfig(data)}
                     setup={(id, datatable) => {
+                        state.inboxDatatable = datatable;
                         $(`#${id} tbody`).on('click', 'button', (event) => {
-                            const inboxItem = datatable.row($(event.target).parents('tr')).data();
-                            state.selectedApplicationId = inboxItem.studentApplicationId;
+                            const row = $(event.target).parents('tr');
+                            state.selectedInboxRow = row;
+                            state.selectedInboxApplicationId = datatable.row(row).data().studentApplicationId;
                             m.redraw();
                         });
                     }}
                     cache={false}
                 />
-                {state.selectedApplicationId && (
+                {state.selectedInboxApplicationId && (
                     <StaffEditApplicationModal
-                        applicationId={state.selectedApplicationId}
+                        applicationId={state.selectedInboxApplicationId}
+                        onSubmit={() => {
+                            const qs = m.buildQueryString({
+                                applicationId: state.selectedInboxApplicationId
+                            });
+                            m.request(`/api/inbox/application?${qs}`).then((inboxItem) => {
+                                if (state.selectedInboxRow) {
+                                    state.inboxDatatable.row(state.selectedInboxRow).data(inboxItem).invalidate();
+                                    state.selectedInboxRow.addClass(Styles.blink);
+                                }
+                            });
+                        }}
                         onClose={() => {
-                            state.selectedApplicationId = null;
+                            state.selectedInboxApplicationId = null;
                         }}
                     />
                 )}

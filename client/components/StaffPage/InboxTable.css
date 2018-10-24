@@ -1,0 +1,9 @@
+.blink {
+    animation: blink-animation 1s linear;
+}
+
+@keyframes blink-animation {
+    50% {
+        opacity: 0;
+    }
+}
