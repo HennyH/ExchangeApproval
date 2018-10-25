@@ -1,6 +1,6 @@
 import m from 'mithril'
 import classNames from 'classnames'
-import { Form } from 'powerform'
+import { Form } from 'Components/FormHelpers'
 
 import { Input, Select, OptionsField, IntegerField, StringField, FormListField, BooleanField }  from 'FormHelpers'
 import Styles from './UnitSetForm.css'
@@ -13,8 +13,7 @@ import { removeItemFromCart } from 'Components/Cart'
 import {EmailData} from '../ViewData'
 
 export class UnitPowerForm extends Form {
-    constructor({ ...config }) {
-        super(config);
+    configureFields() {
         this.unitName = StringField.new({ required: true });
         this.unitCode = StringField.new({ required: true });
         this.unitHref = StringField.new({
@@ -22,15 +21,11 @@ export class UnitPowerForm extends Form {
             regex: /^https?\:\/\//,
             regexErrorMessage: 'Enter a URL of the from https://...'
         });
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 
 export class StaffUnitSetApprovalPowerForm extends Form {
-    constructor({
-            unitLevelOptions, ...config }) {
-        super(config);
+    configureFields({ unitLevelOptions }) {
         this.equivalentUnitLevel = OptionsField.new({
             required: true,
             options: [
@@ -58,35 +53,34 @@ export class StaffUnitSetApprovalPowerForm extends Form {
             default: { value: null, label: 'Pending', selected: true }
         });
         this.comments = StringField.new();
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 
 export class UnitSetPowerForm extends Form {
-    constructor({ unitLevelOptions, ...config }) {
-        super(config);
-        this.readonly = BooleanField.new({ default: false });
-        this.precedentUnitSetId = IntegerField.new();
+    configureFields({ unitLevelOptions }) {
+        this.cartItemId = IntegerField.new();
+        this.unitSetId = IntegerField.new();
+        this.readonly = BooleanField.new({ defualtValue: false });
         this.applicationId = IntegerField.new();
-        this.exchangeUnitsForm = FormListField.new({
-            factory: ({...config}) => new UnitPowerForm({ ...config }),
+        this.exchangeUnitForms = FormListField.new({
+            factory: (data) => {
+                const form = new UnitPowerForm();
+                form.setData(data);
+                return form;
+            },
             required: true
         });
-        this.uwaUnitsForm = FormListField.new({
-            factory: ({...config}) => new UnitPowerForm({ ...config }),
+        this.uwaUnitForms = FormListField.new({
+            factory: (data) => {
+                const form = new UnitPowerForm();
+                form.setData(data);
+                return form;
+            },
             required: false
         });
         this.staffApprovalForm = new FormField({
             form: new StaffUnitSetApprovalPowerForm({ unitLevelOptions })
         })
-        Form.new.call(() => this, config);
-        this.config = config;
-        if (this.precedentUnitSetId.getData() !== null
-            && this.precedentUnitSetId.getData() !== undefined
-        ) {
-            this.readonly.setData(true);
-        }
     }
 }
 
@@ -202,7 +196,7 @@ export function UnitSetForm() {
                         </div>
                         <div class="card-body">
                             <FormRepeater
-                                field={form.exchangeUnitsForm}
+                                field={form.exchangeUnitForms}
                                 readonly={staffView}
                                 jumps={false}
                                 render={({ form, removeForm }) => (
@@ -235,7 +229,7 @@ export function UnitSetForm() {
                         </div>
                         <div class="card-body">
                             <FormRepeater
-                                field={form.uwaUnitsForm}
+                                field={form.uwaUnitForms}
                                 readonly={staffView}
                                 jumps={false}
                                 render={({ form, removeForm }) => (
@@ -247,6 +241,18 @@ export function UnitSetForm() {
                                 )}
                                 footer={({ forms, addForm }) => {
                                     const numberOfForms = forms.length;
+                                    /* Rather than display an empty gray box
+                                     * when the student entered no UWA units
+                                     * (as is the case for an elective) show a
+                                     * N/A to show it wasn't an error.
+                                     */
+                                    if (staffView && numberOfForms === 0) {
+                                        return (
+                                            <div class="text-center" style="width: 100%">
+                                                <b>N/A</b>
+                                            </div>
+                                        )
+                                    }
                                     return !staffView && (
                                         <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
                                             <button

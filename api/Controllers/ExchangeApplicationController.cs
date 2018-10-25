@@ -72,13 +72,13 @@ namespace ExchangeApproval.Controllers
                     EquivalentUWAUnitLevel = asStaff
                         ? parseUnitLevel(f.StaffApprovalForm.EquivalentUnitLevel.Label)
                         : (UWAUnitLevel?)null,
-                    ExchangeUnits = f.ExchangeUnitsForm.Select(u => new ExchangeUnit
+                    ExchangeUnits = f.ExchangeUnitForms.Select(u => new ExchangeUnit
                     {
                         Code = u.UnitCode,
                         Title = u.UnitName,
                         Href = u.UnitHref
                     }).ToList(),
-                    UWAUnits = f.UWAUnitsFormForm?.Select(u => new UWAUnit
+                    UWAUnits = f.UWAUnitForms?.Select(u => new UWAUnit
                     {
                         Code = u.UnitCode,
                         Title = u.UnitName,
@@ -131,13 +131,14 @@ namespace ExchangeApproval.Controllers
                 },
                 UnitSetForms = application.UnitSets.Select(us => new UnitSetFormVM
                 {
-                    ExchangeUnitsForm = us.ExchangeUnits.Select(u => new UnitFormVM
+                    UnitSetId = us.UnitSetId,
+                    ExchangeUnitForms = us.ExchangeUnits.Select(u => new UnitFormVM
                     {
                         UnitName = u.Title,
                         UnitCode = u.Code,
                         UnitHref = u.Href
                     }).ToList(),
-                    UWAUnitsFormForm = us.UWAUnits.Select(u => new UnitFormVM
+                    UWAUnitForms = us.UWAUnits.Select(u => new UnitFormVM
                     {
                         UnitName = u.Title,
                         UnitCode = u.Code,

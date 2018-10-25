@@ -12,6 +12,8 @@ export const CART_EVENTS = {
     CART_CHANGED: 'CART_CHANGED'
 };
 
+window.NEXT_ITEM_ID = 1;
+
 export function makeCartTableConfig(cartItems) {
     const decisionsTableConfig = makeDecisionsTableConfig(cartItems);
     const columnsToKeep = [
@@ -59,6 +61,7 @@ export function addItemToCart(item, emitEvent = true) {
      * of the item.
      */
     removeItemFromCart(item, false);
+    item.__CART_ITEM_ID = window.NEXT_ITEM_ID++;
     CART.items = [item, ...CART.items];
     if (emitEvent) {
         emitCartEvent(CART_EVENTS.CART_CHANGED);
@@ -73,7 +76,24 @@ export function removeItemFromCart(item, emitEvent = true) {
 }
 
 export function isItemInCart(item) {
-    return CART.items.indexOf(item) >= 0;
+    return CART.items.indexOf(item) >= 0
+        || (item && item.__CART_ITEM_ID !== undefined
+                && CART.items.some(i => i.__CART_ITEM_ID === item.__CART_ITEM_ID));
+}
+
+export function isItemIdInCart(itemId) {
+    return CART.items.some(i => i.__CART_ITEM_ID === itemId);
+}
+
+export function getCardItemId(item) {
+    if (isItemInCart(item)) {
+        return item.__CART_ITEM_ID;
+    }
+    return undefined;
+}
+
+export function getCartItemById(id) {
+    return CART.items.find(i => i.__CART_ITEM_ID == id);
 }
 
 export function addCartEventHandler(name, id, callback) {

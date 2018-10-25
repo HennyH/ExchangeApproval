@@ -124,7 +124,10 @@ export class FormListField extends Field {
     }
 
     modify(newVal, preVal) {
-        return newVal.map(data => this.formFactory({ data }));
+        return newVal.map(data => {
+            const form = this.formFactory(data);
+            return form;
+        });
     }
 
     setData(data) {
@@ -160,7 +163,7 @@ export class FormListField extends Field {
             )
         ], []);
     }
-    
+
     setDirty(value) {
         this.forms.forEach(form => form.setDirty(value));
     }
@@ -170,13 +173,17 @@ export class FormListField extends Field {
     }
 
     pushForm(config) {
-        this.forms.push(this.formFactory(config));
+        const form = this.formFactory(config);
+        this.forms.push(form);
         this.triggerOnChange();
+        return form;
     }
 
     unshiftForm(config) {
-        this.forms.unshift(this.formFactory(config));
+        const form = this.formFactory(config);
+        this.forms.unshift(form);
         this.triggerOnChange();
+        return form;
     }
 
     removeForm(form) {

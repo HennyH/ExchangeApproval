@@ -1,18 +1,16 @@
 import m from 'mithril';
 import classNames from 'classnames';
-import { Form } from 'powerform'
+import { Form } from 'Components/FormHelpers'
 
 import { CheckboxGroup, Select2, OptionsField } from 'FormHelpers'
 import Styles from './StaffDecisionSearchSettingsPanel.css';
 
 export class StaffUnitSearchSettingsPowerForm extends Form {
-    constructor({
+    configureFields({
         studentOptions,
         studentOfficeOptions,
-        applicationStateOptions,
-        ...config
+        applicationStateOptions
     }) {
-        super(config)
         this.studentNumbers = OptionsField.new({
             multiple: true,
             options: studentOptions
@@ -25,8 +23,6 @@ export class StaffUnitSearchSettingsPowerForm extends Form {
             multiple: true,
             options: applicationStateOptions
         });
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 

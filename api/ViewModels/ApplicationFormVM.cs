@@ -41,8 +41,9 @@ namespace ExchangeApproval.ViewModels
 
     public class UnitSetFormVM
     {
-        public IEnumerable<UnitFormVM> ExchangeUnitsForm { get; set; }
-        public IEnumerable<UnitFormVM> UWAUnitsFormForm { get; set; }
+        public int? UnitSetId { get; set; }
+        public IEnumerable<UnitFormVM> ExchangeUnitForms { get; set; }
+        public IEnumerable<UnitFormVM> UWAUnitForms { get; set; }
         public StaffApprovalFormVM StaffApprovalForm { get; set; }
     }
 

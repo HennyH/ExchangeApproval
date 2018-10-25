@@ -1,17 +1,12 @@
 import m from 'mithril';
 import classNames from 'classnames';
-import { Form } from 'powerform'
+import { Form } from 'Components/FormHelpers'
 
 import { CheckboxGroup, Select2, OptionsField } from 'FormHelpers'
 
 
 export class DecisionSearchSettingsPowerForm extends Form {
-    constructor({
-        exchangeUniversityNameOptions,
-        uwaUnitLevelOptions,
-        ...config
-    }) {
-        super(config)
+    configureFields({ exchangeUniversityNameOptions, uwaUnitLevelOptions }) {
         this.exchangeUniversities = OptionsField.new({
             multiple: true,
             options: exchangeUniversityNameOptions
@@ -20,8 +15,6 @@ export class DecisionSearchSettingsPowerForm extends Form {
             multiple: true,
             options: uwaUnitLevelOptions
         })
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 

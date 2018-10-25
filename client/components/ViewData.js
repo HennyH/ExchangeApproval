@@ -109,12 +109,12 @@ function processUnitSet(unitSet) {
     var uwaUnits;
     var exchangeUnits;
 
-    for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
-        uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
+    for (var j = 0; j < unitSet.uwaUnitForms.length; j++) {
+        uwaUnits = printUnitLine(unitSet.uwaUnitForms[j], j)
     }
 
-    for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
-        exchangeUnits = printUnitLine(unitSet.exchangeUnitsForm[k], k)
+    for (var k = 0; k < unitSet.exchangeUnitForms.length; k++) {
+        exchangeUnits = printUnitLine(unitSet.exchangeUnitForms[k], k)
     }
 
     return(
@@ -136,12 +136,12 @@ function processUnitSetEquivalence(unitSet) {
     var uwaUnits;
     var exchangeUnits;
 
-    for (var j = 0; j < unitSet.uwaUnitsForm.length; j++) {
-        uwaUnits = printUnitLine(unitSet.uwaUnitsForm[j], j)
+    for (var j = 0; j < unitSet.uwaUnitForms.length; j++) {
+        uwaUnits = printUnitLine(unitSet.uwaUnitForms[j], j)
     }
 
-    for (var k = 0; k < unitSet.exchangeUnitsForm.length; k++) {
-        exchangeUnits = printUnitLineEquivalence(unitSet.exchangeUnitsForm[k], k)
+    for (var k = 0; k < unitSet.exchangeUnitForms.length; k++) {
+        exchangeUnits = printUnitLineEquivalence(unitSet.exchangeUnitForms[k], k)
     }
 
     return(

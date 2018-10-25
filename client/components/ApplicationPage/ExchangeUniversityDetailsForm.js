@@ -1,11 +1,10 @@
 import m from 'mithril'
-import { Form } from 'powerform'
+import { Form } from 'Components/FormHelpers'
 
 import { Input, StringField } from 'FormHelpers'
 
 export class ExchangeUniversityDetailsPowerForm extends Form {
-    constructor({ ...config }) {
-        super(config);
+    configureFields() {
         this.universityName = StringField.new({ required: true });
         this.universityHomepage = StringField.new({
             required: true,
@@ -13,8 +12,6 @@ export class ExchangeUniversityDetailsPowerForm extends Form {
             regexErrorMessage: 'Enter a URL of the form https:// or http://...'
         });
         this.universityCountry = StringField.new({ required: true });
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 

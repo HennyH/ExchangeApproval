@@ -21,8 +21,8 @@ export default function Input() {
          * presumably having either been already sumitted to or provided by
          * the server.
          */
-        const validationClass = field.validationClass();
-        const input = ( 
+        const validationClass = !readonly && field.validationClass();
+        const input = (
             <input
                 name={field.fieldName}
                 readonly={readonly}

@@ -1,11 +1,10 @@
 import m from 'mithril'
-import { Form } from 'powerform'
+import { Form } from 'Components/FormHelpers'
 import classNames from 'classnames'
 import { Input, Select, OptionsField, StudentEmailField, StringField } from 'FormHelpers'
 
 export class StudentDetailsPowerForm extends Form {
-    constructor({ studentOfficeOptions, ...config }) {
-		super(config);
+    configureFields({ studentOfficeOptions }) {
 		this.name = StringField.new({ required: true });
         this.email = StudentEmailField.new({ required: true });
         this.degree = StringField.new({ required: true  });
@@ -18,8 +17,6 @@ export class StudentDetailsPowerForm extends Form {
             ],
             required: true
         });
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 

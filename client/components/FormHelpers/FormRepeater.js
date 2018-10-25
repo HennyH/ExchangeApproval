@@ -14,17 +14,19 @@ export function FormRepeater() {
         nextFormKey: 1
     };
 
-    function removeForm(field, form) {
+    function removeForm(field, form, onRemoveForm) {
         field.removeForm(form);
+        onRemoveForm({ field, forms: field.forms, form });
     }
 
-    function addForm(field, config) {
+    function addForm(field, config, onAddForm) {
         const formKey = state.nextFormKey;
         state.nextFormKey += 1;
-        field.pushForm({ ...config, __repeater_key: formKey });
+        const form = field.pushForm({ ...config, __repeater_key: formKey });
         if (state.jumps) {
             state.scrollToBottom = true;
         }
+        onAddForm({ field, forms: field.forms, form });
     }
 
     function scrollToLastForm() {
@@ -59,6 +61,8 @@ export function FormRepeater() {
             render,
             jumps = true,
             readonly = false,
+            onAddForm = noop,
+            onRemoveForm = noop,
             footer = noop
         }
     }) {
@@ -84,7 +88,7 @@ export function FormRepeater() {
                         {render({
                             index,
                             form,
-                            removeForm: () => removeForm(field, form)
+                            removeForm: () => removeForm(field, form, onRemoveForm)
                         })}
                     </div>
                 ))}
@@ -95,8 +99,8 @@ export function FormRepeater() {
                 <div class="row mx-2">
                     {footer({
                         forms: field.forms,
-                        addForm: (config) => addForm(field, config),
-                        removeForm: (form) => removeForm(field, form)
+                        addForm: (config) => addForm(field, config, onAddForm),
+                        removeForm: (form) => removeForm(field, form, onRemoveForm)
                     })}
                     {jumps && numberOfForms > 1 && (
                         <button

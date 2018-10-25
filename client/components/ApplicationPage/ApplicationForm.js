@@ -1,13 +1,15 @@
 import m from 'mithril'
 import classNames from 'classnames'
-import { Form } from 'powerform'
 
 import { StudentDetailsForm, StudentDetailsPowerForm } from './StudentDetailsForm.js'
 import { ExchangeUniversityDetailsForm, ExchangeUniversityDetailsPowerForm } from './ExchangeUniversityDetailsForm.js'
-import { UnitSetForm, UnitPowerForm, UnitSetPowerForm } from './UnitSetForm.js'
+import { UnitSetForm, UnitSetPowerForm } from './UnitSetForm.js'
 import {
     CART_EVENTS,
     removeItemFromCart,
+    getCartItemById,
+    getCardItemId,
+    isItemIdInCart,
     getItemsInCart,
     addCartEventHandler,
     removeCartEventHandler
@@ -15,8 +17,6 @@ import {
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
 import { Form, FormField, FormListField, IntegerField } from '../FormHelpers';
 import { EmailData } from '../ViewData.js'
-
-console.log(Form);
 
 export class ApplicationPowerForm extends Form {
     configureFields({ unitLevelOptions = [], studentOfficeOptions = [], ...config }) {
@@ -30,11 +30,11 @@ export class ApplicationPowerForm extends Form {
             form: new ExchangeUniversityDetailsPowerForm()
         });
         this.unitSetForms = FormListField.new({
-            factory: ({ ...config } = {}) => {
+            factory: (data) => {
                 const form = new UnitSetPowerForm({
-                    ...config,
                     unitLevelOptions
                 });
+                form.setData(data);
                 return form;
             },
             required: true
@@ -59,7 +59,6 @@ export default function ApplicationForm() {
             ? (form.isValid() ? 'is-valid' : 'is-invalid')
             : '';
         const errorMessage = "This form is not valid. Please check all fields for validation errors";
-
         return (
             <div class="container-fluid">
                 <div class="card-body">
@@ -90,6 +89,13 @@ export default function ApplicationForm() {
                                         className="mt-3"
                                     />
                                 )}
+                                onRemoveForm={({ form }) => {
+                                    const cartItemId = form.cartItemId.getData();
+                                    if (cartItemId) {
+                                        const cartItem = getCartItemById(cartItemId);
+                                        removeItemFromCart(cartItem, true);
+                                    }
+                                }}
                                 footer={({ forms, addForm }) => {
                                     const numberOfForms = forms.length;
                                     return !staffView && (
@@ -161,8 +167,8 @@ export default function ApplicationForm() {
     function updateUnitSetsFromCart(form, items) {
         const formsToDrop = form.unitSetForms.forms.reduce(
             (agg, f) => {
-                const precedentUnitSetId = f.precedentUnitSetId.getData();
-                if (precedentUnitSetId && !items.some(i => i.unitSetId === precedentUnitSetId)) {
+                const cartItemId = f.cartItemId.getData();
+                if (cartItemId && !isItemIdInCart(cartItemId)) {
                     agg.push(f);
                 }
                 return agg;
@@ -171,23 +177,22 @@ export default function ApplicationForm() {
         );
         let redraw = formsToDrop.length > 0;
         formsToDrop.map(f => form.unitSetForms.removeForm(f));
-        items.map(i => {
-            if (!form.unitSetForms.forms.some(f => f.precedentUnitSetId.getData() === i.unitSetId)) {
+        items.forEach(cartItem => {
+            const cartItemId = getCardItemId(cartItem);
+            if (!form.unitSetForms.forms.some(f => f.cartItemId.getData() === cartItemId)) {
                 form.unitSetForms.unshiftForm({
-                    data: {
-                        precedentUnitSetId: i.unitSetId,
-                        exchangeUnitsForm: i.exchangeUnits.map(u => ({
-                            unitName: u.unitName,
-                            unitCode: u.unitCode,
-                            unitHref: u.unitHref
-                        })),
-                        uwaUnitsForm: i.uwaUnits.map(u => ({
-                            unitName: u.unitName,
-                            unitCode: u.unitCode,
-                            unitHref: u.unitHref
-                        }))
-                    },
-                    cartItem: i
+                    cartItemId,
+                    exchangeUnitForms: cartItem.exchangeUnits.map(u => ({
+                        unitName: u.unitName,
+                        unitCode: u.unitCode,
+                        unitHref: u.unitHref
+                    })),
+                    uwaUnitForms: cartItem.uwaUnits.map(u => ({
+                        unitName: u.unitName,
+                        unitCode: u.unitCode,
+                        unitHref: u.unitHref
+                    })),
+                    readonly: true
                 });
                 redraw = true;
             }
