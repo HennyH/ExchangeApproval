@@ -25,38 +25,38 @@ export class StudentDetailsPowerForm extends Form {
 
 export function StudentDetailsForm() {
 
-    function view({ attrs: { form, staffView, hasTriedToSubmit } }) {
+    function view({ attrs: { form, staffView } }) {
 
         return (
             <form novalidate>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="email">Name: </label>
                     <div class="input-group col-8">
-                        <Input field={form.name} placeholder="Full Name" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
+                        <Input field={form.name} placeholder="Full Name" type="text" readonly={staffView} />
                     </div>
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="email">UWA Email: </label>
                     <div class="input-group col-8">
-                        <Input field={form.email} type="text" placeholder="Student Number" appendInputText="@student.uwa.edu.au" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
+                        <Input field={form.email} type="text" placeholder="Student Number" appendInputText="@student.uwa.edu.au" readonly={staffView} />
                     </div>
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="degree">Degree: </label>
                     <div class="input-group col-8">
-                        <Input field={form.degree} placeholder="Degree" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
+                        <Input field={form.degree} placeholder="Degree" type="text" readonly={staffView}/>
                     </div>
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="major">Major: </label>
                     <div class="input-group col-8">
-                        <Input field={form.major} placeholder="First Major" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
+                        <Input field={form.major} placeholder="First Major" type="text" readonly={staffView} />
                     </div>
                 </div>
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="2ndMajor">2nd Major*: </label>
                     <div class={"input-group col-8"}>
-                        <Input field={form.major2nd} placeholder="Second Major (optional)" type="text" readonly={staffView} hasTriedToSubmit={hasTriedToSubmit}/>
+                        <Input field={form.major2nd} placeholder="Second Major (optional)" type="text" readonly={staffView} />
                     </div>
                 </div>
                 <div class="form-group row mx-1">

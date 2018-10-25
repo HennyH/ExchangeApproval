@@ -59,12 +59,11 @@ export function FormRepeater() {
             render,
             jumps = true,
             readonly = false,
-            footer = noop,
-            hasTriedToSubmit
+            footer = noop
         }
     }) {
         const numberOfForms = field.forms.length;
-        const validationClass = (!readonly && hasTriedToSubmit)
+        const validationClass = !readonly
             ? (field.isValid() ? (field.isDirty() ? 'is-valid' : '') : 'is-invalid')
             : '';
         const error = field.getError({ childForms: false });
