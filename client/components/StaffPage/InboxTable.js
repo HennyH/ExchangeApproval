@@ -119,10 +119,10 @@ function StaffEditApplicationModal() {
                     const modalFooter = ([
                         <div>
                             <button disabled={showLoading} type="button" class="btn btn-outline-primary mx-1" onclick={() => EmailData.Student.SendEmail()}>
-                                Send Application Results
+                                ✉ Send Application Results
                             </button>
                             <button disabled={showLoading} type="button" class="btn btn-outline-secondary mx-1" onclick={() => EmailData.Student.CopyText()}>
-                                Copy to Clipboard
+                                📋 Copy to Clipboard
                             </button>
                         </div>,
                         <div>

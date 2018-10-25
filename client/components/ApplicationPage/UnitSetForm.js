@@ -172,8 +172,12 @@ export function UnitSetForm() {
                         <div class="col" style="width: 3em">
                             {(staffView) ?
                                 <span>
-                                    <button class="btn-sm ml-2 btn-outline-primary float-right" onclick={() => EmailData.Equivalence.SendEmail(formIndex)}>Email Equivalence</button>
-                                    <button class="btn-sm ml-2 btn-outline-secondary float-right" onclick={() => EmailData.Equivalence.CopyText(formIndex)}>Copy to Clipboard</button>
+                                    <button class="btn btn-sm ml-2 btn-outline-secondary float-right" onclick={() => EmailData.Equivalence.CopyText(formIndex)}>
+                                        📋 Copy to Clipboard
+                                    </button>
+                                    <button class="btn btn-sm ml-2 btn-outline-primary float-right" onclick={() => EmailData.Equivalence.SendEmail(formIndex)}>
+                                        ✉ Email Equivalence
+                                    </button>
                                 </span>
                                 : <span class="float-right">
                                     <DeleteButton
