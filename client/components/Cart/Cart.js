@@ -116,7 +116,7 @@ export function removeCartEventHandler(name, id, callback) {
 export default function Cart() {
 
     function view() {
-        return (
+        return !window.LOGGED_IN && (
             <div class="card bg-light my-3">
                 <div class="card-header d-flex align-items-center">Cart</div>
                 <div class="card-body">
