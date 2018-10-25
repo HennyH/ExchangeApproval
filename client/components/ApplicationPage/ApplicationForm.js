@@ -78,6 +78,7 @@ export default function ApplicationForm() {
                         <div class="card-header">Unit Approval Requests</div>
                         <div class="card-body">
                             <FormRepeater
+                                jumps={!staffView}
                                 field={form.unitSetForms}
                                 readonly={staffView}
                                 render={({ index, form, removeForm }) => (
