@@ -118,12 +118,12 @@ function processUnitSet(unitSet) {
     }
 
     return(
-    `UWA Units:\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
-    Exchange Units:\t\t${exchangeUnits}
-    Equivalence Approval:\t${unitSet.staffApprovalForm.isEquivalent.label}
-    Contextual Approval:\t${unitSet.staffApprovalForm.isContextuallyApproved.label}
+`\tUWA Units:\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
+\tExchange Units:\t\t${exchangeUnits}
+\tEquivalence Approval:\t${unitSet.staffApprovalForm.isEquivalent.label}
+\tContextual Approval:\t${unitSet.staffApprovalForm.isContextuallyApproved.label}
 
-    `)
+`)
 }
 
 function printUnitLine(unit, index) {
@@ -145,10 +145,10 @@ function processUnitSetEquivalence(unitSet) {
     }
 
     return(
-    `UWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
-    Exchange Units:\t\t${exchangeUnits}
+`\tUWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
+\tExchange Units:\t\t${exchangeUnits}
 
-    `)
+`)
 }
 
 function printUnitLineEquivalence(unit, index) {
@@ -161,7 +161,7 @@ function studentMessage(EmailData) {
     return (
 `Hi ${EmailData.Name},
 
-I hope this email finds you well.\n\nI am writing to update you on the status of your application for exchange at ${EmailData.University}. Exchange units need both equivalence and contextual approval. Please see the approval status below.\n\n\t\t${EmailData.Approvals}
+I hope this email finds you well.\n\nI am writing to update you on the status of your application for exchange at ${EmailData.University}. Exchange units need both equivalence and contextual approval. Please see the approval status below.\n\n${EmailData.Approvals}
 Regards,
 `
 )}
@@ -174,7 +174,7 @@ I hope this email finds you well.
 
 I am writing to kindly request your assistance with ${EmailData.Name}'s <${EmailData.To}@student.uwa.edu.au> exchange unit approvals for ${EmailData.University}.
 
-${EmailData.Name} is enrolled in ${EmailData.Major} and is looking for approval on the following units:\n\n\t\t${EmailData.Approvals}
+${EmailData.Name} is enrolled in ${EmailData.Major} and is looking for approval on the following units:\n\n${EmailData.Approvals}
 Regards,
 `
 )}
