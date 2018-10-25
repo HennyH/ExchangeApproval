@@ -1,4 +1,40 @@
-import { Field, ValidationError } from 'powerform'
+import { Field as PowerformField, ValidationError } from 'powerform'
+
+class Field extends PowerformField {
+    constructor(config) {
+        super(config);
+        Field.new.call(() => this, config)
+        this.config = config;
+        this.dirtyOverride = undefined;
+    }
+
+    setDirty(value) {
+        this.dirtyOverride = value;
+    }
+
+    isDirty() {
+        if (this.dirtyOverride === true) {
+            return true;
+        }
+        if (this.dirtyOverride === false) {
+            return false;
+        }
+        return super.isDirty();
+    }
+
+    validationClass() {
+        /* If it is dirty but has no data and is optional don't show the green outline because it
+         * looks weird. The empty input is valid but looks weird to explicitly show it as green.
+         */
+        if (this.isDirty() && ((this.config.required !== true && this.config.optional !== false) && !this.getData())) {
+            return '';
+        }
+        if (this.isDirty()) {
+            return this.isValid() ? 'is-valid' : 'is-invalid';
+        }
+        return '';
+    }
+}
 
 export class StudentEmailField extends Field {
     constructor({ ...config } = {}) {
@@ -124,6 +160,10 @@ export class FormListField extends Field {
             )
         ], []);
     }
+    
+    setDirty(value) {
+        this.forms.forEach(form => form.setDirty(value));
+    }
 
     isDirty() {
         return this.forms.some(f => f.isDirty());
@@ -162,6 +202,10 @@ export class FormField extends Field {
 
     setData(data) {
         this.config.form.setData(data);
+    }
+
+    setDirty(value) {
+        this.config.form._fields.forEach(fieldName => this.config.form[fieldName].setDirty(value));
     }
 
     isDirty() {

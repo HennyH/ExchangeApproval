@@ -13,12 +13,13 @@ import {
     removeCartEventHandler
 } from 'Components/Cart'
 import { FormRepeater } from '../FormHelpers/FormRepeater.js';
-import { FormField, FormListField, IntegerField } from '../FormHelpers/Fields.js';
+import { Form, FormField, FormListField, IntegerField } from '../FormHelpers';
 import { EmailData } from '../ViewData.js'
 
+console.log(Form);
+
 export class ApplicationPowerForm extends Form {
-    constructor({ unitLevelOptions = [], studentOfficeOptions = [], ...config }) {
-        super(config);
+    configureFields({ unitLevelOptions = [], studentOfficeOptions = [], ...config }) {
         this.applicationId = new IntegerField({
             required: false
         });
@@ -38,8 +39,6 @@ export class ApplicationPowerForm extends Form {
             },
             required: true
         });
-        Form.new.call(() => this, config);
-        this.config = config;
     }
 }
 
@@ -139,6 +138,7 @@ export default function ApplicationForm() {
             onSubmit();
         } else {
             state.hasTriedToSubmit = true;
+            form.setDirty(true);
         }
     }
 
