@@ -3,29 +3,32 @@ import classNames from 'classnames';
 
 const noop = () => {};
 
+const placeHolderOption = { label: "Please select...", value: null };
+
 export default function Select() {
     function view({
         attrs: {
             field,
             onchange = noop,
-            class: classes = null,
+            className: classes = null,
             options = null,
             readonly,
             ...otherAttrs
         }
     }) {
         options = options || field.config.options
-        const selected = field.getData() || options.find(o => o.selected) || options[0];
-        if (selected) {
+        const selectedOption = field.getData() || options.find(o => o.selected);
+        const validationClass = !readonly && field.validationClass();
+        if (selectedOption) {
             const currentSelection = field.getData();
-            if (!currentSelection || currentSelection.value !== selected.value) {
-                field.setData(selected);
+            if (!currentSelection || currentSelection.value !== selectedOption.value) {
+                field.setData(selectedOption);
             }
         }
-        return (
+        return [
             <select
                 name={field.fieldName}
-                class={classNames("custom-select", classes)}
+                class={classNames("custom-select", classes, validationClass)}
                 onchange={e => {
                     field.setData(e.target.selectedOptions[0]);
                     onchange(e);
@@ -33,16 +36,22 @@ export default function Select() {
                 disabled={readonly}
                 {...otherAttrs}
             >
+                {!selectedOption && (
+                    <option value={placeHolderOption.value}>
+                        {placeHolderOption.label}
+                    </option>
+                )}
                 {options.map(props => (
                     <option
                         {...props}
-                        selected={props.value === selected.value}
+                        selected={selectedOption && props.value === selectedOption.value}
                     >
                         {props.label}
                     </option>
                 ))}
-            </select>
-        )
+            </select>,
+            <div class="invalid-feedback">{field.getError()}</div>
+        ];
     }
 
     return { view };
