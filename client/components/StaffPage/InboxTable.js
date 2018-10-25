@@ -115,6 +115,7 @@ function StaffEditApplicationModal() {
                             studentOfficeOptions: filters.studentOfficeOptions,
                         });
                         state.applicationForm.setData(application);
+                        state.applicationForm.setDirty(false);
                     }
                     const modalFooter = ([
                         <div>

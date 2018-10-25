@@ -6,10 +6,20 @@ class Field extends PowerformField {
         Field.new.call(() => this, config)
         this.config = config;
         this.dirtyOverride = undefined;
+        this.__initialized = true;
     }
 
     setDirty(value) {
         this.dirtyOverride = value;
+    }
+
+    setData(data) {
+        const previousValue = this.__initialized && this.getData();
+        super.setData(data);
+        const newValue = this.__initialized && this.getData();
+        if (this.__initialized) {
+            this.dirtyOverride = JSON.stringify(previousValue) !== JSON.stringify(newValue);
+        }
     }
 
     isDirty() {
