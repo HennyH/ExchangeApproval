@@ -10,6 +10,7 @@ export default function Select() {
             onchange = noop,
             class: classes = null,
             options = null,
+            readonly,
             ...otherAttrs
         }
     }) {
@@ -29,6 +30,7 @@ export default function Select() {
                     field.setData(e.target.selectedOptions[0]);
                     onchange(e);
                 }}
+                disabled={readonly}
                 {...otherAttrs}
             >
                 {options.map(props => (

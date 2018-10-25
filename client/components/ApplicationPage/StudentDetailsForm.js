@@ -59,7 +59,7 @@ export function StudentDetailsForm() {
                 <div class="form-group row mx-1">
                     <label class="col-form-label col-3" for="studentOffice">Student Office: </label>
                     <div class="input-group col-8">
-                        <Select field={form.studentOffice} />
+                        <Select field={form.studentOffice} readonly={staffView} />
                     </div>
                 </div>
             </form>
