@@ -25,6 +25,7 @@ namespace ExchangeApproval.Controllers
             {
                 ExchangeUniversityNameOptions = this._db.StudentApplications
                     .Select(a => a.ExchangeUniversityName)
+                    .Distinct()
                     .OrderByDescending(n => n)
                     .Select(n => new SelectOption<string>(n, n.ToString(), false))
                     .ToList(),
@@ -65,6 +66,7 @@ namespace ExchangeApproval.Controllers
             {
                 ExchangeUniversityNameOptions = this._db.StudentApplications
                     .Select(a => a.ExchangeUniversityName)
+                    .Distinct()
                     .OrderByDescending(n => n)
                     .Select(n => new SelectOption<string>(n, n.ToString(), false))
                     .ToList(),
