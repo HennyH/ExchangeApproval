@@ -97,24 +97,23 @@ function processUnitSets(form) {
     var approvalsString = "";
 
     for (var i = 0; i < form.length; i++ ) {
-        approvalsString = approvalsString + processUnitSet(form[i]);
+        approvalsString += approvalsString + processUnitSet(form[i]);
     }
 
-    // return forms.reduce((sb, f) => sb + processUnitSet(f), "")
     return approvalsString;
 }
 
 
 function processUnitSet(unitSet) {
-    var uwaUnits;
-    var exchangeUnits;
+    var uwaUnits = "";
+    var exchangeUnits = "";
 
     for (var j = 0; j < unitSet.uwaUnitForms.length; j++) {
-        uwaUnits = printUnitLine(unitSet.uwaUnitForms[j], j)
+        uwaUnits += printUnitLine(unitSet.uwaUnitForms[j], j)
     }
 
     for (var k = 0; k < unitSet.exchangeUnitForms.length; k++) {
-        exchangeUnits = printUnitLine(unitSet.exchangeUnitForms[k], k)
+        exchangeUnits += printUnitLine(unitSet.exchangeUnitForms[k], k)
     }
 
     return(
@@ -133,19 +132,19 @@ function printUnitLine(unit, index) {
 }
 
 function processUnitSetEquivalence(unitSet) {
-    var uwaUnits;
-    var exchangeUnits;
+    var uwaUnits = "";
+    var exchangeUnits = "";
 
     for (var j = 0; j < unitSet.uwaUnitForms.length; j++) {
-        uwaUnits = printUnitLine(unitSet.uwaUnitForms[j], j)
+        uwaUnits += printUnitLine(unitSet.uwaUnitForms[j], j)
     }
 
     for (var k = 0; k < unitSet.exchangeUnitForms.length; k++) {
-        exchangeUnits = printUnitLineEquivalence(unitSet.exchangeUnitForms[k], k)
+        exchangeUnits += printUnitLineEquivalence(unitSet.exchangeUnitForms[k], k)
     }
 
     return(
-`\tUWA Units:\t\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
+`\tUWA Units:\t\t${(uwaUnits === null ? "N/A": uwaUnits)}
 \tExchange Units:\t\t${exchangeUnits}
 
 `)
