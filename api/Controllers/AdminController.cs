@@ -52,7 +52,7 @@ namespace ExchangeApproval.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(new string[] { ex.Message })
+                return new JsonResult(new string[] { "Unkown Server Error" })
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError
                 };
@@ -79,7 +79,7 @@ namespace ExchangeApproval.Controllers
 
         [Authorize]
         [HttpPost("applications")]
-        public ActionResult UpdateApplications(IFormFile applications) 
+        public ActionResult UpdateApplications(IFormFile applications)
         {
             try
             {
@@ -88,14 +88,14 @@ namespace ExchangeApproval.Controllers
                 {
                     var str = reader.ReadToEnd();
 
-                    StudentApplication[] js = JsonConvert.DeserializeObject<StudentApplication[]>(str);
+                    var js = JsonConvert.DeserializeObject<IEnumerable<StudentApplication>>(str);
                     ApplicationsBackup.UpdateApplicationsinDatabase(this._db, js);
                     return new StatusCodeResult((int)HttpStatusCode.NoContent);
                 }
             }
             catch (Exception ex)
             {
-                return new JsonResult(new string[] { ex.Message })
+                return new JsonResult(new string[] { "Unkown Server Error" })
                 {
                     StatusCode = (int)HttpStatusCode.InternalServerError
                 };
