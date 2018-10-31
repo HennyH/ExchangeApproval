@@ -98,7 +98,11 @@ export function makeDecisionsTableConfig(decisions, headers) {
             {
                 title: COLUMN_NAMES.Approved,
                 data: "approved",
-                render: (data, type, row, meta) => data ? "✅" : "❌"
+                render: (data, type, row, meta) => `
+                    <div style="width: 100%; height: 100%; padding-right: 0px; text-align: center; padding-right: 0.75rem">
+                        ${data ? "✅" : "❌"}
+                    </div>
+                `
             },
             !window.LOGGED_IN && {
                 title: COLUMN_NAMES.Cart,
