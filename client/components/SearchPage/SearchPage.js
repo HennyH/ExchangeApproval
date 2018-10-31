@@ -39,7 +39,7 @@ function UnitSearch() {
                     requests={{filters: () => m.request("/api/filters/student")}}
                     render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions } = {} }}) => {
                         const hideForm = !!(loading || errored)
-                        if (!hideForm) {
+                        if (!hideForm && state.searchSettingsForm === null) {
                             state.searchSettingsForm = new DecisionSearchSettingsPowerForm({
                                 exchangeUniversityNameOptions,
                                 uwaUnitLevelOptions
