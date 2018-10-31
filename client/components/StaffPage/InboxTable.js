@@ -27,14 +27,6 @@ export function makeInboxTableConfig(decisions) {
         data: decisions,
         columns: [
             {
-                title: COLUMN_NAMES.StudentName,
-                data: "studentName"
-            },
-            {
-                title: COLUMN_NAMES.StudentNumber,
-                data: "studentNumber"
-            },
-            {
                 title: COLUMN_NAMES.Date,
                 data: "lastUpdatedAt",
                 render: (data, type, row, meta) => {
@@ -45,9 +37,17 @@ export function makeInboxTableConfig(decisions) {
                             </span>
                         `;
                     }
-                    const options = { month: "short", year: "2-digit" };
+                    const options = { day: "numeric", month: "short", year: "numeric" };
                     return new Date(data).toLocaleDateString(undefined, options);
                 }
+            },
+            {
+                title: COLUMN_NAMES.StudentName,
+                data: "studentName"
+            },
+            {
+                title: COLUMN_NAMES.StudentNumber,
+                data: "studentNumber"
             },
             {
                 title: COLUMN_NAMES.ExchangeUniversityName,
