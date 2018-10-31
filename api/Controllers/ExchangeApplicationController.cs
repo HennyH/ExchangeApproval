@@ -61,6 +61,7 @@ namespace ExchangeApproval.Controllers
                 ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
                 UnitSets = form.UnitSetForms.Select(f => new UnitSet
                 {
+                    ExchangeUniversityCountry = form.ExchangeUniversityForm.UniversityCountry,
                     ExchangeUniversityName  = form.ExchangeUniversityForm.UniversityName,
                     ExchangeUniversityHref = form.ExchangeUniversityForm.UniversityHomepage,
                     IsEquivalent = asStaff
