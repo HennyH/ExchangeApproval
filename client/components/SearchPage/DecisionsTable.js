@@ -100,7 +100,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 data: "approved",
                 render: (data, type, row, meta) => data ? "✅" : "❌"
             },
-            {
+            !window.LOGGED_IN && {
                 title: COLUMN_NAMES.Cart,
                 data: null,
                 render: (data, type, row, meta) => {
@@ -109,7 +109,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
                         : ""
                 }
             }
-        ].filter(c => headers == null || headers.includes(c.title))
+        ].filter(c => c && (headers == null || headers.includes(c.title)))
     }
 }
 
