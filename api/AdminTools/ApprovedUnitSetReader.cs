@@ -4,6 +4,7 @@ using ExchangeApproval.Data;
 using CsvHelper;
 using System.Linq;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeApproval.AdminTools
 {
@@ -26,37 +27,39 @@ namespace ExchangeApproval.AdminTools
         public static IList<(int line, string error)> ValidateRows(IReadOnlyCollection<EquivalenceUnitSetRow> rows)
         {
             var errors = new List<string>();
-            var numberedRows = rows.Select((r, i) => new { LineNumber = i + 1, Row = r });
+            /* +1 for 0 offset, and +1 for the header */
+            var numberedRows = rows.Select((r, i) => new { LineNumber = i + 2, Row = r });
 
             var invalidUnitLevel = numberedRows
                 .Where(r => r.Row.EquivalentUWAUnitLevel == UWAUnitLevel.Zero)
-                .Select(r => (r.LineNumber, "Approved unit set cannot be equivalent to a level 0 unit."));
+                .Select(r => (Row: r, LineNumber: r.LineNumber, Message: "Approved unit set cannot be equivalent to a level 0 unit."));
             var badUnitLevelForGroup = numberedRows
                 .GroupBy(r => r.Row.UnitSetId)
                 .Where(g => g.Select(r => r.Row.EquivalentUWAUnitLevel).Distinct().Count() > 1)
                 .SelectMany(g => g)
-                .Select(r => (r.LineNumber, "The group of unit sets must have the same equivalence level for each row."));
+                .Select(r => (Row: r, LineNumber: r.LineNumber, Message: "The group of unit sets must have the same equivalence level for each row."));
             var badIsEquivalentForGroup = numberedRows
                 .GroupBy(r => r.Row.UnitSetId)
                 .Where(g => g.Select(r => r.Row.IsEquivalent).Distinct().Count() > 1)
                 .SelectMany(g => g)
-                .Select(r => (r.LineNumber, "The group of unit sets must have the same 'is equivalent' value for each row."));
+                .Select(r => (Row: r, LineNumber: r.LineNumber, Message: "The group of unit sets must have the same 'is equivalent' value for each row."));
             var missingExchangeUnit = numberedRows
                 .GroupBy(r => r.Row.UnitSetId)
                 .Where(g => !g.Any(r => r.Row.IsExchangeUnit))
                 .SelectMany(g => g)
-                .Select(r => (r.LineNumber, "A unit set group must include at least one exchange unit."));
+                .Select(r => (Row: r, LineNumber: r.LineNumber, Message: "A unit set group must include at least one exchange unit."));
             var missingUnitCode = numberedRows
                 .Where(r => string.IsNullOrWhiteSpace(r.Row.UnitCode))
-                .Select(r => (r.LineNumber, "A unit set must include a unit code."));
+                .Select(r => (Row: r, LineNumber: r.LineNumber, Message: "A unit set must include a unit code."));
             var missingUniversityName = numberedRows
                 .Where(r => string.IsNullOrWhiteSpace(r.Row.UniversityName))
-                .Select(r => (r.LineNumber, "A unit set must a university name."));
+                .Select(r => (Row: r, LineNumber: r.LineNumber, Message: "A unit set must a university name."));
             return invalidUnitLevel
                 .Union(badUnitLevelForGroup)
                 .Union(missingExchangeUnit)
                 .Union(missingUnitCode)
                 .Union(badIsEquivalentForGroup)
+                .Select(t => (t.LineNumber, t.Message))
                 .ToList();
         }
 
@@ -73,30 +76,34 @@ namespace ExchangeApproval.AdminTools
                 }
                 var approvedUnitSets = rows
                     .GroupBy(r => r.UnitSetId)
-                    .Select(g => new UnitSet
+                    .Select(g =>
                     {
-                        IsEquivalent = g.First().IsEquivalent,
-                        IsContextuallyApproved = null,
-                        EquivalentUWAUnitLevel = g.First().EquivalentUWAUnitLevel,
-                        ExchangeUniversityName = g.First().UniversityName,
-                        ExchangeUniversityCountry = g.First().UniversityCountry,
-                        ExchangeUniversityHref = g.First().UniversityHref,
-                        ExchangeUnits = g
-                            .Where(r => r.IsExchangeUnit)
-                            .Select(r => new ExchangeUnit
-                            {
-                                Code = r.UnitCode,
-                                Title = r.UnitTitle,
-                                Href = r.UnitHref
-                            }).ToList(),
-                        UWAUnits = g
-                            .Where(r => !r.IsExchangeUnit)
-                            .Select(r => new UWAUnit
-                            {
-                                Code = r.UnitCode,
-                                Title = r.UnitTitle,
-                                Href = r.UnitHref
-                            }).ToList()
+                        var firstExchangeUnit = g.First(u => u.IsExchangeUnit);
+                        return new UnitSet
+                        {
+                            IsEquivalent = firstExchangeUnit.IsEquivalent,
+                            IsContextuallyApproved = null,
+                            EquivalentUWAUnitLevel = firstExchangeUnit.EquivalentUWAUnitLevel,
+                            ExchangeUniversityName = firstExchangeUnit.UniversityName,
+                            ExchangeUniversityCountry = firstExchangeUnit.UniversityCountry,
+                            ExchangeUniversityHref = firstExchangeUnit.UniversityHref,
+                            ExchangeUnits = g
+                                .Where(r => r.IsExchangeUnit)
+                                .Select(r => new ExchangeUnit
+                                {
+                                    Code = r.UnitCode,
+                                    Title = r.UnitTitle,
+                                    Href = r.UnitHref
+                                }).ToList(),
+                            UWAUnits = g
+                                .Where(r => !r.IsExchangeUnit)
+                                .Select(r => new UWAUnit
+                                {
+                                    Code = r.UnitCode,
+                                    Title = r.UnitTitle,
+                                    Href = r.UnitHref
+                                }).ToList()
+                        };
                     });
                 return (null, approvedUnitSets);
             }
@@ -162,7 +169,8 @@ namespace ExchangeApproval.AdminTools
         {
             using (var transaction = db.Database.BeginTransaction())
             {
-                var existingManualUnitSets = db.UnitSets.Where(u => u.StudentApplicationId == null).ToList();
+                db.ChangeTracker.AutoDetectChangesEnabled = false;
+                var existingManualUnitSets = db.UnitSets.AsNoTracking().Where(u => u.StudentApplicationId == null).ToList();
                 db.RemoveRange(existingManualUnitSets);
                 db.AddRange(newManualUnitApprovals);
                 db.SaveChanges();

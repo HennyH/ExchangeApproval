@@ -60,6 +60,7 @@ namespace ExchangeApproval.Controllers
         }
 
         [HttpGet("student")]
+        [ResponseCache(Duration = 30 /* min */ * 60 /* seconds */)]
         public StudentFiltersVM GetFiltersForStudents()
         {
             return new StudentFiltersVM

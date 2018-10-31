@@ -89,7 +89,6 @@ namespace ExchangeApproval
                     });
                     options.UseLoggerFactory(SqlLoggerFactory);
                 }
-                options.UseLazyLoadingProxies();
             });
         }
 

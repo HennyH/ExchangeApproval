@@ -21,10 +21,6 @@ export function makeDecisionsTableConfig(decisions, headers) {
         badgeType = "secondary",
         badgeClasses = ""
     }) => {
-        displayName = displayName || "";
-        const shortName = displayName.length >= 20
-            ? displayName.substring(0, 18) + "..."
-            : displayName;
         const link = href
             ? `
                 <a href="${href}" class="badge badge-light" style="font-size: 100%; margin-left: 0.5em" target="_blank">
@@ -33,14 +29,15 @@ export function makeDecisionsTableConfig(decisions, headers) {
             `
             : ``;
         return `
-            <span class="badge badge-${badgeType} ${badgeClasses}" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
+            <span class="badge badge-${badgeType} ${badgeClasses}" style="display: block; line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
                 <span
                     rel="popover"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="${tooltipContent}"
+                    style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
                 >
-                    ${shortName}
+                    ${displayName || ""}
                 </span>
                 ${link}
             </span>
@@ -49,6 +46,11 @@ export function makeDecisionsTableConfig(decisions, headers) {
 
     return {
         data: decisions,
+        responsive: {
+            details: {
+                display: $.fn.dataTable.Responsive.display.childRowImmediate
+            }
+        },
         columns: [
             {
                 title: COLUMN_NAMES.Date,
@@ -60,6 +62,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
             },
             {
                 title: COLUMN_NAMES.ExchangeUniversity,
+                responsivePriority: 1,
                 data: "exchangeUniversityName",
                 width: '30%',
                 render: (data, type, row, meta) =>
@@ -67,10 +70,11 @@ export function makeDecisionsTableConfig(decisions, headers) {
             },
             {
                 title: COLUMN_NAMES.ExchangeUnit,
+                responsivePriority: 2,
                 width: "30%",
                 data: "exchangeUnits",
                 render: (data, type, row, meta) => data.map((u, i) => unitButton({
-                    displayName: u.unitCode || u.unitName,
+                    displayName: u.unitName || u.unitCode,
                     tooltipContent: `${u.unitName} ${u.unitCode}`,
                     href: u.unitHref,
                     badgeClasses: i > 0 ? 'mt-1' : ''
@@ -78,7 +82,9 @@ export function makeDecisionsTableConfig(decisions, headers) {
             },
             {
                 title: COLUMN_NAMES.UWAUnit,
+                responsivePriority: 3,
                 width: "30%",
+                data: "uwaUnits",
                 render: (data, type, row, meta) => {
                     if (row.uwaUnits === null || row.uwaUnits === undefined || row.uwaUnits.length == 0) {
                         return unitButton({
@@ -97,15 +103,17 @@ export function makeDecisionsTableConfig(decisions, headers) {
             },
             {
                 title: COLUMN_NAMES.Approved,
+                responsivePriority: 4,
                 data: "approved",
                 render: (data, type, row, meta) => `
-                    <div style="width: 100%; height: 100%; padding-right: 0px; text-align: center; padding-right: 0.75rem">
+                    <div style="display: inline; width: 100%; height: 100%; padding-right: 0px; text-align: center; padding-right: 0.75rem">
                         ${data ? "✅" : "❌"}
                     </div>
                 `
             },
             !window.LOGGED_IN && {
                 title: COLUMN_NAMES.Cart,
+                responsivePriority: 5,
                 data: null,
                 render: (data, type, row, meta) => {
                     return row.approved

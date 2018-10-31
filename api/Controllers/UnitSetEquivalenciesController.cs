@@ -22,34 +22,35 @@ namespace ExchangeApproval.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 30 /* min */ * 60 /* seconds */)]
         public IEnumerable<UnitSetDecisionVM> ApprovalRequests(
                 string[] universityNames,
                 UWAUnitLevel[] uwaUnitLevels
             )
         {
-            var unitSets = QueryUnitSets(this._db, universityNames, uwaUnitLevels).ToList();
-            var groups = unitSets
-                .Where(us => us.EquivalentUWAUnitLevel.HasValue)
-                .Select(us => new UnitSetDecisionVM
+            var results = QueryUnitSets(this._db, universityNames, uwaUnitLevels).ToList();
+            var groups = results
+                .Where(r => r.UnitSet.EquivalentUWAUnitLevel.HasValue)
+                .Select(r => new UnitSetDecisionVM
                 {
-                    ExchangeUniversityName = us.ExchangeUniversityName,
-                    ExchangeUniversityHref = us.ExchangeUniversityHref,
-                    UnitSetId = us.UnitSetId,
+                    ExchangeUniversityName = r.UnitSet.ExchangeUniversityName,
+                    ExchangeUniversityHref = r.UnitSet.ExchangeUniversityHref,
+                    UnitSetId = r.UnitSet.UnitSetId,
                     Approved =
-                        us.IsEquivalent.HasValue
-                        && us.IsEquivalent.Value
-                        && us.EquivalentUWAUnitLevel.HasValue
-                        && us.EquivalentUWAUnitLevel.Value != UWAUnitLevel.Zero,
-                    ExchangeUnits = us.ExchangeUnits.Select(u => new UnitVM
+                        r.UnitSet.IsEquivalent.HasValue
+                        && r.UnitSet.IsEquivalent.Value
+                        && r.UnitSet.EquivalentUWAUnitLevel.HasValue
+                        && r.UnitSet.EquivalentUWAUnitLevel.Value != UWAUnitLevel.Zero,
+                    ExchangeUnits = r.ExchangeUnits.Select(u => new UnitVM
                     {
                         UnitId = u.Id,
-                        UniversityName = us.ExchangeUniversityName,
-                        UniversityHref = us.ExchangeUniversityHref,
+                        UniversityName = r.UnitSet.ExchangeUniversityName,
+                        UniversityHref = r.UnitSet.ExchangeUniversityHref,
                         UnitCode = u.Code,
                         UnitName = u.Title,
                         UnitHref = u.Href
                     }).ToList(),
-                    UWAUnits = us.UWAUnits.Select(u => new UnitVM
+                    UWAUnits = r.UWAUnits.Select(u => new UnitVM
                     {
                         UnitId = u.Id,
                         UniversityName = ReferenceData.UWAName,
@@ -59,8 +60,8 @@ namespace ExchangeApproval.Controllers
                         UnitHref = u.Href
                     }).ToList(),
                     EquivalentUnitLevel = new SelectOption<UWAUnitLevel>(
-                        us.EquivalentUWAUnitLevel.Value,
-                        us.EquivalentUWAUnitLevel.Value.GetLabel(),
+                        r.UnitSet.EquivalentUWAUnitLevel.Value,
+                        r.UnitSet.EquivalentUWAUnitLevel.Value.GetLabel(),
                         true
                     )
                 })

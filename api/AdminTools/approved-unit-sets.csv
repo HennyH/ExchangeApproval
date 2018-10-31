@@ -1,4 +1,1148 @@
-﻿UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTitle,UnitCode,UnitHref,EquivalentUWAUnitLevel,IsEquivalent
-0,TRUE,Finland,Finland University,https://finuni.com,Mighty Maths,MATH-1,https://unit.com,1,TRUE
-0,FALSE,Finland,Finland University,https://finuni.com,Intro To Maths 1,MATH1001,https://uwa.com,1,TRUE
-0,FALSE,Australia,UWA,https://uwa.com,Intro To Maths 2,MATH1002,https://uwa.com,1,TRUE
+UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTitle,UnitCode,UnitHref,EquivalentUWAUnitLevel,IsEquivalent
+0,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3015,,1000,TRUE
+0,TRUE,Canada,McMaster University,,Signal,ELECENG 3TP4,,1000,TRUE
+1,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH1001,,1000,TRUE
+1,TRUE,China,Shanghai Jiatong University,,Applied calculus,VV225,,1000,TRUE
+2,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC1002,,1000,TRUE
+2,TRUE,China,Shanghai Jiatong University,,Introduction to Sold Mechanics,VM211,,1000,TRUE
+3,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+3,TRUE,Denmark,Technical University of Denmark,,System Safety,42171,,1000,TRUE
+5,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5503,,1000,TRUE
+5,TRUE,Denmark,Technical University of Denmark,,Robust,31320,,1000,TRUE
+6,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5502,,1000,TRUE
+6,TRUE,Denmark,Technical University of Denmark,,Intergrated Analog Electronics,31631/31632,,1000,TRUE
+9,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4402,,1000,TRUE
+9,TRUE,Denmark,Technical University of Denmark,,Digital Communication,6532,,1000,TRUE
+10,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+10,TRUE,Denmark,Technical University of Denmark,,System Safety,42171,,1000,TRUE
+11,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+11,TRUE,UK,Cardiff University,,Fluid Mechanics,EN3034,,1000,TRUE
+12,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+12,TRUE,UK,University of Bristol,,Thermodynamics I,MENG11202,,1000,TRUE
+12,TRUE,UK,University of Bristol,,Linear Circuits ,EENG11001,,1000,TRUE
+13,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3017,,1000,TRUE
+13,TRUE,USA,University of Illonois,,Introduction to Electronics,ECE110,,1000,TRUE
+14,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3016,,1000,TRUE
+14,TRUE,Canada,McMaster University,,Energy Conversion,EELECENG 3PI4,,1000,TRUE
+15,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3031,,1000,TRUE
+15,TRUE,Canada,McMaster University,,Discrete Dynamical Sys. Chaos,MATH3DC3,,1000,TRUE
+16,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3022,,1000,TRUE
+16,TRUE,Canada,McMaster University,,Partial Diff. Equations,MATH3FF3,,1000,TRUE
+17,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4424,,1000,TRUE
+17,TRUE,Norway,Norwegian University of Science and Technology,,Measurement Techniques,TFY4185,,1000,TRUE
+18,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+18,TRUE,Norway,Norwegian University of Science and Technology,,Dynamics,TKT4108,,1000,TRUE
+19,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS3003,,1000,TRUE
+19,TRUE,Singapore,National University of Singapore,,Computer Graphics,CS3241,,1000,TRUE
+20,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2211,,1000,TRUE
+20,TRUE,Singapore,National University of Singapore,,Discrete Structures ,CS1231,,1000,TRUE
+21,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3008,,1000,TRUE
+21,TRUE,UK,Leeds University,,Structural Analysis 2,CIVE3390,,1000,TRUE
+22,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+22,TRUE,China,Tsinghua University,,Materials Processing,40120463,,1000,TRUE
+22,TRUE,China,Tsinghua University,,Engineering Materials,20350042,,1000,TRUE
+23,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5502,,1000,TRUE
+23,TRUE,Hong Kong,University of Hong Kong,,Design of Digital Integrated Circuits ,ELEC4343,,1000,TRUE
+24,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+24,TRUE,Hong Kong,University of Hong Kong,,Control,ELEC3245,,1000,TRUE
+25,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4402,,1000,TRUE
+25,TRUE,Hong Kong,University of Hong Kong,,Communications Engineering,ELEC3242,,1000,TRUE
+26,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR5521,,1000,TRUE
+26,TRUE,Norway,Norwegian University of Science and Technology,,Multiphase Transport,TEP4250,,1000,TRUE
+27,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR5501,,1000,TRUE
+27,TRUE,Norway,Norwegian University of Science and Technology,,Petrochemistry,TKP4150,,1000,TRUE
+28,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3326,,1000,TRUE
+28,TRUE,Austria,Vienna University of Business,,International Financial Management I,4460,,1000,TRUE
+29,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MKTG2301,,1000,TRUE
+29,TRUE,Austria,Vienna University of Business,,Small Business Management,4145,,1000,TRUE
+30,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA2222,,1000,TRUE
+30,TRUE,Austria,Vienna University of Business,,Corporate Finance,4597,,1000,TRUE
+31,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+31,TRUE,USA,University of Montana,,Mechanics of Mtls,EGEN205,,1000,TRUE
+32,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+32,TRUE,France,ESSEC,,Portfolio Management,FINM14120,,1000,TRUE
+32,TRUE,France,ESSEC,,Financial Markets,FINM14033,,1000,TRUE
+33,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA2207,,1000,TRUE
+33,TRUE,France,ESSEC,,Financial Statement Analysis,CPTC14,,1000,TRUE
+34,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+34,TRUE,USA,Montana State University,,Renewable Energy Applications,ETME470,,1000,TRUE
+35,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4405,,1000,TRUE
+35,TRUE,Norway,Norwegian University of Science and Technology,,Modelling simulation,TMR4275,,1000,TRUE
+36,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5501,,1000,TRUE
+36,TRUE,Canada,McMaster University,,Seismic Design,CIV ENG 748,,1000,TRUE
+37,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5501,,1000,TRUE
+37,TRUE,Canada,McMaster University,,Structural Control,CIV ENG 727,,1000,TRUE
+38,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5502,,1000,TRUE
+38,TRUE,Canada,McMaster University,,Transportation Engineering II - Modelling Transit,CIV ENG 6T04,,1000,TRUE
+39,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+39,TRUE,Canada,Queen's University,,Dynamics,MECH328,,1000,TRUE
+40,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3326,,1000,TRUE
+40,TRUE,Canada,Queen's University,,Financial Management Stategy,COMM322,,1000,TRUE
+41,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5505,,1000,TRUE
+41,TRUE,USA,Montana State University,,Power Systems Analysis,EELE454,,1000,TRUE
+42,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5503,,1000,TRUE
+42,TRUE,USA,Montana State University,,Introduction to VLSI Design,EELE414,,1000,TRUE
+43,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+43,TRUE,USA,Montana State University,,,EELE321,,1000,TRUE
+44,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5503,,1000,TRUE
+44,TRUE,USA,Montana State University,,Introduction to Modern Control,EELE422,,1000,TRUE
+45,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2211,,1000,TRUE
+45,TRUE,New Zealand,University of Otago,,Discrete Mathematics,MATH272,,1000,TRUE
+46,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS3002,,1000,TRUE
+46,TRUE,New Zealand,University of Otago,,"Data-communications, Networks, Internet",COSC244,,1000,TRUE
+47,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2200,,1000,TRUE
+47,TRUE,New Zealand,University of Otago,,Algorithms,COSC242,,1000,TRUE
+51,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT2402,,1000,TRUE
+51,TRUE,Canada,Queen's University,,Generalized Linear Models,STAT473,,1000,TRUE
+52,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT2401,,1000,TRUE
+52,TRUE,Canada,Queen's University,,Design,STAT471,,1000,TRUE
+61,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5552,,1000,TRUE
+61,TRUE,USA,Montana State University,,Capstone 2,EMEC499R ,,1000,TRUE
+62,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+62,TRUE,USA,Montana State University,,Thermodynamics 2,EMEC321,,1000,TRUE
+63,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA2207,,1000,TRUE
+63,TRUE,USA,University of Montana,,Advanced Analysis of Financial Statements,BFIN441,,1000,TRUE
+64,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3304,,1000,TRUE
+64,TRUE,USA,University of Montana,,Financial Markets,BFIN357,,1000,TRUE
+65,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA2204,,1000,TRUE
+65,TRUE,USA,University of Montana,,Derivative Securities,BFIN460,,1000,TRUE
+66,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+66,TRUE,USA,University of Montana,,Investment Fundamentals,BFIN402,,1000,TRUE
+67,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5501 ,,1000,TRUE
+67,TRUE,Norway,University of Stavanger,,Marine Operations,OFF600,,1000,TRUE
+68,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT1400,,1000,TRUE
+68,TRUE,New Zealand,University of Otago,,Quantitative Analysis for Business,BSNS102,,1000,TRUE
+69,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5505,,1000,TRUE
+69,TRUE,USA,Montana State University,,Power Systems Analysis,EELE454,,1000,TRUE
+70,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4424,,1000,TRUE
+70,TRUE,USA,Montana State University,,"""Measurement",ETME360,,1000,TRUE
+70,TRUE,USA,Montana State University,,"Instrumentation Applications""",EMEC445,,1000,TRUE
+71,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5503,,1000,TRUE
+71,TRUE,USA,Montana State University,,Introduction to Modern Control,EELE422,,1000,TRUE
+72,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+72,TRUE,USA,Montana State University,,Introduction to Feedback Controls,EELE321,,1000,TRUE
+73,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5503,,1000,TRUE
+73,TRUE,USA,Montana State University,,Introduction to VLSI Design,EELE414,,1000,TRUE
+74,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B,,1000,TRUE
+74,TRUE,USA,Montana State University,,Introduction to Microfabrication,EELE407,,1000,TRUE
+75,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B,,1000,TRUE
+75,TRUE,USA,Montana State University,,Acoustics/Audio Engineering,EELE417,,1000,TRUE
+76,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC5505,,1000,TRUE
+76,TRUE,Hong Kong,University of Hong Kong,,Power System Analysis,ELEC4147,,1000,TRUE
+77,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS4404,,1000,TRUE
+77,TRUE,Hong Kong,University of Hong Kong,,Fuzzy Systems,ELEC4543,,1000,TRUE
+78,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVT2251,,1000,TRUE
+78,TRUE,Canada,University of Calgary,,Physical Hydrogeology,Geology 401,,1000,TRUE
+79,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3022,,1000,TRUE
+79,TRUE,USA,University of New Mexico,,Partial Differential Equations for Engineering,MA312,,1000,TRUE
+80,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT2402,,1000,TRUE
+80,TRUE,Canada,Queen's University,,Generalized Linear Models,STAT473,,1000,TRUE
+81,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT2401,,1000,TRUE
+81,TRUE,Canada,Queen's University,,Sampling,STAT471,,1000,TRUE
+82,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+82,TRUE,Canada,Queen's University,,Dynamics,MECH328,,1000,TRUE
+84,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE4401,,1000,TRUE
+84,TRUE,Norway,Norwegian University of Science and Technology,,Understanding,TEP4220,,1000,TRUE
+85,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+85,TRUE,USA,University of Vermont,,Mechanics of Materials,ME014,,1000,TRUE
+85,TRUE,USA,University of Vermont,,Materials,CE101,,1000,TRUE
+86,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3009,,1000,TRUE
+86,TRUE,USA,University of Vermont,,Geotechnical Principles,CE180,,1000,TRUE
+87,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5552,,1000,TRUE
+87,TRUE,USA,Montana State University,,Capstone 2,EMEC499R ,,1000,TRUE
+88,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+88,TRUE,USA,Montana State University,, Thermodynamics 2,EMEC321,,1000,TRUE
+89,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+89,TRUE,UK,University of Aberdeen,,Principles of Electronics,EG1008,,1000,TRUE
+89,TRUE,UK,University of Aberdeen,,Fluid Mechanics,EG2004,,1000,TRUE
+90,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+90,TRUE,Canada,Western University,,Thermodynamics I,2204A/B,,1000,TRUE
+90,TRUE,Canada,Western University,,Electrical Circuits I,2205A/B,,1000,TRUE
+91,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH2021,,1000,TRUE
+91,TRUE,Canada,Western University,,Applied Mathematics ODE,2402,,1000,TRUE
+92,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+92,TRUE,USA,University of Washington,,Automatic Control,ME471,,1000,TRUE
+93,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4403,,1000,TRUE
+93,TRUE,USA,University of New Mexico,,Reinforced Concrete Design,CE411,,1000,TRUE
+94,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+94,TRUE,USA,University of New Mexico,,Engineering Project Management,CE455,,1000,TRUE
+95,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5501,,1000,TRUE
+95,TRUE,USA,University of New Mexico,,Structural Dynamics,CE521,,1000,TRUE
+96,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4407,,1000,TRUE
+96,TRUE,USA,Montana State University,,Transport Analysis,ECHM424,,1000,TRUE
+97,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+97,TRUE,USA,Montana State University,,,EMEC445,,1000,TRUE
+98,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+98,TRUE,USA,Montana State University,,,EMEC405,,1000,TRUE
+99,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5502,,1000,TRUE
+99,TRUE,USA,Montana State University,,,EMEC403,,1000,TRUE
+99,TRUE,USA,Montana State University,,,EMEC342,,1000,TRUE
+100,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3021,,1000,TRUE
+100,TRUE,Sweden,Lund University,,Applied Mathematics,1MA060,,1000,TRUE
+101,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+101,TRUE,Sweden,Lund University,,Financial Derivatives,1MA209,,1000,TRUE
+102,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3031,,1000,TRUE
+102,TRUE,Sweden,Lund University,,Algebraic Structures,1MA007,,1000,TRUE
+103,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS2002,,1000,TRUE
+103,TRUE,Sweden,Lund University,,Statistical Mechanics,1FA140,,1000,TRUE
+104,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3011,,1000,TRUE
+104,TRUE,Sweden,Lund University,,Mathematical Methods of Physics,1FA121,,1000,TRUE
+105,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+105,TRUE,Sweden,Lund University,,Basic Swedish I,5PU028,,1000,TRUE
+106,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+106,TRUE,Sweden,Lund University,,Basic Swedish II,5PU029,,1000,TRUE
+107,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3031,,1000,TRUE
+107,TRUE,UK,Durham University,,,Number Theory III,,1000,TRUE
+108,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+108,TRUE,Sweden,Uppsala University,,,1MA032,,1000,TRUE
+109,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3021,,1000,TRUE
+109,TRUE,UK,Durham University,,,MATH3091,,1000,TRUE
+110,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+110,TRUE,USA,Montana State University,,Fluid Mechanics,EGEN335,,1000,TRUE
+111,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+111,TRUE,USA,Montana State University,,Mechanics of Mtls,EGEN205,,1000,TRUE
+112,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3304,,1000,TRUE
+112,TRUE,USA,Montana State University,,Commerical Bank Management,BFIN458,,1000,TRUE
+113,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+113,TRUE,USA,Montana State University,,Investments II,BFIN466,,1000,TRUE
+114,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+114,TRUE,USA,Montana State University,,Applied Mechanics,EGEN203,,1000,TRUE
+115,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+115,TRUE,USA,Montana State University,,Quality Assurance,EIND477,,1000,TRUE
+116,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5502,,1000,TRUE
+116,TRUE,USA,Montana State University,,CAE IV - Design Integration,EMEC403,,1000,TRUE
+116,TRUE,USA,Montana State University,,Mech Component Design,EMEC342,,1000,TRUE
+117,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+117,TRUE,USA,Montana State University,,Finite Element Analysis,EMEC405,,1000,TRUE
+118,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+118,TRUE,USA,Montana State University,,Mechanical Vibrations,EMEC445,,1000,TRUE
+119,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+119,TRUE,USA,Montana State University,,,EIND477 ,,1000,TRUE
+120,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+120,TRUE,USA,Montana State University,,,EMEC405 ,,1000,TRUE
+121,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5502,,1000,TRUE
+121,TRUE,USA,Montana State University,,,EMEC 403,,1000,TRUE
+121,TRUE,USA,Montana State University,,,EMEC 342 ,,1000,TRUE
+122,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+122,TRUE,USA,Montana State University,,,EMEC 445,,1000,TRUE
+123,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH1002,,1000,TRUE
+123,TRUE,USA,University of Vermont,,,MATH121,,1000,TRUE
+124,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH2501,,1000,TRUE
+124,TRUE,UK,University of Sheffield,,,MAS222,,1000,TRUE
+125,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3014,,1000,TRUE
+125,TRUE,Singapore,Nanyang University of Technology,,Semiconductor fundamentals ,EE2003     ,,1000,TRUE
+126,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4405 ,,1000,TRUE
+126,TRUE,USA,Montana State University,,Advanced Engineering Analysis ,EGEN505 ,,1000,TRUE
+127,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5503 ,,1000,TRUE
+127,TRUE,USA,Montana State University,,Intro to Modern Controls  ,EELE422 ,,1000,TRUE
+128,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH2501,,1000,TRUE
+128,TRUE,UK,University of Sheffield,,,MATH248,,1000,TRUE
+129,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH1002,,1000,TRUE
+129,TRUE,Canada,University of Western Ontario,,,Applied Mathematics for Engineering II 2411 ,,1000,TRUE
+130,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5504,,1000,TRUE
+130,TRUE,USA,Montana State University,,,EMAT 550 ,,1000,TRUE
+131,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4424 ,,1000,TRUE
+131,TRUE,USA,Montana State University,,,EMEC 360 ,,1000,TRUE
+132,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3015,,1000,TRUE
+132,TRUE,Canada,McMasters University,,Signals,ELEC ENG 3TP4 ,,1000,TRUE
+133,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,SCIE5500,,1000,TRUE
+133,TRUE,Norway,Norwegian University of Science and Technology,,Hydrological Modelling ,TVM4106 ,,1000,TRUE
+134,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE4402,,1000,TRUE
+134,TRUE,Norway,Norwegian University of Science and Technology,,Hydrology ,TVM4105 ,,1000,TRUE
+135,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+135,TRUE,Norway,Norwegian University of Science and Technology,,Water resources Management,TVM5171 ,,1000,TRUE
+136,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE5551,,1000,TRUE
+136,TRUE,Norway,Norwegian University of Science and Technology,,Planning of Hydro power,TVM5135 ,,1000,TRUE
+138,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE4402,,1000,TRUE
+138,TRUE,Norway,Norwegian University of Science and Technology,,Hydrological Modelling ,TVM4106 ,,1000,TRUE
+139,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,SCIE5500,,1000,TRUE
+139,TRUE,Norway,Norwegian University of Science and Technology,,Hydrology ,TVM4105 ,,1000,TRUE
+140,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE5551,,1000,TRUE
+140,TRUE,Norway,Norwegian University of Science and Technology,,Water resources Management,TVM5171 ,,1000,TRUE
+141,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+141,TRUE,Norway,Norwegian University of Science and Technology,,Planning of Hydro power,TVM5135 ,,1000,TRUE
+142,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+142,TRUE,Canada,McGill University,,Thermo Dynamics,MECH240 &ECSE 200,,1000,TRUE
+143,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3013,,1000,TRUE
+143,TRUE,Canada,McGill University,,Environmental Engineering,CIVE 225,,1000,TRUE
+144,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+144,TRUE,Canada,McGill University,,Fluid Mechanics,MECH 331,,1000,TRUE
+145,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3009,,1000,TRUE
+145,TRUE,Canada,McGill University,,General Geology,EPSC 221,,1000,TRUE
+146,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+146,TRUE,Canada,McGill University,,Solid Mechanics,CIVE 207,,1000,TRUE
+147,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group C Option,,1000,TRUE
+147,TRUE,Norway,Norwegian University of Science and Technology,,Natural Gas Technology,TEP4185,,1000,TRUE
+148,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4405,,1000,TRUE
+148,TRUE,Norway,Norwegian University of Science and Technology,,System Simulation,TEP4240,,1000,TRUE
+149,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+149,TRUE,Norway,Norwegian University of Science and Technology,,Process Control,TKP4140,,1000,TRUE
+150,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+150,TRUE,Norway,Norwegian University of Science and Technology,,Energy Management,TEP4150,,1000,TRUE
+151,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR5501,,1000,TRUE
+151,TRUE,Norway,Norwegian University of Science and Technology,,Reaction Kinetics,TKP4155,,1000,TRUE
+152,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4403,,1000,TRUE
+152,TRUE,Norway,Norwegian University of Science and Technology,,Extractive Metallurgy,TMT4280,,1000,TRUE
+153,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PETR3511,,1000,TRUE
+153,TRUE,Norway,Norwegian University of Science and Technology,,Reservoir Fluids,TPG4145,,1000,TRUE
+154,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3007,,1000,TRUE
+154,TRUE,Canada,Queen's University,,Heat Transfer,MECH346,,1000,TRUE
+155,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4404,,1000,TRUE
+155,TRUE,Canada,Queen's University,,Noise Control,MECH482,,1000,TRUE
+156,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4403,,1000,TRUE
+156,TRUE,Canada,Queen's University,,Chemical Extraction of Metals,MINE451,,1000,TRUE
+157,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+157,TRUE,Canada,Queen's University,,Internal Combustion Engines,MECH435,,1000,TRUE
+158,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+158,TRUE,Canada,University of Alberta,,Fluid Mechanics,MEC E 331,,1000,TRUE
+159,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+159,TRUE,Canada,University of Alberta,,Advanced Strength of Materials,MEC E 380,,1000,TRUE
+160,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+160,TRUE,Canada,University of Alberta,,Feedback Control Design of Dynamic,MEC E 420,,1000,TRUE
+161,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+161,TRUE,Canada,University of Alberta,,Applied Thermodynamics,MEC E 340,,1000,TRUE
+162,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B option,,1000,TRUE
+162,TRUE,Canada,University of Alberta,,Experimental Design Project,MEC E 409,,1000,TRUE
+163,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+163,TRUE,Canada,University of Alberta,,Vibrations,MEC E 451,,1000,TRUE
+164,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+164,TRUE,UK,University of Manchester,,Investment Analysis ,BMAN20072,,1000,TRUE
+165,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3326,,1000,TRUE
+165,TRUE,UK,University of Manchester,,Strategy in Financial Context,BMAN20112,,1000,TRUE
+166,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4401,,1000,TRUE
+166,TRUE,USA,University of New Mexico,,Foundation Engineering 1,462/562,,1000,TRUE
+167,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3010,,1000,TRUE
+167,TRUE,USA,University of New Mexico,,Fluid Mechanics,331,,1000,TRUE
+168,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3008,,1000,TRUE
+168,TRUE,USA,University of New Mexico,,Structural Analysis,308,,1000,TRUE
+169,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4403,,1000,TRUE
+169,TRUE,USA,University of New Mexico,,Reinforced Concrete Design,411/511,,1000,TRUE
+170,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4402,,1000,TRUE
+170,TRUE,USA,University of New Mexico,,Design of Hydraulic Systems,440/540,,1000,TRUE
+171,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+171,TRUE,UK,University of Sheffield,,Financial Markets,MGT6077,,1000,TRUE
+172,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+172,TRUE,UK,University of Sheffield,,Fluids Engineering ,MEC208,,1000,TRUE
+173,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+173,TRUE,Canada,University of Waterloo  ,,Physical Chemistry 1,CHE230 &PHYS222,,1000,TRUE
+174,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+174,TRUE,Canada,University of Waterloo  ,,Physical Chemistry 1,CHE230,,1000,TRUE
+175,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2001,,1000,TRUE
+175,TRUE,Canada,University of Waterloo  ,,Dynamics,ME212,,1000,TRUE
+176,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH1002,,1000,TRUE
+176,TRUE,Canada,University of Waterloo  ,,Calculus 3,MATH207,,1000,TRUE
+177,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+177,TRUE,Singapore,National University of Singapore,,CHEMICAL,CN2122,,1000,TRUE
+178,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+178,TRUE,UK,University of Sheffield,,Fluid Mechanics,CPE106,,1000,TRUE
+179,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ECON3236,,1000,TRUE
+179,TRUE,UK,University of Sheffield,,International Finance,MGT6117,,1000,TRUE
+180,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Level 2 Finace option unit,,1000,TRUE
+180,TRUE,UK,University of Sheffield,,Issues in Finance,MGT6091,,1000,TRUE
+181,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+181,TRUE,USA,North Carolina State University,,Investments,BUS422,,1000,TRUE
+182,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA2207,,1000,TRUE
+182,TRUE,USA,North Carolina State University,,Business Valuation,ACC411,,1000,TRUE
+183,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2001,,1000,TRUE
+183,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+183,TRUE,Hong Kong,University of Hong Kong,,"Engineering Mechanics, Fundamentals of electrical","MECH2413, MECH2405, MECH2414",,1000,TRUE
+183,TRUE,Hong Kong,University of Hong Kong,,"electronic engineering, Thermofluids",MECH2419,,1000,TRUE
+184,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3014,,1000,TRUE
+184,TRUE,USA,Purdue University,,Semiconductor devices ,ECE30500,,1000,TRUE
+185,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3017 ,,1000,TRUE
+185,TRUE,USA,Purdue University,,Electronic circuit analysis,ECE25500,,1000,TRUE
+185,TRUE,USA,Purdue University,,design,ECE27000,,1000,TRUE
+186,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,FINA3324,,1000,TRUE
+186,TRUE,USA,Purdue University,,Investment Management,MGMT41100,,1000,TRUE
+186,TRUE,USA,Purdue University,,Financial Markets,MGMT41200,,1000,TRUE
+187,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3015,,1000,TRUE
+187,TRUE,USA,North Carolina State University,,Introduction to Signal Processing ,ECE421,,1000,TRUE
+188,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3016,,1000,TRUE
+188,TRUE,USA,North Carolina State University,,Electric Motor Drives ,ECE453,,1000,TRUE
+189,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS2001,,1000,TRUE
+189,TRUE,USA,North Carolina State University,,Introduction to Quantum Mechanics,PY301,,1000,TRUE
+190,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+190,TRUE,USA,North Carolina State University,,Fluid Mechanics,MAE308,,1000,TRUE
+191,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+191,TRUE,USA,North Carolina State University,,Solid Mechanics,MAE314,,1000,TRUE
+192,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+192,TRUE,UK,University of Sheffield,,Advanced Mechanics of Solids,MEC312,,1000,TRUE
+193,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH2501,,1000,TRUE
+193,TRUE,USA,North Carolina State University,,Differential equations II,MA401,,1000,TRUE
+194,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Finance Level 2 option unit,,1000,TRUE
+194,TRUE,UK,University of Sheffield,,Introduction to Corporate Finance,MGT230,,1000,TRUE
+195,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Finance Level 2 option unit,,1000,TRUE
+195,TRUE,UK,University of Sheffield,,Issues in Corporate Governance,MGT227,,1000,TRUE
+196,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Finance Level 2 option unit,,1000,TRUE
+196,TRUE,UK,University of Sheffield,,Modern Finance,ECN357,,1000,TRUE
+197,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Finance Level 2 option unit,,1000,TRUE
+197,TRUE,UK,University of Sheffield,,"Money, Banking",ECN220,,1000,TRUE
+198,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+198,TRUE,USA,Kansas State University,,Fluid Mechanics,MET353,,1000,TRUE
+199,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+199,TRUE,USA,Kansas State University,,Mechanics of Materials ,CE533,,1000,TRUE
+200,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3014,,1000,TRUE
+200,TRUE,USA,North Carolina State University,,Introduction to Solid-State Devices,ECE404,,1000,TRUE
+201,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3007,,1000,TRUE
+201,TRUE,UK,University of Manchester,,"Momentum, Heat",CHEN20010,,1000,TRUE
+202,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3006,,1000,TRUE
+202,TRUE,UK,University of Manchester,,Thermodynamics,MACE11005,,1000,TRUE
+203,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3018,,1000,TRUE
+203,TRUE,Sweden,Lund University,,"Chemical Engineering, Project Laboratory",KETF20,,1000,TRUE
+204,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+204,TRUE,Sweden,Lund University,,Applied Computational Fluid Mechanics ,MVKN45,,1000,TRUE
+205,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3005,,1000,TRUE
+205,TRUE,Sweden,Lund University,,Mass Transfer Processes in Environmental Engineering ,KTE170,,1000,TRUE
+206,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4404,,1000,TRUE
+206,TRUE,UK,University of Glasgow,,"""Acoustics",ENG4001,,1000,TRUE
+206,TRUE,UK,University of Glasgow,,"Audio Technology""",MACE11602,,1000,TRUE
+207,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3015,,1000,TRUE
+207,TRUE,USA,North Carolina State University,,"""Linear Systems""",ECE301,,1000,TRUE
+207,TRUE,USA,North Carolina State University,,"""Introduction to Signal Processing""",ECE421,,1000,TRUE
+208,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3017 ,,1000,TRUE
+208,TRUE,USA,North Carolina State University,,"""Microelectronics""",ECE302,,1000,TRUE
+208,TRUE,USA,North Carolina State University,,"""Fundamentals of Logic Design""",ECE212,,1000,TRUE
+209,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3016,,1000,TRUE
+209,TRUE,USA,North Carolina State University,,Electric Power Systems ,ECE305,,1000,TRUE
+210,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+210,TRUE,Canada,Queen's University,,Solid Mechanics II,MECH321,,1000,TRUE
+211,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3014,,1000,TRUE
+211,TRUE,UK,University of Manchester,,Fundemantals of Solid State Phyics,PHYS20252,,1000,TRUE
+212,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3017 ,,1000,TRUE
+212,TRUE,UK,University of Manchester,,Electronic Circuit Design,EEEN10029,,1000,TRUE
+213,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+213,TRUE,UK,University of Manchester,,"""Applied Fluid Mechanics""",MACE20002,,1000,TRUE
+213,TRUE,UK,University of Manchester,,"""Transport Phenomena 2""",CHEN10092,,1000,TRUE
+214,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHEM1002,,1000,TRUE
+214,TRUE,UK,University of Manchester,,Introductory Chemistry ,CHEM10101,,1000,TRUE
+215,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3008,,1000,TRUE
+215,TRUE,Canada,Queen's University,,Structural Analysis,CIVL330,,1000,TRUE
+216,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH1002,,1000,TRUE
+216,TRUE,USA,North Carolina State University,,Calculus III,MA242,,1000,TRUE
+217,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B option,,1000,TRUE
+217,TRUE,Norway,Norwegian University of Science and Technology,,Energy,FY2290 ,,1000,TRUE
+218,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+218,TRUE,Canada,University of Calgary,,Fundamentals of Kinematics,Mechanical Engineering 473 ,,1000,TRUE
+219,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+219,TRUE,Canada,Queen's University,,Dynamics,MECH328,,1000,TRUE
+220,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+220,TRUE,Canada,Queen's University,,Principles of Materials Processing,MECH 370,,1000,TRUE
+221,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+221,TRUE,Norway,Norwegian University of Science and Technology,,Metal Fabrication,TMT4266 ,,1000,TRUE
+222,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4407,,1000,TRUE
+222,TRUE,Norway,Norwegian University of Science and Technology,,Tribology,TMM4205 ,,1000,TRUE
+223,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+223,TRUE,UK,University of Manchester,,Applied Fluid Mechanics,MACE20002,,1000,TRUE
+223,TRUE,UK,University of Manchester,,Transport Phenomena 2,CHEN10092,,1000,TRUE
+224,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Civil major opt,,1000,TRUE
+224,TRUE,Canada,University of British Columbia,,Dynamics of Structures 1  ,CIVL507,,1000,TRUE
+225,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+225,TRUE,Canada,University of British Columbia,,Project Management For Engineers,CIVL523 ,,1000,TRUE
+226,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+226,TRUE,Canada,Queen's University,, Manufacturing Methods,Mech270,,1000,TRUE
+226,TRUE,Canada,Queen's University,,Manufacturing Methods and,Mech213,,1000,TRUE
+227,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ACCT1101,,1000,TRUE
+227,TRUE,Canada,Queen's University,,,COM111 ,,1000,TRUE
+228,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT3062,,1000,TRUE
+228,TRUE,UK,University of Southampton,,,MATH3044 ,,1000,TRUE
+229,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Broadening ,,1000,TRUE
+229,TRUE,Canada,Queen's University,,,HIST246,,1000,TRUE
+230,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+230,TRUE,Canada,Queen's University,,,MECH213,,1000,TRUE
+230,TRUE,Canada,Queen's University,,,MECH270 ,,1000,TRUE
+231,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+231,TRUE,Canada,Queen's University,,,MECH321 ,,1000,TRUE
+232,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+232,TRUE,UK,University of Exeter,,,ECM2114 ,,1000,TRUE
+233,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+233,TRUE,Canada,UBC,,,CIVL518,,1000,TRUE
+234,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+234,TRUE,Canada,UBC,,,MECH329,,1000,TRUE
+235,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MKTG1203,,1000,TRUE
+235,TRUE,Canada,Queen's University,,,com131 ,,1000,TRUE
+236,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MANG1001,,1000,TRUE
+236,TRUE,UK,University of Southampton,,,MANG1001,,1000,TRUE
+237,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2200,,1000,TRUE
+237,TRUE,USA,University of Vermont,,,CS 124,,1000,TRUE
+238,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+238,TRUE,Canada,Queen's University,,,Mech 328,,1000,TRUE
+239,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5502,,1000,TRUE
+239,TRUE,Canada,UBC,,,CIVL580,,1000,TRUE
+240,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH463,,1000,TRUE
+240,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS306 ,,1000,TRUE
+240,TRUE,Canada,UBC,,,ENSC3001,,1000,TRUE
+241,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,econs2234,,1000,TRUE
+241,TRUE,Canada,Queen's University,,,econs222,,1000,TRUE
+242,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3008,,1000,TRUE
+242,TRUE,Canada,Queen's University,,,CIVL330 ,,1000,TRUE
+243,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,unspecified option in the Finance major,,1000,TRUE
+243,TRUE,UK,University of Southampton,,,MANG3030,,1000,TRUE
+244,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+244,TRUE,Canada,Queen's University,,,Mech270,,1000,TRUE
+244,TRUE,Canada,Queen's University,,,Mech213,,1000,TRUE
+245,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5501 ,,1000,TRUE
+245,TRUE,Canada,UBC,,,CIVL417,,1000,TRUE
+246,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5501,,1000,TRUE
+246,TRUE,Canada,UBC,,,CIVL507,,1000,TRUE
+247,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+247,TRUE,Canada,UBC,,,CIVL523,,1000,TRUE
+248,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,HIST3002 ,,1000,TRUE
+248,TRUE,Canada,Queen's University,,,HIST2406 ,,1000,TRUE
+249,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3007,,1000,TRUE
+249,TRUE,Norway,Norwegian University of Science and Technology,,,TEP4130,,1000,TRUE
+250,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR5520,,1000,TRUE
+250,TRUE,Norway,Norwegian University of Science and Technology,,,TEP4170,,1000,TRUE
+251,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4407,,1000,TRUE
+251,TRUE,Norway,Norwegian University of Science and Technology,,,TEP4250,,1000,TRUE
+252,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3018,,1000,TRUE
+252,TRUE,Norway,Norwegian University of Science and Technology,,,TKP4165,,1000,TRUE
+253,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+253,TRUE,UK,University of Glasgow,,Thermodynamics of Engines,ENG3053,,1000,TRUE
+254,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+254,TRUE,Denmark,Technical University of Denmark,,System Safety,42171,,1000,TRUE
+255,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+255,TRUE,Denmark,Technical University of Denmark,,Control Theory,2492,,1000,TRUE
+261,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3006,,1000,TRUE
+261,TRUE,UK,Leeds University,,Chemical Engineering Thermodynamics,PEME3321,,1000,TRUE
+262,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B option,,1000,TRUE
+262,TRUE,Sweden,Lund University,,Introduction to Vehicle Engineering,MVKF15,,1000,TRUE
+263,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH3405,,1000,TRUE
+263,TRUE,Singapore,National University of Singapore,,Materials Failure,ME4255,,1000,TRUE
+264,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH3404,,1000,TRUE
+264,TRUE,Singapore,National University of Singapore,,Vibration Theory,ME4213,,1000,TRUE
+265,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH3401,,1000,TRUE
+265,TRUE,Singapore,National University of Singapore,,Energy Conversion Processes,ME3221,,1000,TRUE
+266,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4404,,1000,TRUE
+266,TRUE,Singapore,National University of Singapore,,Engineering Acoustics,ME5106,,1000,TRUE
+267,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4409,,1000,TRUE
+267,TRUE,Singapore,National University of Singapore,,Internal Combustion Engines,ME4227,,1000,TRUE
+268,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4130,,1000,TRUE
+268,TRUE,Norway,Norwegian University of Science and Technology,,Coadtal Engineering,TBA4120,,1000,TRUE
+269,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4110,,1000,TRUE
+269,TRUE,Norway,Norwegian University of Science and Technology,,Structural Dynamics 1,TKT4201,,1000,TRUE
+270,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4170,,1000,TRUE
+270,TRUE,Norway,Norwegian University of Science and Technology,,Design of Offshore Structures,TMR4195,,1000,TRUE
+271,TRUE,Norway,Norwegian University of Science and Technology,,"Nuclear Power, Introduction",TKP4182 ,,1000,TRUE
+272,TRUE,Norway,Norwegian University of Science and Technology,,Aero Dynamics,TEP4160,,1000,TRUE
+273,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3112,,1000,TRUE
+273,TRUE,Norway,Norwegian University of Science and Technology,,Concrete Structures 2,TKT4220,,1000,TRUE
+274,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3150,,1000,TRUE
+274,TRUE,Norway,Norwegian University of Science and Technology,,Project Planning,TPK5100,,1000,TRUE
+275,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4150,,1000,TRUE
+275,TRUE,Norway,Norwegian University of Science and Technology,,Project Planning,TBA5200,,1000,TRUE
+276,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3111 ,,1000,TRUE
+276,TRUE,Norway,Norwegian University of Science and Technology,,"Structural Design, Advanced Course",TKT4198,,1000,TRUE
+277,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4111,,1000,TRUE
+277,TRUE,Norway,Norwegian University of Science and Technology,,Steel Structures,TKT4170,,1000,TRUE
+278,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4130,,1000,TRUE
+278,TRUE,Norway,Norwegian University of Science and Technology,,Coastal Engineering,TBA4270,,1000,TRUE
+279,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B option,,1000,TRUE
+279,TRUE,Norway,Norwegian University of Science and Technology,,Turbulent Flows,TEP4112,,1000,TRUE
+280,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3432,,1000,TRUE
+280,TRUE,Norway,Norwegian University of Science and Technology,,Reactor Technology,TKP4145,,1000,TRUE
+281,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PETR2510,,1000,TRUE
+281,TRUE,Norway,Norwegian University of Science and Technology,,Petrochemistry,TKP4150,,1000,TRUE
+282,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3531,,1000,TRUE
+282,TRUE,Norway,Norwegian University of Science and Technology,,Chemical Process System Engineering,TKP4135,,1000,TRUE
+283,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3434,,1000,TRUE
+283,TRUE,Norway,Norwegian University of Science and Technology,,Surface,TKP4115,,1000,TRUE
+284,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3120,,1000,TRUE
+284,TRUE,Norway,Norwegian University of Science and Technology,,"Geotechnics, Design Methods",TBA4105,,1000,TRUE
+285,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PETR4512,,1000,TRUE
+285,TRUE,Norway,Norwegian University of Science and Technology,,Reservoir Recovery Techniques,TPG4150,,1000,TRUE
+286,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4400,,1000,TRUE
+286,TRUE,Norway,Norwegian University of Science and Technology,,Project Planning,TPK5100 or TET4851,,1000,TRUE
+287,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+287,TRUE,Norway,Norwegian University of Science and Technology,,Project Planning,TPK5100,,1000,TRUE
+288,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5502,,1000,TRUE
+288,TRUE,Norway,Norwegian University of Science and Technology,,"Geotechnical Engineering, Advanced Course",TBA4116,,1000,TRUE
+289,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4405,,1000,TRUE
+289,TRUE,Norway,Norwegian University of Science and Technology,,Finite Element Methods in Structural Analaysis,TMR4190,,1000,TRUE
+290,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+290,TRUE,Norway,Norwegian University of Science and Technology,,Risk Analysis,TPK5160,,1000,TRUE
+291,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group C Option,,1000,TRUE
+291,TRUE,Norway,Norwegian University of Science and Technology,,Norwegian for Foreigners,NFUT0001,,1000,TRUE
+292,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group C Option,,1000,TRUE
+292,TRUE,Norway,Norwegian University of Science and Technology,,Innovation,TIO4536,,1000,TRUE
+293,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group C or B option,,1000,TRUE
+293,TRUE,Norway,Norwegian University of Science and Technology,,Port,TBA4145,,1000,TRUE
+294,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3009,,1000,TRUE
+294,TRUE,Norway,Norwegian University of Science and Technology,,Geotechnical Eng,TBA4100,,1000,TRUE
+295,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4402,,1000,TRUE
+295,TRUE,Norway,Norwegian University of Science and Technology,,Engineering Fluid Mechanics,TEP4135,,1000,TRUE
+296,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3140,,1000,TRUE
+296,TRUE,Norway,Norwegian University of Science and Technology,,Finite Element Methods in Strength Analysis,TKT4192,,1000,TRUE
+297,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5501,,1000,TRUE
+297,TRUE,Norway,Norwegian University of Science and Technology,,"Dynamics, Advanced course",TKT4108,,1000,TRUE
+298,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+298,TRUE,Norway,Norwegian University of Science and Technology,,Risk Management in Projects,TPK5115,,1000,TRUE
+299,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4402,,1000,TRUE
+299,TRUE,Norway,Norwegian University of Science and Technology,,Hydraulic Design,TVM5125,,1000,TRUE
+300,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3010,,1000,TRUE
+300,TRUE,Norway,Norwegian University of Science and Technology,,Fluid Mechanics,TEP4105,,1000,TRUE
+301,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group D option unit,,1000,TRUE
+301,TRUE,Norway,Norwegian University of Science and Technology,,Natural Gas  ,TPG4140,,1000,TRUE
+302,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group D option unit,,1000,TRUE
+302,TRUE,Norway,Norwegian University of Science and Technology,,Effects of Climate Change,GEOG2007,,1000,TRUE
+303,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group D option unit,,1000,TRUE
+303,TRUE,Norway,Norwegian University of Science and Technology,,Norwegian Society,SOS2501,,1000,TRUE
+304,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group D option unit,,1000,TRUE
+304,TRUE,Norway,Norwegian University of Science and Technology,,Macroeconomics for Managers,SOK1151,,1000,TRUE
+305,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MGMT3308,,1000,TRUE
+305,TRUE,Norway,Norwegian University of Science and Technology,,Strategic Purchasing,TIØ4566,,1000,TRUE
+306,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,INMT3234,,1000,TRUE
+306,TRUE,Norway,Norwegian University of Science and Technology,,Knowledge Management in a Global Economy ,GEOG3518,,1000,TRUE
+307,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2121,,1000,TRUE
+307,TRUE,UK,Nottingham University,,Geotechnics 1,H21G11,,1000,TRUE
+308,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3150,,1000,TRUE
+308,TRUE,UK,Nottingham University,,Construction Project Management,H22MOA,,1000,TRUE
+309,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2150,,1000,TRUE
+309,TRUE,UK,Nottingham University,,Engineering Surveying 1,H21VII,,1000,TRUE
+310,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3112,,1000,TRUE
+310,TRUE,UK,Nottingham University,,Concrete,H23SM3,,1000,TRUE
+311,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3010,,1000,TRUE
+311,TRUE,UK,Nottingham University,,Hydraulics I,H22H11,,1000,TRUE
+311,TRUE,UK,Nottingham University,,Hydraulics 2,H22H12,,1000,TRUE
+312,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3111 ,,1000,TRUE
+312,TRUE,UK,Nottingham University,,Steel Structures,H23S07,,1000,TRUE
+313,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3120,,1000,TRUE
+313,TRUE,UK,Nottingham University,,Foundation,H23GGE,,1000,TRUE
+314,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4180,,1000,TRUE
+314,TRUE,UK,Nottingham University,,Traffic Engineering,H24T01,,1000,TRUE
+315,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3140,,1000,TRUE
+315,TRUE,UK,Nottingham University,,Finite Element Analysis in Strutural Mechanics,H24SFE,,1000,TRUE
+316,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+316,TRUE,UK,Nottingham University,,Fluid Mechanics,H81FLM,,1000,TRUE
+317,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3006,,1000,TRUE
+317,TRUE,UK,Nottingham University,,Engineering Thermodynamics,H81ETD,,1000,TRUE
+318,TRUE,UK,Nottingham University,,Plant Design,H82PLD,,1000,TRUE
+319,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3007,,1000,TRUE
+319,TRUE,UK,Nottingham University,,Heat,H81NMT,,1000,TRUE
+320,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3433,,1000,TRUE
+320,TRUE,UK,Nottingham University,,Process Dynamics,H83PDC,,1000,TRUE
+321,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3018,,1000,TRUE
+321,TRUE,UK,Nottingham University,,Process Synthesis,H84PSD,,1000,TRUE
+322,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH3402,,1000,TRUE
+322,TRUE,UK,Nottingham University,,Engineering Project  ,H82PEP,,1000,TRUE
+323,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3327,,1000,TRUE
+323,TRUE,New Zealand,Otago University,,Mathematical Modelling 1,COMO301,,1000,TRUE
+324,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3342,,1000,TRUE
+324,TRUE,New Zealand,Otago University,,Complex Analysis,MATH302,,1000,TRUE
+325,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4403,,1000,TRUE
+325,TRUE,USA,Pennsylvania State University,,Design of Concrete Structures,CE 341,,1000,TRUE
+326,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+326,TRUE,USA,Pennsylvania State University,,Project Development,CE 332,,1000,TRUE
+327,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MCTX3420,,1000,TRUE
+327,TRUE,USA,Purdue University,,Mechatronics: Integrated Design of Electro-Mechanical Systems,ME58800,,1000,TRUE
+328,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+328,TRUE,USA,Purdue University,,Mechanical Vibrations,ME56300,,1000,TRUE
+329,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+329,TRUE,USA,Purdue University,,Aircraft Design,AAE45100,,1000,TRUE
+330,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+330,TRUE,USA,Purdue University,,Introduction to Aerospace Design,AAE25100,,1000,TRUE
+331,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+331,TRUE,USA,Purdue University,,Aerodynamics,AAE33400,,1000,TRUE
+332,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+332,TRUE,USA,Purdue University,,Machine Design 1,ME35200,,1000,TRUE
+333,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+333,TRUE,Canada,Queen's University,,Applied Thermodynamics,MECH330,,1000,TRUE
+334,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3011,,1000,TRUE
+334,TRUE,Canada,Queen's University,,Introduction to Mining,MINE201,,1000,TRUE
+335,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+335,TRUE,Canada,Queen's University,,Dynamics,MECH328,,1000,TRUE
+336,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+336,TRUE,Canada,Queen's University,,"Reliability, Maintenance",MINE359,,1000,TRUE
+337,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC3306,,1000,TRUE
+337,TRUE,Canada,Queen's University,,Control Systems 1,ELEC443,,1000,TRUE
+338,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3016,,1000,TRUE
+338,TRUE,Canada,Queen's University,,Electric Machines,ELEC333,,1000,TRUE
+339,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC3303,,1000,TRUE
+339,TRUE,Canada,Queen's University,,Applications of Electromagnetics,ELEC381,,1000,TRUE
+340,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC2301,,1000,TRUE
+340,TRUE,Canada,Queen's University,,Digital Systems,ELEC271,,1000,TRUE
+341,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC3300,,1000,TRUE
+341,TRUE,Canada,Queen's University,,Electronics 2,ELEC353,,1000,TRUE
+342,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4130,,1000,TRUE
+342,TRUE,Ireland,University College Dublin,,Hydraulic Engineering Design,CVEN40080,,1000,TRUE
+343,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5232,,1000,TRUE
+343,TRUE,Ireland,University College Dublin,,Soil Mechanics,CVEN40210,,1000,TRUE
+344,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4111,,1000,TRUE
+344,TRUE,Ireland,University College Dublin,,Structural Design,CVEN40050,,1000,TRUE
+345,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4120,,1000,TRUE
+345,TRUE,Ireland,University College Dublin,,Soil-Structure Interaction,CVEN40430,,1000,TRUE
+346,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3120,,1000,TRUE
+346,TRUE,Ireland,University College Dublin,,Soil Mechanics 2,CVEN30010,,1000,TRUE
+347,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group D option,,1000,TRUE
+347,TRUE,UK,University of Bristol,,Soil Structures Interaction 4,CENGM2700,,1000,TRUE
+348,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS1002,,1000,TRUE
+348,TRUE,UK,University of Bristol,,Introduction to C,COMS11500,,1000,TRUE
+349,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3010,,1000,TRUE
+349,TRUE,UK,University of Bristol,,Fluid Mechanics,CENG11300,,1000,TRUE
+350,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4405,,1000,TRUE
+350,TRUE,UK,University of Bristol,,Finte Element Anaylsis,MENG33111,,1000,TRUE
+351,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4111,,1000,TRUE
+351,TRUE,UK,University of Bristol,,Structural Engineering 4,CENGM2400,,1000,TRUE
+352,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+352,TRUE,UK,University of Bristol,,Research Methodology,EFACM0004,,1000,TRUE
+353,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+353,TRUE,UK,University of Bristol,,Civil Engineering Systems 3,CENG33900,,1000,TRUE
+354,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHEM1002 or CHEM1001,,1000,TRUE
+354,TRUE,UK,University of Bristol,,Introductory Chemistry,CHEM10600,,1000,TRUE
+355,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE4609,,1000,TRUE
+355,TRUE,UK,University of Bristol,,Water Engineering 3,CENG33600,,1000,TRUE
+356,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4405,,1000,TRUE
+356,TRUE,Canada,University of Calgary,,Numerical Methods in Engineering,Engineering 407,,1000,TRUE
+357,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR5501,,1000,TRUE
+357,TRUE,Canada,University of Calgary,,Chemical Reactor Desigm,Chemical Engineering 623,,1000,TRUE
+358,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+358,TRUE,Canada,University of Calgary,,The role,Engineering 513,,1000,TRUE
+359,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3008,,1000,TRUE
+359,TRUE,USA,University of Illinois,,Structural Analysis,CEE470,,1000,TRUE
+360,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3111 ,,1000,TRUE
+360,TRUE,USA,University of Illinois,,Steel Structures 1,CEE460,,1000,TRUE
+361,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3120,,1000,TRUE
+361,TRUE,USA,University of Illinois,,Applied Soil Mechanics,CEE484,,1000,TRUE
+362,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2403,,1000,TRUE
+362,TRUE,USA,University of New Mexico,,Thermofluids,ME301,,1000,TRUE
+363,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR2432,,1000,TRUE
+363,TRUE,USA,University of New Mexico,,Heat Transfer,ME320,,1000,TRUE
+364,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3432,,1000,TRUE
+364,TRUE,Canada,University of Ottawa,,Chemical Reaction Engineering,CH6 3127,,1000,TRUE
+365,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHEM1001,,1000,TRUE
+365,TRUE,UK,University of Sheffield,,,CHM1001,,1000,TRUE
+366,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5501,,1000,TRUE
+366,TRUE,UK,University of Sheffield,,Structural Dynamics,CIV4180,,1000,TRUE
+367,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3008,,1000,TRUE
+367,TRUE,UK,University of Sheffield,,Advanced Structural Analysis,CIV312,,1000,TRUE
+368,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3009,,1000,TRUE
+368,TRUE,UK,University of Sheffield,,Geotechnical Design,CIV350,,1000,TRUE
+369,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2401,,1000,TRUE
+369,TRUE,Canada,University of Toronto,,Mechanical Design Theory,MIE440H1,,1000,TRUE
+370,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2121,,1000,TRUE
+370,TRUE,USA,University of Vermont,,Geotechnical Principles,CE180,,1000,TRUE
+371,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3112,,1000,TRUE
+371,TRUE,USA,University of Vermont,,Reinforced Concrete,CE173,,1000,TRUE
+372,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3017 ,,1000,TRUE
+372,TRUE,Canada,University of Waterloo  ,,Electronic Circuits 1,ECE240,,1000,TRUE
+372,TRUE,Canada,University of Waterloo  ,,Electronic Circuits 2,ECE242,,1000,TRUE
+373,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3015,,1000,TRUE
+373,TRUE,Canada,University of Waterloo  ,,Signals,ECE207 nad ECE380,,1000,TRUE
+374,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3014,,1000,TRUE
+374,TRUE,Canada,University of Waterloo  ,,Electronic,ECE209,,1000,TRUE
+374,TRUE,Canada,University of Waterloo  ,,Electrical Properties Electronic Devices,ECE331,,1000,TRUE
+375,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3016,,1000,TRUE
+375,TRUE,Canada,University of Waterloo  ,,Power Systems,ECE361,,1000,TRUE
+376,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+376,TRUE,Canada,University of Waterloo  ,,Industrial Ecology,CHE 571,,1000,TRUE
+377,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+377,TRUE,UK,University of Glasgow,,Design And Manufacture 2A ,ENG2015,,1000,TRUE
+378,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+378,TRUE,UK,University of Glasgow,,ENG1003: ANALOGUE ELECTRONICS 1,ENG1003,,1000,TRUE
+378,TRUE,UK,University of Glasgow,,ENG2053: THERMODYNAMICS M2,ENG2053,,1000,TRUE
+379,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH1001,,1000,TRUE
+379,TRUE,UK,University of Manchester,,Mathematics 1,PHYS10071,,1000,TRUE
+380,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC1002,,1000,TRUE
+380,TRUE,UK,University of Manchester,,Materials Science 1,MATS10221,,1000,TRUE
+380,TRUE,UK,University of Manchester,,Structures,MACE10010,,1000,TRUE
+381,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5503 ,,1000,TRUE
+381,TRUE,UK,Nottingham University,,Foundation,H23GGE ,,1000,TRUE
+382,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5501 ,,1000,TRUE
+382,TRUE,UK,Nottingham University,,Coastal Engineering ,H24HCR ,,1000,TRUE
+383,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC1002,,1000,TRUE
+383,TRUE,UK,University of Manchester,,"""Structures""",MACE10010,,1000,TRUE
+383,TRUE,UK,University of Manchester,,"""Materials""",MACE10152,,1000,TRUE
+384,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2001,,1000,TRUE
+384,TRUE,UK,University of Manchester,,"""Fluid Mechanics""",MACE10421,,1000,TRUE
+384,TRUE,UK,University of Manchester,,"""Mechanics""",MACE10602,,1000,TRUE
+385,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+385,TRUE,UK,University of Manchester,,"""Electrical Energy Supply",MACE10392,,1000,TRUE
+385,TRUE,UK,University of Manchester,,"Circuits""",MACE11005,,1000,TRUE
+386,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+386,TRUE,UK,University of Manchester,,"""Fluid Mechanics 1""",MACE10421,,1000,TRUE
+386,TRUE,UK,University of Manchester,,"""Applied Fluid Mechanics""",MACE20002,,1000,TRUE
+387,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Finance Level 2 option unit,,1000,TRUE
+387,TRUE,Canada,University of Waterloo,,Business Finance 2,ECON372,,1000,TRUE
+388,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR5522,,1000,TRUE
+388,TRUE,Norway,Norwegian University of Science and Technology,,Natural Gas Technology,TEP4185,,1000,TRUE
+389,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3130,,1000,TRUE
+389,TRUE,UK,Leeds University,,Water Engineering II,CIVE2405,,1000,TRUE
+390,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3120,,1000,TRUE
+390,TRUE,UK,Leeds University,,Geotechnics III,CIVE3500,,1000,TRUE
+391,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3019,,1000,TRUE
+391,TRUE,Norway,Norwegian University of Science and Technology,,Process Engineering,TKP4120,,1000,TRUE
+392,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4406,,1000,TRUE
+392,TRUE,Norway,Norwegian University of Science and Technology,,Chemical Reaction Engineering,TKP4110,,1000,TRUE
+393,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4404,,1000,TRUE
+393,TRUE,Norway,Norwegian University of Science and Technology,,Engineering Thermodynamics 2,TEP4125,,1000,TRUE
+394,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+394,TRUE,Norway,Norwegian University of Science and Technology,,Process Design Project,TKP4170,,1000,TRUE
+395,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4401&CHPR4402,,1000,TRUE
+395,TRUE,Norway,Norwegian University of Science and Technology,,"Industrial Process Technology, Specialisation Project",TEP4520,,1000,TRUE
+396,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH1401,,1000,TRUE
+396,TRUE,Canada,Queen's University,,Mechanics,APSC111,,1000,TRUE
+397,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2403,,1000,TRUE
+397,TRUE,Canada,Queen's University,,Applied Thermo II,MECH330,,1000,TRUE
+398,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MINE1160,,1000,TRUE
+398,TRUE,Canada,Queen's University,,Intro to  Mining/ Mineral Processing,MINE201,,1000,TRUE
+399,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG2140,,1000,TRUE
+399,TRUE,Canada,Queen's University,,Differential Equations,MTHE237,,1000,TRUE
+400,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2110,,1000,TRUE
+400,TRUE,Canada,University of Calgary,,Mechanics of Solids,ENGG317,,1000,TRUE
+401,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2402,,1000,TRUE
+401,TRUE,Canada,University of Calgary,,Machine Component Design,ENME493,,1000,TRUE
+402,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2401,,1000,TRUE
+402,TRUE,Canada,University of Calgary,,Roles,ENGG513,,1000,TRUE
+403,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2403,,1000,TRUE
+403,TRUE,Canada,University of Calgary,,Fundamentals of Fluid Mechanics,ENME341,,1000,TRUE
+404,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2121,,1000,TRUE
+404,TRUE,Canada,University of Calgary,,Intro to Geology 1,GLGY209,,1000,TRUE
+405,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2121,,1000,TRUE
+405,TRUE,Canada,University of Calgary,,Engineering Geology,GLGY571,,1000,TRUE
+406,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE3601,,1000,TRUE
+406,TRUE,Canada,University of Calgary,,Fundamentals of Fluid Mechanics,ENME341,,1000,TRUE
+407,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE3604,,1000,TRUE
+407,TRUE,Canada,University of Calgary,,Energy,ENEE503,,1000,TRUE
+408,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+408,TRUE,Canada,University of Calgary,,Water,Civil Eng 581,,1000,TRUE
+409,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+409,TRUE,Canada,University of Calgary,,Earth Observation for the Environment,Geomatics Engineering 637,,1000,TRUE
+410,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+410,TRUE,Canada,University of Calgary,,Roles,ENGG513,,1000,TRUE
+411,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+411,TRUE,Canada,University of Calgary,,Site Assessment,Civil eng 587,,1000,TRUE
+412,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+412,TRUE,Canada,University of Calgary,,Engineering Aspects of Sustainable Communities,ENEE573,,1000,TRUE
+413,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3110,,1000,TRUE
+413,TRUE,USA,University of Illinois,,Structural Engineering,CEE360,,1000,TRUE
+413,TRUE,USA,University of Illinois,,Steel Structures 1,CEE460,,1000,TRUE
+414,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3130,,1000,TRUE
+414,TRUE,USA,University of Illinois,,Hydraulic Analysis,CEE452,,1000,TRUE
+415,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3120,,1000,TRUE
+415,TRUE,USA,University of Illinois,,Foundation Engineering,CEE480,,1000,TRUE
+416,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3150,,1000,TRUE
+416,TRUE,USA,University of Illinois,,Engineering Risk,CEE202,,1000,TRUE
+417,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3112,,1000,TRUE
+417,TRUE,USA,University of Illinois,,Reinforced Concrete 1,CEE461,,1000,TRUE
+418,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4110,,1000,TRUE
+418,TRUE,USA,University of Illinois,,Structural Dynamics 1,CEE472,,1000,TRUE
+419,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4150,,1000,TRUE
+419,TRUE,USA,University of Illinois,,Construction Engineering,CEE320,,1000,TRUE
+420,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4111,,1000,TRUE
+420,TRUE,USA,University of Illinois,,Design of Structural Systems,CEE465,,1000,TRUE
+421,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+421,TRUE,Norway,Norwegian University of Science and Technology,,Mechanical Vibrations ,TMM4185 ,,1000,TRUE
+422,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+422,TRUE,Norway,Norwegian University of Science and Technology,,Finite Element Methods in Strength Analysis,TKT4192 ,,1000,TRUE
+423,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Mech Group B,,1000,TRUE
+423,TRUE,Norway,Norwegian University of Science and Technology,,Arctic,TBA4265,,1000,TRUE
+424,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Mech Group B,,1000,TRUE
+424,TRUE,Norway,Norwegian University of Science and Technology,,Petroleum Geology,TGB4160 ,,1000,TRUE
+425,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,group B,,1000,TRUE
+425,TRUE,Norway,Norwegian University of Science and Technology,,,TKT4146,,1000,TRUE
+426,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426 ,,1000,TRUE
+426,TRUE,Norway,Norwegian University of Science and Technology,,,TMM4185 ,,1000,TRUE
+427,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4407,,1000,TRUE
+427,TRUE,Norway,Norwegian University of Science and Technology,,,TKT4192 ,,1000,TRUE
+428,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B,,1000,TRUE
+428,TRUE,Norway,Norwegian University of Science and Technology,,,TBA4265 ,,1000,TRUE
+429,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B,,1000,TRUE
+429,TRUE,Norway,Norwegian University of Science and Technology,,,TGB4160 ,,1000,TRUE
+430,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4307,,1000,TRUE
+430,TRUE,Hong Kong,Hong Kong Polytechnic,,Power Transmission,EE3041,,1000,TRUE
+431,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC3306,,1000,TRUE
+431,TRUE,Hong Kong,Hong Kong Polytechnic,,Systems,EE3051,,1000,TRUE
+432,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4332,,1000,TRUE
+432,TRUE,Hong Kong,Hong Kong Polytechnic,,Engineering Project Management,EE4041,,1000,TRUE
+433,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC1302,,1000,TRUE
+433,TRUE,USA,North Carolina State University,,Electric Power Systems,ECE305,,1000,TRUE
+434,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4180,,1000,TRUE
+434,TRUE,USA,North Carolina State University,,Traffic Engineering,CE305,,1000,TRUE
+435,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3112,,1000,TRUE
+435,TRUE,USA,North Carolina State University,,Reinforced Concrete Design,CE327,,1000,TRUE
+436,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2130,,1000,TRUE
+436,TRUE,USA,North Carolina State University,,Hydraulics,CE382,,1000,TRUE
+437,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group D option,,1000,TRUE
+437,TRUE,USA,North Carolina State University,,Probability/Stats for Engrs,ST370,,1000,TRUE
+438,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH3404,,1000,TRUE
+438,TRUE,USA,Pennsylvania State University,,Vibration Mech systems,ME370,,1000,TRUE
+439,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH2402,,1000,TRUE
+439,TRUE,USA,Pennsylvania State University,,Product Dissection,ME240,,1000,TRUE
+440,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH3403,,1000,TRUE
+440,TRUE,USA,Pennsylvania State University,,Mechanical Design,ME360,,1000,TRUE
+441,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B option,,1000,TRUE
+441,TRUE,USA,Pennsylvania State University,,Aeronautics 1,AERSP306,,1000,TRUE
+442,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+442,TRUE,USA,Pennsylvania State University,,"Intrumentation, measurements",ME345,,1000,TRUE
+443,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3432,,1000,TRUE
+443,TRUE,UK,University College London,,Chemical Reaction Engineering,CENG3003,,1000,TRUE
+444,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3433,,1000,TRUE
+444,TRUE,UK,University College London,,Process Dynamics,CENG3001,,1000,TRUE
+445,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3434,,1000,TRUE
+445,TRUE,UK,University College London,,Particulate Systems,CENG2007,,1000,TRUE
+446,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3530,,1000,TRUE
+446,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR2432,,1000,TRUE
+446,TRUE,UK,University College London,,Mass Transfer Operations,CENG2002,,1000,TRUE
+446,TRUE,UK,University College London,,Process Heat Transfer,CENG2006,,1000,TRUE
+447,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4400,,1000,TRUE
+447,TRUE,UK,University College London,,Process Engineering,CENG2003,,1000,TRUE
+448,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2130,,1000,TRUE
+448,TRUE,UK,University of Sheffield,,Pump,CIV202,,1000,TRUE
+449,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2122,,1000,TRUE
+449,TRUE,UK,University of Sheffield,,"Geotechnical Engineering 2, Geotechnical Engineering 3",CIV250 CIV251,,1000,TRUE
+450,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2110,,1000,TRUE
+450,TRUE,UK,University of Sheffield,,"Structural Analysis1, Structural Analysis2","CIV210,CIV212",,1000,TRUE
+451,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL2150,,1000,TRUE
+451,TRUE,UK,University of Sheffield,,Civil Engineering Design,"CIV123, 122",,1000,TRUE
+452,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG2140,,1000,TRUE
+452,TRUE,UK,University of Sheffield,,Further Civil Engineering Mathematics,MAS250,,1000,TRUE
+453,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3130,,1000,TRUE
+453,TRUE,UK,University of Sheffield,,Open Channel Hydraulics,CIV233,,1000,TRUE
+454,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+454,TRUE,UK,University of Sheffield,,Structural Engineering design,CIV223,,1000,TRUE
+455,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+455,TRUE,UK,University of Sheffield,,Civil structrual engineering design,CIV226,,1000,TRUE
+456,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4180,,1000,TRUE
+456,TRUE,USA,"University of Texas, Austin",,Transportation Systems,CE321,,1000,TRUE
+457,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3112,,1000,TRUE
+457,TRUE,USA,"University of Texas, Austin",,Reinforced Concrete Design,CE331,,1000,TRUE
+458,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE1601,,1000,TRUE
+458,TRUE,USA,"University of Texas, Austin",,`,CE341,,1000,TRUE
+459,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
+459,TRUE,USA,"University of Texas, Austin",,Probability/Stats for Civil Engrs,CE311S,,1000,TRUE
+460,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+460,TRUE,Norway,Norwegian University of Science and Technology,,Safety,TPK4120,,1000,TRUE
+461,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4408,,1000,TRUE
+461,TRUE,USA,Montana State University,,Biomedical Materials Engineering,EMAT464,,1000,TRUE
+462,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+462,TRUE,Norway,Norwegian University of Science and Technology,, Energy from Wind,TEP4175,,1000,TRUE
+463,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+463,TRUE,Norway,Norwegian University of Science and Technology,,"Thermal Energy, Specialisation Course",TEP4515,,1000,TRUE
+464,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3022,,1000,TRUE
+464,TRUE,UK,University of Bristol,,Fluid Dynamics 3,MATH33200,,1000,TRUE
+465,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+465,TRUE,South Korea,Seoul National University,,Fluid Mechanics,M2794.001300,,1000,TRUE
+466,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4401 ,,1000,TRUE
+466,TRUE,Singapore,Nanyang University of Technology,,Engineering Electromagnetics,EE3001,,1000,TRUE
+466,TRUE,Singapore,Nanyang University of Technology,,Radio Frequency Circuits ,EE4343,,1000,TRUE
+470,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option unit,,1000,TRUE
+470,TRUE,Norway,Norwegian University of Science and Technology,,Fire Technology,TBA4175,,1000,TRUE
+471,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option unit,,1000,TRUE
+471,TRUE,Norway,Norwegian University of Science and Technology,,Polymers,TMM4175,,1000,TRUE
+472,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+472,TRUE,Norway,Norwegian University of Science and Technology,,Risk Management in Projects ,TPK5115,,1000,TRUE
+473,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option unit,,1000,TRUE
+473,TRUE,Norway,Norwegian University of Science and Technology,,Tribology,TMM4205,,1000,TRUE
+474,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+474,TRUE,Norway,Norwegian University of Science and Technology,,Heat Pumping Processes,TEP4225,,1000,TRUE
+475,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5551,,1000,TRUE
+475,TRUE,Norway,Norwegian University of Science and Technology,,Engineering Design,TMM4400,,1000,TRUE
+476,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS3003,,1000,TRUE
+476,TRUE,Sweden,Uppsala University,,Computer Graphics,1DT388,,1000,TRUE
+477,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,STAT4063,,1000,TRUE
+477,TRUE,Norway,Norwegian University of Science and Technology,,Computer Intensive Statistical Methods ,TMA4300,,1000,TRUE
+478,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS5508,,1000,TRUE
+478,TRUE,Norway,Norwegian University of Science and Technology,,Knowledge Discovery(KD),PK8106,,1000,TRUE
+479,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS5505,,1000,TRUE
+479,TRUE,Norway,Norwegian University of Science and Technology,,Web Intelligence,TDT4215,,1000,TRUE
+480,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MDSc option unit,,1000,TRUE
+480,TRUE,Norway,Norwegian University of Science and Technology,,Information Security,TTM4135,,1000,TRUE
+481,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+481,TRUE,United States,University of Rochester,,Fluid Dynamics,CHE243,,1000,TRUE
+482,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+482,TRUE,USA,University of Vermont,,Mechanics of Solids/Computational Engineer Lab,ME014/ME083,,1000,TRUE
+483,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3001,,1000,TRUE
+483,TRUE,Sweden,Uppsala University,,Atom,1FA558 ,,1000,TRUE
+484,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3001,,1000,TRUE
+484,TRUE,Sweden,Uppsala University,,"Quantum Mechanics, Advanced Couse",1FA352,,1000,TRUE
+485,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3011,,1000,TRUE
+485,TRUE,Sweden,Uppsala University,,Mathematical Methods of Physics,IFA121,,1000,TRUE
+486,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3003,,1000,TRUE
+486,TRUE,Sweden,Uppsala University,,The Physics of Galaxies,1FA260,,1000,TRUE
+487,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3003,,1000,TRUE
+487,TRUE,Sweden,Uppsala University,,The Physics of Stars,1FA223,,1000,TRUE
+488,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3003,,1000,TRUE
+488,TRUE,Sweden,Uppsala University,,Syllabus for Observational Astrophysics I,1FA203,,1000,TRUE
+489,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+489,TRUE,Denmark,Technical University of Denmark,,Tissue,KU103 ,,1000,TRUE
+490,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+490,TRUE,Denmark,Technical University of Denmark,,Biophotonics,34454,,1000,TRUE
+491,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+491,TRUE,Denmark,Technical University of Denmark,,Biomaterials,33281,,1000,TRUE
+492,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+492,TRUE,Denmark,Technical University of Denmark,,LabChip-1: Bio/chemical microsystems on chips,33236,,1000,TRUE
+493,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3012,,1000,TRUE
+493,TRUE,Sweden,Uppsala University,,"Astrophysics II
+Condensed Matter Physics","1FA205
+1FA526",,1000,TRUE
+494,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5551,,1000,TRUE
+494,TRUE,Sweden,Lund University,,Project-Machine Design,MMKN65,,1000,TRUE
+495,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4403,,1000,TRUE
+495,TRUE,Sweden,Lund University,,Design of Embedded Systems,EDAN15,,1000,TRUE
+496,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+496,TRUE,Sweden,Lund University,,Risk Assessment,VBRN01,,1000,TRUE
+497,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+497,TRUE,Sweden,Lund University,,Multibody Dynamics,FMEN02,,1000,TRUE
+498,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4407,,1000,TRUE
+498,TRUE,Sweden,Lund University,,Numerical Fluid Dynamics,MMVN05,,1000,TRUE
+499,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5504,,1000,TRUE
+499,TRUE,Sweden,Lund University,,"Fracture Mechanics, Advanced Course",FHLN25,,1000,TRUE
+500,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5503,,1000,TRUE
+500,TRUE,Sweden,Lund University,,Real Time Systems,FRTN01,,1000,TRUE
+501,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3001,,1000,TRUE
+501,TRUE,Sweden,Lund University,,Advanced Quantum Mechanics,FYST37,,1000,TRUE
+502,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS2001,,1000,TRUE
+502,TRUE,Sweden,Lund University,,Basic Quantum Mechanics,FYSB11,,1000,TRUE
+503,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3009,,1000,TRUE
+503,TRUE,Denmark,Technical University of Denmark,,Basic Soil Mechanics,11411,,1000,TRUE
+504,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3001,,1000,TRUE
+504,TRUE,Sweden,Uppsala University,,Quantum Physics,1FA521,,1000,TRUE
+505,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2401,,1000,TRUE
+505,TRUE,Denmark,Technical University of Denmark,,Introduction to Programming,2692,,1000,TRUE
+506,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3010,,1000,TRUE
+506,TRUE,Denmark,Technical University of Denmark,,Basic Fluid Mechanics ,41312,,1000,TRUE
+507,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS1402,,1000,TRUE
+507,TRUE,Denmark,Technical University of Denmark,,Database Systems,2170,,1000,TRUE
+508,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2001,,1000,TRUE
+508,TRUE,Denmark,Technical University of Denmark,,Dynamics,62694,,1000,TRUE
+509,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+509,TRUE,Norway,Norwegian University of Science and Technology,,Machinery,TMR4222,,1000,TRUE
+510,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+510,TRUE,Norway,Norwegian University of Science and Technology,,Concrete Technology,TKT4215,,1000,TRUE
+511,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+511,TRUE,Norway,Norwegian University of Science and Technology,,Industrial Systems Engineering,TPK4185,,1000,TRUE
+512,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+512,TRUE,Norway,Norwegian University of Science and Technology,,Internal Combustion Engines,TMR4280,,1000,TRUE
+513,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5502,,1000,TRUE
+513,TRUE,Denmark,Technical University of Denmark,,Dynamics of Machinery,41514,,1000,TRUE
+514,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+514,TRUE,Denmark,Technical University of Denmark,,Life Science,27008,,1000,TRUE
+515,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+515,TRUE,Denmark,Technical University of Denmark,,Intro to Nantechnology,33323,,1000,TRUE
+516,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+516,TRUE,Denmark,Technical University of Denmark,,Management of Change in Engineering Systems,42543,,1000,TRUE
+517,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+517,TRUE,USA,Montana State University,,Construction Project Planning,ECIV405,,1000,TRUE
+518,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+518,TRUE,Norway,Stavanger University,,Offshore Wind Turbine Engineering,OFF610,,1000,TRUE
+519,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+519,TRUE,Norway,Stavanger University,,Offshore Field Developments,OFF515,,1000,TRUE
+520,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+520,TRUE,Norway,Stavanger University,,Offshore Wind Turbine Engineering,MK545,,1000,TRUE
+521,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+521,TRUE,Norway,Stavanger University,,Subsea Technology,OFF550,,1000,TRUE
+522,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+522,TRUE,United Kingdom,University of Southampton,,Advanced Finite Element Analysis,FEEG6010 ,,1000,TRUE
+523,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+523,TRUE,United Kingdom,University of Southampton,,Project Economics,CENV6152,,1000,TRUE
+524,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4401,,1000,TRUE
+524,TRUE,United Kingdom,University of Southampton,,Geotechnical Engineering,CENV3020,,1000,TRUE
+525,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE4402,,1000,TRUE
+525,TRUE,United Kingdom,University of Southampton,,Engineering Hydrology,CENV3061,,1000,TRUE
+526,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5502,,1000,TRUE
+526,TRUE,United Kingdom,University of Southampton,,Transportation Engineering: Transport Management,CENV6109,,1000,TRUE
+527,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4405,,1000,TRUE
+527,TRUE,USA,University of Vermont,,Numerical Methods for Engineer,CE218,,1000,TRUE
+528,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+528,TRUE,USA,University of Vermont,,Capstone Design 1,CE185,,1000,TRUE
+529,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option OR CIVL4401,,1000,TRUE
+529,TRUE,USA,University of Vermont,,Geotechnical Design,CE281,,1000,TRUE
+530,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+530,TRUE,Norway,Stavanger University,,Pipelines,OFF520,,1000,TRUE
+531,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+531,TRUE,Norway,Stavanger University,,Marine Operations,OFF600,,1000,TRUE
+532,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+532,TRUE,Norway,Stavanger University,,Nordic Models for Gender Equality,GEN530,,1000,TRUE
+533,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Civil) option,,1000,TRUE
+533,TRUE,Norway,Stavanger University,,"Human factors, technology",OFF570,,1000,TRUE
+534,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5551,,1000,TRUE
+534,TRUE,United Kingdom,University of Southampton,,Design 3,CENV3015,,1000,TRUE
+535,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL5552,,1000,TRUE
+535,TRUE,United Kingdom,University of Southampton,,Structural Engineering,CENV3056,,1000,TRUE
+536,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ELEC4403,,1000,TRUE
+536,TRUE,USA,Montana State University,,Hardware/Software Engineering Embedded Systems,EELE475,,1000,TRUE
+537,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5505,,1000,TRUE
+537,TRUE,USA,University of New Mexico,,Engineering Project Management,ME 455,,1000,TRUE
+538,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+538,TRUE,USA,University of New Mexico,,Robot Engineering,ME482/582,,1000,TRUE
+539,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+539,TRUE,USA,University of New Mexico,,Embedded Systems Architecture,ECE528,,1000,TRUE
+540,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4429,,1000,TRUE
+540,TRUE,USA,University of New Mexico,,Thermal System Design,ME 521,,1000,TRUE
+541,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+541,TRUE,USA,"University of Texas, Austin",,Strategic Decision,ENM383.2,,1000,TRUE
+542,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+542,TRUE,USA,"University of Texas, Austin",,Structural Analysis,CE329,,1000,TRUE
+543,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+543,TRUE,USA,"University of Texas, Austin",,Biomedical Engineering Signal,BME343,,1000,TRUE
+544,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5501,,1000,TRUE
+544,TRUE,USA,Montana State University,,Acoustics/Audio Engineering,EELE417,,1000,TRUE
+545,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+545,TRUE,USA,University of Texas at Austin,,Markov Decision Processes,ORI 390R 16,,1000,TRUE
+546,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
+546,TRUE,USA,University of Texas at Austin,,Dynamic Systems,ME344,,1000,TRUE
+547,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L2 Elective,,1000,TRUE
+547,TRUE,USA,University of Vermont,,Elementary II,FREN002 ,,1000,TRUE
+548,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
+548,TRUE,USA,University of Vermont,,Mechanics of Solids,ME 014 + ME 083,,1000,TRUE
+549,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L1 Elective,,1000,TRUE
+549,TRUE,USA,University of Vermont,,Club Sports: Swimming,PEAC 005,,1000,TRUE
+550,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L1 Elective,,1000,TRUE
+550,TRUE,USA,University of Vermont,,5K/10 K Training,PEAC 052 ,,1000,TRUE
+551,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4403,,1000,TRUE
+551,TRUE,Denmark,Technical University of Denmark,,Concrete Technology,11563,,1000,TRUE
+552,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4403,,1000,TRUE
+552,TRUE,Denmark,Technical University of Denmark,,Advanced Concrete Structures,11351,,1000,TRUE
+553,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ECON3205,,1000,TRUE
+553,TRUE,Canada,University of Calgary,,The Economics of Health,ECON 379  ,,1000,TRUE
+554,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+554,TRUE,Canada,University of Calgary,,Fundamentals Fluid Mechanics ,ENME341 ,,1000,TRUE
+555,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Level 1 Broadening Unit,,1000,TRUE
+555,TRUE,Canada,University of Calgary,,Intro Exer,KNES 253 ,,1000,TRUE
+556,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Level 1 Elective,,1000,TRUE
+556,TRUE,Canada,University of Calgary,,Introduction to Marketing ,MKTG 341 ,,1000,TRUE
+557,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L2 Elective,,1000,TRUE
+557,TRUE,USA,University of Rochester ,,Numerical Methods,CHE 116 ,,1000,TRUE
+558,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L2 Elective,,1000,TRUE
+558,TRUE,USA,University of Rochester ,,Circuits,ECE 210 ,,1000,TRUE
+559,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2401,,1000,TRUE
+559,TRUE,USA,University of Rochester ,,Engineering Computation II,ME 260 ,,1000,TRUE
+560,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
+560,TRUE,USA,University of Rochester ,,Fluid Dynamics,CHE 243 ,,1000,TRUE
+561,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5551,,1000,TRUE
+561,TRUE,USA,Montana State University,,Capstone 1: Mechanical Engineering Design,EMEC489 ,,1000,TRUE
+562,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5514,,1000,TRUE
+562,TRUE,USA,Montana State University,,Finite Element Analysis,EMEC405 ,,1000,TRUE
+563,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4408,,1000,TRUE
+563,TRUE,USA,Montana State University,,Principles of Biomedical Engineering,EBIO461,,1000,TRUE
+564,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group A option ,,1000,TRUE
+564,TRUE,USA,Montana State University,,Sustainability Issues in Construction,ECIV406,,1000,TRUE
+565,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
+565,TRUE,Sweden,Lunds University,,Multibody Dynamics,FMEN02 ,,1000,TRUE
+566,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5551,,1000,TRUE
+566,TRUE,Sweden,Lunds University,,Project -Machine Design,MMKN65,,1000,TRUE
+567,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+567,TRUE,Sweden,Lunds University,,Risk Assessment,VBRN01,,1000,TRUE
+568,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH5504,,1000,TRUE
+568,TRUE,Sweden,Lunds University,,Numerical Fluid Dynamics,MMVN05,,1000,TRUE
+569,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC2002,,1000,TRUE
+569,TRUE,USA,University of Texas at Austin,,Circuits,EE 411 + ME 316T,,1000,TRUE
+570,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR4407,,1000,TRUE
+570,TRUE,Norway,Norwegian University of Science and Technology,,Viscous Flows,TEP4156,,1000,TRUE
+571,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group A option ,,1000,TRUE
+571,TRUE,Norway,Norwegian University of Science and Technology,,Bioenergy: Technology,TEP4270,,1000,TRUE
+572,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group A option ,,1000,TRUE
+572,TRUE,Norway,Norwegian University of Science and Technology,,Energy,TFY4300,,1000,TRUE
+573,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
+573,TRUE,Denmark,Technical University of Denmark,,Advanced Engineering Dynamics,62614,,1000,TRUE
+574,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3002,,1000,TRUE
+574,TRUE,Denmark,Technical University of Denmark,,Material Science,41681,,1000,TRUE
+575,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
+575,TRUE,Denmark,Technical University of Denmark,,System Safety Reliability Engineering,42171,,1000,TRUE
+576,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+576,TRUE,Denmark,Technical University of Denmark,,Energy,28870,,1000,TRUE
+577,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4424,,1000,TRUE
+577,TRUE,Denmark,Technical University of Denmark,,Precision Manufacturing,41744,,1000,TRUE
+578,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MPE(Mech) option,,1000,TRUE
+578,TRUE,Denmark,Technical University of Denmark,,Combustion,28244,,1000,TRUE
+579,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5506,,1000,TRUE
+579,TRUE,Denmark,Technical University of Denmark,,Offshore Wind Energy,46211,,1000,TRUE

@@ -16,13 +16,14 @@ namespace ExchangeApproval.Data
                 .Distinct();
         }
 
-        public static IEnumerable<UnitSet> QueryUnitSets(
+        public static IEnumerable<(UnitSet UnitSet, List<ExchangeUnit> ExchangeUnits, List<UWAUnit> UWAUnits)> QueryUnitSets(
                 ExchangeDbContext db,
                 IReadOnlyList<string> universityNames = null,
                 IReadOnlyList<UWAUnitLevel> uwaUnitLevels = null
             )
         {
             return db.UnitSets
+                .AsNoTracking()
                 .Include(u => u.ExchangeUnits)
                 .Include(u => u.UWAUnits)
                 .Where(a =>
@@ -32,7 +33,13 @@ namespace ExchangeApproval.Data
                 .Where(us =>
                         uwaUnitLevels == null ||
                         uwaUnitLevels.Count() == 0 ||
-                        uwaUnitLevels.Contains(us.EquivalentUWAUnitLevel.Value));
+                        uwaUnitLevels.Contains(us.EquivalentUWAUnitLevel.Value))
+                .ToList()
+                .Select(us => (
+                    UnitSet: us,
+                    ExchangeUnits: us.ExchangeUnits.ToList(),
+                    UWAUnits: us.UWAUnits.ToList()
+                ));
         }
 
         public static IQueryable<StudentApplication> QueryApplications(ExchangeDbContext db)
