@@ -39,7 +39,7 @@ export default function Modal() {
         return (
             <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
                 <div
-                    class= {classNames((size == 'xl' ? ModalStyles.modalXl : (size == 'lg' ? 'modal-lg' : 'modal-sm')), "modal-dialog modal-dialog-centered")}
+                    class= {classNames((size == 'xl' ? ModalStyles.modalXl : (size == 'lg' ? 'modal-lg' : size && 'modal-sm')), "modal-dialog modal-dialog-centered")}
                     role="document"
                 >
                     <div class="modal-content">
