@@ -109,6 +109,7 @@ namespace ExchangeApproval.AdminTools
         public static IEnumerable<EquivalenceUnitSetRow> DumpEquivalencies(ExchangeDbContext db)
         {
             return db.UnitSets
+                .Where(us => us.StudentApplicationId == null)
                 .Select(us => new
                 {
                     LastUpdated = us.StudentApplicationId == null ? (DateTime?)null : us.StudentApplication.LastUpdatedAt,
