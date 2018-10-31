@@ -5,6 +5,8 @@ using CsvHelper;
 using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore;
+using CsvHelper.TypeConversion;
+using CsvHelper.Configuration;
 
 namespace ExchangeApproval.AdminTools
 {
@@ -20,6 +22,19 @@ namespace ExchangeApproval.AdminTools
         public string UnitHref { get; set; }
         public UWAUnitLevel EquivalentUWAUnitLevel { get; set; }
         public bool IsEquivalent { get; set; }
+    }
+
+    public class UWAUnitLevelConverter : ITypeConverter
+    {
+        public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+            return UWAUnitLevelExtensions.ParseLabel(text);
+        }
+
+        public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
+        {
+            return (value as UWAUnitLevel?)?.GetLabel();
+        }
     }
 
     public static class EquivalenceUnitSetsReader
@@ -66,6 +81,7 @@ namespace ExchangeApproval.AdminTools
         public static (IList<(int line, string error)> Errors, IEnumerable<UnitSet> unitSets) LoadEquivalencies(TextReader reader)
         {
             var csv = new CsvReader(reader);
+            csv.Configuration.TypeConverterCache.AddConverter<UWAUnitLevel>(new UWAUnitLevelConverter());
             try
             {
                 var rows = csv.GetRecords<EquivalenceUnitSetRow>().ToList();

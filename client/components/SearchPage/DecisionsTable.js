@@ -29,7 +29,7 @@ export function makeDecisionsTableConfig(decisions, headers) {
             `
             : ``;
         return `
-            <span class="badge badge-${badgeType} ${badgeClasses}" style="display: block; line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
+            <span class="badge badge-${badgeType} ${badgeClasses}" style="line-height: 2em; padding-left: 0.7em; padding-right: 0.7em;">
                 <span
                     rel="popover"
                     data-toggle="tooltip"
@@ -48,7 +48,21 @@ export function makeDecisionsTableConfig(decisions, headers) {
         data: decisions,
         responsive: {
             details: {
-                display: $.fn.dataTable.Responsive.display.childRowImmediate
+                display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                renderer: function ( api, rowIdx, columns ) {
+                var data = $.map( columns, function ( col, i ) {
+                    return col.hidden ?
+                        '<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
+                            '<td>'+col.title+':'+'</td> '+
+                            '<td>'+col.data+'</td>'+
+                        '</tr>' :
+                        '';
+                } ).join('');
+
+                return data ?
+                    $('<table class="table"/>').append( data ) :
+                    false;
+            }
             }
         },
         columns: [

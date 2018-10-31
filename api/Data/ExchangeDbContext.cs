@@ -93,6 +93,27 @@ namespace ExchangeApproval.Data
                     return ">4000";
             }
         }
+
+        public static UWAUnitLevel? ParseLabel(string level)
+        {
+            switch (level)
+            {
+                case "Insufficent":
+                    return UWAUnitLevel.Zero;
+                case "1000":
+                    return UWAUnitLevel.One;
+                case "2000":
+                    return UWAUnitLevel.Two;
+                case "3000":
+                    return UWAUnitLevel.Three;
+                case "4000":
+                    return UWAUnitLevel.Four;
+                case ">4000":
+                    return UWAUnitLevel.GtFour;
+                default:
+                    throw new ArgumentException($"Unrecognised UWA unit level {level}");
+            }
+        }
     }
 
     public enum UWAStaffRole { StudentOffice, UnitCoordinator };

@@ -179,7 +179,6 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 99,TRUE,USA,Montana State University,,,EMEC342,,1000,TRUE
 100,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3021,,1000,TRUE
 100,TRUE,Sweden,Lund University,,Applied Mathematics,1MA060,,1000,TRUE
-101,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 101,TRUE,Sweden,Lund University,,Financial Derivatives,1MA209,,1000,TRUE
 102,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3031,,1000,TRUE
 102,TRUE,Sweden,Lund University,,Algebraic Structures,1MA007,,1000,TRUE
@@ -187,13 +186,10 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 103,TRUE,Sweden,Lund University,,Statistical Mechanics,1FA140,,1000,TRUE
 104,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,PHYS3011,,1000,TRUE
 104,TRUE,Sweden,Lund University,,Mathematical Methods of Physics,1FA121,,1000,TRUE
-105,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 105,TRUE,Sweden,Lund University,,Basic Swedish I,5PU028,,1000,TRUE
-106,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 106,TRUE,Sweden,Lund University,,Basic Swedish II,5PU029,,1000,TRUE
 107,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3031,,1000,TRUE
 107,TRUE,UK,Durham University,,,Number Theory III,,1000,TRUE
-108,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 108,TRUE,Sweden,Uppsala University,,,1MA032,,1000,TRUE
 109,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MATH3021,,1000,TRUE
 109,TRUE,UK,Durham University,,,MATH3091,,1000,TRUE
@@ -291,7 +287,6 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 155,TRUE,Canada,Queen's University,,Noise Control,MECH482,,1000,TRUE
 156,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4403,,1000,TRUE
 156,TRUE,Canada,Queen's University,,Chemical Extraction of Metals,MINE451,,1000,TRUE
-157,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 157,TRUE,Canada,Queen's University,,Internal Combustion Engines,MECH435,,1000,TRUE
 158,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3003,,1000,TRUE
 158,TRUE,Canada,University of Alberta,,Fluid Mechanics,MEC E 331,,1000,TRUE
@@ -636,11 +631,8 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 327,TRUE,USA,Purdue University,,Mechatronics: Integrated Design of Electro-Mechanical Systems,ME58800,,1000,TRUE
 328,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,MECH4426,,1000,TRUE
 328,TRUE,USA,Purdue University,,Mechanical Vibrations,ME56300,,1000,TRUE
-329,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 329,TRUE,USA,Purdue University,,Aircraft Design,AAE45100,,1000,TRUE
-330,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 330,TRUE,USA,Purdue University,,Introduction to Aerospace Design,AAE25100,,1000,TRUE
-331,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 331,TRUE,USA,Purdue University,,Aerodynamics,AAE33400,,1000,TRUE
 332,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3001,,1000,TRUE
 332,TRUE,USA,Purdue University,,Machine Design 1,ME35200,,1000,TRUE
@@ -802,15 +794,10 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 406,TRUE,Canada,University of Calgary,,Fundamentals of Fluid Mechanics,ENME341,,1000,TRUE
 407,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE3604,,1000,TRUE
 407,TRUE,Canada,University of Calgary,,Energy,ENEE503,,1000,TRUE
-408,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 408,TRUE,Canada,University of Calgary,,Water,Civil Eng 581,,1000,TRUE
-409,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 409,TRUE,Canada,University of Calgary,,Earth Observation for the Environment,Geomatics Engineering 637,,1000,TRUE
-410,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 410,TRUE,Canada,University of Calgary,,Roles,ENGG513,,1000,TRUE
-411,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 411,TRUE,Canada,University of Calgary,,Site Assessment,Civil eng 587,,1000,TRUE
-412,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 412,TRUE,Canada,University of Calgary,,Engineering Aspects of Sustainable Communities,ENEE573,,1000,TRUE
 413,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3110,,1000,TRUE
 413,TRUE,USA,University of Illinois,,Structural Engineering,CEE360,,1000,TRUE
@@ -871,7 +858,6 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 440,TRUE,USA,Pennsylvania State University,,Mechanical Design,ME360,,1000,TRUE
 441,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Group B option,,1000,TRUE
 441,TRUE,USA,Pennsylvania State University,,Aeronautics 1,AERSP306,,1000,TRUE
-442,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 442,TRUE,USA,Pennsylvania State University,,"Intrumentation, measurements",ME345,,1000,TRUE
 443,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CHPR3432,,1000,TRUE
 443,TRUE,UK,University College London,,Chemical Reaction Engineering,CENG3003,,1000,TRUE
@@ -897,9 +883,7 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 452,TRUE,UK,University of Sheffield,,Further Civil Engineering Mathematics,MAS250,,1000,TRUE
 453,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL3130,,1000,TRUE
 453,TRUE,UK,University of Sheffield,,Open Channel Hydraulics,CIV233,,1000,TRUE
-454,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 454,TRUE,UK,University of Sheffield,,Structural Engineering design,CIV223,,1000,TRUE
-455,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 455,TRUE,UK,University of Sheffield,,Civil structrual engineering design,CIV226,,1000,TRUE
 456,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4180,,1000,TRUE
 456,TRUE,USA,"University of Texas, Austin",,Transportation Systems,CE321,,1000,TRUE
@@ -907,7 +891,6 @@ UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTit
 457,TRUE,USA,"University of Texas, Austin",,Reinforced Concrete Design,CE331,,1000,TRUE
 458,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENVE1601,,1000,TRUE
 458,TRUE,USA,"University of Texas, Austin",,`,CE341,,1000,TRUE
-459,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Elective,,1000,TRUE
 459,TRUE,USA,"University of Texas, Austin",,Probability/Stats for Civil Engrs,CE311S,,1000,TRUE
 460,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG5507,,1000,TRUE
 460,TRUE,Norway,Norwegian University of Science and Technology,,Safety,TPK4120,,1000,TRUE
@@ -1080,13 +1063,10 @@ Condensed Matter Physics","1FA205
 545,TRUE,USA,University of Texas at Austin,,Markov Decision Processes,ORI 390R 16,,1000,TRUE
 546,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,GENG4402,,1000,TRUE
 546,TRUE,USA,University of Texas at Austin,,Dynamic Systems,ME344,,1000,TRUE
-547,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L2 Elective,,1000,TRUE
 547,TRUE,USA,University of Vermont,,Elementary II,FREN002 ,,1000,TRUE
 548,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,ENSC3004,,1000,TRUE
 548,TRUE,USA,University of Vermont,,Mechanics of Solids,ME 014 + ME 083,,1000,TRUE
-549,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L1 Elective,,1000,TRUE
 549,TRUE,USA,University of Vermont,,Club Sports: Swimming,PEAC 005,,1000,TRUE
-550,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L1 Elective,,1000,TRUE
 550,TRUE,USA,University of Vermont,,5K/10 K Training,PEAC 052 ,,1000,TRUE
 551,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CIVL4403,,1000,TRUE
 551,TRUE,Denmark,Technical University of Denmark,,Concrete Technology,11563,,1000,TRUE
@@ -1098,11 +1078,8 @@ Condensed Matter Physics","1FA205
 554,TRUE,Canada,University of Calgary,,Fundamentals Fluid Mechanics ,ENME341 ,,1000,TRUE
 555,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Level 1 Broadening Unit,,1000,TRUE
 555,TRUE,Canada,University of Calgary,,Intro Exer,KNES 253 ,,1000,TRUE
-556,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,Level 1 Elective,,1000,TRUE
 556,TRUE,Canada,University of Calgary,,Introduction to Marketing ,MKTG 341 ,,1000,TRUE
-557,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L2 Elective,,1000,TRUE
 557,TRUE,USA,University of Rochester ,,Numerical Methods,CHE 116 ,,1000,TRUE
-558,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,L2 Elective,,1000,TRUE
 558,TRUE,USA,University of Rochester ,,Circuits,ECE 210 ,,1000,TRUE
 559,FALSE,Australia,University of Western Australia,https://www.uwa.edu.au/,,CITS2401,,1000,TRUE
 559,TRUE,USA,University of Rochester ,,Engineering Computation II,ME 260 ,,1000,TRUE
