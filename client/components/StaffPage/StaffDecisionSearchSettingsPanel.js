@@ -54,7 +54,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                             }}
                         />
                     </div>
-                    <div class="col-lg-5 col-md-12 form-group">
+                    <div class="col-lg-4 col-md-12 form-group pt-md-0 pt-sm-3 pt-3">
                         <label>Student Office</label>
                         <Select2
                             field={form.studentOffices}
@@ -69,18 +69,25 @@ export default function StaffDecisionSearchSettingsPanel() {
                             }}
                         />
                     </div>
-                    <div class="col-sm-1 form-group">
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Application Status</label>
-                                <CheckboxGroup field={form.applicationStatuses} />
-                            </div>
-                            <div class="col-12 form-group align-self-end">
-                                <button type="submit" class="btn btn-primary">
-                                    Search
-                                </button>
-                            </div>
-                        </div>
+                    <div class="col-lg-4 col-md-12 form-group pt-md-0 pt-sm-3 pt-3">
+                        <label>Application Status</label>
+                        <Select2
+                            field={form.applicationStatuses}
+                            config={{
+                                multiple: true,
+                                width: '100%',
+                                placeholder: 'Select statuses to filter to...',
+                                data: form.applicationStatuses.config.options.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
+                                }))
+                            }}
+                        />
+                    </div>
+                    <div class="col-lg-12 col-md-12 form-group">
+                        <button type="submit" class="btn btn-primary" style="display: block; float: right;">
+                            Search
+                        </button>
                     </div>
                 </div>
             </form>

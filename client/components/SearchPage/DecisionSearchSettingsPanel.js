@@ -31,7 +31,7 @@ export default function DecisionSearchSettingsPanel() {
         return (
             <form class="mb-0" onsubmit={(e) => handleSubmit(e, form, onSearchSettingsChanged)}>
                 <div class="row">
-                    <div class="col-6 from-group">
+                    <div class="col-lg-6 col-sm-12 from-group">
                         <label for="universities">Exchange Universities</label>
                         <Select2
                             field={form.exchangeUniversities}
@@ -46,18 +46,30 @@ export default function DecisionSearchSettingsPanel() {
                             }}
                         />
                     </div>
-                    <div class="col-auto form-group pt-md-2">
+                    <div class="col-lg-6 col-sm-12 form-group pt-md-0 pt-sm-3 pt-3">
                         <label>Unit Level(s)</label>
-                        <CheckboxGroup
+                        <Select2
+                            field={form.unitLevels}
+                            config={{
+                                multiple: true,
+                                width: '100%',
+                                placeholder: 'Select unit levels to filter to...',
+                                data: form.unitLevels.config.options.map(({ label, value }) => ({
+                                    id: value,
+                                    text: label
+                                }))
+                            }}
+                        />
+                        {/* <CheckboxGroup
                             field={form.unitLevels}
                             options={form.unitLevels.config.options}
-                        />
+                        /> */}
                     </div>
-                </div>
-                <div class="row">
-                    <button type="submit" class="btn btn-primary ml-3 mr-2" style="width: 100%">
-                        Search
-                    </button>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" class="btn btn-primary ml-3 mr-2" style="display: block; float: right;">
+                            Search
+                        </button>
+                    </div>
                 </div>
             </form>
         );
