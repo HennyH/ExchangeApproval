@@ -37,7 +37,7 @@ function UnitSearch() {
                 <div class="card-header">Search Settings</div>
                 <DataLoader
                     requests={{filters: () => m.request("/api/filters/student")}}
-                    render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions, uwaUnitContextOptions } = {} }}) => {
+                    render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions } = {} }}) => {
                         const hideForm = !!(loading || errored)
                         if (!hideForm) {
                             state.searchSettingsForm = new DecisionSearchSettingsPowerForm({

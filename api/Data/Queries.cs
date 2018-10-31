@@ -33,6 +33,7 @@ namespace ExchangeApproval.Data
                 .Where(us =>
                         uwaUnitLevels == null ||
                         uwaUnitLevels.Count() == 0 ||
+                        !us.EquivalentUWAUnitLevel.HasValue ||
                         uwaUnitLevels.Contains(us.EquivalentUWAUnitLevel.Value))
                 .ToList()
                 .Select(us => (

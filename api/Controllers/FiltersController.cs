@@ -23,16 +23,11 @@ namespace ExchangeApproval.Controllers
         {
             return new StaffFiltersVM
             {
-                ExchangeUniversityNameOptions = this._db.StudentApplications
+                ExchangeUniversityNameOptions = this._db.UnitSets
                     .Select(a => a.ExchangeUniversityName)
                     .Distinct()
-                    .OrderByDescending(n => n)
+                    .OrderBy(n => n)
                     .Select(n => new SelectOption<string>(n, n.ToString(), false))
-                    .ToList(),
-                UWAUnitContextOptions = Enum
-                    .GetValues(typeof(UWAUnitContext))
-                    .Cast<UWAUnitContext>()
-                    .Select(c => new SelectOption<UWAUnitContext>(c, c.ToString(), false))
                     .ToList(),
                 UWAUnitLevelOptions = Enum
                     .GetValues(typeof(UWAUnitLevel))
@@ -65,16 +60,11 @@ namespace ExchangeApproval.Controllers
         {
             return new StudentFiltersVM
             {
-                ExchangeUniversityNameOptions = this._db.StudentApplications
+                ExchangeUniversityNameOptions = this._db.UnitSets
                     .Select(a => a.ExchangeUniversityName)
                     .Distinct()
-                    .OrderByDescending(n => n)
+                    .OrderBy(n => n)
                     .Select(n => new SelectOption<string>(n, n.ToString(), false))
-                    .ToList(),
-                UWAUnitContextOptions = Enum
-                    .GetValues(typeof(UWAUnitContext))
-                    .Cast<UWAUnitContext>()
-                    .Select(c => new SelectOption<UWAUnitContext>(c, c.ToString(), false))
                     .ToList(),
                 StudentOfficeOptions = ReferenceData.UWAStudentOffices
                     .Select(o => new SelectOption<string>(o, o, false))
@@ -82,6 +72,7 @@ namespace ExchangeApproval.Controllers
                 UWAUnitLevelOptions = Enum
                     .GetValues(typeof(UWAUnitLevel))
                     .Cast<UWAUnitLevel>()
+                    .Where(l => l != UWAUnitLevel.Zero)
                     .Select(l => new SelectOption<UWAUnitLevel>(l, l.GetLabel(), false))
                     .ToList()
             };

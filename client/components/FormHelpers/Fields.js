@@ -292,7 +292,11 @@ export class OptionsField extends Field {
             );
         }
         if (option && normalizedValue) {
-            normalizedValue.selected = option.selected
+            if (Array.isArray(normalizedValue)) {
+                normalizedValue.forEach(o => { o.selected = true; })
+            } else {
+                normalizedValue.selected = option.selected;
+            }
         }
         super.setData(normalizedValue);
     }

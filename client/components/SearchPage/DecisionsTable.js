@@ -67,14 +67,6 @@ export function makeDecisionsTableConfig(decisions, headers) {
         },
         columns: [
             {
-                title: COLUMN_NAMES.Date,
-                data: "lastUpdatedAt",
-                render: (data, type, row, meta) => {
-                    const options = { month: "short", year: "2-digit" };
-                    return new Date(data).toLocaleDateString(undefined, options);
-                }
-            },
-            {
                 title: COLUMN_NAMES.ExchangeUniversity,
                 responsivePriority: 1,
                 data: "exchangeUniversityName",
@@ -100,19 +92,19 @@ export function makeDecisionsTableConfig(decisions, headers) {
                 width: "30%",
                 data: "uwaUnits",
                 render: (data, type, row, meta) => {
-                    if (row.uwaUnits === null || row.uwaUnits === undefined || row.uwaUnits.length == 0) {
-                        return unitButton({
+                    return [
+                        ...row.uwaUnits.map((u, i) => unitButton({
+                            displayName: u.unitCode || u.unitName,
+                            tooltipContent: `${u.unitName} ${u.unitCode}`,
+                            href: u.unitHref,
+                            badgeClasses: i > 0 ? 'mt-1' : ''
+                        })),
+                        unitButton({
                             displayName: `Level ${row.equivalentUnitLevel.label}`,
                             tooltipContent: `Was deemed equivalent of a level ${row.equivalentUnitLevel.label} unit.`,
                             badgeType: 'primary'
-                        });
-                    }
-                    return row.uwaUnits.map((u, i) => unitButton({
-                        displayName: u.unitCode || u.unitName,
-                        tooltipContent: `${u.unitName} ${u.unitCode}`,
-                        href: u.unitHref,
-                        badgeClasses: i > 0 ? 'mt-1' : ''
-                    })).join('');
+                        })
+                    ].join('');
                 }
             },
             {
