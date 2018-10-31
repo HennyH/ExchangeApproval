@@ -18,6 +18,7 @@ namespace ExchangeApproval.AdminTools
         public string UnitCode { get; set; }
         public string UnitHref { get; set; }
         public UWAUnitLevel EquivalentUWAUnitLevel { get; set; }
+        public bool IsEquivalent { get; set; }
     }
 
     public static class EquivalenceUnitSetsReader
@@ -35,6 +36,11 @@ namespace ExchangeApproval.AdminTools
                 .Where(g => g.Select(r => r.Row.EquivalentUWAUnitLevel).Distinct().Count() > 1)
                 .SelectMany(g => g)
                 .Select(r => (r.LineNumber, "The group of unit sets must have the same equivalence level for each row."));
+            var badIsEquivalentForGroup = numberedRows
+                .GroupBy(r => r.Row.UnitSetId)
+                .Where(g => g.Select(r => r.Row.IsEquivalent).Distinct().Count() > 1)
+                .SelectMany(g => g)
+                .Select(r => (r.LineNumber, "The group of unit sets must have the same 'is equivalent' value for each row."));
             var missingExchangeUnit = numberedRows
                 .GroupBy(r => r.Row.UnitSetId)
                 .Where(g => !g.Any(r => r.Row.IsExchangeUnit))
@@ -50,6 +56,7 @@ namespace ExchangeApproval.AdminTools
                 .Union(badUnitLevelForGroup)
                 .Union(missingExchangeUnit)
                 .Union(missingUnitCode)
+                .Union(badIsEquivalentForGroup)
                 .ToList();
         }
 
@@ -68,7 +75,7 @@ namespace ExchangeApproval.AdminTools
                     .GroupBy(r => r.UnitSetId)
                     .Select(g => new UnitSet
                     {
-                        IsEquivalent = true,
+                        IsEquivalent = g.First().IsEquivalent,
                         IsContextuallyApproved = null,
                         EquivalentUWAUnitLevel = g.First().EquivalentUWAUnitLevel,
                         ExchangeUniversityName = g.First().UniversityName,
@@ -118,6 +125,7 @@ namespace ExchangeApproval.AdminTools
                         UnitTitle = u.Title,
                         UnitCode = u.Code,
                         UnitHref = u.Href,
+                        IsEquivalent = us.IsEquivalent.GetValueOrDefault(),
                         EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
                     }).ToList(),
                     UWAUnits = us.UWAUnits.Select(u => new EquivalenceUnitSetRow
@@ -130,6 +138,7 @@ namespace ExchangeApproval.AdminTools
                         UnitTitle = u.Title,
                         UnitCode = u.Code,
                         UnitHref = u.Href,
+                        IsEquivalent = us.IsEquivalent.GetValueOrDefault(),
                         EquivalentUWAUnitLevel = us.EquivalentUWAUnitLevel.GetValueOrDefault(UWAUnitLevel.One)
                     }).ToList()
                 })

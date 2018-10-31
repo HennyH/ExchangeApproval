@@ -1,4 +1,4 @@
-﻿UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTitle,UnitCode,UnitHref,EquivalentUWAUnitLevel
-0,TRUE,Finland,Finland University,https://finuni.com,Mighty Maths,MATH-1,https://unit.com,1
-0,FALSE,Finland,Finland University,https://finuni.com,Intro To Maths 1,MATH1001,https://uwa.com,1
-0,FALSE,Australia,UWA,https://uwa.com,Intro To Maths 2,MATH1002,https://uwa.com,1
+﻿UnitSetId,IsExchangeUnit,UniversityCountry,UniversityName,UniversityHref,UnitTitle,UnitCode,UnitHref,EquivalentUWAUnitLevel,IsEquivalent
+0,TRUE,Finland,Finland University,https://finuni.com,Mighty Maths,MATH-1,https://unit.com,1,TRUE
+0,FALSE,Finland,Finland University,https://finuni.com,Intro To Maths 1,MATH1001,https://uwa.com,1,TRUE
+0,FALSE,Australia,UWA,https://uwa.com,Intro To Maths 2,MATH1002,https://uwa.com,1,TRUE
