@@ -121,6 +121,7 @@ function processUnitSet(unitSet) {
 \tExchange Units:\t\t${exchangeUnits}
 \tEquivalence Approval:\t${unitSet.staffApprovalForm.isEquivalent.label}
 \tContextual Approval:\t${unitSet.staffApprovalForm.isContextuallyApproved.label}
+\tComment:\t${unitSet.staffApprovalForm.comments}
 
 `)
 }
