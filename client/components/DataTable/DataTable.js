@@ -67,28 +67,21 @@ export default function DataTable() {
 
         let restoredFromCache = false;
 
-        /* This reverses the caching operation performed in onremove. If
-         * the table was previously cached we replace the empty <div /> the
-         * view renders with HTML from the cache. All the event handlers
-         * will still be attached since we DID NOT CLONE the HTML when we
-         * cached it. We then mark us as having restored from the cache
-         * so that other oncreate logic knows wether to run or not.
-         */
         if (isCacheEnabled) {
-            const $maybeCachedTable = $(`#data-table-cache-${id}`).children();
+            const $maybeCachedTable = $(`#_table_wrapper_${id}`);
             if ($maybeCachedTable.length > 0) {
-                $anchor.after($maybeCachedTable);
+                $maybeCachedTable.insertAfter($anchor);
                 restoredFromCache = true;
             }
         }
 
         if (!restoredFromCache) {
             $anchor.after(`
-                <div id="${id}">
-                    <table id="__table__${id}" class="display table compact" style="width:100%"></table>
+                <div id="_table_wrapper_${id}">
+                    <table id="_table_${id}" class="display table compact" style="width:100%"></table>
                 </div>
             `);
-            const datatable = $(`#__table__${id}`).DataTable({
+            const datatable = $(`#_table_${id}`).DataTable({
                 ...config,
                 /* Override the data here. We do this because the maybeRefresh
                     * function updates some internal state about what data we
@@ -104,38 +97,24 @@ export default function DataTable() {
         maybeRefreshData(config.data);
 
         if (!restoredFromCache && setup) {
-            setup(id, getDataTable(), config);
+            setup($(`#_table_${id}`), getDataTable(), config);
         }
     }
 
     function onremove({ dom : ref }) {
-        if (!isCacheEnabled) {
+        if (isCacheEnabled) {
+            if ($("#data-table-cache").length === 0) {
+                document.body.append($("<div id='data-table-cache' style='display: none' />"));
+            }
+            const cache = $("#data-table-cache");
+            const table = $(`#_table_wrapper_${id}`);
+            table.appendTo(cache);
+        } else {
             setData(null);
             setDataTable(null);
             /* clear out our unmanaged DOM */
             $(ref).siblings().remove();
         }
-
-        /* To cache the table we create a <div /> to contain the table HTML
-         * inside if it doesn't already exist. Since we may have already
-         * stored a cached value inside the <div /> but not used it we
-         * delete all the children of the <div />. We then move the DOM tree
-         * into that div.
-         */
-        if ($(`#data-table-cache-${id}`).length === 0) {
-            $("#data-table-cache").append(
-                `<div id="data-table-cache-${id}"></div>`
-            );
-        }
-        const $cachedTable = $(`#data-table-cache-${id}`).first();
-        $cachedTable.empty()
-
-        /* We can't use the dom attribute of the vnode because for some reason
-         * when we replace it in oncreate (when restoring from cache) it
-         * doesn't know...
-         */
-        const $currentTable = $(`#${id}`);
-        $cachedTable.append($currentTable);
     }
 
     return { oninit, view, oncreate, onremove };
