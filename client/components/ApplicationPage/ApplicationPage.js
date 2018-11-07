@@ -5,13 +5,11 @@ import ApplicationForm, { ApplicationPowerForm } from './ApplicationForm'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 import DataLoader from 'Components/DataLoader.js'
 
+window.APPLICATION_FORM = window.APPLICATION_FORM || null;
 
 export default function ApplicationPage() {
 
-    const state = {
-        hasSubmittedForm: false,
-        applicationForm: null
-    };
+    const state = { hasSubmittedForm: false };
 
     function fetchFilters() {
         return m.request({
@@ -54,8 +52,8 @@ export default function ApplicationPage() {
                                         </div>
                                     );
                                 }
-                                if (state.applicationForm === null) {
-                                    state.applicationForm = new ApplicationPowerForm({
+                                if (window.APPLICATION_FORM === null) {
+                                    window.APPLICATION_FORM = new ApplicationPowerForm({
                                         unitLevelOptions: filters.unitLevelOptions,
                                         studentOfficeOptions: filters.studentOfficeOptions,
                                     });
@@ -64,7 +62,7 @@ export default function ApplicationPage() {
                                     <div class="container-fluid">
                                         <div class="card my-3">
                                             <div class="card-header"> Exchange Application</div>
-                                            <ApplicationForm form={state.applicationForm} onSubmit={handleFormSubmitted} />
+                                            <ApplicationForm form={window.APPLICATION_FORM} onSubmit={handleFormSubmitted} />
                                         </div>
                                     </div>
                                 );

@@ -60,7 +60,7 @@ export class UnitSetPowerForm extends Form {
     configureFields({ unitLevelOptions }) {
         this.cartItemId = IntegerField.new();
         this.unitSetId = IntegerField.new();
-        this.readonly = BooleanField.new({ defualtValue: false });
+        this.readonly = BooleanField.new({ defaultValue: false });
         this.applicationId = IntegerField.new();
         this.exchangeUnitForms = FormListField.new({
             factory: (data) => {
@@ -201,23 +201,23 @@ export function UnitSetForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.exchangeUnitForms}
-                                readonly={staffView}
+                                readonly={readonly}
                                 jumps={false}
                                 render={({ form, removeForm }) => (
                                     <UnitForm
                                         form={form}
                                         onDelete={removeForm}
-                                        readonly={staffView}
+                                        readonly={readonly}
                                     />
                                 )}
                                 footer={({ forms, addForm }) => {
                                     const numberOfForms = forms.length;
-                                    return !staffView && (
+                                    return !readonly && (
                                         <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
                                             <button
                                                 type="button"
                                                 class="mb-1 mr-3 btn btn-primary"
-                                                onclick={() => addForm({ staffView })}
+                                                onclick={addForm}
                                             >
                                                 Add Exchange Unit
                                             </button>
@@ -234,13 +234,13 @@ export function UnitSetForm() {
                         <div class="card-body">
                             <FormRepeater
                                 field={form.uwaUnitForms}
-                                readonly={staffView}
+                                readonly={readonly}
                                 jumps={false}
                                 render={({ form, removeForm }) => (
                                     <UnitForm
                                         form={form}
                                         onDelete={removeForm}
-                                        readonly={staffView}
+                                        readonly={readonly}
                                     />
                                 )}
                                 footer={({ forms, addForm }) => {
@@ -257,12 +257,12 @@ export function UnitSetForm() {
                                             </div>
                                         )
                                     }
-                                    return !staffView && (
+                                    return !readonly && (
                                         <div class={classNames(numberOfForms > 0 ? "mt-3" : "")}>
                                             <button
                                                 type="button"
                                                 class="mb-1 mr-3 btn btn-primary"
-                                                onclick={() => addForm({ staffView })}
+                                                onclick={addForm}
                                             >
                                                 Add UWA Unit
                                             </button>
