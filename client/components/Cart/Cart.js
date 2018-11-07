@@ -134,6 +134,7 @@ export default function Cart() {
                                 trigger: 'hover'
                             });
                         }}
+                        cache={true}
                     />
                 </div>
                 <div class="card-footer">

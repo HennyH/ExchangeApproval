@@ -103,70 +103,73 @@ namespace ExchangeApproval.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetApplication(int id)
+        public ApplicationFormVM GetApplication(int id)
         {
-            var application = this._db.StudentApplications
-                .Single(a => a.StudentApplicationId == id);
-            var form = new ApplicationFormVM
-            {
-                ApplicationId = application.StudentApplicationId,
-                StudentDetailsForm = new StudentDetailsFormVM
+            return this._db.StudentApplications
+                .Include(a => a.UnitSets).ThenInclude(us => us.ExchangeUnits)
+                .Include(a => a.UnitSets).ThenInclude(us => us.UWAUnits)
+                .Where(a => a.StudentApplicationId == id)
+                .ToList()
+                .Select(application => new ApplicationFormVM
                 {
-                    Name = application.StudentName,
-                    Degree = application.Degree,
-                    Email = application.StudentNumber,
-                    Major = application.Major1st,
-                    Major2nd = application.Major2nd,
-                    StudentOffice = new SelectOption<string>
+                    ApplicationId = application.StudentApplicationId,
+                    StudentDetailsForm = new StudentDetailsFormVM
                     {
-                        Value = application.StudentOffice,
-                        Label = application.StudentOffice,
-                        Selected = application.StudentOffice != null
-                    }
-                },
-                ExchangeUniversityForm = new ExchangeUniversityFormVM
-                {
-                    UniversityCountry = application.ExchangeUniversityCountry,
-                    UniversityName = application.ExchangeUniversityName,
-                    UniversityHomepage = application.ExchangeUniversityHref
-                },
-                UnitSetForms = application.UnitSets.Select(us => new UnitSetFormVM
-                {
-                    UnitSetId = us.UnitSetId,
-                    ExchangeUnitForms = us.ExchangeUnits.Select(u => new UnitFormVM
+                        Name = application.StudentName,
+                        Degree = application.Degree,
+                        Email = application.StudentNumber,
+                        Major = application.Major1st,
+                        Major2nd = application.Major2nd,
+                        StudentOffice = new SelectOption<string>
+                        {
+                            Value = application.StudentOffice,
+                            Label = application.StudentOffice,
+                            Selected = application.StudentOffice != null
+                        }
+                    },
+                    ExchangeUniversityForm = new ExchangeUniversityFormVM
                     {
-                        UnitName = u.Title,
-                        UnitCode = u.Code,
-                        UnitHref = u.Href
-                    }).ToList(),
-                    UWAUnitForms = us.UWAUnits.Select(u => new UnitFormVM
+                        UniversityCountry = application.ExchangeUniversityCountry,
+                        UniversityName = application.ExchangeUniversityName,
+                        UniversityHomepage = application.ExchangeUniversityHref
+                    },
+                    UnitSetForms = application.UnitSets.Select(us => new UnitSetFormVM
                     {
-                        UnitName = u.Title,
-                        UnitCode = u.Code,
-                        UnitHref = u.Href
-                    }).ToList(),
-                    StaffApprovalForm = new StaffApprovalFormVM
-                    {
-                        EquivalentUnitLevel = new SelectOption<UWAUnitLevel?>(
-                            us.EquivalentUWAUnitLevel,
-                            us.EquivalentUWAUnitLevel?.ToString() ?? "Pending",
-                            us.EquivalentUWAUnitLevel.HasValue
-                        ),
-                        IsContextuallyApproved = new SelectOption<bool?>(
-                            us.IsContextuallyApproved,
-                            us.IsContextuallyApproved?.ToString() ?? "Pending",
-                            us.IsContextuallyApproved.HasValue
-                        ),
-                        IsEquivalent = new SelectOption<bool?>(
-                            us.IsEquivalent,
-                            us.IsEquivalent?.ToString() ?? "Pending",
-                            us.IsEquivalent.HasValue
-                        ),
-                        Comments = us.Comments
-                    }
-                }).ToList()
-            };
-            return Json(form);
+                        UnitSetId = us.UnitSetId,
+                        ExchangeUnitForms = us.ExchangeUnits.Select(u => new UnitFormVM
+                        {
+                            UnitName = u.Title,
+                            UnitCode = u.Code,
+                            UnitHref = u.Href
+                        }).ToList(),
+                        UWAUnitForms = us.UWAUnits.Select(u => new UnitFormVM
+                        {
+                            UnitName = u.Title,
+                            UnitCode = u.Code,
+                            UnitHref = u.Href
+                        }).ToList(),
+                        StaffApprovalForm = new StaffApprovalFormVM
+                        {
+                            EquivalentUnitLevel = new SelectOption<UWAUnitLevel?>(
+                                us.EquivalentUWAUnitLevel,
+                                us.EquivalentUWAUnitLevel?.ToString() ?? "Pending",
+                                us.EquivalentUWAUnitLevel.HasValue
+                            ),
+                            IsContextuallyApproved = new SelectOption<bool?>(
+                                us.IsContextuallyApproved,
+                                us.IsContextuallyApproved?.ToString() ?? "Pending",
+                                us.IsContextuallyApproved.HasValue
+                            ),
+                            IsEquivalent = new SelectOption<bool?>(
+                                us.IsEquivalent,
+                                us.IsEquivalent?.ToString() ?? "Pending",
+                                us.IsEquivalent.HasValue
+                            ),
+                            Comments = us.Comments
+                        }
+                    }).ToList()
+                })
+                .Single();
         }
 
         [HttpPost("submit")]

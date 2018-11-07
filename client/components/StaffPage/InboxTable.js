@@ -166,13 +166,11 @@ function StaffEditApplicationModal() {
     return { view };
 }
 
-export default function InboxTable() {
+window.INBOX_DATATABLE = window.INBOX_DATATABLE || null;
+window.INBOX_SELECED_APPLICATION_ID = window.INBOX_SELECED_APPLICATION_ID || null;
+window.INBOX_SELECED_ROW = window.INBOX_SELECED_ROW || null;
 
-    const state = {
-        inboxDatatable: null,
-        selectedInboxApplicationId: null,
-        selectedInboxRow: null
-    };
+export default function InboxTable() {
 
     function view({ attrs: { data }}) {
         return (
@@ -181,35 +179,36 @@ export default function InboxTable() {
                     id="inbox-table"
                     config={makeInboxTableConfig(data)}
                     setup={($ref, datatable) => {
-                        state.inboxDatatable = datatable;
+                        window.INBOX_DATATABLE = datatable;
                         $ref.on('click', 'button', (event) => {
                             const row = $(event.target).parents('tr');
-                            state.selectedInboxRow = row;
-                            state.selectedInboxApplicationId = datatable.row(row).data().studentApplicationId;
+                            window.INBOX_SELECED_ROW = row;
+                            window.INBOX_SELECED_APPLICATION_ID = datatable.row(row).data().studentApplicationId;
                             m.redraw();
                         });
                     }}
-                    cache={false}
+                    cache={true}
                 />
-                {state.selectedInboxApplicationId && (
+                {window.INBOX_SELECED_APPLICATION_ID && (
                     <StaffEditApplicationModal
-                        applicationId={state.selectedInboxApplicationId}
+                        applicationId={window.INBOX_SELECED_APPLICATION_ID}
                         onSubmit={() => {
                             const qs = m.buildQueryString({
-                                applicationId: state.selectedInboxApplicationId
+                                applicationId: window.INBOX_SELECED_APPLICATION_ID
                             });
                             m.request(`/api/inbox/application?${qs}`).then((inboxItem) => {
-                                if (state.selectedInboxRow) {
-                                    state.inboxDatatable.row(state.selectedInboxRow).data(inboxItem).invalidate();
-                                    state.selectedInboxRow.addClass(Styles.blink);
+                                if (window.INBOX_SELECED_ROW) {
+                                    window.INBOX_DATATABLE.row(window.INBOX_SELECED_ROW).data(inboxItem).invalidate();
+                                    window.INBOX_SELECED_ROW.addClass(Styles.blink);
                                     setTimeout(() => {
-                                        state.selectedInboxRow.removeClass(Styles.blink);
+                                        window.INBOX_SELECED_ROW.removeClass(Styles.blink);
                                     }, 1000);
                                 }
                             });
                         }}
                         onClose={() => {
-                            state.selectedInboxApplicationId = null;
+                            window.INBOX_SELECED_APPLICATION_ID = null;
+                            window.INBOX_SELECED_ROW = null;
                         }}
                     />
                 )}

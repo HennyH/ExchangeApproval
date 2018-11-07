@@ -36,6 +36,7 @@ export default function StaffPage() {
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox Search Settings</div>
                                 <PersistentDataLoader
+                                    id="staff-page-filters"
                                     requests={{filters: () => m.request("/api/filters/staff")}}
                                     render={({ loading, error, data: { filters } = {}}) => {
                                         const hidePanel = !!(loading || error);
@@ -65,6 +66,7 @@ export default function StaffPage() {
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox</div>
                                 <PersistentDataLoader
+                                    id="staff-page-inbox"
                                     settings={state.inboxSearchSettings}
                                     requests={{inbox: ({settings}) => fetchInbox(settings)}}
                                     render={({ loading, error, refresh, data: { inbox } = {}}) => (
