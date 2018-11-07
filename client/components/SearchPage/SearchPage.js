@@ -6,6 +6,7 @@ import { addItemToCart, default as Cart } from 'Components/Cart';
 import DecisionSearchSettingsPanel, { DecisionSearchSettingsPowerForm } from './DecisionSearchSettingsPanel.js';
 import DecisionsTable from './DecisionsTable.js';
 import DataLoader from 'Components/DataLoader.js'
+import PersistentDataLoader from 'Components/PersistentDataLoader.js'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
 window.SEARCH_SETTINGS_FORM = window.SEARCH_SETTINGS_FORM ||  null;
@@ -37,7 +38,7 @@ function UnitSearch() {
                 </div>
                 <div class="card bg-light m-3">
                 <div class="card-header">Search Settings</div>
-                <DataLoader
+                <PersistentDataLoader
                     requests={{filters: () => m.request("/api/filters/student")}}
                     render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions } = {} }}) => {
                         const hideForm = !!(loading || errored)
@@ -64,7 +65,7 @@ function UnitSearch() {
                 </div>
                 <div class="card bg-light m-3">
                     <div class="card-header">Search Results</div>
-                        <DataLoader
+                        <PersistentDataLoader
                             settings={state.searchSettings}
                             requests={{equivalencies: ({settings}) => fetchEquivalencies(settings)}}
                             render={({ loading, errored, data: { equivalencies } = {}}) => (

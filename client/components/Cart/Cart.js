@@ -123,12 +123,12 @@ export default function Cart() {
                     {CART.items.length === 0 ? <h6>Cart is empty.</h6> : ''}
                     <DataTable
                         config={makeCartTableConfig(CART.items)}
-                        setup={(id, datatable) => {
-                            $(`#${id} tbody`).on('click', 'button', function(event) {
+                        setup={($ref, datatable) => {
+                            $ref.on('click', 'button', function(event) {
                                 const item = datatable.row($(event.target).parents('tr')).data();
                                 removeItemFromCart(item);
                             });
-                            $(`#${id} tbody`).tooltip({
+                            $ref.tooltip({
                                 selector: '[rel="popover"]',
                                 trigger: 'hover'
                             });

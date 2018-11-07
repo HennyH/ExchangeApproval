@@ -138,17 +138,17 @@ export default function DecisionsTable() {
             <DataTable
                 id="decisions-table"
                 config={makeDecisionsTableConfig(decisions, headers)}
-                setup={(id, datatable) => {
-                    $(`#${id} tbody`).on('click', 'button', function (event) {
+                setup={($ref, datatable) => {
+                    $ref.on('click', 'button', function (event) {
                         const decision = datatable.row($(event.target).parents('tr')).data();
                         onAddToCart(decision);
                     });
-                    $(`#${id} tbody`).tooltip({
+                    $ref.tooltip({
                         selector: '[rel="popover"]',
                         trigger: 'hover'
                     });
                 }}
-                cache={false}
+                cache={true}
             />
         )
     }

@@ -180,9 +180,9 @@ export default function InboxTable() {
                 <DataTable
                     id="inbox-table"
                     config={makeInboxTableConfig(data)}
-                    setup={(id, datatable) => {
+                    setup={($ref, datatable) => {
                         state.inboxDatatable = datatable;
-                        $(`#${id} tbody`).on('click', 'button', (event) => {
+                        $ref.on('click', 'button', (event) => {
                             const row = $(event.target).parents('tr');
                             state.selectedInboxRow = row;
                             state.selectedInboxApplicationId = datatable.row(row).data().studentApplicationId;
