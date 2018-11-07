@@ -38,11 +38,7 @@ export default function DecisionSearchSettingsPanel() {
                             config={{
                                 multiple: true,
                                 width: '100%',
-                                placeholder: 'Select universities to filter to...',
-                                data: form.exchangeUniversities.config.options.map(({ label, value }) => ({
-                                    id: value,
-                                    text: label
-                                }))
+                                placeholder: 'Select universities to filter to...'
                             }}
                         />
                     </div>
@@ -53,11 +49,7 @@ export default function DecisionSearchSettingsPanel() {
                             config={{
                                 multiple: true,
                                 width: '100%',
-                                placeholder: 'Select unit levels to filter to...',
-                                data: form.unitLevels.config.options.map(({ label, value }) => ({
-                                    id: value,
-                                    text: label
-                                }))
+                                placeholder: 'Select unit levels to filter to...'
                             }}
                         />
                         {/* <CheckboxGroup

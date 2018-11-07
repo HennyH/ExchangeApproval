@@ -46,11 +46,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                             config={{
                                 multiple: true,
                                 width: '100%',
-                                placeholder: 'Select students to filter to...',
-                                data: form.studentNumbers.config.options.map(({ label, value }) => ({
-                                    id: value,
-                                    text: label
-                                }))
+                                placeholder: 'Select students to filter to...'
                             }}
                         />
                     </div>
@@ -61,11 +57,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                             config={{
                                 multiple: true,
                                 width: '100%',
-                                placeholder: 'Select student offices to filter to...',
-                                data: form.studentOffices.config.options.map(({ label, value }) => ({
-                                    id: value,
-                                    text: label
-                                }))
+                                placeholder: 'Select student offices to filter to...'
                             }}
                         />
                     </div>
@@ -76,11 +68,7 @@ export default function StaffDecisionSearchSettingsPanel() {
                             config={{
                                 multiple: true,
                                 width: '100%',
-                                placeholder: 'Select statuses to filter to...',
-                                data: form.applicationStatuses.config.options.map(({ label, value }) => ({
-                                    id: value,
-                                    text: label
-                                }))
+                                placeholder: 'Select statuses to filter to...'
                             }}
                         />
                     </div>

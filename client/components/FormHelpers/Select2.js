@@ -32,8 +32,24 @@ export default function Select2() {
         )
     }
 
-    function oncreate({ attrs: { config }, dom: ref }) {
-        $(ref).select2(config);
+    function oncreate({
+        attrs: {
+            field,
+            config,
+            selectHtmlOption = ({ label, value }) => new Option(label, value)
+        },
+        dom: ref
+    }) {
+        const $ref = $(ref);
+        $ref.select2({
+            ...config,
+            data: field.config.options.map(selectHtmlOption).map(({ label, value }) => ({
+                id: value,
+                text: label
+            }))
+        });
+        $ref.val((field.getData() || []).map(selectHtmlOption).map(({ value }) => value));
+        $ref.trigger('change');
     }
 
     return { view, oncreate };

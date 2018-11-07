@@ -8,11 +8,13 @@ import DecisionsTable from './DecisionsTable.js';
 import DataLoader from 'Components/DataLoader.js'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
+window.SEARCH_SETTINGS_FORM = window.SEARCH_SETTINGS_FORM ||  null;
+
+
 function UnitSearch() {
 
     const state = {
-        searchSettings: { universityNames: [], uwaUnitLevels: [] },
-        searchSettingsForm: null
+        searchSettings: { universityNames: [], uwaUnitLevels: [] }
     }
 
     function handleSearchSettingsChanged(settings) {
@@ -39,8 +41,8 @@ function UnitSearch() {
                     requests={{filters: () => m.request("/api/filters/student")}}
                     render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions } = {} }}) => {
                         const hideForm = !!(loading || errored)
-                        if (!hideForm && state.searchSettingsForm === null) {
-                            state.searchSettingsForm = new DecisionSearchSettingsPowerForm({
+                        if (!hideForm && window.SEARCH_SETTINGS_FORM === null) {
+                            window.SEARCH_SETTINGS_FORM = new DecisionSearchSettingsPowerForm({
                                 exchangeUniversityNameOptions,
                                 uwaUnitLevelOptions
                             })
@@ -51,7 +53,7 @@ function UnitSearch() {
                                     ? <Spinner />
                                     : (
                                         <DecisionSearchSettingsPanel
-                                            form={state.searchSettingsForm}
+                                            form={window.SEARCH_SETTINGS_FORM}
                                             onSearchSettingsChanged={handleSearchSettingsChanged}
                                         />
                                     )}
