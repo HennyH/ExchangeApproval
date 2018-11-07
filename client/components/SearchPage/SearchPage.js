@@ -38,6 +38,7 @@ function UnitSearch() {
                 <div class="card bg-light m-3">
                 <div class="card-header">Search Settings</div>
                 <PersistentDataLoader
+                    id="search-page-filters"
                     requests={{filters: () => m.request("/api/filters/student")}}
                     render={({loading, errored, data: { filters: { exchangeUniversityNameOptions, uwaUnitLevelOptions } = {} }}) => {
                         const hideForm = !!(loading || errored)
@@ -65,6 +66,7 @@ function UnitSearch() {
                 <div class="card bg-light m-3">
                     <div class="card-header">Search Results</div>
                         <PersistentDataLoader
+                            id="search-page-equivalencies"
                             settings={state.searchSettings}
                             requests={{equivalencies: ({settings}) => fetchEquivalencies(settings)}}
                             render={({ loading, errored, data: { equivalencies } = {}}) => (

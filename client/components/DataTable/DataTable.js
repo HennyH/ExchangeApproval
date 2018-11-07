@@ -93,11 +93,6 @@ export default function DataTable() {
         if (!rehydratedFromCache && setup) {
             setup($(`#_table_${id}`), getDataTable(), config);
         }
-
-        const { page } = getDataTable().page.info();
-        setTimeout(() => {
-            getDataTable().page(page);
-        }, 3000)
     }
 
     function onremove({ dom : ref }) {

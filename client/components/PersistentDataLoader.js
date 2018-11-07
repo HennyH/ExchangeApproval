@@ -9,6 +9,12 @@ export default function PersistentDataLoader() {
 
     let prevAttrs = null;
 
+    function oninit({ attrs: { id } }) {
+        if (!id) {
+            throw new Error('Must provide an id to <PersistentDataLoader />');
+        }
+    }
+
     function view({ attrs: { id, render, requests, ...otherAttrs } }) {
         const cached = window.PERSISTENT_DATA_LOADER_CACHE[id];
         if (cached && (!prevAttrs || shallowEqualObjects(prevAttrs, otherAttrs))) {
@@ -30,6 +36,6 @@ export default function PersistentDataLoader() {
         );
     }
 
-    return { view };
+    return { oninit, view };
 }
 

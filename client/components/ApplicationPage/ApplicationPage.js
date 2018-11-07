@@ -3,6 +3,7 @@ import m from 'mithril'
 import Layout from 'Components/Layout'
 import ApplicationForm, { ApplicationPowerForm } from './ApplicationForm'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
+import PersistentDataLoader from 'Components/PersistentDataLoader.js'
 import DataLoader from 'Components/DataLoader.js'
 
 window.APPLICATION_FORM = window.APPLICATION_FORM || null;
@@ -42,7 +43,8 @@ export default function ApplicationPage() {
                             </div>
                         </div>
                     ) : (
-                        <DataLoader
+                        <PersistentDataLoader
+                            id="applicaion-page-filters"
                             requests={{filters: fetchFilters}}
                             render={({ loading, errored, data: { filters } = {}}) => {
                                 if (loading || errored) {
