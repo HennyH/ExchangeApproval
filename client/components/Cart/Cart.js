@@ -122,6 +122,7 @@ export default function Cart() {
                 <div class="card-body">
                     {CART.items.length === 0 ? <h6>Cart is empty.</h6> : ''}
                     <DataTable
+                        id="cart"
                         config={makeCartTableConfig(CART.items)}
                         setup={($ref, datatable) => {
                             $ref.on('click', 'button', function(event) {

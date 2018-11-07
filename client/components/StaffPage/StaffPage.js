@@ -3,11 +3,9 @@ import classNames from 'classnames';
 
 import Layout from 'Components/Layout'
 import StaffDecisionSearchSettingsPanel, { StaffUnitSearchSettingsPowerForm } from './StaffDecisionSearchSettingsPanel.js'
-import { COLUMN_NAMES, default as InboxTable } from './InboxTable.js';
-import Modal from '../Modal/Modal.js';
-import {ModalState} from '../ViewData'
-import DataLoader from 'Components/DataLoader.js'
+import InboxTable from './InboxTable.js';
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
+import PersistentDataLoader from 'Components/PersistentDataLoader.js'
 
 export default function StaffPage() {
 
@@ -37,7 +35,7 @@ export default function StaffPage() {
                         <div class="col">
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox Search Settings</div>
-                                <DataLoader
+                                <PersistentDataLoader
                                     requests={{filters: () => m.request("/api/filters/staff")}}
                                     render={({ loading, error, data: { filters } = {}}) => {
                                         const hidePanel = !!(loading || error);
@@ -66,7 +64,7 @@ export default function StaffPage() {
                             </div>
                             <div class="card bg-light mt-3 mb-3">
                                 <div class="card-header">Inbox</div>
-                                <DataLoader
+                                <PersistentDataLoader
                                     settings={state.inboxSearchSettings}
                                     requests={{inbox: ({settings}) => fetchInbox(settings)}}
                                     render={({ loading, error, refresh, data: { inbox } = {}}) => (

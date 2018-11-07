@@ -8,7 +8,6 @@ export default function DataTable() {
 
     let id = null;
     let isCacheEnabled = false;
-    let refreshLock = true;
 
     function getDataTable() {
         return id ? window.TABLE_ID_TO_DATATABLE[id] : null;
@@ -32,7 +31,7 @@ export default function DataTable() {
          * don't rerender the datatable. This operation can take almost 800ms.
          */
         const datatable = getDataTable();
-        if (newData === getData() || datatable === null || datatable === undefined || refreshLock) {
+        if (newData === getData() || datatable === null || datatable === undefined) {
             return;
         }
 
@@ -61,21 +60,17 @@ export default function DataTable() {
 
     function oncreate({ attrs: { config, setup = null }, dom: ref }) {
         const $anchor = $(ref);
-        /* Create our container for the table alongside the anchor DOM that
-         * is managed by mithril.
-         */
-
-        let restoredFromCache = false;
+        let rehydratedFromCache = false;
 
         if (isCacheEnabled) {
             const $maybeCachedTable = $(`#_table_wrapper_${id}`);
             if ($maybeCachedTable.length > 0) {
                 $maybeCachedTable.insertAfter($anchor);
-                restoredFromCache = true;
+                rehydratedFromCache = true;
             }
         }
 
-        if (!restoredFromCache) {
+        if (!rehydratedFromCache) {
             $anchor.after(`
                 <div id="_table_wrapper_${id}">
                     <table id="_table_${id}" class="display table compact" style="width:100%"></table>
@@ -93,18 +88,22 @@ export default function DataTable() {
             setDataTable(datatable);
         }
 
-        refreshLock = false;
         maybeRefreshData(config.data);
 
-        if (!restoredFromCache && setup) {
+        if (!rehydratedFromCache && setup) {
             setup($(`#_table_${id}`), getDataTable(), config);
         }
+
+        const { page } = getDataTable().page.info();
+        setTimeout(() => {
+            getDataTable().page(page);
+        }, 3000)
     }
 
     function onremove({ dom : ref }) {
         if (isCacheEnabled) {
             if ($("#data-table-cache").length === 0) {
-                document.body.append($("<div id='data-table-cache' style='display: none' />"));
+               $("<div id='data-table-cache' style='display: none' />").appendTo(document.body);
             }
             const cache = $("#data-table-cache");
             const table = $(`#_table_wrapper_${id}`);

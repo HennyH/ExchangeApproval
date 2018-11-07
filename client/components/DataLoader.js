@@ -8,7 +8,8 @@ export default function DataLoader() {
     const state = {
         loading: true,
         errored: undefined,
-        data: {}
+        data: {},
+        $fetching: null
     };
 
     function oninit({ attrs: { requests, render, ...arg }}) {
@@ -16,11 +17,17 @@ export default function DataLoader() {
     }
 
     function fetchData(requests, arg) {
+        if (state.$fetching) {
+            state.$fetching.reject();
+        }
+
+        const $fetching = $.Deferred();
+
         state.loading = true;
         state.errored = false;
         state.data = {};
+        state.$fetching = $fetching;
 
-        const $deferred = $.Deferred();
         const data = {};
         const fetches = [];
         const mrs = Object.keys(requests).map(prop => {
@@ -31,20 +38,40 @@ export default function DataLoader() {
                 $fetch.resolve();
                 return json;
             }).then(() => {
-                return $deferred;
+                return $fetching;
             });
             return $mr;
         });
-        return Promise.all(fetches).then(() => {
-            state.loading = false;
-            state.errored = undefined;
-            state.data = data;
-            $deferred.resolve();
-        }, (err) => {
+
+        const $allMrs = Promise.all(fetches);
+        /* If any of the m.requests failed we should reject the overall process
+         * and display an error state.
+         */
+        $allMrs.catch((err) => {
             state.loading = false;
             state.errored = err;
             state.data = {};
+            $fetching.reject();
         });
+        /* If all the m.requests succeed consider the overall fetching as
+         * a success.
+         */
+        $allMrs.then(() => {
+            $fetching.resolve();
+        });
+
+        /* If something else cancels our fetching work, we should cancel all
+         * the m.fetch promises we created.
+         */
+        $fetching.catch(() => {
+            mrs.forEach($mr => $mr.reject());
+        });
+        /* If our fetching works then set a success state. */
+        $fetching.then(() => {
+            state.loading = false;
+            state.errored = undefined;
+            state.data = data;
+        })
     }
 
     function view({ attrs: { requests, render, ...arg } }) {

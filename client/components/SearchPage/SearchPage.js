@@ -5,7 +5,6 @@ import Layout from 'Components/Layout';
 import { addItemToCart, default as Cart } from 'Components/Cart';
 import DecisionSearchSettingsPanel, { DecisionSearchSettingsPowerForm } from './DecisionSearchSettingsPanel.js';
 import DecisionsTable from './DecisionsTable.js';
-import DataLoader from 'Components/DataLoader.js'
 import PersistentDataLoader from 'Components/PersistentDataLoader.js'
 import Spinner from 'Components/Spinners/RectangularSpinner.js';
 
