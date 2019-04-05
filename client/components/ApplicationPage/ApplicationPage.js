@@ -23,7 +23,7 @@ export default function ApplicationPage() {
         m.request({
             method: "POST",
             url: "api/application/submit",
-            data: state.applicationForm.getData()
+            data: window.APPLICATION_FORM.getData()
         }).then(() => {
             state.hasSubmittedForm = true;
         });
